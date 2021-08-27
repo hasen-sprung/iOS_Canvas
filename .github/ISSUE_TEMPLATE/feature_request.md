@@ -7,6 +7,4 @@ assignees: ''
 
 ---
 
-## New feature list
-
-## Deleted feature list
+## New features needed
