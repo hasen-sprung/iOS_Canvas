@@ -1,4 +1,6 @@
 PODS:
+  - Firebase (8.3.0):
+    - Firebase/Core (= 8.3.0)
   - Firebase/Analytics (8.3.0):
     - Firebase/Core
   - Firebase/Core (8.3.0):
@@ -85,6 +87,7 @@ PODS:
   - SWXMLHash (5.0.1)
 
 DEPENDENCIES:
+  - Firebase
   - Firebase/Analytics
   - Macaw (= 0.9.7)
 
@@ -117,6 +120,6 @@ SPEC CHECKSUMS:
   PromisesObjC: 3113f7f76903778cf4a0586bd1ab89329a0b7b97
   SWXMLHash: 9cc0c2e4807926c74377724aa8722ee5707a0485
 
-PODFILE CHECKSUM: d3c4c959fdd90f294f2b020a94f87943ce13a565
+PODFILE CHECKSUM: 1ecec17c3a3586cd45927ade5e84fb5cc09065ca
 
 COCOAPODS: 1.10.1

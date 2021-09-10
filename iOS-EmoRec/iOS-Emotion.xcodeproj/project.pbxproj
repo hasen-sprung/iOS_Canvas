@@ -21,7 +21,7 @@
 /* Begin PBXFileReference section */
 		1BBAAD70CA0B4A5B6B36E81C /* Pods_iOS_EmoRec.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iOS_EmoRec.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F2CB2C526EB18E30004B4FF /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../GoogleService-Info.plist"; sourceTree = "<group>"; };
-		4FE3564326D89EE4003D163C /* iOS-EmoRec.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "iOS-EmoRec.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		4FE3564326D89EE4003D163C /* iOS-Emotion.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "iOS-Emotion.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4FE3564626D89EE4003D163C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4FE3564826D89EE4003D163C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		4FE3564A26D89EE4003D163C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -67,7 +67,7 @@
 		4FE3564426D89EE4003D163C /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				4FE3564326D89EE4003D163C /* iOS-EmoRec.app */,
+				4FE3564326D89EE4003D163C /* iOS-Emotion.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -124,9 +124,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		4FE3564226D89EE4003D163C /* iOS-EmoRec */ = {
+		4FE3564226D89EE4003D163C /* iOS-Emotion */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 4FE3565A26D89EE8003D163C /* Build configuration list for PBXNativeTarget "iOS-EmoRec" */;
+			buildConfigurationList = 4FE3565A26D89EE8003D163C /* Build configuration list for PBXNativeTarget "iOS-Emotion" */;
 			buildPhases = (
 				47426D2AAB2046E54C94416B /* [CP] Check Pods Manifest.lock */,
 				4FE3563F26D89EE4003D163C /* Sources */,
@@ -138,9 +138,9 @@
 			);
 			dependencies = (
 			);
-			name = "iOS-EmoRec";
+			name = "iOS-Emotion";
 			productName = "iOS-EmoRec";
-			productReference = 4FE3564326D89EE4003D163C /* iOS-EmoRec.app */;
+			productReference = 4FE3564326D89EE4003D163C /* iOS-Emotion.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -157,7 +157,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 4FE3563E26D89EE4003D163C /* Build configuration list for PBXProject "iOS-EmoRec" */;
+			buildConfigurationList = 4FE3563E26D89EE4003D163C /* Build configuration list for PBXProject "iOS-Emotion" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -170,7 +170,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				4FE3564226D89EE4003D163C /* iOS-EmoRec */,
+				4FE3564226D89EE4003D163C /* iOS-Emotion */,
 			);
 		};
 /* End PBXProject section */
@@ -422,7 +422,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		4FE3563E26D89EE4003D163C /* Build configuration list for PBXProject "iOS-EmoRec" */ = {
+		4FE3563E26D89EE4003D163C /* Build configuration list for PBXProject "iOS-Emotion" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				4FE3565826D89EE8003D163C /* Debug */,
@@ -431,7 +431,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		4FE3565A26D89EE8003D163C /* Build configuration list for PBXNativeTarget "iOS-EmoRec" */ = {
+		4FE3565A26D89EE8003D163C /* Build configuration list for PBXNativeTarget "iOS-Emotion" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				4FE3565B26D89EE8003D163C /* Debug */,

@@ -2,7 +2,7 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:iOS-EmoRec.xcodeproj">
+      location = "group:/Users/Feldblume/Documents/iOS-EmoRec/iOS-EmoRec/iOS-Emotion.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:Pods/Pods.xcodeproj">
