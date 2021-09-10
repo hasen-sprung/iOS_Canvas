@@ -1,0 +1,435 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 51;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		4FEFF16826EB211E00BEE94C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FEFF16726EB211E00BEE94C /* AppDelegate.swift */; };
+		4FEFF16A26EB211E00BEE94C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FEFF16926EB211E00BEE94C /* SceneDelegate.swift */; };
+		4FEFF16C26EB211E00BEE94C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FEFF16B26EB211E00BEE94C /* ViewController.swift */; };
+		4FEFF16F26EB211E00BEE94C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4FEFF16D26EB211E00BEE94C /* Main.storyboard */; };
+		4FEFF17226EB211E00BEE94C /* project_Emotion.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4FEFF17026EB211E00BEE94C /* project_Emotion.xcdatamodeld */; };
+		4FEFF17426EB212100BEE94C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4FEFF17326EB212100BEE94C /* Assets.xcassets */; };
+		4FEFF17726EB212100BEE94C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4FEFF17526EB212100BEE94C /* LaunchScreen.storyboard */; };
+		4FEFF18326EB242700BEE94C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4FEFF18226EB242700BEE94C /* GoogleService-Info.plist */; };
+		7124799DD30D3AC06BB2EEB4 /* Pods_project_Emotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B04614864AB9B463303D87A /* Pods_project_Emotion.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		45EB1485D1F5767E6CBCAA89 /* Pods-project-Emotion.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-project-Emotion.debug.xcconfig"; path = "Target Support Files/Pods-project-Emotion/Pods-project-Emotion.debug.xcconfig"; sourceTree = "<group>"; };
+		4FEFF16426EB211E00BEE94C /* project-Emotion.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "project-Emotion.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		4FEFF16726EB211E00BEE94C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		4FEFF16926EB211E00BEE94C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		4FEFF16B26EB211E00BEE94C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		4FEFF16E26EB211E00BEE94C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		4FEFF17126EB211E00BEE94C /* project_Emotion.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = project_Emotion.xcdatamodel; sourceTree = "<group>"; };
+		4FEFF17326EB212100BEE94C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		4FEFF17626EB212100BEE94C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		4FEFF17826EB212100BEE94C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4FEFF18226EB242700BEE94C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../GoogleService-Info.plist"; sourceTree = "<group>"; };
+		9B04614864AB9B463303D87A /* Pods_project_Emotion.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_project_Emotion.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F39EE963C03397839C211175 /* Pods-project-Emotion.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-project-Emotion.release.xcconfig"; path = "Target Support Files/Pods-project-Emotion/Pods-project-Emotion.release.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		4FEFF16126EB211E00BEE94C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7124799DD30D3AC06BB2EEB4 /* Pods_project_Emotion.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		3B74C8BA0D557B41E3E8DCDF /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				45EB1485D1F5767E6CBCAA89 /* Pods-project-Emotion.debug.xcconfig */,
+				F39EE963C03397839C211175 /* Pods-project-Emotion.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		4FEFF15B26EB211E00BEE94C = {
+			isa = PBXGroup;
+			children = (
+				4FEFF16626EB211E00BEE94C /* project-Emotion */,
+				4FEFF16526EB211E00BEE94C /* Products */,
+				3B74C8BA0D557B41E3E8DCDF /* Pods */,
+				B84B50C5379013D2CFB73190 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		4FEFF16526EB211E00BEE94C /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				4FEFF16426EB211E00BEE94C /* project-Emotion.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		4FEFF16626EB211E00BEE94C /* project-Emotion */ = {
+			isa = PBXGroup;
+			children = (
+				4FEFF16726EB211E00BEE94C /* AppDelegate.swift */,
+				4FEFF16926EB211E00BEE94C /* SceneDelegate.swift */,
+				4FEFF16B26EB211E00BEE94C /* ViewController.swift */,
+				4FEFF16D26EB211E00BEE94C /* Main.storyboard */,
+				4FEFF17326EB212100BEE94C /* Assets.xcassets */,
+				4FEFF17526EB212100BEE94C /* LaunchScreen.storyboard */,
+				4FEFF17826EB212100BEE94C /* Info.plist */,
+				4FEFF18226EB242700BEE94C /* GoogleService-Info.plist */,
+				4FEFF17026EB211E00BEE94C /* project_Emotion.xcdatamodeld */,
+			);
+			path = "project-Emotion";
+			sourceTree = "<group>";
+		};
+		B84B50C5379013D2CFB73190 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				9B04614864AB9B463303D87A /* Pods_project_Emotion.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		4FEFF16326EB211E00BEE94C /* project-Emotion */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4FEFF17B26EB212100BEE94C /* Build configuration list for PBXNativeTarget "project-Emotion" */;
+			buildPhases = (
+				0CF3936BA4C1C95C7EC8AB9D /* [CP] Check Pods Manifest.lock */,
+				4FEFF16026EB211E00BEE94C /* Sources */,
+				4FEFF16126EB211E00BEE94C /* Frameworks */,
+				4FEFF16226EB211E00BEE94C /* Resources */,
+				F555337FFBCC11D18B9D6C6C /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "project-Emotion";
+			productName = "project-Emotion";
+			productReference = 4FEFF16426EB211E00BEE94C /* project-Emotion.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		4FEFF15C26EB211E00BEE94C /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1250;
+				LastUpgradeCheck = 1250;
+				TargetAttributes = {
+					4FEFF16326EB211E00BEE94C = {
+						CreatedOnToolsVersion = 12.5.1;
+					};
+				};
+			};
+			buildConfigurationList = 4FEFF15F26EB211E00BEE94C /* Build configuration list for PBXProject "project-Emotion" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 4FEFF15B26EB211E00BEE94C;
+			productRefGroup = 4FEFF16526EB211E00BEE94C /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				4FEFF16326EB211E00BEE94C /* project-Emotion */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		4FEFF16226EB211E00BEE94C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4FEFF17726EB212100BEE94C /* LaunchScreen.storyboard in Resources */,
+				4FEFF18326EB242700BEE94C /* GoogleService-Info.plist in Resources */,
+				4FEFF17426EB212100BEE94C /* Assets.xcassets in Resources */,
+				4FEFF16F26EB211E00BEE94C /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		0CF3936BA4C1C95C7EC8AB9D /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-project-Emotion-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F555337FFBCC11D18B9D6C6C /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-project-Emotion/Pods-project-Emotion-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-project-Emotion/Pods-project-Emotion-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-project-Emotion/Pods-project-Emotion-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		4FEFF16026EB211E00BEE94C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4FEFF16C26EB211E00BEE94C /* ViewController.swift in Sources */,
+				4FEFF17226EB211E00BEE94C /* project_Emotion.xcdatamodeld in Sources */,
+				4FEFF16826EB211E00BEE94C /* AppDelegate.swift in Sources */,
+				4FEFF16A26EB211E00BEE94C /* SceneDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		4FEFF16D26EB211E00BEE94C /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4FEFF16E26EB211E00BEE94C /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		4FEFF17526EB212100BEE94C /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4FEFF17626EB212100BEE94C /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		4FEFF17926EB212100BEE94C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		4FEFF17A26EB212100BEE94C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		4FEFF17C26EB212100BEE94C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 45EB1485D1F5767E6CBCAA89 /* Pods-project-Emotion.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = "project-Emotion/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.hasensprung.project-Emotion";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		4FEFF17D26EB212100BEE94C /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = F39EE963C03397839C211175 /* Pods-project-Emotion.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = "project-Emotion/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.hasensprung.project-Emotion";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		4FEFF15F26EB211E00BEE94C /* Build configuration list for PBXProject "project-Emotion" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4FEFF17926EB212100BEE94C /* Debug */,
+				4FEFF17A26EB212100BEE94C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4FEFF17B26EB212100BEE94C /* Build configuration list for PBXNativeTarget "project-Emotion" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4FEFF17C26EB212100BEE94C /* Debug */,
+				4FEFF17D26EB212100BEE94C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		4FEFF17026EB211E00BEE94C /* project_Emotion.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				4FEFF17126EB211E00BEE94C /* project_Emotion.xcdatamodel */,
+			);
+			currentVersion = 4FEFF17126EB211E00BEE94C /* project_Emotion.xcdatamodel */;
+			path = project_Emotion.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = 4FEFF15C26EB211E00BEE94C /* Project object */;
+}
