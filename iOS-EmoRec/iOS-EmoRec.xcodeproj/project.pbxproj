@@ -3,10 +3,11 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4F2CB2C626EB18E30004B4FF /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4F2CB2C526EB18E30004B4FF /* GoogleService-Info.plist */; };
 		4FE3564726D89EE4003D163C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FE3564626D89EE4003D163C /* AppDelegate.swift */; };
 		4FE3564926D89EE4003D163C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FE3564826D89EE4003D163C /* SceneDelegate.swift */; };
 		4FE3564B26D89EE4003D163C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FE3564A26D89EE4003D163C /* ViewController.swift */; };
@@ -19,6 +20,7 @@
 
 /* Begin PBXFileReference section */
 		1BBAAD70CA0B4A5B6B36E81C /* Pods_iOS_EmoRec.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iOS_EmoRec.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4F2CB2C526EB18E30004B4FF /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../GoogleService-Info.plist"; sourceTree = "<group>"; };
 		4FE3564326D89EE4003D163C /* iOS-EmoRec.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "iOS-EmoRec.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4FE3564626D89EE4003D163C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4FE3564826D89EE4003D163C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -81,6 +83,7 @@
 				4FE3565226D89EE8003D163C /* Assets.xcassets */,
 				4FE3565426D89EE8003D163C /* LaunchScreen.storyboard */,
 				4FE3565726D89EE8003D163C /* Info.plist */,
+				4F2CB2C526EB18E30004B4FF /* GoogleService-Info.plist */,
 				4FE3564F26D89EE4003D163C /* iOS_EmoRec.xcdatamodeld */,
 			);
 			path = "iOS-EmoRec";
@@ -115,7 +118,6 @@
 				F6A2A8B455D1D35823C9C1C4 /* Pods-iOS-EmoRec.debug.xcconfig */,
 				8205C1CAB055B71D6A66AF8B /* Pods-iOS-EmoRec.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -179,6 +181,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4FE3565626D89EE8003D163C /* LaunchScreen.storyboard in Resources */,
+				4F2CB2C626EB18E30004B4FF /* GoogleService-Info.plist in Resources */,
 				4FE3565326D89EE8003D163C /* Assets.xcassets in Resources */,
 				4FE3564E26D89EE4003D163C /* Main.storyboard in Resources */,
 			);
@@ -390,7 +393,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.hasen-sprung.EmoRec";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.hasen-sprung.Emotion";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -409,7 +412,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.hasen-sprung.EmoRec";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.hasen-sprung.Emotion";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;

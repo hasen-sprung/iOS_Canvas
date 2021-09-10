@@ -9,4 +9,5 @@ target 'iOS-EmoRec' do
 
   pod "Macaw", "0.9.7"
 
+  pod 'Firebase/Analytics'
 end
