@@ -15,7 +15,13 @@ class GaugeWaveAnimationView: UIView {
     var panGestureRecognizer: UIPanGestureRecognizer = UIPanGestureRecognizer()
     var waveView: WaveAnimationView = WaveAnimationView()
     var superviewFrame: CGRect = CGRect()
-    var touchedOutLocationY: CGFloat = CGFloat()
+    var touchedOutLocationY: CGFloat = CGFloat() {
+        didSet {
+            
+            let figureDict: [String : Float] = ["figure" : getGaugeValue()]
+            NotificationCenter.default.post(name: Notification.Name(rawValue: "figureChanged"), object: nil, userInfo: figureDict)
+        }
+    }
     
     private var actionScrubber: ActionScrubber?
     private let gradientLayer: CAGradientLayer = {
