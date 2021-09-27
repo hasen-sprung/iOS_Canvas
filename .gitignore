@@ -1,5 +1,6 @@
 # config
 .env
+GoogleService-Info.plist
 
 # macos
 *.swp
