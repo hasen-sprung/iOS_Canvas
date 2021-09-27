@@ -83,10 +83,14 @@ PODS:
   - nanopb/encode (2.30908.0)
   - PromisesObjC (1.2.12)
   - SWXMLHash (5.0.1)
+  - TweenKit (1.0.3)
+  - WaveAnimationView (1.0.2)
 
 DEPENDENCIES:
   - Firebase/Analytics
   - Macaw (= 0.9.7)
+  - TweenKit (= 1.0.3)
+  - WaveAnimationView (= 1.0.2)
 
 SPEC REPOS:
   trunk:
@@ -102,6 +106,8 @@ SPEC REPOS:
     - nanopb
     - PromisesObjC
     - SWXMLHash
+    - TweenKit
+    - WaveAnimationView
 
 SPEC CHECKSUMS:
   Firebase: 817b9171d0d51dccc458b94a5e8edff6b1dd323d
@@ -116,7 +122,9 @@ SPEC CHECKSUMS:
   nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
   PromisesObjC: 3113f7f76903778cf4a0586bd1ab89329a0b7b97
   SWXMLHash: 9cc0c2e4807926c74377724aa8722ee5707a0485
+  TweenKit: 7f32dbdda44609be0cfb3fe853af9562cd1e3564
+  WaveAnimationView: 1ffdf3184884eb3270f4b19cc2e69893fec16b9d
 
-PODFILE CHECKSUM: 500f386c9ece3c24bb579c3d34e8199b358d3f89
+PODFILE CHECKSUM: 081cf273e8c1ef049a8e33515cb8ff6abf2456a9
 
 COCOAPODS: 1.10.1
