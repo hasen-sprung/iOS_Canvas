@@ -15,6 +15,9 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         view.addSubview(gaugeView)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
         gaugeView.startWaveAnimation()
     }
     
