@@ -25,10 +25,6 @@ class GuageViewController: UIViewController {
         view.addSubview(floatingView)
         floatingView.addSubview(floatingSVGView)
         
-        
-        gaugeView.startWaveAnimation()
-        
-        
         setFloatingView()
         floatingSVGView.setFloatingSVGView(node: [Node](),
                                            width: 50,
@@ -43,11 +39,14 @@ class GuageViewController: UIViewController {
         navigationController?.navigationBar.shadowImage = UIImage()
         navigationController?.navigationBar.isTranslucent = true
         // [End] navigationBar 투명
+
+    
+        gaugeView.startWaveAnimation()
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        
+
         gaugeView.setGradientLayer()
     }
     
@@ -76,5 +75,6 @@ class GuageViewController: UIViewController {
         }
     }
     // [end] floating object base View setting and moving
+
 }
 
