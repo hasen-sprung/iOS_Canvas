@@ -15,7 +15,7 @@
 		35E5CB1D2701AF650066176A /* AnalysisViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E5CB1B2701AF650066176A /* AnalysisViewController.swift */; };
 		4FEFF16826EB211E00BEE94C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FEFF16726EB211E00BEE94C /* AppDelegate.swift */; };
 		4FEFF16A26EB211E00BEE94C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FEFF16926EB211E00BEE94C /* SceneDelegate.swift */; };
-		4FEFF16C26EB211E00BEE94C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FEFF16B26EB211E00BEE94C /* ViewController.swift */; };
+		4FEFF16C26EB211E00BEE94C /* GuageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FEFF16B26EB211E00BEE94C /* GuageViewController.swift */; };
 		4FEFF16F26EB211E00BEE94C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4FEFF16D26EB211E00BEE94C /* Main.storyboard */; };
 		4FEFF17226EB211E00BEE94C /* project_Emotion.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4FEFF17026EB211E00BEE94C /* project_Emotion.xcdatamodeld */; };
 		4FEFF17426EB212100BEE94C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4FEFF17326EB212100BEE94C /* Assets.xcassets */; };
@@ -34,7 +34,7 @@
 		4FEFF16426EB211E00BEE94C /* project-Emotion.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "project-Emotion.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4FEFF16726EB211E00BEE94C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4FEFF16926EB211E00BEE94C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		4FEFF16B26EB211E00BEE94C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		4FEFF16B26EB211E00BEE94C /* GuageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuageViewController.swift; sourceTree = "<group>"; };
 		4FEFF16E26EB211E00BEE94C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		4FEFF17126EB211E00BEE94C /* project_Emotion.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = project_Emotion.xcdatamodel; sourceTree = "<group>"; };
 		4FEFF17326EB212100BEE94C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -68,7 +68,7 @@
 		355622B727015F9C00EBD775 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				4FEFF16B26EB211E00BEE94C /* ViewController.swift */,
+				4FEFF16B26EB211E00BEE94C /* GuageViewController.swift */,
 				35E5CB172701AF220066176A /* MainViewController.swift */,
 				35E5CB192701AF380066176A /* SettingViewController.swift */,
 				35E5CB1B2701AF650066176A /* AnalysisViewController.swift */,
@@ -252,7 +252,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				35E5CB182701AF220066176A /* MainViewController.swift in Sources */,
-				4FEFF16C26EB211E00BEE94C /* ViewController.swift in Sources */,
+				4FEFF16C26EB211E00BEE94C /* GuageViewController.swift in Sources */,
 				355622BA27015FD000EBD775 /* Colors.swift in Sources */,
 				35E5CB1A2701AF380066176A /* SettingViewController.swift in Sources */,
 				4FEFF17226EB211E00BEE94C /* project_Emotion.xcdatamodeld in Sources */,

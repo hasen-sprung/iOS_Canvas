@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class GuageViewController: UIViewController {
 
     let gaugeView = GaugeWaveAnimationView(frame: UIScreen.main.bounds)
 
