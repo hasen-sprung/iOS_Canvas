@@ -103,6 +103,7 @@ class FloatingSVGView: MacawView {
         }) { (completed) in }
     }
     
+    // MARK: - Model에 리팩토링 필요
     func changeSVGShape(figure: Float) {
         
         if let oldNode = currentNode {
@@ -129,7 +130,7 @@ class FloatingSVGView: MacawView {
                 } else {
                     return
                 }
-            } else if figure > 0.68 && figure <= 0.74 {
+            } else if figure > 0.68 && figure <= 0.84 {
                 if  oldNode != self.svgNodes[3] {
                     newNode = self.svgNodes[3]
                     changeShapeFeedback()
