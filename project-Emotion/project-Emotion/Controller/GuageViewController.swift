@@ -11,31 +11,38 @@ import Macaw
 class GuageViewController: UIViewController {
 
     let gaugeView = GaugeWaveAnimationView(frame: UIScreen.main.bounds)
-    let floatingView: UIView = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
-    let floatingSVGViewCenter = FloatingSVGView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
-    let floatingSVGViewLeft = FloatingSVGView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
-    let floatingSVGViewRight = FloatingSVGView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+    let floatingAreaView: UIView = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+   
     
-    let animationGroup = try! SVGParser.parse(path: "emotions") as! Group
+    var floatingSVGViews = [FloatingSVGView]()
+    let svgGroup = try! SVGParser.parse(path: "emotions") as! Group
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-
-        // MARK: - [start] guage수신
-        NotificationCenter.default.addObserver(self, selector: #selector(setFloatingView(_:)), name: Notification.Name(rawValue: "figureChanged"), object: nil)
+        view.backgroundColor = .white
+        
+        // MARK: - [start] guage figure 수신
+        NotificationCenter.default.addObserver(self, selector: #selector(getFigureStatus(_:)), name: Notification.Name(rawValue: "figureChanged"), object: nil)
+        // [end] guage figure 수신
+        
+        // MARK: - [start] svg view 생성
+        floatingSVGViews.append(FloatingSVGView(frame: CGRect(x: 0, y: 0, width: 0, height: 0)))
+        floatingSVGViews.append(FloatingSVGView(frame: CGRect(x: 0, y: 0, width: 0, height: 0)))
+        floatingSVGViews.append(FloatingSVGView(frame: CGRect(x: 0, y: 0, width: 0, height: 0)))
+        // [end] svg view 생성
         
         view.addSubview(gaugeView)
-        view.addSubview(floatingView)
-        floatingView.addSubview(floatingSVGViewCenter)
-        floatingView.addSubview(floatingSVGViewRight)
-        floatingView.addSubview(floatingSVGViewLeft)
+        view.addSubview(floatingAreaView)
+        
+        for idx in 1...floatingSVGViews.count {
+        
+            floatingAreaView.addSubview(floatingSVGViews[idx - 1])
+        }
         
         
         gaugeView.startWaveAnimation()
-        
-        
-        setFloatingView()
+        setFloatingAreaView()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -46,32 +53,39 @@ class GuageViewController: UIViewController {
         navigationController?.navigationBar.isTranslucent = true
         // [End] navigationBar 투명
         
-        floatingSVGViewCenter.startSVGanimation(node: animationGroup,
-                                           width: 50,
-                                           height: 50,
+        floatingSVGViews[0].startSVGanimation(node: svgGroup,
+                                           width: 60,
+                                           height: 60,
                                            rangeX: 5,
                                            rangeY: -30,
                                            centerX: 0,
-                                           centerY: 10,
-                                           duration: 0.7)
+                                           centerY: 15,
+                                           duration: 0.9,
+                                           delay: 0.2)
         
-        floatingSVGViewRight.startSVGanimation(node: animationGroup,
-                                           width: 30,
-                                           height: 30,
-                                           rangeX: 8,
-                                           rangeY: -40,
-                                           centerX: 150,
-                                           centerY: 20,
-                                           duration: 0.5)
-        
-        floatingSVGViewLeft.startSVGanimation(node: animationGroup,
+        floatingSVGViews[1].startSVGanimation(node: svgGroup,
                                            width: 40,
                                            height: 40,
+                                           rangeX: 14,
+                                           rangeY: -40,
+                                           centerX: 150,
+                                           centerY: 23,
+                                           duration: 0.7,
+                                           delay: 0)
+        
+        floatingSVGViews[2].startSVGanimation(node: svgGroup,
+                                           width: 50,
+                                           height: 50,
                                            rangeX: -5,
                                            rangeY: -50,
                                            centerX: -130,
-                                           centerY: 30,
-                                           duration: 0.9)
+                                           centerY: 33,
+                                           duration: 1.1,
+                                           delay: 0.1)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        
     }
     
     override func viewDidLayoutSubviews() {
@@ -87,22 +101,28 @@ class GuageViewController: UIViewController {
     }
 
     // MARK: - [start] floating base View setting and moving
-    func setFloatingView() {
+    func setFloatingAreaView() {
         
-        floatingView.frame.size = CGSize(width: view.frame.width, height: view.frame.height * 0.2)
-        floatingView.center = CGPoint(x: view.frame.width / 2, y: view.frame.height * 0.5)
-        floatingView.backgroundColor = .clear
-        floatingView.isUserInteractionEnabled = false
+        floatingAreaView.frame.size = CGSize(width: view.frame.width, height: view.frame.height * 0.2)
+        floatingAreaView.center = CGPoint(x: view.frame.width / 2, y: view.frame.height * 0.5)
+        floatingAreaView.backgroundColor = .clear
+        floatingAreaView.isUserInteractionEnabled = false
     }
 
-    @objc func setFloatingView(_ notification: NSNotification) {
+    @objc func getFigureStatus(_ notification: NSNotification) {
         
         if let figure = notification.userInfo?["figure"] as? Float {
-            floatingView.frame.size = CGSize(width: view.frame.width, height: view.frame.height * 0.2)
-            floatingView.center = CGPoint(x: view.frame.width / 2, y: view.frame.height * CGFloat(figure))
-            floatingView.backgroundColor = .clear
-            floatingView.isUserInteractionEnabled = false
+            floatingAreaView.frame.size = CGSize(width: view.frame.width, height: view.frame.height * 0.2)
+            floatingAreaView.center = CGPoint(x: view.frame.width / 2, y: view.frame.height * CGFloat(figure))
+            floatingAreaView.backgroundColor = .clear
+            floatingAreaView.isUserInteractionEnabled = false
+            
+            for idx in 1...floatingSVGViews.count {
+                floatingSVGViews[idx - 1].changeSVGShape(figure: figure)
+            }
         }
+        
+       
     }
     // [end] floating object base View setting and moving
 }

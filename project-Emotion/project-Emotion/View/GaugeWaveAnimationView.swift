@@ -16,9 +16,11 @@ class GaugeWaveAnimationView: UIView {
     var waveView: WaveAnimationView = WaveAnimationView()
     var superviewFrame: CGRect = CGRect()
     var touchedOutLocationY: CGFloat = CGFloat() {
-        didSet {
-            
-            let figureDict: [String : Float] = ["figure" : getGaugeValue()]
+        
+        didSet(oldValue) {
+    
+            let newFigure = getGaugeValue()
+            let figureDict: [String : Float] = ["figure" : newFigure]
             NotificationCenter.default.post(name: Notification.Name(rawValue: "figureChanged"), object: nil, userInfo: figureDict)
         }
     }
@@ -94,8 +96,7 @@ extension GaugeWaveAnimationView {
         // TODO: 화면 전체로 설정할 경우 다시 내리기가 불가능하므로 safeArea설정
         touchedOutLocationY = location.y
         if state == 3 {
-            let value = getGaugeValue()
-            print("Now Gauge Value : ", value)
+            // 손가락을 뗐을 때, 어떤 동작을 할지
         }
         waveView.progress = Float(1 - gaugeMaxOneValue)
         actionScrubber?.update(t: Double(gaugeMaxOneValue))
