@@ -11,6 +11,12 @@
 		355622BC2701600A00EBD775 /* GaugeWaveAnimationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355622BB2701600A00EBD775 /* GaugeWaveAnimationView.swift */; };
 		4F0F7FFE2701881000FC1E6A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4F0F7FFD2701881000FC1E6A /* GoogleService-Info.plist */; };
 		4F0F800127019D8E00FC1E6A /* FloatingSVGView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0F800027019D8E00FC1E6A /* FloatingSVGView.swift */; };
+		4F0F80142702C68800FC1E6A /* svg_2.svg in Resources */ = {isa = PBXBuildFile; fileRef = 4F0F800F2702C68700FC1E6A /* svg_2.svg */; };
+		4F0F80152702C68800FC1E6A /* svg_5.svg in Resources */ = {isa = PBXBuildFile; fileRef = 4F0F80102702C68700FC1E6A /* svg_5.svg */; };
+		4F0F80162702C68800FC1E6A /* svg_4.svg in Resources */ = {isa = PBXBuildFile; fileRef = 4F0F80112702C68700FC1E6A /* svg_4.svg */; };
+		4F0F80172702C68800FC1E6A /* svg_3.svg in Resources */ = {isa = PBXBuildFile; fileRef = 4F0F80122702C68700FC1E6A /* svg_3.svg */; };
+		4F0F80182702C68800FC1E6A /* svg_1.svg in Resources */ = {isa = PBXBuildFile; fileRef = 4F0F80132702C68700FC1E6A /* svg_1.svg */; };
+		4F0F801A2702CA8E00FC1E6A /* emotions.svg in Resources */ = {isa = PBXBuildFile; fileRef = 4F0F80192702CA8E00FC1E6A /* emotions.svg */; };
 		4FEFF16826EB211E00BEE94C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FEFF16726EB211E00BEE94C /* AppDelegate.swift */; };
 		4FEFF16A26EB211E00BEE94C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FEFF16926EB211E00BEE94C /* SceneDelegate.swift */; };
 		4FEFF16C26EB211E00BEE94C /* GuageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FEFF16B26EB211E00BEE94C /* GuageViewController.swift */; };
@@ -27,6 +33,12 @@
 		45EB1485D1F5767E6CBCAA89 /* Pods-project-Emotion.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-project-Emotion.debug.xcconfig"; path = "Target Support Files/Pods-project-Emotion/Pods-project-Emotion.debug.xcconfig"; sourceTree = "<group>"; };
 		4F0F7FFD2701881000FC1E6A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		4F0F800027019D8E00FC1E6A /* FloatingSVGView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingSVGView.swift; sourceTree = "<group>"; };
+		4F0F800F2702C68700FC1E6A /* svg_2.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = svg_2.svg; sourceTree = "<group>"; };
+		4F0F80102702C68700FC1E6A /* svg_5.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = svg_5.svg; sourceTree = "<group>"; };
+		4F0F80112702C68700FC1E6A /* svg_4.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = svg_4.svg; sourceTree = "<group>"; };
+		4F0F80122702C68700FC1E6A /* svg_3.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = svg_3.svg; sourceTree = "<group>"; };
+		4F0F80132702C68700FC1E6A /* svg_1.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = svg_1.svg; sourceTree = "<group>"; };
+		4F0F80192702CA8E00FC1E6A /* emotions.svg */ = {isa = PBXFileReference; lastKnownFileType = text; path = emotions.svg; sourceTree = "<group>"; };
 		4FEFF16426EB211E00BEE94C /* project-Emotion.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "project-Emotion.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4FEFF16726EB211E00BEE94C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4FEFF16926EB211E00BEE94C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -55,6 +67,7 @@
 		355622B627015F8700EBD775 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				4F0F80022702B7FB00FC1E6A /* SVG */,
 				355622BB2701600A00EBD775 /* GaugeWaveAnimationView.swift */,
 				4F0F800027019D8E00FC1E6A /* FloatingSVGView.swift */,
 				4FEFF16D26EB211E00BEE94C /* Main.storyboard */,
@@ -85,6 +98,19 @@
 				F39EE963C03397839C211175 /* Pods-project-Emotion.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		4F0F80022702B7FB00FC1E6A /* SVG */ = {
+			isa = PBXGroup;
+			children = (
+				4F0F80192702CA8E00FC1E6A /* emotions.svg */,
+				4F0F80132702C68700FC1E6A /* svg_1.svg */,
+				4F0F800F2702C68700FC1E6A /* svg_2.svg */,
+				4F0F80122702C68700FC1E6A /* svg_3.svg */,
+				4F0F80112702C68700FC1E6A /* svg_4.svg */,
+				4F0F80102702C68700FC1E6A /* svg_5.svg */,
+			);
+			path = SVG;
 			sourceTree = "<group>";
 		};
 		4FEFF15B26EB211E00BEE94C = {
@@ -190,9 +216,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				4FEFF17726EB212100BEE94C /* LaunchScreen.storyboard in Resources */,
+				4F0F80182702C68800FC1E6A /* svg_1.svg in Resources */,
+				4F0F80172702C68800FC1E6A /* svg_3.svg in Resources */,
+				4F0F80152702C68800FC1E6A /* svg_5.svg in Resources */,
 				4F0F7FFE2701881000FC1E6A /* GoogleService-Info.plist in Resources */,
 				4FEFF17426EB212100BEE94C /* Assets.xcassets in Resources */,
+				4F0F80142702C68800FC1E6A /* svg_2.svg in Resources */,
 				4FEFF16F26EB211E00BEE94C /* Main.storyboard in Resources */,
+				4F0F801A2702CA8E00FC1E6A /* emotions.svg in Resources */,
+				4F0F80162702C68800FC1E6A /* svg_4.svg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

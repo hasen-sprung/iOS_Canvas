@@ -12,28 +12,30 @@ class GuageViewController: UIViewController {
 
     let gaugeView = GaugeWaveAnimationView(frame: UIScreen.main.bounds)
     let floatingView: UIView = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
-    let floatingSVGView = FloatingSVGView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+    let floatingSVGViewCenter = FloatingSVGView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+    let floatingSVGViewLeft = FloatingSVGView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+    let floatingSVGViewRight = FloatingSVGView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
     
+    let animationGroup = try! SVGParser.parse(path: "emotions") as! Group
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // MARK: - [start] 수신
+
+        // MARK: - [start] guage수신
         NotificationCenter.default.addObserver(self, selector: #selector(setFloatingView(_:)), name: Notification.Name(rawValue: "figureChanged"), object: nil)
         
         view.addSubview(gaugeView)
         view.addSubview(floatingView)
-        floatingView.addSubview(floatingSVGView)
+        floatingView.addSubview(floatingSVGViewCenter)
+        floatingView.addSubview(floatingSVGViewRight)
+        floatingView.addSubview(floatingSVGViewLeft)
         
         
         gaugeView.startWaveAnimation()
         
         
         setFloatingView()
-        floatingSVGView.setFloatingSVGView(node: [Node](),
-                                           width: 50,
-                                           height: 50,
-                                           range: 40)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -43,6 +45,33 @@ class GuageViewController: UIViewController {
         navigationController?.navigationBar.shadowImage = UIImage()
         navigationController?.navigationBar.isTranslucent = true
         // [End] navigationBar 투명
+        
+        floatingSVGViewCenter.startSVGanimation(node: animationGroup,
+                                           width: 50,
+                                           height: 50,
+                                           rangeX: 5,
+                                           rangeY: -30,
+                                           centerX: 0,
+                                           centerY: 10,
+                                           duration: 0.7)
+        
+        floatingSVGViewRight.startSVGanimation(node: animationGroup,
+                                           width: 30,
+                                           height: 30,
+                                           rangeX: 8,
+                                           rangeY: -40,
+                                           centerX: 150,
+                                           centerY: 20,
+                                           duration: 0.5)
+        
+        floatingSVGViewLeft.startSVGanimation(node: animationGroup,
+                                           width: 40,
+                                           height: 40,
+                                           rangeX: -5,
+                                           rangeY: -50,
+                                           centerX: -130,
+                                           centerY: 30,
+                                           duration: 0.9)
     }
     
     override func viewDidLayoutSubviews() {
