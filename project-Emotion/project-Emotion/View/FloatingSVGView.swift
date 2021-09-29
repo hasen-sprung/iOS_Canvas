@@ -83,23 +83,6 @@ class FloatingSVGView: MacawView {
     
     func zoomSVGShape() {
         
-        let newView: MacawView?
-        
-        do {
-            
-            newView = try self.copyObject()
-            self.alpha = 0.0
-            newView?.backgroundColor = .blue
-        } catch {print(error)}
-        
-        //        UIView.animate(withDuration: 2.0, delay: animationDelay, options: [.curveEaseIn], animations: { [self] in
-        //            self.frame.size = CGSize(width: self.SVGWidth * 100, height: self.SVGHeight * 100)
-        //            self.svgView.frame.size = CGSize(width: self.SVGWidth * 100, height: self.SVGHeight * 100)
-        //            self.center = CGPoint(x: SVGCenterX, y: SVGCenterY)
-        //            self.fadeIn()
-        //        }) { (completed) in
-        //
-        //        }
     }
     
     
