@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+
 		35015B2E27042D0800A813FA /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 35015B2D27042D0800A813FA /* GoogleService-Info.plist */; };
 		35015B302704385B00A813FA /* AnalysisViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35015B2F2704385B00A813FA /* AnalysisViewController.swift */; };
 		35015B322704387000A813FA /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35015B312704387000A813FA /* MainViewController.swift */; };
@@ -21,6 +22,7 @@
 		4F0F80182702C68800FC1E6A /* svg_1.svg in Resources */ = {isa = PBXBuildFile; fileRef = 4F0F80132702C68700FC1E6A /* svg_1.svg */; };
 		4F0F801A2702CA8E00FC1E6A /* emotions.svg in Resources */ = {isa = PBXBuildFile; fileRef = 4F0F80192702CA8E00FC1E6A /* emotions.svg */; };
 		4FB312AC2703FAB700CA0EC0 /* NodeProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FB312AB2703FAB700CA0EC0 /* NodeProtocol.swift */; };
+		4FB312B2270437F500CA0EC0 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4FB312B1270437F500CA0EC0 /* GoogleService-Info.plist */; };
 		4FEFF16826EB211E00BEE94C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FEFF16726EB211E00BEE94C /* AppDelegate.swift */; };
 		4FEFF16A26EB211E00BEE94C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FEFF16926EB211E00BEE94C /* SceneDelegate.swift */; };
 		4FEFF16C26EB211E00BEE94C /* GaugeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FEFF16B26EB211E00BEE94C /* GaugeViewController.swift */; };
@@ -32,6 +34,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+
 		35015B2D27042D0800A813FA /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		35015B2F2704385B00A813FA /* AnalysisViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalysisViewController.swift; sourceTree = "<group>"; };
 		35015B312704387000A813FA /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
@@ -47,6 +50,7 @@
 		4F0F80132702C68700FC1E6A /* svg_1.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = svg_1.svg; sourceTree = "<group>"; };
 		4F0F80192702CA8E00FC1E6A /* emotions.svg */ = {isa = PBXFileReference; lastKnownFileType = text; path = emotions.svg; sourceTree = "<group>"; };
 		4FB312AB2703FAB700CA0EC0 /* NodeProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeProtocol.swift; sourceTree = "<group>"; };
+		4FB312B1270437F500CA0EC0 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		4FEFF16426EB211E00BEE94C /* project-Emotion.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "project-Emotion.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4FEFF16726EB211E00BEE94C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4FEFF16926EB211E00BEE94C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -162,7 +166,7 @@
 				4FEFF17326EB212100BEE94C /* Assets.xcassets */,
 				4FEFF17526EB212100BEE94C /* LaunchScreen.storyboard */,
 				4FEFF17826EB212100BEE94C /* Info.plist */,
-				35015B2D27042D0800A813FA /* GoogleService-Info.plist */,
+				4FB312B1270437F500CA0EC0 /* GoogleService-Info.plist */,
 				4FEFF17026EB211E00BEE94C /* project_Emotion.xcdatamodeld */,
 			);
 			path = "project-Emotion";
@@ -242,7 +246,7 @@
 				4FEFF17426EB212100BEE94C /* Assets.xcassets in Resources */,
 				4F0F80142702C68800FC1E6A /* svg_2.svg in Resources */,
 				4FEFF16F26EB211E00BEE94C /* Main.storyboard in Resources */,
-				35015B2E27042D0800A813FA /* GoogleService-Info.plist in Resources */,
+				4FB312B2270437F500CA0EC0 /* GoogleService-Info.plist in Resources */,
 				4F0F801A2702CA8E00FC1E6A /* emotions.svg in Resources */,
 				4F0F80162702C68800FC1E6A /* svg_4.svg in Resources */,
 			);
@@ -456,7 +460,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 8WJBD73YAT;
+				DEVELOPMENT_TEAM = 8QSTXVD8H9;
 				INFOPLIST_FILE = "project-Emotion/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -476,7 +480,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 8WJBD73YAT;
+				DEVELOPMENT_TEAM = 8QSTXVD8H9;
 				INFOPLIST_FILE = "project-Emotion/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

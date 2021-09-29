@@ -1,9 +1,3 @@
-//
-//  ViewController.swift
-//  project-Emotion
-//
-//  Created by Junhong Park on 2021/09/10.
-//
 
 import UIKit
 import Macaw
@@ -21,9 +15,11 @@ class GaugeViewController: UIViewController {
         
         view.backgroundColor = .white
         
-        // MARK: - [start] guage figure 수신
-        NotificationCenter.default.addObserver(self, selector: #selector(getFigureStatus(_:)), name: Notification.Name(rawValue: "figureChanged"), object: nil)
-        // [end] guage figure 수신
+        // MARK: - [start] gaugeWaveAnimation에서 정보 수신
+        NotificationCenter.default.addObserver(self, selector: #selector(setFloatingAreaView(_:)), name: Notification.Name(rawValue: "figureIsChanged"), object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(appearTextField(_:)), name: Notification.Name(rawValue: "figureIsSettled"), object: nil)
+        // [end] gaugeWaveAnimation에서 정보 수신
         
         // MARK: - [start] svg view 생성
         floatingSVGViews.append(FloatingSVGView(frame: CGRect(x: 0, y: 0, width: 0, height: 0)))
@@ -108,7 +104,7 @@ class GaugeViewController: UIViewController {
         floatingAreaView.isUserInteractionEnabled = false
     }
 
-    @objc func getFigureStatus(_ notification: NSNotification) {
+    @objc func setFloatingAreaView(_ notification: NSNotification) {
         
         // 0.12초 후에 실행 (wave속도와 sync 조절용도)
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.12) {
@@ -124,22 +120,37 @@ class GaugeViewController: UIViewController {
                 }
             }
         }
-
     }
     // [end] floating object base View setting and moving
+    
+    // MARK: - [start] appear textField (when figure settled)
+    @objc func appearTextField(_ notification: NSNotification) {
+        
+        if let figure = notification.userInfo?["figure"] as? Float {
+            
+            print(figure)
+            floatingSVGViews[0].zoomSVGShape()
+        }
+    }
+    // [end] appear textField (when figure settled)
 }
 
 //MARK: - GaugeWaveAnimationViewDelegate
 
 extension GaugeViewController: GaugeWaveAnimationViewDelegate {
+    
     func sendFigureToGaugeViewController() {
+        
         let newFigure = gaugeView.getGaugeValue()
         let figureDict: [String : Float] = ["figure" : newFigure]
-        NotificationCenter.default.post(name: Notification.Name(rawValue: "figureChanged"), object: nil, userInfo: figureDict)
+        NotificationCenter.default.post(name: Notification.Name(rawValue: "figureIsChanged"), object: nil, userInfo: figureDict)
     }
     
     func actionTouchedUpOutside() {
-        print("touched up outside")
+        
+        let settledFigure = gaugeView.getGaugeValue()
+        let figureDict: [String : Float] = ["figure" : settledFigure]
+        NotificationCenter.default.post(name: Notification.Name(rawValue: "figureIsSettled"), object: nil, userInfo: figureDict)
     }
     
 }
