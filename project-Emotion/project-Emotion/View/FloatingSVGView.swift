@@ -1,9 +1,3 @@
-//
-//  FloatingSVGVIew.swift
-//  project-Emotion
-//
-//  Created by Junhong Park on 2021/09/27.
-//
 
 import UIKit
 import Macaw
@@ -45,8 +39,11 @@ class FloatingSVGView: MacawView {
         
         if let superview = superview {
             
+            
             self.feedbackGenerator = UINotificationFeedbackGenerator()
             self.feedbackGenerator?.prepare()
+            
+            
             
             self.nodeGroup.setNodes()
             
@@ -90,10 +87,6 @@ class FloatingSVGView: MacawView {
         self.feedbackIsEnable = false
     }
     
-    private func changeShapeFeedback() {
-        self.feedbackGenerator?.notificationOccurred(.success)
-    }
-    
     private func setSVGColor(hex: Int) {
         
         let svgShape = (svgView.node as! Group).contents.first as! Shape
@@ -120,6 +113,4 @@ class FloatingSVGView: MacawView {
                                   y: objCenterY + self.nodeRangeY)
         }) { (completed) in }
     }
-    
-    
 }

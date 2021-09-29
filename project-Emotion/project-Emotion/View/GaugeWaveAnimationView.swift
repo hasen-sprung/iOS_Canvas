@@ -17,10 +17,10 @@ class GaugeWaveAnimationView: UIView {
     var superviewFrame: CGRect = CGRect()
     var touchedOutLocationY: CGFloat = CGFloat() {
         
-        didSet(oldValue) {
+        didSet {
     
             let newFigure = getGaugeValue()
-            let figureDict: [String : Float] = ["figure" : newFigure]
+            let figureDict: [String : Any] = ["figure" : newFigure]
             NotificationCenter.default.post(name: Notification.Name(rawValue: "figureChanged"), object: nil, userInfo: figureDict)
         }
     }

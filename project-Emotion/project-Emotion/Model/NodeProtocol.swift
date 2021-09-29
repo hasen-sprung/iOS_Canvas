@@ -1,28 +1,24 @@
-//
-//  AppNode.swift
-//  project-Emotion
-//
-//  Created by Junhong Park on 2021/09/29.
-//
 
 import UIKit
 import Macaw
 
-protocol AppNode {
+@objc protocol NodeProtocol {
     
     var nodeGroup: Group { get }
     
     func setNodes()
-    func getNodeGroup() -> Group
+    
+    @objc optional func getNodeGroup() -> Group
+    
     func getNodeByFigure(figure: Float, currentNode: Node?) -> Node?
+    
     func getStartingNode() -> Node
 }
 
-class geometricFigure: AppNode {
+class geometricFigure: NodeProtocol  {
     
     let nodeGroup = try! SVGParser.parse(path: "emotions") as! Group
     private var svgNodes = [Node]()
-
     
     func setNodes() {
         
@@ -31,10 +27,6 @@ class geometricFigure: AppNode {
         svgNodes.append(self.nodeGroup.nodeBy(tag: "svg_3")!)
         svgNodes.append(self.nodeGroup.nodeBy(tag: "svg_4")!)
         svgNodes.append(self.nodeGroup.nodeBy(tag: "svg_5")!)
-    }
-    
-    func getNodeGroup() -> Group {
-        return nodeGroup
     }
     
     func getNodeByFigure(figure: Float, currentNode: Node?) -> Node? {
