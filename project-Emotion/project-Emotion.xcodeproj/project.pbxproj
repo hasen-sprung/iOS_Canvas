@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		35015B2E27042D0800A813FA /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 35015B2D27042D0800A813FA /* GoogleService-Info.plist */; };
+		35015B302704385B00A813FA /* AnalysisViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35015B2F2704385B00A813FA /* AnalysisViewController.swift */; };
+		35015B322704387000A813FA /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35015B312704387000A813FA /* MainViewController.swift */; };
+		35015B342704389D00A813FA /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35015B332704389D00A813FA /* SettingViewController.swift */; };
 		355622BA27015FD000EBD775 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355622B927015FD000EBD775 /* Colors.swift */; };
 		355622BC2701600A00EBD775 /* GaugeWaveAnimationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355622BB2701600A00EBD775 /* GaugeWaveAnimationView.swift */; };
 		4F0F800127019D8E00FC1E6A /* FloatingSVGView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0F800027019D8E00FC1E6A /* FloatingSVGView.swift */; };
@@ -30,6 +33,9 @@
 
 /* Begin PBXFileReference section */
 		35015B2D27042D0800A813FA /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		35015B2F2704385B00A813FA /* AnalysisViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalysisViewController.swift; sourceTree = "<group>"; };
+		35015B312704387000A813FA /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		35015B332704389D00A813FA /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		355622B927015FD000EBD775 /* Colors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		355622BB2701600A00EBD775 /* GaugeWaveAnimationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GaugeWaveAnimationView.swift; sourceTree = "<group>"; };
 		45EB1485D1F5767E6CBCAA89 /* Pods-project-Emotion.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-project-Emotion.debug.xcconfig"; path = "Target Support Files/Pods-project-Emotion/Pods-project-Emotion.debug.xcconfig"; sourceTree = "<group>"; };
@@ -81,6 +87,9 @@
 			isa = PBXGroup;
 			children = (
 				4FEFF16B26EB211E00BEE94C /* GaugeViewController.swift */,
+				35015B2F2704385B00A813FA /* AnalysisViewController.swift */,
+				35015B312704387000A813FA /* MainViewController.swift */,
+				35015B332704389D00A813FA /* SettingViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -289,13 +298,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				4FEFF16C26EB211E00BEE94C /* GaugeViewController.swift in Sources */,
+				35015B342704389D00A813FA /* SettingViewController.swift in Sources */,
 				4F0F800127019D8E00FC1E6A /* FloatingSVGView.swift in Sources */,
 				355622BA27015FD000EBD775 /* Colors.swift in Sources */,
 				4FB312AC2703FAB700CA0EC0 /* NodeProtocol.swift in Sources */,
 				4FEFF17226EB211E00BEE94C /* project_Emotion.xcdatamodeld in Sources */,
+				35015B302704385B00A813FA /* AnalysisViewController.swift in Sources */,
 				4FEFF16826EB211E00BEE94C /* AppDelegate.swift in Sources */,
 				355622BC2701600A00EBD775 /* GaugeWaveAnimationView.swift in Sources */,
 				4FEFF16A26EB211E00BEE94C /* SceneDelegate.swift in Sources */,
+				35015B322704387000A813FA /* MainViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
