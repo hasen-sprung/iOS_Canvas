@@ -4,16 +4,18 @@ import Macaw
 
 class FloatingSVGView: MacawView {
     
-    private var nodeGroup = geometricFigure()
+    private var SVGGroup = geometricFigure()
     
-    private var nodeWidth: CGFloat = 50
-    private var nodeHeight: CGFloat = 50
-    private var nodeRangeX: CGFloat = 5
-    private var nodeRangeY: CGFloat = -40
-    private var nodeDuration: TimeInterval = 0.5
-    private var nodeDelay: TimeInterval = 0.0
+    private var SVGWidth: CGFloat = 50.0
+    private var SVGHeight: CGFloat = 50.0
+    private var animationRangeX: CGFloat = 5.0
+    private var animationRangeY: CGFloat = -40.0
+    private var animationDuration: TimeInterval = 0.5
+    private var animationDelay: TimeInterval = 0.0
+    private var SVGCenterX: CGFloat = 0.0
+    private var SVGCenterY: CGFloat = 0.0
     
-    private var currentNode: Node?
+    private var currentSVG: Node?
     
     private let svgView = SVGView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
     
@@ -43,20 +45,20 @@ class FloatingSVGView: MacawView {
             self.feedbackGenerator = UINotificationFeedbackGenerator()
             self.feedbackGenerator?.prepare()
             
-            
-            
-            self.nodeGroup.setNodes()
+            self.SVGGroup.setNodes()
             
             self.frame.size = CGSize(width: CGFloat(width), height: CGFloat(height))
             self.center = CGPoint(x: (superview.frame.width / 2) + centerX,
                                   y: (superview.frame.height / 2) + centerY)
             self.backgroundColor = .clear
             self.alpha = 0.95
-            self.nodeWidth = width
-            self.nodeHeight = height
-            self.nodeRangeX = rangeX
-            self.nodeRangeY = rangeY
-            self.nodeDelay = delay
+            self.SVGWidth = width
+            self.SVGHeight = height
+            self.animationRangeX = rangeX
+            self.animationRangeY = rangeY
+            self.animationDelay = delay
+            self.SVGCenterX = (superview.frame.width / 2) + centerX
+            self.SVGCenterY = (superview.frame.height / 2) + centerY
             
             setStartingSVG()
             floatingAnimation(objCenterX: (superview.frame.width / 2) + centerX,
@@ -68,16 +70,38 @@ class FloatingSVGView: MacawView {
         
         let newNode: Node!
         
-        newNode = nodeGroup.getNodeByFigure(figure: figure, currentNode: currentNode)
+        newNode = SVGGroup.getNodeByFigure(figure: figure, currentNode: currentSVG)
         if newNode != nil {
             svgView.node = newNode
-            currentNode = newNode
+            currentSVG = newNode
             if feedbackIsEnable == true {
                 feedbackGenerator?.notificationOccurred(.success)
             }
         }
         setSVGColor(hex: 0x5f4b8b)
     }
+    
+    func zoomSVGShape() {
+        
+        let newView: MacawView?
+        
+        do {
+            
+            newView = try self.copyObject()
+            self.alpha = 0.0
+            newView?.backgroundColor = .blue
+        } catch {print(error)}
+        
+        //        UIView.animate(withDuration: 2.0, delay: animationDelay, options: [.curveEaseIn], animations: { [self] in
+        //            self.frame.size = CGSize(width: self.SVGWidth * 100, height: self.SVGHeight * 100)
+        //            self.svgView.frame.size = CGSize(width: self.SVGWidth * 100, height: self.SVGHeight * 100)
+        //            self.center = CGPoint(x: SVGCenterX, y: SVGCenterY)
+        //            self.fadeIn()
+        //        }) { (completed) in
+        //
+        //        }
+    }
+    
     
     func activateFeedback() {
         self.feedbackIsEnable = true
@@ -97,8 +121,8 @@ class FloatingSVGView: MacawView {
         
         svgView.frame.size = CGSize(width: self.frame.width, height: self.frame.height)
         svgView.center = CGPoint(x: self.frame.width / 2, y: self.frame.width / 2)
-        svgView.node = nodeGroup.getStartingNode()
-        self.currentNode = svgView.node
+        svgView.node = SVGGroup.getStartingNode()
+        self.currentSVG = svgView.node
         svgView.backgroundColor = .clear
         setSVGColor(hex: 0x5f4b8b)
         self.addSubview(svgView)
@@ -106,11 +130,34 @@ class FloatingSVGView: MacawView {
     
     private func floatingAnimation(objCenterX: CGFloat, objCenterY: CGFloat) {
         
-        UIView.animate(withDuration: nodeDuration, delay: nodeDelay, options: [.repeat, .autoreverse], animations: { [self] in
-            self.frame.size = CGSize(width: self.nodeWidth * 1.3, height: self.nodeHeight * 1.5)
-            self.svgView.frame.size = CGSize(width: self.nodeWidth * 1.3, height: self.nodeHeight * 1.5)
-            self.center = CGPoint(x: objCenterX + self.nodeRangeX,
-                                  y: objCenterY + self.nodeRangeY)
+        UIView.animate(withDuration: animationDuration, delay: animationDelay, options: [.repeat, .autoreverse], animations: { [self] in
+            self.frame.size = CGSize(width: self.SVGWidth * 1.3, height: self.SVGHeight * 1.5)
+            self.svgView.frame.size = CGSize(width: self.SVGWidth * 1.3, height: self.SVGHeight * 1.5)
+            self.center = CGPoint(x: objCenterX + self.animationRangeX,
+                                  y: objCenterY + self.animationRangeY)
         }) { (completed) in }
+    }
+}
+
+public extension UIView {
+    
+    func fadeIn(duration: TimeInterval = 1.0) {
+        UIView.animate(withDuration: duration, animations: {
+            self.alpha = 1.0
+        })
+    }
+    
+    func fadeOut(duration: TimeInterval = 1.0) {
+        UIView.animate(withDuration: duration, animations: {
+            self.alpha = 0.0
+        })
+    }
+}
+
+extension NSObject {
+    
+    func copyObject<T:NSObject>() throws -> T? {
+        let data = try NSKeyedArchiver.archivedData(withRootObject:self, requiringSecureCoding:false)
+        return try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data) as? T
     }
 }
