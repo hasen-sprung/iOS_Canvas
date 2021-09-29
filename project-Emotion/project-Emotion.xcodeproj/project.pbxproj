@@ -17,6 +17,7 @@
 		4F0F80172702C68800FC1E6A /* svg_3.svg in Resources */ = {isa = PBXBuildFile; fileRef = 4F0F80122702C68700FC1E6A /* svg_3.svg */; };
 		4F0F80182702C68800FC1E6A /* svg_1.svg in Resources */ = {isa = PBXBuildFile; fileRef = 4F0F80132702C68700FC1E6A /* svg_1.svg */; };
 		4F0F801A2702CA8E00FC1E6A /* emotions.svg in Resources */ = {isa = PBXBuildFile; fileRef = 4F0F80192702CA8E00FC1E6A /* emotions.svg */; };
+		4FB312AC2703FAB700CA0EC0 /* AppNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FB312AB2703FAB700CA0EC0 /* AppNode.swift */; };
 		4FEFF16826EB211E00BEE94C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FEFF16726EB211E00BEE94C /* AppDelegate.swift */; };
 		4FEFF16A26EB211E00BEE94C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FEFF16926EB211E00BEE94C /* SceneDelegate.swift */; };
 		4FEFF16C26EB211E00BEE94C /* GuageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FEFF16B26EB211E00BEE94C /* GuageViewController.swift */; };
@@ -39,6 +40,7 @@
 		4F0F80122702C68700FC1E6A /* svg_3.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = svg_3.svg; sourceTree = "<group>"; };
 		4F0F80132702C68700FC1E6A /* svg_1.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = svg_1.svg; sourceTree = "<group>"; };
 		4F0F80192702CA8E00FC1E6A /* emotions.svg */ = {isa = PBXFileReference; lastKnownFileType = text; path = emotions.svg; sourceTree = "<group>"; };
+		4FB312AB2703FAB700CA0EC0 /* AppNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppNode.swift; sourceTree = "<group>"; };
 		4FEFF16426EB211E00BEE94C /* project-Emotion.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "project-Emotion.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4FEFF16726EB211E00BEE94C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4FEFF16926EB211E00BEE94C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -113,6 +115,14 @@
 			path = SVG;
 			sourceTree = "<group>";
 		};
+		4FB312AA2703FA6500CA0EC0 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				4FB312AB2703FAB700CA0EC0 /* AppNode.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		4FEFF15B26EB211E00BEE94C = {
 			isa = PBXGroup;
 			children = (
@@ -137,6 +147,7 @@
 				4FEFF16726EB211E00BEE94C /* AppDelegate.swift */,
 				4FEFF16926EB211E00BEE94C /* SceneDelegate.swift */,
 				355622B827015FB500EBD775 /* Constants */,
+				4FB312AA2703FA6500CA0EC0 /* Model */,
 				355622B727015F9C00EBD775 /* Controller */,
 				355622B627015F8700EBD775 /* View */,
 				4FEFF17326EB212100BEE94C /* Assets.xcassets */,
@@ -280,6 +291,7 @@
 				4FEFF16C26EB211E00BEE94C /* GuageViewController.swift in Sources */,
 				4F0F800127019D8E00FC1E6A /* FloatingSVGView.swift in Sources */,
 				355622BA27015FD000EBD775 /* Colors.swift in Sources */,
+				4FB312AC2703FAB700CA0EC0 /* AppNode.swift in Sources */,
 				4FEFF17226EB211E00BEE94C /* project_Emotion.xcdatamodeld in Sources */,
 				4FEFF16826EB211E00BEE94C /* AppDelegate.swift in Sources */,
 				355622BC2701600A00EBD775 /* GaugeWaveAnimationView.swift in Sources */,
