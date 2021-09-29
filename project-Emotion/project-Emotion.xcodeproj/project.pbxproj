@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-
-		35015B2E27042D0800A813FA /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 35015B2D27042D0800A813FA /* GoogleService-Info.plist */; };
 		35015B302704385B00A813FA /* AnalysisViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35015B2F2704385B00A813FA /* AnalysisViewController.swift */; };
 		35015B322704387000A813FA /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35015B312704387000A813FA /* MainViewController.swift */; };
 		35015B342704389D00A813FA /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35015B332704389D00A813FA /* SettingViewController.swift */; };
@@ -34,8 +32,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-
-		35015B2D27042D0800A813FA /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		35015B2F2704385B00A813FA /* AnalysisViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalysisViewController.swift; sourceTree = "<group>"; };
 		35015B312704387000A813FA /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		35015B332704389D00A813FA /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
