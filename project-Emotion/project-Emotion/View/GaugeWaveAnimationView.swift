@@ -9,19 +9,23 @@ import UIKit
 import WaveAnimationView
 import TweenKit
 
+protocol GaugeWaveAnimationViewDelegate {
+    func sendFigureToGaugeViewController()
+    func actionTouchedUpOutside()
+}
+
 class GaugeWaveAnimationView: UIView {
     
     //MARK: - properties
+    var delegate: GaugeWaveAnimationViewDelegate?
     var panGestureRecognizer: UIPanGestureRecognizer = UIPanGestureRecognizer()
     var waveView: WaveAnimationView = WaveAnimationView()
     var superviewFrame: CGRect = CGRect()
     var touchedOutLocationY: CGFloat = CGFloat() {
-        
         didSet {
-    
-            let newFigure = getGaugeValue()
-            let figureDict: [String : Any] = ["figure" : newFigure]
-            NotificationCenter.default.post(name: Notification.Name(rawValue: "figureChanged"), object: nil, userInfo: figureDict)
+            if let delegate = delegate {
+                delegate.sendFigureToGaugeViewController()
+            }
         }
     }
     
@@ -97,6 +101,9 @@ extension GaugeWaveAnimationView {
         touchedOutLocationY = location.y
         if state == 3 {
             // 손가락을 뗐을 때, 어떤 동작을 할지
+            if let delegate = delegate {
+                delegate.actionTouchedUpOutside()
+            }
         }
         waveView.progress = Float(1 - gaugeMaxOneValue)
         actionScrubber?.update(t: Double(gaugeMaxOneValue))

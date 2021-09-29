@@ -7,9 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		35015B2E27042D0800A813FA /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 35015B2D27042D0800A813FA /* GoogleService-Info.plist */; };
 		355622BA27015FD000EBD775 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355622B927015FD000EBD775 /* Colors.swift */; };
 		355622BC2701600A00EBD775 /* GaugeWaveAnimationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355622BB2701600A00EBD775 /* GaugeWaveAnimationView.swift */; };
-		4F0F7FFE2701881000FC1E6A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4F0F7FFD2701881000FC1E6A /* GoogleService-Info.plist */; };
 		4F0F800127019D8E00FC1E6A /* FloatingSVGView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0F800027019D8E00FC1E6A /* FloatingSVGView.swift */; };
 		4F0F80142702C68800FC1E6A /* svg_2.svg in Resources */ = {isa = PBXBuildFile; fileRef = 4F0F800F2702C68700FC1E6A /* svg_2.svg */; };
 		4F0F80152702C68800FC1E6A /* svg_5.svg in Resources */ = {isa = PBXBuildFile; fileRef = 4F0F80102702C68700FC1E6A /* svg_5.svg */; };
@@ -20,7 +20,7 @@
 		4FB312AC2703FAB700CA0EC0 /* NodeProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FB312AB2703FAB700CA0EC0 /* NodeProtocol.swift */; };
 		4FEFF16826EB211E00BEE94C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FEFF16726EB211E00BEE94C /* AppDelegate.swift */; };
 		4FEFF16A26EB211E00BEE94C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FEFF16926EB211E00BEE94C /* SceneDelegate.swift */; };
-		4FEFF16C26EB211E00BEE94C /* GuageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FEFF16B26EB211E00BEE94C /* GuageViewController.swift */; };
+		4FEFF16C26EB211E00BEE94C /* GaugeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FEFF16B26EB211E00BEE94C /* GaugeViewController.swift */; };
 		4FEFF16F26EB211E00BEE94C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4FEFF16D26EB211E00BEE94C /* Main.storyboard */; };
 		4FEFF17226EB211E00BEE94C /* project_Emotion.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4FEFF17026EB211E00BEE94C /* project_Emotion.xcdatamodeld */; };
 		4FEFF17426EB212100BEE94C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4FEFF17326EB212100BEE94C /* Assets.xcassets */; };
@@ -29,10 +29,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		35015B2D27042D0800A813FA /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		355622B927015FD000EBD775 /* Colors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		355622BB2701600A00EBD775 /* GaugeWaveAnimationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GaugeWaveAnimationView.swift; sourceTree = "<group>"; };
 		45EB1485D1F5767E6CBCAA89 /* Pods-project-Emotion.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-project-Emotion.debug.xcconfig"; path = "Target Support Files/Pods-project-Emotion/Pods-project-Emotion.debug.xcconfig"; sourceTree = "<group>"; };
-		4F0F7FFD2701881000FC1E6A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		4F0F800027019D8E00FC1E6A /* FloatingSVGView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingSVGView.swift; sourceTree = "<group>"; };
 		4F0F800F2702C68700FC1E6A /* svg_2.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = svg_2.svg; sourceTree = "<group>"; };
 		4F0F80102702C68700FC1E6A /* svg_5.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = svg_5.svg; sourceTree = "<group>"; };
@@ -44,7 +44,7 @@
 		4FEFF16426EB211E00BEE94C /* project-Emotion.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "project-Emotion.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4FEFF16726EB211E00BEE94C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4FEFF16926EB211E00BEE94C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		4FEFF16B26EB211E00BEE94C /* GuageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuageViewController.swift; sourceTree = "<group>"; };
+		4FEFF16B26EB211E00BEE94C /* GaugeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GaugeViewController.swift; sourceTree = "<group>"; };
 		4FEFF16E26EB211E00BEE94C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		4FEFF17126EB211E00BEE94C /* project_Emotion.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = project_Emotion.xcdatamodel; sourceTree = "<group>"; };
 		4FEFF17326EB212100BEE94C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -80,7 +80,7 @@
 		355622B727015F9C00EBD775 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				4FEFF16B26EB211E00BEE94C /* GuageViewController.swift */,
+				4FEFF16B26EB211E00BEE94C /* GaugeViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -153,7 +153,7 @@
 				4FEFF17326EB212100BEE94C /* Assets.xcassets */,
 				4FEFF17526EB212100BEE94C /* LaunchScreen.storyboard */,
 				4FEFF17826EB212100BEE94C /* Info.plist */,
-				4F0F7FFD2701881000FC1E6A /* GoogleService-Info.plist */,
+				35015B2D27042D0800A813FA /* GoogleService-Info.plist */,
 				4FEFF17026EB211E00BEE94C /* project_Emotion.xcdatamodeld */,
 			);
 			path = "project-Emotion";
@@ -230,10 +230,10 @@
 				4F0F80182702C68800FC1E6A /* svg_1.svg in Resources */,
 				4F0F80172702C68800FC1E6A /* svg_3.svg in Resources */,
 				4F0F80152702C68800FC1E6A /* svg_5.svg in Resources */,
-				4F0F7FFE2701881000FC1E6A /* GoogleService-Info.plist in Resources */,
 				4FEFF17426EB212100BEE94C /* Assets.xcassets in Resources */,
 				4F0F80142702C68800FC1E6A /* svg_2.svg in Resources */,
 				4FEFF16F26EB211E00BEE94C /* Main.storyboard in Resources */,
+				35015B2E27042D0800A813FA /* GoogleService-Info.plist in Resources */,
 				4F0F801A2702CA8E00FC1E6A /* emotions.svg in Resources */,
 				4F0F80162702C68800FC1E6A /* svg_4.svg in Resources */,
 			);
@@ -288,7 +288,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4FEFF16C26EB211E00BEE94C /* GuageViewController.swift in Sources */,
+				4FEFF16C26EB211E00BEE94C /* GaugeViewController.swift in Sources */,
 				4F0F800127019D8E00FC1E6A /* FloatingSVGView.swift in Sources */,
 				355622BA27015FD000EBD775 /* Colors.swift in Sources */,
 				4FB312AC2703FAB700CA0EC0 /* NodeProtocol.swift in Sources */,
@@ -444,7 +444,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 8QSTXVD8H9;
+				DEVELOPMENT_TEAM = 8WJBD73YAT;
 				INFOPLIST_FILE = "project-Emotion/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -464,7 +464,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 8QSTXVD8H9;
+				DEVELOPMENT_TEAM = 8WJBD73YAT;
 				INFOPLIST_FILE = "project-Emotion/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

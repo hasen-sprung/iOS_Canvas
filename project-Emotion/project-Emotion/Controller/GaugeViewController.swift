@@ -8,16 +8,16 @@
 import UIKit
 import Macaw
 
-class GuageViewController: UIViewController {
+class GaugeViewController: UIViewController {
 
     let gaugeView = GaugeWaveAnimationView(frame: UIScreen.main.bounds)
     let floatingAreaView: UIView = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
-   
     
     var floatingSVGViews = [FloatingSVGView]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        gaugeView.delegate = self
         
         view.backgroundColor = .white
         
@@ -128,3 +128,17 @@ class GuageViewController: UIViewController {
     // [end] floating object base View setting and moving
 }
 
+//MARK: - GaugeWaveAnimationViewDelegate
+
+extension GaugeViewController: GaugeWaveAnimationViewDelegate {
+    func sendFigureToGaugeViewController() {
+        let newFigure = gaugeView.getGaugeValue()
+        let figureDict: [String : Float] = ["figure" : newFigure]
+        NotificationCenter.default.post(name: Notification.Name(rawValue: "figureChanged"), object: nil, userInfo: figureDict)
+    }
+    
+    func actionTouchedUpOutside() {
+        print("touched up outside")
+    }
+    
+}
