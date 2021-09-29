@@ -36,11 +36,12 @@ class GaugeViewController: UIViewController {
         }
         
         
-        gaugeView.startWaveAnimation()
         setFloatingAreaView()
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        // MARK: - [start] gaugeView 애니메이션 실행
+        gaugeView.startWaveAnimation()
         
         // MARK: - [start] navigationBar 투명
         navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
