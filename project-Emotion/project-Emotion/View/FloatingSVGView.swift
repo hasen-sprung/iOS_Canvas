@@ -18,6 +18,24 @@ class FloatingSVGView: MacawView {
     private var currentSVG: Node?
     
     private let svgView = SVGView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+    private let textFieldCancelButton: UIButton = {
+       
+        let newButton = UIButton()
+        
+        newButton.backgroundColor = .clear
+        let boldConfig = UIImage.SymbolConfiguration(weight: .bold)
+        let backImage = UIImage(systemName: "arrow.backward", withConfiguration: boldConfig)
+        
+        newButton.setImage(backImage, for: .normal)
+        newButton.tintColor = .white
+        newButton.frame.size = CGSize(width: 50, height: 50)
+        newButton.frame.origin = CGPoint(x: 50, y: 50)
+        
+        newButton.addTarget(self, action: #selector(cancelTextfield), for: .touchUpInside)
+            
+        return newButton
+    }()
+    
     
     private var feedbackGenerator: UINotificationFeedbackGenerator?
     private var feedbackIsEnable: Bool = true
@@ -37,7 +55,8 @@ class FloatingSVGView: MacawView {
                            centerX: CGFloat,
                            centerY: CGFloat,
                            duration: TimeInterval,
-                           delay: TimeInterval) {
+                           delay: TimeInterval,
+                           isTextField: Bool = false) {
         
         if let superview = superview {
             
@@ -61,8 +80,12 @@ class FloatingSVGView: MacawView {
             self.SVGCenterY = (superview.frame.height / 2) + centerY
             
             setStartingSVG()
-            floatingAnimation(objCenterX: (superview.frame.width / 2) + centerX,
-                              objCenterY: (superview.frame.height / 2) + centerY)
+            if isTextField == false {
+                floatingAnimation(objCenterX: (superview.frame.width / 2) + centerX,
+                                  objCenterY: (superview.frame.height / 2) + centerY)
+            } else {
+                self.alpha = 0.0
+            }
         }
     }
     
@@ -81,8 +104,21 @@ class FloatingSVGView: MacawView {
         setSVGColor(hex: 0x5f4b8b)
     }
     
-    func zoomSVGShape() {
-        
+    func zoomInAsTextField() {
+     
+        self.alpha = 0.95
+        UIView.animate(withDuration: 1.5, delay: animationDelay, options: [.curveEaseIn], animations: { [self] in
+            
+            self.frame.size = CGSize(width: self.SVGWidth * 100, height: self.SVGHeight * 100)
+            self.svgView.frame.size = CGSize(width: self.SVGWidth * 100, height: self.SVGHeight * 100)
+            self.center = CGPoint(x: (superview?.frame.width)! / 2, y: 0)
+            self.backgroundColor = UIColor(hex: 0x5f4b8b)
+            self.alpha = 1.0
+            self.superview?.superview?.addSubview(self.textFieldCancelButton)
+            
+        }) { (completed) in
+            
+        }
     }
     
     
@@ -120,6 +156,23 @@ class FloatingSVGView: MacawView {
                                   y: objCenterY + self.animationRangeY)
         }) { (completed) in }
     }
+    
+    @objc func cancelTextfield(_ sender: UIButton) {
+        
+        self.textFieldCancelButton.removeFromSuperview()
+        
+        UIView.animate(withDuration: 1.5, delay: animationDelay, options: [.curveEaseIn], animations: { [self] in
+            
+            self.frame.size = CGSize(width: self.SVGWidth, height: self.SVGHeight)
+            self.svgView.frame.size = CGSize(width: self.SVGWidth, height: self.SVGHeight)
+            self.center = CGPoint(x: SVGCenterX, y: SVGCenterY)
+            self.backgroundColor = .clear
+            self.alpha = 0.95
+            
+        }) { (completed) in
+            
+        }
+    }
 }
 
 public extension UIView {
@@ -137,10 +190,14 @@ public extension UIView {
     }
 }
 
-extension NSObject {
+extension UIColor {
     
-    func copyObject<T:NSObject>() throws -> T? {
-        let data = try NSKeyedArchiver.archivedData(withRootObject:self, requiringSecureCoding:false)
-        return try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data) as? T
+    convenience init(hex: Int) {
+        let components = (
+            R: CGFloat((hex >> 16) & 0xff) / 255,
+            G: CGFloat((hex >> 08) & 0xff) / 255,
+            B: CGFloat((hex >> 00) & 0xff) / 255
+        )
+        self.init(red: components.R, green: components.G, blue: components.B, alpha: 1)
     }
 }
