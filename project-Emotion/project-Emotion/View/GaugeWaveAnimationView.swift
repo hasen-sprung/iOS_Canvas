@@ -11,6 +11,7 @@ protocol GaugeWaveAnimationViewDelegate {
 class GaugeWaveAnimationView: UIView {
     
     //MARK: - properties
+    var safeAreaInGaugeView: CGFloat = 0.2 //0.0 ~ 1.0
     var delegate: GaugeWaveAnimationViewDelegate?
     var panGestureRecognizer: UIPanGestureRecognizer = UIPanGestureRecognizer()
     var waveView: WaveAnimationView = WaveAnimationView()
@@ -99,6 +100,7 @@ extension GaugeWaveAnimationView {
         let location = sender.location(in: self)
         let gaugeMaxOneValue = location.y / superviewFrame.height
         // TODO: 화면 전체로 설정할 경우 다시 내리기가 불가능하므로 safeArea설정
+        if gaugeMaxOneValue < safeAreaInGaugeView  { return }
         touchedOutLocationY = location.y
         if state == 3 {
             // 손가락을 뗐을 때, 어떤 동작을 할지
