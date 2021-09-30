@@ -1,9 +1,3 @@
-//
-//  GaugeWaveAnimationView.swift
-//  emo-proto
-//
-//  Created by Jaeyoung Lee on 2021/09/23.
-//
 
 import UIKit
 import WaveAnimationView
@@ -20,6 +14,7 @@ class GaugeWaveAnimationView: UIView {
     var delegate: GaugeWaveAnimationViewDelegate?
     var panGestureRecognizer: UIPanGestureRecognizer = UIPanGestureRecognizer()
     var waveView: WaveAnimationView = WaveAnimationView()
+    var gradientView: UIView = UIView()
     var superviewFrame: CGRect = CGRect()
     var touchedOutLocationY: CGFloat = CGFloat() {
         didSet {
@@ -70,14 +65,20 @@ extension GaugeWaveAnimationView {
     
     func setWaveView(frame: CGRect) {
         waveView = WaveAnimationView(frame: frame, frontColor: defaultBackgroundColorBottom, backColor: defaultBackgroundColorTop)
-        waveView.progress = Float(touchedOutLocationY / superviewFrame.height)
+        waveView.progress = 1
+        waveView.addSubview(gradientView)
         
-        waveView.layer.addSublayer(gradientLayer)
+        gradientView.frame = CGRect(origin: CGPoint(x: 0.0, y: waveView.frame.origin.y + 20), size: waveView.frame.size)//waveView.frame
+        gradientView.layer.addSublayer(gradientLayer)
+        
+        waveView.frame.origin.y = touchedOutLocationY
     }
+    
     func startWaveAnimation() {
         waveView.startAnimation()
         setGradientAnimation()
     }
+    
     func stopWaveAnimation() {
         waveView.stopAnimation()
     }
@@ -105,7 +106,8 @@ extension GaugeWaveAnimationView {
                 delegate.actionTouchedUpOutside()
             }
         }
-        waveView.progress = Float(1 - gaugeMaxOneValue)
+        
+        waveView.frame.origin.y = touchedOutLocationY
         actionScrubber?.update(t: Double(gaugeMaxOneValue))
     }
 }
@@ -115,25 +117,19 @@ extension GaugeWaveAnimationView {
 extension GaugeWaveAnimationView {
     
     func setGradientLayer() {
-        gradientLayer.frame = waveView.bounds
+        gradientLayer.frame = gradientView.bounds
         updateBackgroundGradient()
     }
     
     private func updateBackgroundGradient() {
         
-        CATransaction.begin()
-        CATransaction.setDisableActions(true)
-        
         gradientLayer.colors = [backgroundColorTop.cgColor, backgroundColorBottom.cgColor]
         gradientLayer.startPoint = CGPoint(x: 0.5, y: 0)
         gradientLayer.endPoint = CGPoint(x: 0.5, y: 1)
         gradientLayer.locations = [0.0, 1.0]
-        gradientLayer.frame.origin.y = touchedOutLocationY + 20
         
         waveView.backColor = backgroundColorTop
         waveView.frontColor = backgroundColorBottom
-        
-        CATransaction.commit()
         
     }
 }
