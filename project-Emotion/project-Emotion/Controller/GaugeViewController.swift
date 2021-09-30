@@ -153,4 +153,8 @@ extension GaugeViewController: GaugeWaveAnimationViewDelegate {
         NotificationCenter.default.post(name: Notification.Name(rawValue: "figureIsSettled"), object: nil, userInfo: figureDict)
     }
     
+    func actionTouchedUpOutsideInSafeArea() {
+        print("in safe area touched out")
+    }
+    
 }
