@@ -1,21 +1,30 @@
-//
-//  GaugeWaveAnimationView.swift
-//  emo-proto
-//
-//  Created by Jaeyoung Lee on 2021/09/23.
-//
 
 import UIKit
 import WaveAnimationView
 import TweenKit
 
+protocol GaugeWaveAnimationViewDelegate {
+    func sendFigureToGaugeViewController()
+    func actionTouchedUpOutside()
+    func actionTouchedUpOutsideInSafeArea()
+}
+
 class GaugeWaveAnimationView: UIView {
     
     //MARK: - properties
+    var safeAreaInGaugeView: CGFloat = 0.2 //0.0 ~ 1.0
+    var delegate: GaugeWaveAnimationViewDelegate?
     var panGestureRecognizer: UIPanGestureRecognizer = UIPanGestureRecognizer()
     var waveView: WaveAnimationView = WaveAnimationView()
+    var gradientView: UIView = UIView()
     var superviewFrame: CGRect = CGRect()
-    var touchedOutLocationY: CGFloat = CGFloat()
+    var touchedOutLocationY: CGFloat = CGFloat() {
+        didSet {
+            if let delegate = delegate {
+                delegate.sendFigureToGaugeViewController()
+            }
+        }
+    }
     
     private var actionScrubber: ActionScrubber?
     private let gradientLayer: CAGradientLayer = {
@@ -58,14 +67,20 @@ extension GaugeWaveAnimationView {
     
     func setWaveView(frame: CGRect) {
         waveView = WaveAnimationView(frame: frame, frontColor: defaultBackgroundColorBottom, backColor: defaultBackgroundColorTop)
-        waveView.progress = Float(touchedOutLocationY / superviewFrame.height)
+        waveView.progress = 1
+        waveView.addSubview(gradientView)
         
-        waveView.layer.addSublayer(gradientLayer)
+        gradientView.frame = CGRect(origin: CGPoint(x: 0.0, y: waveView.frame.origin.y + 20), size: waveView.frame.size)//waveView.frame
+        gradientView.layer.addSublayer(gradientLayer)
+        
+        waveView.frame.origin.y = touchedOutLocationY
     }
+    
     func startWaveAnimation() {
         waveView.startAnimation()
         setGradientAnimation()
     }
+    
     func stopWaveAnimation() {
         waveView.stopAnimation()
     }
@@ -84,15 +99,20 @@ extension GaugeWaveAnimationView {
     @objc func gaugeViewPanGesture(sender: UIPanGestureRecognizer) {
         let state = sender.state.rawValue
         let location = sender.location(in: self)
-        let gaugeMaxOneValue = location.y / superviewFrame.height
-        // TODO: 화면 전체로 설정할 경우 다시 내리기가 불가능하므로 safeArea설정
-        touchedOutLocationY = location.y
-        if state == 3 {
-            let value = getGaugeValue()
-            print("Now Gauge Value : ", value)
+        let touchedPointRelativeRatio = location.y / superviewFrame.height
+        
+        if touchedPointRelativeRatio < safeAreaInGaugeView  {
+            if state == 3 {
+                if let d = delegate { d.actionTouchedUpOutsideInSafeArea() }
+            }
+        } else {
+            if state == 3 {
+                if let d = delegate { d.actionTouchedUpOutside() }
+            }
+            touchedOutLocationY = location.y
+            waveView.frame.origin.y = touchedOutLocationY
+            actionScrubber?.update(t: Double(touchedPointRelativeRatio))
         }
-        waveView.progress = Float(1 - gaugeMaxOneValue)
-        actionScrubber?.update(t: Double(gaugeMaxOneValue))
     }
 }
 
@@ -101,25 +121,19 @@ extension GaugeWaveAnimationView {
 extension GaugeWaveAnimationView {
     
     func setGradientLayer() {
-        gradientLayer.frame = waveView.bounds
+        gradientLayer.frame = gradientView.bounds
         updateBackgroundGradient()
     }
     
     private func updateBackgroundGradient() {
         
-        CATransaction.begin()
-        CATransaction.setDisableActions(true)
-        
         gradientLayer.colors = [backgroundColorTop.cgColor, backgroundColorBottom.cgColor]
         gradientLayer.startPoint = CGPoint(x: 0.5, y: 0)
         gradientLayer.endPoint = CGPoint(x: 0.5, y: 1)
         gradientLayer.locations = [0.0, 1.0]
-        gradientLayer.frame.origin.y = touchedOutLocationY + 20
         
         waveView.backColor = backgroundColorTop
         waveView.frontColor = backgroundColorBottom
-        
-        CATransaction.commit()
         
     }
 }
