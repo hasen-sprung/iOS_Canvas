@@ -7,19 +7,19 @@ class GaugeViewController: UIViewController {
     let gaugeView = GaugeWaveAnimationView(frame: UIScreen.main.bounds)
     let floatingAreaView: UIView = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
     
+    let textWritingView = UIView()
+    let cancelTextFieldButton = UIButton()
+    let textFieldBackgroundView = UIView()
+    let textField = UITextView()
+    
     var floatingSVGViews = [FloatingSVGView]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+    
         gaugeView.delegate = self
         
         view.backgroundColor = .white
-        
-        // MARK: - [start] gaugeWaveAnimation에서 정보 수신
-
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(appearTextField(_:)), name: Notification.Name(rawValue: "figureIsSettled"), object: nil)
-        // [end] gaugeWaveAnimation에서 정보 수신
         
         // MARK: - [start] svg view 생성
         floatingSVGViews.append(FloatingSVGView(frame: CGRect(x: 0, y: 0, width: 0, height: 0)))
@@ -134,14 +134,12 @@ class GaugeViewController: UIViewController {
     // [end] floating object base View setting and moving
     
     // MARK: - [start] appear textField (when figure settled)
-    @objc func appearTextField(_ notification: NSNotification) {
+    @objc func appearTextField(settledFigure: Float) {
         
-        if let figure = notification.userInfo?["figure"] as? Float {
-            
-            print(figure)
-            floatingSVGViews[0].zoomInAsTextField()
-            floatingSVGViews[1].alpha = 0.0
-        }
+        floatingSVGViews[0].textFieldDelegate = self
+        floatingSVGViews[0].createTextfield()
+        floatingSVGViews[0].alpha = 0.95
+        floatingSVGViews[1].alpha = 0.0
     }
     // [end] appear textField (when figure settled)
 }
@@ -159,8 +157,71 @@ extension GaugeViewController: GaugeWaveAnimationViewDelegate {
     func actionTouchedUpOutside() {
         
         let settledFigure = gaugeView.getGaugeValue()
-        let figureDict: [String : Float] = ["figure" : settledFigure]
-        NotificationCenter.default.post(name: Notification.Name(rawValue: "figureIsSettled"), object: nil, userInfo: figureDict)
+        appearTextField(settledFigure: settledFigure)
+    }
+    
+}
+
+extension GaugeViewController: TextFieldDelegate {
+    
+    func loadTextWritingView() {
+    
+        let boldConfig = UIImage.SymbolConfiguration(weight: .bold)
+        let backImage = UIImage(systemName: "arrow.backward", withConfiguration: boldConfig)
+        
+        textWritingView.frame.size = CGSize(width: view.frame.width, height: view.frame.height)
+        textWritingView.center = view.center
+        textWritingView.backgroundColor = UIColor(hex: 0x5f4b8b)
+        textWritingView.alpha = 0.0
+        textWritingView.fadeIn(duration: 1.5)
+        view.addSubview(textWritingView)
+        
+        cancelTextFieldButton.frame.size = CGSize(width: 50.0, height: 50.0)
+        cancelTextFieldButton.frame.origin = CGPoint(x: 30, y: 80)
+        cancelTextFieldButton.tintColor = .white
+        cancelTextFieldButton.setImage(backImage, for: .normal)        
+        view.addSubview(cancelTextFieldButton)
+        
+        cancelTextFieldButton.addTarget(self, action: #selector(dismissTextField), for: .touchUpInside)
+
+    }
+    
+    func createTextField() {
+
+        textFieldBackgroundView.frame.size = CGSize(width: textWritingView.frame.width * 0.8, height: textWritingView.frame.height * 0.5)
+        textFieldBackgroundView.center = CGPoint(x: textWritingView.frame.width / 2, y: textWritingView.frame.height * 0.4)
+        textFieldBackgroundView.backgroundColor = .white
+        textFieldBackgroundView.layer.cornerRadius = 15.0
+        textWritingView.addSubview(textFieldBackgroundView)
+
+        
+        textField.frame.size = CGSize(width: textFieldBackgroundView.frame.width * 0.85, height: textFieldBackgroundView.frame.height * 0.85)
+        textField.center = CGPoint(x: textFieldBackgroundView.frame.width / 2, y: textFieldBackgroundView.frame.height / 2)
+        textField.textColor = .gray
+        textField.backgroundColor = .clear
+        textField.font?.withSize(17)
+        textField.font = UIFont.systemFont(ofSize: 17, weight: .semibold)
+        textFieldBackgroundView.addSubview(textField)
+        textField.becomeFirstResponder()
+        
+        textFieldBackgroundView.alpha = 0.0
+        textFieldBackgroundView.fadeIn()
+    }
+    
+    @objc func dismissTextField(_ sender: UIButton) {
+        
+        textWritingView.fadeOut()
+        textField.removeFromSuperview()
+        textFieldBackgroundView.removeFromSuperview()
+        cancelTextFieldButton.removeFromSuperview()
+        floatingSVGViews[0].zoomOutSVGShape()
+    }
+    
+    func textFieldToSVGShape() {
+        
+        floatingSVGViews[0].alpha = 0.0
+        floatingSVGViews[1].alpha = 0.95
+        textWritingView.removeFromSuperview()
     }
     
 }

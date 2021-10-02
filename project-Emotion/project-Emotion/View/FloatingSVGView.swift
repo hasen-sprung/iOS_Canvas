@@ -5,6 +5,7 @@ import Macaw
 class FloatingSVGView: MacawView {
     
     private var SVGGroup = geometricFigure()
+    var textFieldDelegate: TextFieldDelegate?
     
     private var SVGWidth: CGFloat = 50.0
     private var SVGHeight: CGFloat = 50.0
@@ -18,24 +19,6 @@ class FloatingSVGView: MacawView {
     private var currentSVG: Node?
     
     private let svgView = SVGView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
-    private let textFieldCancelButton: UIButton = {
-       
-        let newButton = UIButton()
-        
-        newButton.backgroundColor = .clear
-        let boldConfig = UIImage.SymbolConfiguration(weight: .bold)
-        let backImage = UIImage(systemName: "arrow.backward", withConfiguration: boldConfig)
-        
-        newButton.setImage(backImage, for: .normal)
-        newButton.tintColor = .white
-        newButton.frame.size = CGSize(width: 50, height: 50)
-        newButton.frame.origin = CGPoint(x: 50, y: 50)
-        
-        newButton.addTarget(self, action: #selector(cancelTextfield), for: .touchUpInside)
-            
-        return newButton
-    }()
-    
     
     private var feedbackGenerator: UINotificationFeedbackGenerator?
     private var feedbackIsEnable: Bool = true
@@ -104,30 +87,35 @@ class FloatingSVGView: MacawView {
         setSVGColor(hex: 0x5f4b8b)
     }
     
-    func zoomInAsTextField() {
-     
-        self.alpha = 0.95
+    func createTextfield() {
+        
+        zoomInSVGShape()
+        if let delegate = textFieldDelegate { delegate.loadTextWritingView() }
+    }
+    
+    private func zoomInSVGShape() {
+        
         UIView.animate(withDuration: 1.5, delay: animationDelay, options: [.curveEaseIn], animations: { [self] in
             
-            self.frame.size = CGSize(width: self.SVGWidth * 100, height: self.SVGHeight * 100)
-            self.svgView.frame.size = CGSize(width: self.SVGWidth * 100, height: self.SVGHeight * 100)
+            self.frame.size = CGSize(width: self.SVGWidth * 50, height: self.SVGHeight * 50)
+            self.svgView.frame.size = CGSize(width: self.SVGWidth * 50, height: self.SVGHeight * 50)
             self.center = CGPoint(x: (superview?.frame.width)! / 2, y: 0)
-            self.backgroundColor = UIColor(hex: 0x5f4b8b)
-            self.alpha = 1.0
-            self.superview?.superview?.addSubview(self.textFieldCancelButton)
-            
         }) { (completed) in
-            
+            if let delegate = self.textFieldDelegate { delegate.createTextField() }
         }
     }
     
-    
-    func activateFeedback() {
-        self.feedbackIsEnable = true
-    }
-    
-    func deactivateFeedback() {
-        self.feedbackIsEnable = false
+    func zoomOutSVGShape() {
+        
+        UIView.animate(withDuration: 0.5, delay: animationDelay, options: [.curveEaseOut], animations: { [self] in
+            
+            self.frame.size = CGSize(width: self.SVGWidth, height: self.SVGHeight)
+            self.svgView.frame.size = CGSize(width: self.SVGWidth, height: self.SVGHeight)
+            self.center = CGPoint(x: SVGCenterX, y: SVGCenterY)
+        }) { (completed) in
+            
+            self.textFieldDelegate?.textFieldToSVGShape()
+        }
     }
     
     private func setSVGColor(hex: Int) {
@@ -156,23 +144,17 @@ class FloatingSVGView: MacawView {
                                   y: objCenterY + self.animationRangeY)
         }) { (completed) in }
     }
+}
+
+@objc protocol TextFieldDelegate {
     
-    @objc func cancelTextfield(_ sender: UIButton) {
-        
-        self.textFieldCancelButton.removeFromSuperview()
-        
-        UIView.animate(withDuration: 1.5, delay: animationDelay, options: [.curveEaseIn], animations: { [self] in
-            
-            self.frame.size = CGSize(width: self.SVGWidth, height: self.SVGHeight)
-            self.svgView.frame.size = CGSize(width: self.SVGWidth, height: self.SVGHeight)
-            self.center = CGPoint(x: SVGCenterX, y: SVGCenterY)
-            self.backgroundColor = .clear
-            self.alpha = 0.95
-            
-        }) { (completed) in
-            
-        }
-    }
+    func loadTextWritingView()
+    
+    func createTextField()
+    
+    func textFieldToSVGShape()
+    
+    @objc func dismissTextField(_ sender: UIButton)
 }
 
 public extension UIView {
