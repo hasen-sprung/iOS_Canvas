@@ -224,4 +224,8 @@ extension GaugeViewController: TextFieldDelegate {
         textWritingView.removeFromSuperview()
     }
     
+    func actionTouchedUpOutsideInSafeArea() {
+        print("in safe area touched out")
+    }
+    
 }
