@@ -160,8 +160,12 @@ extension GaugeViewController: GaugeWaveAnimationViewDelegate {
         appearTextField(settledFigure: settledFigure)
     }
     
+    func actionTouchedUpOutsideInSafeArea() {
+        print("in safe area touched out")
+    }
 }
 
+// MARK: - TextFieldDelegate
 extension GaugeViewController: TextFieldDelegate {
     
     func loadTextWritingView() {
@@ -223,9 +227,4 @@ extension GaugeViewController: TextFieldDelegate {
         floatingSVGViews[1].alpha = 0.95
         textWritingView.removeFromSuperview()
     }
-    
-    func actionTouchedUpOutsideInSafeArea() {
-        print("in safe area touched out")
-    }
-    
 }
