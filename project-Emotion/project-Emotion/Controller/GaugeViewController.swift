@@ -12,6 +12,9 @@ class GaugeViewController: UIViewController {
     let textFieldBackgroundView = UIView()
     let textField = UITextView()
     
+    let dateLabel = UILabel()
+    let completeButton = UIButton()
+    
     var floatingSVGViews = [FloatingSVGView]()
     
     override func viewDidLoad() {
@@ -183,8 +186,7 @@ extension GaugeViewController: TextFieldDelegate {
         cancelTextFieldButton.frame.size = CGSize(width: 50.0, height: 50.0)
         cancelTextFieldButton.frame.origin = CGPoint(x: 30, y: 80)
         cancelTextFieldButton.tintColor = .white
-        cancelTextFieldButton.setImage(backImage, for: .normal)        
-        view.addSubview(cancelTextFieldButton)
+        cancelTextFieldButton.setImage(backImage, for: .normal)
         
         cancelTextFieldButton.addTarget(self, action: #selector(dismissTextField), for: .touchUpInside)
 
@@ -192,20 +194,44 @@ extension GaugeViewController: TextFieldDelegate {
     
     func createTextField() {
 
-        textFieldBackgroundView.frame.size = CGSize(width: textWritingView.frame.width * 0.8, height: textWritingView.frame.height * 0.5)
-        textFieldBackgroundView.center = CGPoint(x: textWritingView.frame.width / 2, y: textWritingView.frame.height * 0.4)
+        let date = Date()
+        let df = DateFormatter()
+        df.dateFormat = "yyyy년 M월 d일 a h시 mm분"
+        df.locale = Locale(identifier:"ko_KR")
+        let dateString = df.string(from: date)
+
+        textFieldBackgroundView.frame.size = CGSize(width: textWritingView.frame.width * 0.8, height: textWritingView.frame.height * 0.40)
+        textFieldBackgroundView.center = CGPoint(x: textWritingView.frame.width / 2, y: textWritingView.frame.height * 0.35)
         textFieldBackgroundView.backgroundColor = .white
         textFieldBackgroundView.layer.cornerRadius = 15.0
-        textWritingView.addSubview(textFieldBackgroundView)
-
         
-        textField.frame.size = CGSize(width: textFieldBackgroundView.frame.width * 0.85, height: textFieldBackgroundView.frame.height * 0.85)
+        dateLabel.frame.size = CGSize(width: textFieldBackgroundView.frame.width * 0.75, height: 15)
+        dateLabel.center = CGPoint(x: textFieldBackgroundView.frame.width / 2, y: 30)
+        dateLabel.text = dateString
+        dateLabel.textColor = .black
+        dateLabel.textAlignment = .center
+        dateLabel.font = UIFont.systemFont(ofSize: 13, weight: .bold)
+
+        textField.frame.size = CGSize(width: textFieldBackgroundView.frame.width * 0.80, height: textFieldBackgroundView.frame.height * 0.75)
         textField.center = CGPoint(x: textFieldBackgroundView.frame.width / 2, y: textFieldBackgroundView.frame.height / 2)
-        textField.textColor = .gray
+        textField.textColor = .black
         textField.backgroundColor = .clear
-        textField.font?.withSize(17)
         textField.font = UIFont.systemFont(ofSize: 17, weight: .semibold)
+        
+        completeButton.frame.size = CGSize(width: textFieldBackgroundView.frame.width * 0.4, height: 50)
+        completeButton.center = CGPoint(x: textFieldBackgroundView.frame.width / 2, y: textFieldBackgroundView.frame.height * 1.10)
+        completeButton.setTitle("완료", for: .normal)
+        completeButton.setTitleColor(.black, for: .normal)
+        completeButton.backgroundColor = .white
+        completeButton.layer.cornerRadius = 15
+        
+        view.addSubview(cancelTextFieldButton)
+        textWritingView.addSubview(textFieldBackgroundView)
         textFieldBackgroundView.addSubview(textField)
+        textFieldBackgroundView.addSubview(dateLabel)
+        textFieldBackgroundView.addSubview(completeButton)
+        
+        
         textField.becomeFirstResponder()
         
         textFieldBackgroundView.alpha = 0.0
@@ -216,6 +242,8 @@ extension GaugeViewController: TextFieldDelegate {
         
         textWritingView.fadeOut()
         textField.removeFromSuperview()
+        textField.text = nil
+        dateLabel.text = nil
         textFieldBackgroundView.removeFromSuperview()
         cancelTextFieldButton.removeFromSuperview()
         floatingSVGViews[0].zoomOutSVGShape()
