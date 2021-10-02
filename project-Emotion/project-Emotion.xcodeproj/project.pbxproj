@@ -78,6 +78,7 @@
 				4F0F80022702B7FB00FC1E6A /* SVG */,
 				355622BB2701600A00EBD775 /* GaugeWaveAnimationView.swift */,
 				4F0F800027019D8E00FC1E6A /* FloatingSVGView.swift */,
+				4F30AF2A270583F800E89707 /* GoogleService-Info.plist */,
 				4FEFF16D26EB211E00BEE94C /* Main.storyboard */,
 			);
 			path = View;
@@ -456,7 +457,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 8WJBD73YAT;
+				DEVELOPMENT_TEAM = 8QSTXVD8H9;
 				INFOPLIST_FILE = "project-Emotion/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -476,7 +477,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 8WJBD73YAT;
+				DEVELOPMENT_TEAM = 8QSTXVD8H9;
 				INFOPLIST_FILE = "project-Emotion/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

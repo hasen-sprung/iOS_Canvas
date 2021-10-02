@@ -5,6 +5,7 @@ import Macaw
 class FloatingSVGView: MacawView {
     
     private var SVGGroup = geometricFigure()
+    var textFieldDelegate: TextFieldDelegate?
     
     private var SVGWidth: CGFloat = 50.0
     private var SVGHeight: CGFloat = 50.0
@@ -37,7 +38,8 @@ class FloatingSVGView: MacawView {
                            centerX: CGFloat,
                            centerY: CGFloat,
                            duration: TimeInterval,
-                           delay: TimeInterval) {
+                           delay: TimeInterval,
+                           isTextField: Bool = false) {
         
         if let superview = superview {
             
@@ -61,8 +63,12 @@ class FloatingSVGView: MacawView {
             self.SVGCenterY = (superview.frame.height / 2) + centerY
             
             setStartingSVG()
-            floatingAnimation(objCenterX: (superview.frame.width / 2) + centerX,
-                              objCenterY: (superview.frame.height / 2) + centerY)
+            if isTextField == false {
+                floatingAnimation(objCenterX: (superview.frame.width / 2) + centerX,
+                                  objCenterY: (superview.frame.height / 2) + centerY)
+            } else {
+                self.alpha = 0.0
+            }
         }
     }
     
@@ -81,17 +87,35 @@ class FloatingSVGView: MacawView {
         setSVGColor(hex: 0x5f4b8b)
     }
     
-    func zoomSVGShape() {
+    func createTextfield() {
         
+        zoomInSVGShape()
+        if let delegate = textFieldDelegate { delegate.loadTextWritingView() }
     }
     
-    
-    func activateFeedback() {
-        self.feedbackIsEnable = true
+    private func zoomInSVGShape() {
+        
+        UIView.animate(withDuration: 1.5, delay: animationDelay, options: [.curveEaseIn], animations: { [self] in
+            
+            self.frame.size = CGSize(width: self.SVGWidth * 50, height: self.SVGHeight * 50)
+            self.svgView.frame.size = CGSize(width: self.SVGWidth * 50, height: self.SVGHeight * 50)
+            self.center = CGPoint(x: (superview?.frame.width)! / 2, y: 0)
+        }) { (completed) in
+            if let delegate = self.textFieldDelegate { delegate.createTextField() }
+        }
     }
     
-    func deactivateFeedback() {
-        self.feedbackIsEnable = false
+    func zoomOutSVGShape() {
+        
+        UIView.animate(withDuration: 0.5, delay: animationDelay, options: [.curveEaseOut], animations: { [self] in
+            
+            self.frame.size = CGSize(width: self.SVGWidth, height: self.SVGHeight)
+            self.svgView.frame.size = CGSize(width: self.SVGWidth, height: self.SVGHeight)
+            self.center = CGPoint(x: SVGCenterX, y: SVGCenterY)
+        }) { (completed) in
+            
+            self.textFieldDelegate?.textFieldToSVGShape()
+        }
     }
     
     private func setSVGColor(hex: Int) {
@@ -122,6 +146,17 @@ class FloatingSVGView: MacawView {
     }
 }
 
+@objc protocol TextFieldDelegate {
+    
+    func loadTextWritingView()
+    
+    func createTextField()
+    
+    func textFieldToSVGShape()
+    
+    @objc func dismissTextField(_ sender: UIButton)
+}
+
 public extension UIView {
     
     func fadeIn(duration: TimeInterval = 1.0) {
@@ -137,10 +172,14 @@ public extension UIView {
     }
 }
 
-extension NSObject {
+extension UIColor {
     
-    func copyObject<T:NSObject>() throws -> T? {
-        let data = try NSKeyedArchiver.archivedData(withRootObject:self, requiringSecureCoding:false)
-        return try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data) as? T
+    convenience init(hex: Int) {
+        let components = (
+            R: CGFloat((hex >> 16) & 0xff) / 255,
+            G: CGFloat((hex >> 08) & 0xff) / 255,
+            B: CGFloat((hex >> 00) & 0xff) / 255
+        )
+        self.init(red: components.R, green: components.G, blue: components.B, alpha: 1)
     }
 }
