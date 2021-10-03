@@ -20,6 +20,7 @@ class geometricFigure: NodeProtocol  {
     let nodeGroup = try! SVGParser.parse(path: "emotions") as! Group
     private var svgNodes = [Node]()
     
+    
     func setNodes() {
         
         svgNodes.append(self.nodeGroup.nodeBy(tag: "svg_1")!)
@@ -72,5 +73,4 @@ class geometricFigure: NodeProtocol  {
         
         return self.svgNodes[2]
     }
-    
 }
