@@ -121,7 +121,11 @@ class FloatingSVGView: MacawView {
     private func setSVGColor(hex: Int) {
         
         let svgShape = (svgView.node as! Group).contents.first as! Shape
-        svgShape.fill = Color(val: 0x5f4b8b)
+        svgShape.fill = LinearGradient(
+            stops: [
+                Stop(offset: 0.5, color: Color(val: hex)),
+                Stop(offset: 1, color: Color(val: 0xffffff))
+            ])
     }
     
     private func setStartingSVG() {

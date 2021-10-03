@@ -185,7 +185,7 @@ extension GaugeViewController: TextFieldDelegate {
         
         textWritingView.frame.size = CGSize(width: view.frame.width, height: view.frame.height)
         textWritingView.center = view.center
-        textWritingView.backgroundColor = UIColor(hex: 0x5f4b8b)
+        textWritingView.backgroundColor = UIColor(hex: 0xb2b2ff)
         textWritingView.alpha = 0.0
         textWritingView.fadeIn(duration: 1.5)
         view.addSubview(textWritingView)

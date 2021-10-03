@@ -73,5 +73,4 @@ class geometricFigure: NodeProtocol  {
         
         return self.svgNodes[2]
     }
-    
 }
