@@ -32,7 +32,9 @@ class GaugeWaveAnimationView: UIView {
         return layer
     }()
     private var backgroundColorTop = defaultBackgroundColorTop {
-        didSet{ updateBackgroundGradient() }
+        didSet{ updateBackgroundGradient()
+           print(backgroundColorTop)
+        }
     }
     private var backgroundColorBottom = defaultBackgroundColorBottom {
         didSet{ updateBackgroundGradient() }
@@ -150,6 +152,7 @@ extension GaugeWaveAnimationView {
     
     func changedBackgroundColor() -> FiniteTimeAction {
         //scrubbable을 사용할 때는 딱 한번만 불림.
+        print("how")
         let duration = 2.0
         // Change background color
         let changeBackgroundColorTop = InterpolationAction(from: defaultBackgroundColorTop,
