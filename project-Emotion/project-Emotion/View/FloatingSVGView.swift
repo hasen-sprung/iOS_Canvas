@@ -87,13 +87,13 @@ class FloatingSVGView: MacawView {
         setSVGColor(hex: 0x5f4b8b)
     }
     
-    func createTextfield() {
+    func changeSVGToTextField(settledFigure: Float) {
         
-        zoomInSVGShape()
+        zoomInSVGShape(settledFigure: settledFigure)
         if let delegate = textFieldDelegate { delegate.loadTextWritingView() }
     }
     
-    private func zoomInSVGShape() {
+    private func zoomInSVGShape(settledFigure: Float) {
         
         UIView.animate(withDuration: 1.5, delay: animationDelay, options: [.curveEaseIn], animations: { [self] in
             
@@ -101,7 +101,7 @@ class FloatingSVGView: MacawView {
             self.svgView.frame.size = CGSize(width: self.SVGWidth * 50, height: self.SVGHeight * 50)
             self.center = CGPoint(x: (superview?.frame.width)! / 2, y: 0)
         }) { (completed) in
-            if let delegate = self.textFieldDelegate { delegate.createTextField() }
+            if let delegate = self.textFieldDelegate { delegate.createTextField(settledFigure: settledFigure) }
         }
     }
     
@@ -150,11 +150,13 @@ class FloatingSVGView: MacawView {
     
     func loadTextWritingView()
     
-    func createTextField()
+    func createTextField(settledFigure: Float)
     
     func textFieldToSVGShape()
     
     @objc func dismissTextField(_ sender: UIButton)
+    
+    @objc func completeTextField(_ sender: CompleteRecordButton)
 }
 
 public extension UIView {
