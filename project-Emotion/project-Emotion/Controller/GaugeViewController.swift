@@ -9,28 +9,7 @@ class CompleteRecordButton: UIButton {
     var figure: Float?
 }
 
-extension UIColor {
-    func toColor(_ color: UIColor, percentage: CGFloat) -> UIColor {
-        let percentage = max(min(percentage, 100), 0) / 100
-        switch percentage {
-               case 0: return self
-               case 1: return color
-               default:
-                   var (r1, g1, b1, a1): (CGFloat, CGFloat, CGFloat, CGFloat) = (0, 0, 0, 0)
-                   var (r2, g2, b2, a2): (CGFloat, CGFloat, CGFloat, CGFloat) = (0, 0, 0, 0)
-                   guard self.getRed(&r1, green: &g1, blue: &b1, alpha: &a1) else { return self }
-                   guard color.getRed(&r2, green: &g2, blue: &b2, alpha: &a2) else { return self }
-
-                   return UIColor(red: CGFloat(r1 + (r2 - r1) * percentage),
-                                  green: CGFloat(g1 + (g2 - g1) * percentage),
-                                  blue: CGFloat(b1 + (b2 - b1) * percentage),
-                                  alpha: CGFloat(a1 + (a2 - a1) * percentage))
-        }
-    }
-}
-
 class GaugeViewController: UIViewController {
-    let myView = UIView(frame: .init(x: 0, y: 0, width: 200, height: 200))
     
     let gaugeView = GaugeWaveAnimationView(frame: UIScreen.main.bounds)
     let floatingAreaView: UIView = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
@@ -47,6 +26,8 @@ class GaugeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        // 테마 싱글톤의 기본 색상을 적용시킨다.
+        Theme.shared.colors = ThemeColors()
         
         gaugeView.delegate = self
         
@@ -61,8 +42,6 @@ class GaugeViewController: UIViewController {
         
         view.addSubview(gaugeView)
         view.addSubview(floatingAreaView)
-        view.addSubview(myView)
-        myView.backgroundColor = .red
         
         for idx in 1...floatingSVGViews.count {
             
@@ -185,7 +164,6 @@ extension GaugeViewController: GaugeWaveAnimationViewDelegate {
         
         let newFigure = gaugeView.getGaugeValue()
         setFloatingAreaView(newFigure: newFigure)
-        myView.backgroundColor = defaultBackgroundColorTop.toColor(sampleBlueTop, percentage: CGFloat(newFigure * 100))
     }
     
     func actionTouchedUpOutside() {

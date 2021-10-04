@@ -73,4 +73,9 @@ class geometricFigure: NodeProtocol  {
         
         return self.svgNodes[2]
     }
+    
+    func getCurrentColor(figure: Float) -> UIColor {
+        let color = Theme.shared.colors.gaugeViewColorTop.toColor(Theme.shared.colors.gaugeViewColorBottom, percentage: CGFloat(figure) * 100)
+        return color
+    }
 }
