@@ -41,6 +41,8 @@ class SVGTextView: UIView {
         self.date = Date()
         
         setTextBaseView()
+        textBaseView.alpha = 0.0
+        textBaseView.fadeIn(duration: 0.5)
         self.addSubview(textBaseView)
     }
     

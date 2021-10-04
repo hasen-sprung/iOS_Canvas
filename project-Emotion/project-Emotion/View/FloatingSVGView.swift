@@ -124,8 +124,8 @@ class FloatingSVGView: MacawView {
 //        svgShape.fill = LinearGradient(
 //            stops: [
 //                Stop(offset: 0.0, color: Color(val: 0xffffff)),
-//                Stop(offset: 0.4, color: Color(val: hex)),
-//                Stop(offset: 0.6, color: Color(val: hex)),
+//                Stop(offset: 0.4, color: Color(val: CellTheme.shared.getCurrentColor(figure: figure))),
+//                Stop(offset: 0.6, color: Color(val: CellTheme.shared.getCurrentColor(figure: figure))),
 //                Stop(offset: 1.0, color: Color(val: 0xffffff))
 //            ])
         
