@@ -3,25 +3,11 @@ import UIKit
 import Macaw
 import CoreData
 
-class CompleteRecordButton: UIButton {
-    
-    var date: Date?
-    var figure: Float?
-}
-
 class GaugeViewController: UIViewController {
     
     let gaugeView = GaugeWaveAnimationView(frame: UIScreen.main.bounds)
     let floatingAreaView: UIView = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
-    
-    let textWritingView = UIView()
-    let cancelTextFieldButton = UIButton()
-    let textFieldBackgroundView = UIView()
-    let textField = UITextView()
-    
-    let dateLabel = UILabel()
-    let completeButton = CompleteRecordButton()
-    
+    let svgTextBackgroundView = SVGTextView()
     var floatingSVGViews = [FloatingSVGView]()
     
     override func viewDidLoad() {
@@ -48,6 +34,8 @@ class GaugeViewController: UIViewController {
             floatingAreaView.addSubview(floatingSVGViews[idx - 1])
         }
         
+        floatingSVGViews[0].svgTextViewDelegate = self
+        svgTextBackgroundView.svgTextViewDelegate = self
         
         setFloatingAreaView()
     }
@@ -146,10 +134,9 @@ class GaugeViewController: UIViewController {
     // [end] floating object base View setting and moving
     
     // MARK: - [start] appear textField (when figure settled)
-    @objc func appearTextField(settledFigure: Float) {
+    @objc func appearTextField() {
         
-        floatingSVGViews[0].textFieldDelegate = self
-        floatingSVGViews[0].changeSVGToTextField(settledFigure: settledFigure)
+        floatingSVGViews[0].changeSVGToTextField()
         floatingSVGViews[0].alpha = 0.95
         floatingSVGViews[1].alpha = 0.0
     }
@@ -168,8 +155,7 @@ extension GaugeViewController: GaugeWaveAnimationViewDelegate {
     
     func actionTouchedUpOutside() {
         
-        let settledFigure = gaugeView.getGaugeValue()
-        appearTextField(settledFigure: settledFigure)
+        appearTextField()
     }
     
     func actionTouchedUpOutsideInSafeArea() {
@@ -177,112 +163,40 @@ extension GaugeViewController: GaugeWaveAnimationViewDelegate {
     }
 }
 
-// MARK: - TextFieldDelegate
-extension GaugeViewController: TextFieldDelegate {
+extension GaugeViewController: SVGTextViewDelegate {
     
-    func loadTextWritingView() {
+    func setSVGTextView() {
         
-        let boldConfig = UIImage.SymbolConfiguration(weight: .bold)
-        let backImage = UIImage(systemName: "arrow.backward", withConfiguration: boldConfig)
+//        let figure = gaugeView.getGaugeValue() // color값을 가져올 때 사용한다.
         
-        textWritingView.frame.size = CGSize(width: view.frame.width, height: view.frame.height)
-        textWritingView.center = view.center
-        textWritingView.backgroundColor = UIColor(hex: 0xb2b2ff)
-        textWritingView.alpha = 0.0
-        textWritingView.fadeIn(duration: 1.5)
-        view.addSubview(textWritingView)
+        svgTextBackgroundView.frame.size = CGSize(width: view.frame.width, height: view.frame.height)
+        svgTextBackgroundView.center = CGPoint(x: view.frame.width / 2, y: view.frame.height / 2)
+        svgTextBackgroundView.backgroundColor = UIColor(hex: 0x5f4b8b)
+        svgTextBackgroundView.alpha = 0.0
         
-        cancelTextFieldButton.frame.size = CGSize(width: 50.0, height: 50.0)
-        cancelTextFieldButton.frame.origin = CGPoint(x: 30, y: 80)
-        cancelTextFieldButton.tintColor = .white
-        cancelTextFieldButton.setImage(backImage, for: .normal)
-        
-        cancelTextFieldButton.addTarget(self, action: #selector(dismissTextField), for: .touchUpInside)
-        
+                
+        view.addSubview(svgTextBackgroundView)
+        svgTextBackgroundView.fadeIn(duration: 1.0)
     }
     
-    func createTextField(settledFigure: Float) {
+    func setSVGTextViewField() {
         
-        let date = Date()
-        let df = DateFormatter()
-        df.dateFormat = "yyyy년 M월 d일 a h시 mm분"
-        df.locale = Locale(identifier:"ko_KR")
-        let dateString = df.string(from: date)
+        let figure = gaugeView.getGaugeValue()
         
-        textFieldBackgroundView.frame.size = CGSize(width: textWritingView.frame.width * 0.8, height: textWritingView.frame.height * 0.40)
-        textFieldBackgroundView.center = CGPoint(x: textWritingView.frame.width / 2, y: textWritingView.frame.height * 0.35)
-        textFieldBackgroundView.backgroundColor = .white
-        textFieldBackgroundView.layer.cornerRadius = 15.0
-        
-        dateLabel.frame.size = CGSize(width: textFieldBackgroundView.frame.width * 0.75, height: 15)
-        dateLabel.center = CGPoint(x: textFieldBackgroundView.frame.width / 2, y: 30)
-        dateLabel.text = dateString
-        dateLabel.textColor = .black
-        dateLabel.textAlignment = .center
-        dateLabel.font = UIFont.systemFont(ofSize: 13, weight: .bold)
-        
-        textField.frame.size = CGSize(width: textFieldBackgroundView.frame.width * 0.80, height: textFieldBackgroundView.frame.height * 0.75)
-        textField.center = CGPoint(x: textFieldBackgroundView.frame.width / 2, y: textFieldBackgroundView.frame.height / 2)
-        textField.textColor = .black
-        textField.backgroundColor = .clear
-        textField.font = UIFont.systemFont(ofSize: 17, weight: .semibold)
-        
-        completeButton.frame.size = CGSize(width: textFieldBackgroundView.frame.width * 0.4, height: 50)
-        completeButton.center = CGPoint(x: textFieldBackgroundView.frame.width / 2, y: textFieldBackgroundView.frame.height * 0.9)
-        completeButton.setTitle("완료", for: .normal)
-        completeButton.setTitleColor(.black, for: .normal)
-        completeButton.backgroundColor = .white
-        completeButton.layer.cornerRadius = 15
-        completeButton.addTarget(self, action: #selector(completeTextField), for: .touchUpInside)
-        completeButton.date = date
-        completeButton.figure = settledFigure
-        
-        
-        view.addSubview(cancelTextFieldButton)
-        textWritingView.addSubview(textFieldBackgroundView)
-        textFieldBackgroundView.addSubview(textField)
-        textFieldBackgroundView.addSubview(dateLabel)
-        textFieldBackgroundView.addSubview(completeButton)
-        
-        
-        textField.becomeFirstResponder()
-        
-        textFieldBackgroundView.alpha = 0.0
-        textFieldBackgroundView.fadeIn()
+        svgTextBackgroundView.setTextViewProperties(figure: figure)
     }
     
-    func textFieldToSVGShape() {
+    func dismissTextViewSVG() {
         
-        floatingSVGViews[0].alpha = 0.0
-        floatingSVGViews[1].alpha = 0.95
-        textWritingView.removeFromSuperview()
-    }
-    
-    @objc func dismissTextField(_ sender: UIButton) {
-        
-        textWritingView.fadeOut()
-        textField.removeFromSuperview()
-        textField.text = nil
-        dateLabel.text = nil
-        textFieldBackgroundView.removeFromSuperview()
-        cancelTextFieldButton.removeFromSuperview()
+        svgTextBackgroundView.fadeOut()
         floatingSVGViews[0].zoomOutSVGShape()
     }
     
-    @objc func completeTextField(_ sender: CompleteRecordButton) {
+    func textViewToFloatingSVG() {
         
-        
-        print("saved")
-        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-        let newRecord = Record(context: context)
-        
-        
-        if sender.date != nil { newRecord.date = sender.date }
-        if sender.figure != nil { newRecord.figure = sender.figure! }
-        if textField.text != nil { newRecord.text = textField.text }
-        do { try context.save() } catch { print("Error saving context \(error)") }
-        
-        let paths = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.userDomainMask, true)
-        print(paths[0])
+        svgTextBackgroundView.removeFromSuperview()
+        floatingSVGViews[0].alpha = 0.0
+        floatingSVGViews[1].alpha = 0.95
     }
+    
 }
