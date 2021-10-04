@@ -31,6 +31,7 @@ class SVGTextView: UIView {
     
     var figure: Float?
     var date: Date?
+    var currentColor: Int?
     
     var keyboardHeight: CGFloat?
     
@@ -41,6 +42,11 @@ class SVGTextView: UIView {
         
         setTextBaseView()
         self.addSubview(textBaseView)
+    }
+    
+    private func getCurrentColor() -> Int{
+        
+        return CellTheme.shared.getCurrentColor(figure: self.figure ?? 0.5)
     }
     
     private func setTextBaseView() {
@@ -71,7 +77,7 @@ class SVGTextView: UIView {
         dateLabel.frame.size = CGSize(width: textBaseView.frame.width * 0.8, height: textBaseView.frame.height * 0.125)
         dateLabel.center = CGPoint(x: textBaseView.frame.width / 2, y: textBaseView.frame.height * 0.0625)
         dateLabel.text = dateString
-        dateLabel.textColor = UIColor(hex: 0x5f4b8b)
+        dateLabel.textColor = UIColor(hex: getCurrentColor())
         dateLabel.textAlignment = .center
         dateLabel.font = UIFont.systemFont(ofSize: 15, weight: .bold)
     }
@@ -89,7 +95,7 @@ class SVGTextView: UIView {
         
         buttonBaseView.frame.size = CGSize(width: textBaseView.frame.width * 0.8, height: textBaseView.frame.height * 0.15)
         buttonBaseView.center = CGPoint(x: textBaseView.frame.width / 2, y: textBaseView.frame.height * 0.8875)
-        buttonBaseView.backgroundColor = UIColor(hex: 0x5f4b8b)
+        buttonBaseView.backgroundColor = UIColor(hex: getCurrentColor())
         buttonBaseView.layer.cornerRadius = buttonBaseView.frame.height / 2
         
         setCompleteButton()
@@ -106,7 +112,7 @@ class SVGTextView: UIView {
         completeButton.backgroundColor = .white
         completeButton.layer.cornerRadius = completeButton.frame.height / 2
         completeButton.setTitle("추가", for: .normal)
-        completeButton.setTitleColor(UIColor(hex: 0x5f4b8b), for: .normal)
+        completeButton.setTitleColor(UIColor(hex: getCurrentColor()), for: .normal)
         completeButton.addTarget(self, action: #selector(saveRecord), for: .touchUpInside)
     }
     

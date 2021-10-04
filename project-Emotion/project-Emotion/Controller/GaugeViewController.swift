@@ -167,11 +167,11 @@ extension GaugeViewController: SVGTextViewDelegate {
     
     func setSVGTextView() {
         
-//        let figure = gaugeView.getGaugeValue() // color값을 가져올 때 사용한다.
+        let figure = gaugeView.getGaugeValue()
         
         svgTextBackgroundView.frame.size = CGSize(width: view.frame.width, height: view.frame.height)
         svgTextBackgroundView.center = CGPoint(x: view.frame.width / 2, y: view.frame.height / 2)
-        svgTextBackgroundView.backgroundColor = UIColor(hex: 0x5f4b8b)
+        svgTextBackgroundView.backgroundColor = UIColor(hex: CellTheme.shared.getCurrentColor(figure: figure))
         svgTextBackgroundView.alpha = 0.0
         
                 

@@ -4,7 +4,6 @@ import Macaw
 
 class FloatingSVGView: MacawView {
     
-    private var SVGGroup = geometricFigure()
     var svgTextViewDelegate: SVGTextViewDelegate?
     
     private var SVGWidth: CGFloat = 50.0
@@ -47,7 +46,7 @@ class FloatingSVGView: MacawView {
             self.feedbackGenerator = UINotificationFeedbackGenerator()
             self.feedbackGenerator?.prepare()
             
-            self.SVGGroup.setNodes()
+            CellTheme.shared.setNodes()
             
             self.frame.size = CGSize(width: CGFloat(width), height: CGFloat(height))
             self.center = CGPoint(x: (superview.frame.width / 2) + centerX,
@@ -76,7 +75,7 @@ class FloatingSVGView: MacawView {
         
         let newNode: Node!
         
-        newNode = SVGGroup.getNodeByFigure(figure: figure, currentNode: currentSVG)
+        newNode = CellTheme.shared.getNodeByFigure(figure: figure, currentNode: currentSVG)
         if newNode != nil {
             svgView.node = newNode
             currentSVG = newNode
@@ -84,7 +83,7 @@ class FloatingSVGView: MacawView {
                 feedbackGenerator?.notificationOccurred(.success)
             }
         }
-        setSVGColor(hex: 0x5f4b8b)
+        setSVGColor(figure: figure)
     }
     
     func changeSVGToTextField() {
@@ -119,16 +118,18 @@ class FloatingSVGView: MacawView {
         }
     }
     
-    private func setSVGColor(hex: Int) {
+    private func setSVGColor(figure: Float) {
         
         let svgShape = (svgView.node as! Group).contents.first as! Shape
-        svgShape.fill = LinearGradient(
-            stops: [
-                Stop(offset: 0.0, color: Color(val: 0xffffff)),
-                Stop(offset: 0.4, color: Color(val: hex)),
-                Stop(offset: 0.6, color: Color(val: hex)),
-                Stop(offset: 1.0, color: Color(val: 0xffffff))
-            ])
+//        svgShape.fill = LinearGradient(
+//            stops: [
+//                Stop(offset: 0.0, color: Color(val: 0xffffff)),
+//                Stop(offset: 0.4, color: Color(val: hex)),
+//                Stop(offset: 0.6, color: Color(val: hex)),
+//                Stop(offset: 1.0, color: Color(val: 0xffffff))
+//            ])
+        
+        svgShape.fill = Color(CellTheme.shared.getCurrentColor(figure: figure))
         svgShape.stroke = Stroke(fill: Color.white, width: 3)
     }
     
@@ -136,10 +137,10 @@ class FloatingSVGView: MacawView {
         
         svgView.frame.size = CGSize(width: self.frame.width, height: self.frame.height)
         svgView.center = CGPoint(x: self.frame.width / 2, y: self.frame.width / 2)
-        svgView.node = SVGGroup.getStartingNode()
+        svgView.node = CellTheme.shared.getStartingNode()
         self.currentSVG = svgView.node
         svgView.backgroundColor = .clear
-        setSVGColor(hex: 0x5f4b8b)
+        setSVGColor(figure: 0.5)
         self.addSubview(svgView)
     }
     
