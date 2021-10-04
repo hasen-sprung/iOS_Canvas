@@ -162,6 +162,7 @@ extension GaugeWaveAnimationView {
     
     func changedBackgroundColor(topColor: UIColor, topSubColor: UIColor, bottomColor: UIColor, bottomSubColor: UIColor) -> FiniteTimeAction {
         //scrubbable을 사용할 때는 딱 한번만 불림.
+        print("how")
         let duration = 2.0
         // Change background color
         let changeBackgroundColorTop = InterpolationAction(from: topColor,

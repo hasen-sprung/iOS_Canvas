@@ -164,6 +164,7 @@ extension GaugeViewController: GaugeWaveAnimationViewDelegate {
         
         let newFigure = gaugeView.getGaugeValue()
         setFloatingAreaView(newFigure: newFigure)
+        myView.backgroundColor = defaultBackgroundColorTop.toColor(sampleBlueTop, percentage: CGFloat(newFigure * 100))
     }
     
     func actionTouchedUpOutside() {
