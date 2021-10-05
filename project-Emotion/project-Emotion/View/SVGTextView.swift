@@ -12,6 +12,8 @@ import UIKit
     func dismissTextViewSVG()
     
     func saveRecord(date: Date, figure: Float, text: String?)
+    
+    func finishGaugeEvent()
 }
 
 class SVGTextView: UIView {
@@ -127,10 +129,12 @@ class SVGTextView: UIView {
     
     @objc func dismissTextView() {
         
-        textView.text = nil
-        textBaseView.removeFromSuperview()
         if let delegate = self.svgTextViewDelegate {
             delegate.dismissTextViewSVG()
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+            self.textView.text = nil
+            self.textBaseView.removeFromSuperview()
         }
     }
     
@@ -142,7 +146,10 @@ class SVGTextView: UIView {
                                 figure: figure ?? 0.0,
                                 text: textView.text)
         }
-        textView.text = nil
+        
+        if let delegate = self.svgTextViewDelegate {
+            delegate.finishGaugeEvent()
+        }
     }
     
     
