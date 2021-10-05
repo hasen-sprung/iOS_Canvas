@@ -10,6 +10,7 @@ class GaugeViewController: UIViewController {
     private let gaugeView = GaugeWaveAnimationView(frame: UIScreen.main.bounds)
     private let floatingAreaView: UIView = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
     private var floatingSVGViews = [FloatingSVGView]()
+    private let dismissArea = UIButton()
     
     private var svgTextBackgroundView: SVGTextView!
     
@@ -23,10 +24,13 @@ class GaugeViewController: UIViewController {
         createFloatingSVGViews()
         // MARK: - wave를 따라다닐 view setting
         setFloatingAreaView()
+        // MARK: - dismissArea setting
+        setDismissArea()
         
         // MARK: - view에 subview 추가
         view.addSubview(gaugeView)
         view.addSubview(floatingAreaView)
+        view.addSubview(dismissArea)
         for idx in 1...floatingSVGViews.count {
             floatingAreaView.addSubview(floatingSVGViews[idx - 1])
         }
@@ -174,7 +178,8 @@ extension GaugeViewController: GaugeWaveAnimationViewDelegate {
     }
     
     func actionTouchedUpOutsideInSafeArea() {
-        print("in safe area touched out, figure")
+        dismissArea.backgroundColor = .red
+        self.dismissGaugeViewController()
     }
 }
 
@@ -206,6 +211,21 @@ extension GaugeViewController: SVGTextViewDelegate {
         floatingSVGViews[0].minimalizeSVGShape()
         svgTextBackgroundView.fadeOut()
         self.dismissGaugeViewController()
+    }
+    
+    private func setDismissArea() {
+        
+        dismissArea.frame.size = CGSize(width: view.frame.width, height: view.frame.height * 0.1)
+        dismissArea.center = CGPoint(x: view.frame.width / 2, y: view.frame.height * 0.05)
+        dismissArea.backgroundColor = .clear
+        dismissArea.setImage(UIImage.init(systemName: "x.circle"), for: .normal)
+        dismissArea.tintColor = .gray
+        dismissArea.alpha = 0.3
+        dismissArea.addTarget(self, action: #selector(changeDismissAreaColor), for: .touchDragInside)
+    }
+    
+    @objc func changeDismissAreaColor() {
+        dismissArea.backgroundColor = .red
     }
     
 }
