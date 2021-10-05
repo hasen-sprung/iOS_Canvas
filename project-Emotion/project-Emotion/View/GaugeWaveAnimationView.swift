@@ -44,6 +44,7 @@ class GaugeWaveAnimationView: UIView {
         super.init(frame: frame)
         superviewFrame = frame
         
+        touchedOutLocationY = superviewFrame.height / 2
         setPanGesture()
         setWaveView(frame: frame)
         self.addSubview(waveView)
