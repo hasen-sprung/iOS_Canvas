@@ -49,7 +49,9 @@ class GaugeViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         
     }
-    
+    override func viewWillDisappear(_ animated: Bool) {
+
+    }
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
@@ -150,6 +152,13 @@ class GaugeViewController: UIViewController {
         floatingSVGViews[1].alpha = 0.0
     }
     // [end] appear textField (when figure settled)
+    
+    private func dismissGaugeViewController() {
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+            self.dismiss(animated: true, completion: nil)
+        }
+    }
 }
 
 // MARK: - GaugeWaveAnimationViewDelegate
@@ -192,6 +201,13 @@ extension GaugeViewController: SVGTextViewDelegate {
         
         let paths = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.userDomainMask, true)
         print(paths[0])
+    }
+    
+    func finishGaugeEvent() {
+        
+        floatingSVGViews[0].minimalizeSVGShape()
+        svgTextBackgroundView.fadeOut()
+        self.dismissGaugeViewController()
     }
     
 }
