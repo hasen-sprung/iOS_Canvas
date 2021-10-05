@@ -5,6 +5,8 @@ import CoreData
 
 class GaugeViewController: UIViewController {
     
+    private let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    
     private let gaugeView = GaugeWaveAnimationView(frame: UIScreen.main.bounds)
     private let floatingAreaView: UIView = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
     private var floatingSVGViews = [FloatingSVGView]()
@@ -179,15 +181,14 @@ extension GaugeViewController: SVGTextViewDelegate {
     }
     
     func saveRecord(date: Date, figure: Float, text: String?) {
-        
-        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+
         let newRecord = Record(context: context)
         
         newRecord.createdDate = date
         newRecord.gaugeLevel = figure
         newRecord.memo = text
         
-        do { try context.save() } catch { print("Error saving context \(error)") }
+        (UIApplication.shared.delegate as! AppDelegate).saveContext()
         
         let paths = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.userDomainMask, true)
         print(paths[0])
