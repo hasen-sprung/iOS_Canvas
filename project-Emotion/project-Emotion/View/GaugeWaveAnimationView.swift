@@ -141,6 +141,9 @@ extension GaugeWaveAnimationView {
     func setGradientLayer() {
         gradientLayer.frame = gradientView.bounds
         updateBackgroundGradient()
+        
+        // MARK: - 현재 물결 게이지의 위치를 색깔에 맞춰서 초기화
+        actionScrubber?.update(t: Double(getGaugeValue()))
     }
     
     private func updateBackgroundGradient() {
