@@ -38,7 +38,6 @@ class CellTheme: ThemeProtocol  {
     }
     
     func getNodeByFigure(figure: Float, currentNode: Node?) -> Node? {
-        print(figure)
         
         if let oldNode = currentNode {
             
