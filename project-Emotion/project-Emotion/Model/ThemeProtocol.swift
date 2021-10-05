@@ -38,28 +38,29 @@ class CellTheme: ThemeProtocol  {
     }
     
     func getNodeByFigure(figure: Float, currentNode: Node?) -> Node? {
+        print(figure)
         
         if let oldNode = currentNode {
             
-            if figure <= 0.36 {
+            if figure <= 0.2 {
                 if  oldNode != self.svgNodes[0] {
                     return self.svgNodes[0]
                 } else {
                     return nil
                 }
-            } else if figure > 0.36 && figure <= 0.52 {
+            } else if figure <= 0.4 {
                 if  oldNode != self.svgNodes[1] {
                     return self.svgNodes[1]
                 } else {
                     return nil
                 }
-            } else if figure > 0.52 && figure <= 0.68 {
+            } else if figure <= 0.6 {
                 if  oldNode != self.svgNodes[2] {
                     return self.svgNodes[2]
                 } else {
                     return nil
                 }
-            } else if figure > 0.68 && figure <= 0.84 {
+            } else if figure <= 0.8 {
                 if  oldNode != self.svgNodes[3] {
                     return self.svgNodes[3]
                 } else {
