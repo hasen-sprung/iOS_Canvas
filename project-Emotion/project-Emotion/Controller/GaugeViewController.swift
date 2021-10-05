@@ -119,7 +119,7 @@ class GaugeViewController: UIViewController {
     private func setFloatingAreaView() {
         
         floatingAreaView.frame.size = CGSize(width: view.frame.width, height: view.frame.height * 0.2)
-        floatingAreaView.center = CGPoint(x: view.frame.width / 2, y: view.frame.height * 0.5)
+        floatingAreaView.center = CGPoint(x: view.frame.width / 2, y: (view.frame.height * 0.2) + (view.frame.height * 0.5) * 0.8)
         floatingAreaView.backgroundColor = .clear
         floatingAreaView.isUserInteractionEnabled = false
     }
@@ -131,7 +131,7 @@ class GaugeViewController: UIViewController {
             
             let figure = newFigure
             self.floatingAreaView.frame.size = CGSize(width: self.view.frame.width, height: self.view.frame.height * 0.2)
-            self.floatingAreaView.center = CGPoint(x: self.view.frame.width / 2, y: self.view.frame.height * CGFloat(figure))
+            self.floatingAreaView.center = CGPoint(x: self.view.frame.width / 2, y: (self.view.frame.height * 0.2) + (self.view.frame.height * CGFloat(figure)) * 0.8)
             self.floatingAreaView.backgroundColor = .clear
             self.floatingAreaView.isUserInteractionEnabled = false
             
@@ -156,18 +156,16 @@ class GaugeViewController: UIViewController {
 extension GaugeViewController: GaugeWaveAnimationViewDelegate {
     
     func sendFigureToGaugeViewController() {
-        
         let newFigure = gaugeView.getGaugeValue()
         setFloatingAreaView(newFigure: newFigure)
     }
     
     func actionTouchedUpOutside() {
-        
         appearTextField()
     }
     
     func actionTouchedUpOutsideInSafeArea() {
-        print("in safe area touched out")
+        print("in safe area touched out, figure")
     }
 }
 

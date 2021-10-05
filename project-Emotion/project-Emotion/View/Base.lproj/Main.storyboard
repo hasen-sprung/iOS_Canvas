@@ -120,7 +120,7 @@
     <resources>
         <image name="plus.circle" catalog="system" width="128" height="121"/>
         <namedColor name="defaultMainViewColor">
-            <color red="0.63529411764705879" green="0.62352941176470589" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.63499999046325684" green="0.62400001287460327" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
