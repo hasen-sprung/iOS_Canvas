@@ -9,13 +9,9 @@ import UIKit
 
 @objc protocol SVGTextViewDelegate {
     
-    func setSVGTextView()
-    
-    func setSVGTextViewField()
-    
     func dismissTextViewSVG()
     
-    func textViewToFloatingSVG()
+    func saveRecord(date: Date, figure: Float, text: String?)
 }
 
 class SVGTextView: UIView {
@@ -115,7 +111,7 @@ class SVGTextView: UIView {
         completeButton.layer.cornerRadius = completeButton.frame.height / 2
         completeButton.setTitle("추가", for: .normal)
         completeButton.setTitleColor(UIColor(hex: getCurrentColor()), for: .normal)
-        completeButton.addTarget(self, action: #selector(saveRecord), for: .touchUpInside)
+        completeButton.addTarget(self, action: #selector(completeTextView), for: .touchUpInside)
     }
     
     private func setCancelButton() {
@@ -138,19 +134,15 @@ class SVGTextView: UIView {
         }
     }
     
-    @objc func saveRecord() {
+    @objc func completeTextView() {
         
-        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-        let newRecord = Record(context: context)
-        
-        if self.date != nil { newRecord.date = self.date } else { newRecord.date = Date()}
-        if self.figure != nil { newRecord.figure = self.figure ?? 0.0 } else {newRecord.figure = 0.0}
-        if textView.text != nil { newRecord.text = textView.text }
-        
-        do { try context.save() } catch { print("Error saving context \(error)") }
-        
-        let paths = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.userDomainMask, true)
-        print(paths[0])
+        if let delegate = self.svgTextViewDelegate {
+            
+            delegate.saveRecord(date: date ?? Date(),
+                                figure: figure ?? 0.0,
+                                text: textView.text)
+        }
+        textView.text = nil
     }
     
     
