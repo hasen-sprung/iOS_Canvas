@@ -23,9 +23,11 @@ class SVGTextView: UIView {
     let textBaseView = UIView()
     let textView = UITextView()
     let buttonBaseView = UIView()
+    let buttonTriggerView = UIView()
     let cancelButton = UIButton()
     let completeButton = UIButton()
     let dateLabel = UILabel()
+    
     
     var figure: Float?
     var date: Date?
@@ -57,6 +59,10 @@ class SVGTextView: UIView {
         textBaseView.center = CGPoint(x: self.frame.width / 2, y: (self.frame.height - keyboardHeight) / 2)
         textBaseView.backgroundColor = .white
         textBaseView.layer.cornerRadius = 40
+        textBaseView.layer.shadowColor = UIColor.gray.cgColor
+        textBaseView.layer.shadowOpacity = 2.0
+        textBaseView.layer.shadowOffset = CGSize.zero
+        textBaseView.layer.shadowRadius = 6
         setDateLabel()
         textBaseView.addSubview(dateLabel)
         setTextView()
@@ -98,6 +104,8 @@ class SVGTextView: UIView {
         buttonBaseView.backgroundColor = UIColor(hex: getCurrentColor())
         buttonBaseView.layer.cornerRadius = buttonBaseView.frame.height / 2
         
+        setButtonTriggerView()
+        buttonBaseView.addSubview(buttonTriggerView)
         setCompleteButton()
         buttonBaseView.addSubview(completeButton)
         setCancelButton()
@@ -105,12 +113,23 @@ class SVGTextView: UIView {
         
     }
     
+    private func setButtonTriggerView() {
+        
+        buttonTriggerView.frame.size = CGSize(width: buttonBaseView.frame.width / 3, height: buttonBaseView.frame.height * 0.75)
+        buttonTriggerView.center = CGPoint(x: buttonBaseView.frame.width * 0.75, y: buttonBaseView.frame.height / 2)
+        buttonTriggerView.layer.cornerRadius = buttonTriggerView.frame.height / 2
+        buttonTriggerView.backgroundColor = .white
+        buttonTriggerView.layer.shadowColor = UIColor.gray.cgColor
+        buttonTriggerView.layer.shadowOpacity = 1.0
+        buttonTriggerView.layer.shadowOffset = CGSize.zero
+        buttonTriggerView.layer.shadowRadius = 6
+    }
+    
     private func setCompleteButton() {
         
         completeButton.frame.size = CGSize(width: buttonBaseView.frame.width / 3, height: buttonBaseView.frame.height * 0.75)
         completeButton.center = CGPoint(x: buttonBaseView.frame.width * 0.75, y: buttonBaseView.frame.height / 2)
-        completeButton.backgroundColor = .white
-        completeButton.layer.cornerRadius = completeButton.frame.height / 2
+        completeButton.backgroundColor = .clear
         completeButton.setTitle("추가", for: .normal)
         completeButton.setTitleColor(UIColor(hex: getCurrentColor()), for: .normal)
         completeButton.addTarget(self, action: #selector(completeTextView), for: .touchUpInside)
@@ -129,12 +148,20 @@ class SVGTextView: UIView {
     
     @objc func dismissTextView() {
         
-        if let delegate = self.svgTextViewDelegate {
-            delegate.dismissTextViewSVG()
-        }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-            self.textView.text = nil
-            self.textBaseView.removeFromSuperview()
+        UIView.animate(withDuration: 0.3, delay: 0.0, options: [.curveEaseOut], animations: { [self] in
+            
+            self.buttonTriggerView.center = CGPoint(x: buttonBaseView.frame.width * 0.25, y: buttonBaseView.frame.height / 2)
+            self.completeButton.setTitleColor(.white, for: .normal)
+            self.cancelButton.setTitleColor(UIColor(hex: getCurrentColor()), for: .normal)
+            
+        }) { (completed) in
+            if let delegate = self.svgTextViewDelegate {
+                delegate.dismissTextViewSVG()
+            }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                self.textView.text = nil
+                self.textBaseView.removeFromSuperview()
+            }
         }
     }
     
