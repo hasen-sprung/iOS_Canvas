@@ -127,6 +127,20 @@ class FloatingSVGView: MacawView {
         }
     }
     
+    func minimalizeSVGShape() {
+        
+        UIView.animate(withDuration: 0.1, delay: animationDelay, options: [.curveEaseOut], animations: { [self] in
+            
+            self.frame.size = CGSize(width: self.SVGWidth, height: self.SVGHeight)
+            self.svgView.frame.size = CGSize(width: self.SVGWidth, height: self.SVGHeight)
+            self.center = CGPoint(x: SVGCenterX, y: SVGCenterY)
+        }) { (completed) in
+            if let delegate = self.floatingSVGViewDelegate {
+                delegate.textViewToFloatingSVG()
+            }
+        }
+    }
+    
     private func setSVGColor(figure: Float) {
         
         let svgShape = (svgView.node as! Group).contents.first as! Shape
