@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="hTM-Lw-QCR">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -16,11 +17,25 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BER-sR-zqF" userLabel="addRecordButton">
+                                <rect key="frame" x="197" y="744" width="20" height="20"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" backgroundImage="plus.circle" catalog="system"/>
+                                <connections>
+                                    <action selector="pressedAddRecordButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="eXb-j9-s2O"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" name="defaultMainViewColor"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="" image="iphone.homebutton" catalog="system" id="WDA-YV-YCs"/>
                     <navigationItem key="navigationItem" id="13p-Vu-kbE"/>
+                    <connections>
+                        <outlet property="addRecordButton" destination="BER-sR-zqF" id="SV4-yO-UU8"/>
+                        <segue destination="stT-4X-6R3" kind="presentation" identifier="mainToGauge" modalPresentationStyle="fullScreen" id="fyE-QF-8ly"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
@@ -36,7 +51,7 @@
                         <viewLayoutGuide key="safeArea" id="ApZ-3J-bLp"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="" image="alternatingcurrent" catalog="system" id="Eln-O2-Tyr"/>
+                    <navigationItem key="navigationItem" id="0xm-NB-RpQ"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bqx-QP-eQa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -63,7 +78,6 @@
                         <viewLayoutGuide key="safeArea" id="oaT-FV-FEh"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="" image="gearshape" catalog="system" id="wOT-GR-DmF"/>
                     <connections>
                         <outlet property="testBtn" destination="JTA-d1-2bC" id="vq4-3w-rJQ"/>
                     </connections>
@@ -82,35 +96,10 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="Xfe-gE-Yid" kind="relationship" relationship="rootViewController" id="uX5-Eb-hdu"/>
-                    </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="esr-dN-hw5" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="137.68115942028987" y="137.94642857142856"/>
-        </scene>
-        <!--Tab Bar Controller-->
-        <scene sceneID="FOR-q0-MLg">
-            <objects>
-                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="Xfe-gE-Yid" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationItem key="navigationItem" id="iTl-Ra-IdW"/>
-                    <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="G2I-QL-6He">
-                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    </tabBar>
-                    <connections>
-                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="viewControllers" id="8NV-UG-0JE"/>
-                        <segue destination="stT-4X-6R3" kind="relationship" relationship="viewControllers" id="ri5-ZI-wmV"/>
-                        <segue destination="Rq7-kx-FAg" kind="relationship" relationship="viewControllers" id="zTw-Ad-mLe"/>
-                        <segue destination="OMa-iC-MdF" kind="relationship" relationship="viewControllers" id="J1L-JN-Mxb"/>
-                    </connections>
-                </tabBarController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="IzG-3d-n2j" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1055" y="138"/>
         </scene>
         <!--Analysis View Controller-->
         <scene sceneID="5aJ-yg-m7f">
@@ -122,7 +111,6 @@
                         <viewLayoutGuide key="safeArea" id="Jkt-BK-Zyt"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="" image="chart.bar.doc.horizontal" catalog="system" id="B98-u8-91p"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xR4-qJ-TDc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -130,10 +118,10 @@
         </scene>
     </scenes>
     <resources>
-        <image name="alternatingcurrent" catalog="system" width="128" height="49"/>
-        <image name="chart.bar.doc.horizontal" catalog="system" width="115" height="128"/>
-        <image name="gearshape" catalog="system" width="128" height="121"/>
-        <image name="iphone.homebutton" catalog="system" width="108" height="128"/>
+        <image name="plus.circle" catalog="system" width="128" height="121"/>
+        <namedColor name="defaultMainViewColor">
+            <color red="0.63529411764705879" green="0.62352941176470589" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
