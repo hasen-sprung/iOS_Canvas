@@ -4,8 +4,7 @@ import Macaw
 
 class FloatingSVGView: MacawView {
     
-    private var SVGGroup = geometricFigure()
-    var textFieldDelegate: TextFieldDelegate?
+    var svgTextViewDelegate: SVGTextViewDelegate?
     
     private var SVGWidth: CGFloat = 50.0
     private var SVGHeight: CGFloat = 50.0
@@ -47,7 +46,7 @@ class FloatingSVGView: MacawView {
             self.feedbackGenerator = UINotificationFeedbackGenerator()
             self.feedbackGenerator?.prepare()
             
-            self.SVGGroup.setNodes()
+            CellTheme.shared.setNodes()
             
             self.frame.size = CGSize(width: CGFloat(width), height: CGFloat(height))
             self.center = CGPoint(x: (superview.frame.width / 2) + centerX,
@@ -76,7 +75,7 @@ class FloatingSVGView: MacawView {
         
         let newNode: Node!
         
-        newNode = SVGGroup.getNodeByFigure(figure: figure, currentNode: currentSVG)
+        newNode = CellTheme.shared.getNodeByFigure(figure: figure, currentNode: currentSVG)
         if newNode != nil {
             svgView.node = newNode
             currentSVG = newNode
@@ -84,24 +83,24 @@ class FloatingSVGView: MacawView {
                 feedbackGenerator?.notificationOccurred(.success)
             }
         }
-        setSVGColor(hex: 0x5f4b8b)
+        setSVGColor(figure: figure)
     }
     
-    func createTextfield() {
+    func changeSVGToTextField() {
         
         zoomInSVGShape()
-        if let delegate = textFieldDelegate { delegate.loadTextWritingView() }
+        if let delegate = svgTextViewDelegate { delegate.setSVGTextView() }
     }
     
     private func zoomInSVGShape() {
         
-        UIView.animate(withDuration: 1.5, delay: animationDelay, options: [.curveEaseIn], animations: { [self] in
+        UIView.animate(withDuration: 1.0, delay: animationDelay, options: [.curveEaseIn], animations: { [self] in
             
             self.frame.size = CGSize(width: self.SVGWidth * 50, height: self.SVGHeight * 50)
             self.svgView.frame.size = CGSize(width: self.SVGWidth * 50, height: self.SVGHeight * 50)
             self.center = CGPoint(x: (superview?.frame.width)! / 2, y: 0)
         }) { (completed) in
-            if let delegate = self.textFieldDelegate { delegate.createTextField() }
+            if let delegate = self.svgTextViewDelegate { delegate.setSVGTextViewField() }
         }
     }
     
@@ -113,25 +112,35 @@ class FloatingSVGView: MacawView {
             self.svgView.frame.size = CGSize(width: self.SVGWidth, height: self.SVGHeight)
             self.center = CGPoint(x: SVGCenterX, y: SVGCenterY)
         }) { (completed) in
-            
-            self.textFieldDelegate?.textFieldToSVGShape()
+            if let delegate = self.svgTextViewDelegate {
+                delegate.textViewToFloatingSVG()
+            }       
         }
     }
     
-    private func setSVGColor(hex: Int) {
+    private func setSVGColor(figure: Float) {
         
         let svgShape = (svgView.node as! Group).contents.first as! Shape
-        svgShape.fill = Color(val: 0x5f4b8b)
+//        svgShape.fill = LinearGradient(
+//            stops: [
+//                Stop(offset: 0.0, color: Color(val: 0xffffff)),
+//                Stop(offset: 0.4, color: Color(val: CellTheme.shared.getCurrentColor(figure: figure))),
+//                Stop(offset: 0.6, color: Color(val: CellTheme.shared.getCurrentColor(figure: figure))),
+//                Stop(offset: 1.0, color: Color(val: 0xffffff))
+//            ])
+        
+        svgShape.fill = Color(CellTheme.shared.getCurrentColor(figure: figure))
+        svgShape.stroke = Stroke(fill: Color.white, width: 3)
     }
     
     private func setStartingSVG() {
         
         svgView.frame.size = CGSize(width: self.frame.width, height: self.frame.height)
         svgView.center = CGPoint(x: self.frame.width / 2, y: self.frame.width / 2)
-        svgView.node = SVGGroup.getStartingNode()
+        svgView.node = CellTheme.shared.getStartingNode()
         self.currentSVG = svgView.node
         svgView.backgroundColor = .clear
-        setSVGColor(hex: 0x5f4b8b)
+        setSVGColor(figure: 0.5)
         self.addSubview(svgView)
     }
     
@@ -146,17 +155,6 @@ class FloatingSVGView: MacawView {
     }
 }
 
-@objc protocol TextFieldDelegate {
-    
-    func loadTextWritingView()
-    
-    func createTextField()
-    
-    func textFieldToSVGShape()
-    
-    @objc func dismissTextField(_ sender: UIButton)
-}
-
 public extension UIView {
     
     func fadeIn(duration: TimeInterval = 1.0) {
@@ -169,17 +167,5 @@ public extension UIView {
         UIView.animate(withDuration: duration, animations: {
             self.alpha = 0.0
         })
-    }
-}
-
-extension UIColor {
-    
-    convenience init(hex: Int) {
-        let components = (
-            R: CGFloat((hex >> 16) & 0xff) / 255,
-            G: CGFloat((hex >> 08) & 0xff) / 255,
-            B: CGFloat((hex >> 00) & 0xff) / 255
-        )
-        self.init(red: components.R, green: components.G, blue: components.B, alpha: 1)
     }
 }

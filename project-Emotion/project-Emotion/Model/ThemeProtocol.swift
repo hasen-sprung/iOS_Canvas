@@ -2,7 +2,7 @@
 import UIKit
 import Macaw
 
-@objc protocol NodeProtocol {
+@objc protocol ThemeProtocol {
     
     var nodeGroup: Group { get }
     
@@ -13,12 +13,20 @@ import Macaw
     func getNodeByFigure(figure: Float, currentNode: Node?) -> Node?
     
     func getStartingNode() -> Node
+    
+    func getCurrentColor(figure: Float) -> Int
 }
 
-class geometricFigure: NodeProtocol  {
+class CellTheme: ThemeProtocol  {
     
+    static let shared = CellTheme()
+
     let nodeGroup = try! SVGParser.parse(path: "emotions") as! Group
     private var svgNodes = [Node]()
+    
+    var colors: ThemeColors = ThemeColors()
+    
+    private init() {}
     
     func setNodes() {
         
@@ -73,4 +81,9 @@ class geometricFigure: NodeProtocol  {
         return self.svgNodes[2]
     }
     
+    func getCurrentColor(figure: Float) -> Int {
+        let color = Theme.shared.colors.gaugeViewColorTop.toColor(Theme.shared.colors.gaugeViewColorBottom, percentage: CGFloat(figure) * 100)
+        let value = UInt(color.hexStringFromColor().dropFirst(2), radix: 16) ?? 0
+        return Int(value)
+    }
 }

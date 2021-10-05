@@ -31,10 +31,10 @@ class GaugeWaveAnimationView: UIView {
         let layer = CAGradientLayer()
         return layer
     }()
-    private var backgroundColorTop = defaultBackgroundColorTop {
+    private var backgroundColorTop = Theme.shared.colors.gaugeViewColorTop {
         didSet{ updateBackgroundGradient() }
     }
-    private var backgroundColorBottom = defaultBackgroundColorBottom {
+    private var backgroundColorBottom = Theme.shared.colors.gaugeViewColorBottom {
         didSet{ updateBackgroundGradient() }
     }
     
@@ -59,6 +59,12 @@ class GaugeWaveAnimationView: UIView {
         return Float(value)
     }
     
+    func initGaugeView() {
+        self.backgroundColor = Theme.shared.colors.gaugeViewBackgroundColor
+        touchedOutLocationY = superviewFrame.height / 2
+        waveView.frame.origin.y = touchedOutLocationY
+    }
+    
 }
 
 //MARK: - Wave Animation
@@ -66,7 +72,8 @@ class GaugeWaveAnimationView: UIView {
 extension GaugeWaveAnimationView {
     
     func setWaveView(frame: CGRect) {
-        waveView = WaveAnimationView(frame: frame, frontColor: defaultBackgroundColorBottom, backColor: defaultBackgroundColorTop)
+        self.backgroundColor = Theme.shared.colors.gaugeViewBackgroundColor
+        waveView = WaveAnimationView(frame: frame, frontColor: Theme.shared.colors.gaugeViewColorBottom, backColor: Theme.shared.colors.gaugeViewColorTop)
         waveView.progress = 1
         waveView.addSubview(gradientView)
         
@@ -80,7 +87,7 @@ extension GaugeWaveAnimationView {
         waveView.startAnimation()
         setGradientAnimation()
     }
-    
+    // MARK: - 뷰가 전환될 때 애니메이션을 정지해야 메모리 누수가 발생하지 않는다.
     func stopWaveAnimation() {
         waveView.stopAnimation()
     }
@@ -142,24 +149,29 @@ extension GaugeWaveAnimationView {
 
 extension GaugeWaveAnimationView {
     
+    // MARK: - 두 개의 그라데이션이 제스쳐의 위치에 따라 변경되는 액션을 설정해준다.
     func setGradientAnimation() {
-        let action = changedBackgroundColor()
+        let action = changedBackgroundColor(topColor: Theme.shared.colors.gaugeViewColorTop,
+                                            topSubColor: Theme.shared.colors.gaugeViewColorBottom,
+                                            bottomColor: Theme.shared.colors.gaugeViewColorBottom,
+                                            bottomSubColor: Theme.shared.colors.gaugeViewColorBottom)
         
         actionScrubber = ActionScrubber(action: action)
+        initGaugeView()
     }
     
-    func changedBackgroundColor() -> FiniteTimeAction {
+    func changedBackgroundColor(topColor: UIColor, topSubColor: UIColor, bottomColor: UIColor, bottomSubColor: UIColor) -> FiniteTimeAction {
         //scrubbable을 사용할 때는 딱 한번만 불림.
         let duration = 2.0
         // Change background color
-        let changeBackgroundColorTop = InterpolationAction(from: defaultBackgroundColorTop,
-                                                           to: sampleBlueTop,
+        let changeBackgroundColorTop = InterpolationAction(from: topColor,
+                                                           to: topSubColor,
                                                            duration: duration,
                                                            easing: .linear,
                                                            update: { [unowned self] in self.backgroundColorTop = $0 })
         
-        let changeBackgroundColorBottom = InterpolationAction(from: defaultBackgroundColorBottom,
-                                                              to: sampleBlueBottom,
+        let changeBackgroundColorBottom = InterpolationAction(from: bottomColor,
+                                                              to: bottomSubColor,
                                                               duration: duration,
                                                               easing: .linear,
                                                               update: { [unowned self] in self.backgroundColorBottom = $0 })
