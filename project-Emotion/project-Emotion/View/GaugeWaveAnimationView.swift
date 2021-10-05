@@ -12,6 +12,7 @@ protocol GaugeWaveAnimationViewDelegate {
 class GaugeWaveAnimationView: UIView {
     
     //MARK: - properties
+    var cancelAreaInGaugeView: CGFloat = 0.1
     var safeAreaInGaugeView: CGFloat = 0.2 //0.0 ~ 1.0
     var delegate: GaugeWaveAnimationViewDelegate?
     var panGestureRecognizer: UIPanGestureRecognizer = UIPanGestureRecognizer()
@@ -42,7 +43,6 @@ class GaugeWaveAnimationView: UIView {
     override init(frame : CGRect) {
         super.init(frame: frame)
         superviewFrame = frame
-        touchedOutLocationY = superviewFrame.height / 2
         
         setPanGesture()
         setWaveView(frame: frame)
@@ -53,9 +53,12 @@ class GaugeWaveAnimationView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - 현재 물결 위치의 값을 0 ~ 1.0 사이로 전달
     func getGaugeValue() -> Float {
-        let value = touchedOutLocationY / superviewFrame.height
+        let safeAreaHeight = superviewFrame.height * safeAreaInGaugeView
+        let waveViewHeight = superviewFrame.height * (1.0 - safeAreaInGaugeView)
         
+        let value = (touchedOutLocationY - safeAreaHeight) / waveViewHeight
         return Float(value)
     }
     
@@ -72,11 +75,14 @@ class GaugeWaveAnimationView: UIView {
 extension GaugeWaveAnimationView {
     
     func setWaveView(frame: CGRect) {
-        self.backgroundColor = Theme.shared.colors.gaugeViewBackgroundColor
-        waveView = WaveAnimationView(frame: frame, frontColor: Theme.shared.colors.gaugeViewColorBottom, backColor: Theme.shared.colors.gaugeViewColorTop)
-        waveView.progress = 1
-        waveView.addSubview(gradientView)
+        let resizedFrameWithSafeArea: CGRect = CGRect(origin: frame.origin, size: CGSize(width: frame.width, height: frame.height * (1.0 - safeAreaInGaugeView)))
         
+        self.backgroundColor = Theme.shared.colors.gaugeViewBackgroundColor
+        waveView = WaveAnimationView(frame: resizedFrameWithSafeArea, frontColor: Theme.shared.colors.gaugeViewColorBottom, backColor: Theme.shared.colors.gaugeViewColorTop)
+        waveView.progress = 1
+        
+        // MARK: - set gradient view
+        waveView.addSubview(gradientView)
         gradientView.frame = CGRect(origin: CGPoint(x: 0.0, y: waveView.frame.origin.y + 20), size: waveView.frame.size)//waveView.frame
         gradientView.layer.addSublayer(gradientLayer)
         
@@ -108,9 +114,13 @@ extension GaugeWaveAnimationView {
         let location = sender.location(in: self)
         let touchedPointRelativeRatio = location.y / superviewFrame.height
         
-        if touchedPointRelativeRatio < safeAreaInGaugeView  {
+        if touchedPointRelativeRatio < cancelAreaInGaugeView  {
             if state == 3 {
                 if let d = delegate { d.actionTouchedUpOutsideInSafeArea() }
+            }
+        } else if touchedPointRelativeRatio < safeAreaInGaugeView {
+            if state == 3 {
+                if let d = delegate { d.actionTouchedUpOutside() }
             }
         } else {
             if state == 3 {
