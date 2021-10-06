@@ -10,6 +10,9 @@ import UIKit
 class SettingViewController: UIViewController {
 
     @IBOutlet weak var testBtn: UIButton!
+    @IBOutlet weak var ThemeDefaultBtn: UIButton!
+    @IBOutlet weak var ThemeCustomBtn: UIButton!
+    @IBOutlet weak var ThemeNewBtn: UIButton!
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -21,15 +24,20 @@ class SettingViewController: UIViewController {
         Theme.shared.colors = newColors
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    @IBAction func pressedThemeDefault(_ sender: Any) {
+        changeThemeColor(themeColor: defaultColor)
     }
-    */
-
+    
+    @IBAction func pressedThemeCustom(_ sender: Any) {
+        changeThemeColor(themeColor: customColor)
+    }
+    
+    @IBAction func pressedThemeNew(_ sender: Any) {
+        changeThemeColor(themeColor: seoulColor)
+    }
+    
+    func changeThemeColor(themeColor: Int) {
+        UserDefaults.standard.set(themeColor, forKey: userDefaultColor)
+        print("changed the user default color to \(themeColor)")
+    }
 }

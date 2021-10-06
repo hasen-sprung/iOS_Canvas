@@ -13,6 +13,8 @@ struct ThemeColors {
 // MARK: - 테마 클래스를 싱글톤으로 관리(?)
 class Theme {
     static let shared = Theme()
+    
+    
     var colors: ThemeColors = ThemeColors()
     // SVG이미지 파일
     

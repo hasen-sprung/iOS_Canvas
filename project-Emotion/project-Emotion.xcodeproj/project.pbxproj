@@ -13,6 +13,7 @@
 		350221BB270D308D00DF45BC /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 350221BA270D308D00DF45BC /* GoogleService-Info.plist */; };
 		355622BA27015FD000EBD775 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355622B927015FD000EBD775 /* Colors.swift */; };
 		355622BC2701600A00EBD775 /* GaugeWaveAnimationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355622BB2701600A00EBD775 /* GaugeWaveAnimationView.swift */; };
+		35FDFD75270D89E30027E4CD /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35FDFD74270D89E30027E4CD /* Constants.swift */; };
 		4F0F800127019D8E00FC1E6A /* FloatingSVGView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0F800027019D8E00FC1E6A /* FloatingSVGView.swift */; };
 		4F0F80142702C68800FC1E6A /* svg_2.svg in Resources */ = {isa = PBXBuildFile; fileRef = 4F0F800F2702C68700FC1E6A /* svg_2.svg */; };
 		4F0F80152702C68800FC1E6A /* svg_5.svg in Resources */ = {isa = PBXBuildFile; fileRef = 4F0F80102702C68700FC1E6A /* svg_5.svg */; };
@@ -39,6 +40,7 @@
 		350221BA270D308D00DF45BC /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		355622B927015FD000EBD775 /* Colors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		355622BB2701600A00EBD775 /* GaugeWaveAnimationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GaugeWaveAnimationView.swift; sourceTree = "<group>"; };
+		35FDFD74270D89E30027E4CD /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		45EB1485D1F5767E6CBCAA89 /* Pods-project-Emotion.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-project-Emotion.debug.xcconfig"; path = "Target Support Files/Pods-project-Emotion/Pods-project-Emotion.debug.xcconfig"; sourceTree = "<group>"; };
 		4F0F800027019D8E00FC1E6A /* FloatingSVGView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingSVGView.swift; sourceTree = "<group>"; };
 		4F0F800F2702C68700FC1E6A /* svg_2.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = svg_2.svg; sourceTree = "<group>"; };
@@ -101,6 +103,7 @@
 			isa = PBXGroup;
 			children = (
 				355622B927015FD000EBD775 /* Colors.swift */,
+				35FDFD74270D89E30027E4CD /* Constants.swift */,
 			);
 			path = Constants;
 			sourceTree = "<group>";
@@ -307,6 +310,7 @@
 				4FB312AC2703FAB700CA0EC0 /* ThemeProtocol.swift in Sources */,
 				4FEFF17226EB211E00BEE94C /* project_Emotion.xcdatamodeld in Sources */,
 				35015B302704385B00A813FA /* AnalysisViewController.swift in Sources */,
+				35FDFD75270D89E30027E4CD /* Constants.swift in Sources */,
 				4FEFF16826EB211E00BEE94C /* AppDelegate.swift in Sources */,
 				4FA269D6270A970C00E0330B /* SVGTextView.swift in Sources */,
 				355622BC2701600A00EBD775 /* GaugeWaveAnimationView.swift in Sources */,

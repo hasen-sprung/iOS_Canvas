@@ -10,10 +10,13 @@ import UIKit
 class MainViewController: UIViewController {
     
     @IBOutlet weak var addRecordButton: UIButton!
+    @IBOutlet weak var gotoSettingButton: UIButton!
+    let userDefaults = UserDefaults.standard
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setTheme()
         setAddRecordButton()
     }
     
@@ -25,6 +28,12 @@ class MainViewController: UIViewController {
         addRecordButton.frame.size = CGSize(width: buttonSize, height: buttonSize)
         addRecordButton.center = CGPoint(x: mainViewWidth / 2, y: mainViewHeight - (mainViewWidth / 4))
     }
+    // MARK: - Set Theme
+    func setTheme() {
+        let data = userDefaults.integer(forKey: userDefaultColor)
+        
+        print(data)
+    }
 
     // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -35,5 +44,9 @@ class MainViewController: UIViewController {
     @IBAction func pressedAddRecordButton(_ sender: UIButton) {
         performSegue(withIdentifier: "mainToGauge", sender: nil)
     }
-
+    
+    @IBAction func pressedGotoSettingButton(_ sender: UIButton) {
+        performSegue(withIdentifier: "mainToSetting", sender: nil)
+    }
+    
 }
