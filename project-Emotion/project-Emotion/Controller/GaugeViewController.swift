@@ -181,6 +181,13 @@ extension GaugeViewController: GaugeWaveAnimationViewDelegate {
         dismissArea.backgroundColor = .red
         self.dismissGaugeViewController()
     }
+    
+    func actionTouchedInCancelArea() {
+        print("in")
+        let figure = gaugeView.getGaugeValue()
+        print(figure)
+    }
+    
 }
 
 // MARK: - SVGTextViewDelegate

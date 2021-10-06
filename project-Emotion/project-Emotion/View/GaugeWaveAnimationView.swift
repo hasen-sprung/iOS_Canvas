@@ -7,6 +7,7 @@ protocol GaugeWaveAnimationViewDelegate {
     func sendFigureToGaugeViewController()
     func actionTouchedUpOutside()
     func actionTouchedUpOutsideInSafeArea()
+    func actionTouchedInCancelArea()
 }
 
 class GaugeWaveAnimationView: UIView {
@@ -116,6 +117,7 @@ extension GaugeWaveAnimationView {
         let touchedPointRelativeRatio = location.y / superviewFrame.height
         
         if touchedPointRelativeRatio < cancelAreaInGaugeView  {
+            if let d = delegate { d.actionTouchedInCancelArea() }
             if state == 3 {
                 if let d = delegate { d.actionTouchedUpOutsideInSafeArea() }
             }
