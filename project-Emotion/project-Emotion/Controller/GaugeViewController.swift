@@ -188,6 +188,10 @@ extension GaugeViewController: GaugeWaveAnimationViewDelegate {
         print(figure)
     }
     
+    func actionTouchedOutCancelArea() {
+        print("out")
+    }
+    
 }
 
 // MARK: - SVGTextViewDelegate
