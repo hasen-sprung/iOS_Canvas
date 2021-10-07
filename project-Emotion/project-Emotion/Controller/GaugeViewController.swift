@@ -11,6 +11,7 @@ class GaugeViewController: UIViewController {
     private let floatingAreaView: UIView = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
     private var floatingSVGViews = [FloatingSVGView]()
     private let dismissArea = UIButton()
+    private let underWaterView = UnderWaterSVGView()
     
     private var svgTextBackgroundView: SVGTextView!
     
@@ -19,6 +20,8 @@ class GaugeViewController: UIViewController {
         
         // 테마 싱글톤의 기본 색상을 적용시킨다.
         //Theme.shared.colors = ThemeColors()
+        // MARK: - under water view setting
+        setUnderWaterView()
         // MARK: - floating svg 객체들을 생성
         createFloatingSVGViews()
         // MARK: - wave를 따라다닐 view setting
@@ -28,6 +31,8 @@ class GaugeViewController: UIViewController {
         
         // MARK: - view에 subview 추가
         view.addSubview(gaugeView)
+        view.addSubview(underWaterView)
+        underWaterView.setUnderWaterSVGs()
         view.addSubview(floatingAreaView)
         view.addSubview(dismissArea)
         for idx in 1...floatingSVGViews.count {
@@ -48,6 +53,8 @@ class GaugeViewController: UIViewController {
         // MARK: - init Floating SVG and Play Animation
         initAndPlayFloatingSVGAnimation()
         view.backgroundColor = Theme.shared.colors.gaugeViewBackground
+        // MARK: - play underwater Animation
+        underWaterView.startUnderWaterSVGAnimation()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -79,19 +86,18 @@ class GaugeViewController: UIViewController {
     
     private func createFloatingSVGViews() {
         
+        for _ in 1...2 {
         floatingSVGViews.append(FloatingSVGView(frame: CGRect(x: 0, y: 0, width: 0, height: 0)))
-        floatingSVGViews.append(FloatingSVGView(frame: CGRect(x: 0, y: 0, width: 0, height: 0)))
-        floatingSVGViews.append(FloatingSVGView(frame: CGRect(x: 0, y: 0, width: 0, height: 0)))
-        floatingSVGViews.append(FloatingSVGView(frame: CGRect(x: 0, y: 0, width: 0, height: 0)))
+        }
     }
     
     private func initAndPlayFloatingSVGAnimation() {
         
-        let svgSize: [CGFloat] = [60.0, 40.0, 50.0]
+        let svgSize: [CGFloat] = [65.0, 40.0, 50.0]
         let rangeX: [CGFloat] = [5.0, 14.0, -5.0]
         let rangeY: [CGFloat] = [-30.0, -40.0, -50.0]
         let centerX: [CGFloat] = [0.0, 150, -130]
-        let centerY: [CGFloat] = [15.0, 23.0, 33.0]
+        let centerY: [CGFloat] = [5.0, 23.0, 33.0]
         let duration: [TimeInterval] = [0.9, 0.7, 1.1]
         let delay: [TimeInterval] = [0.2, 0, 0.1]
         
@@ -119,6 +125,16 @@ class GaugeViewController: UIViewController {
                                                         delay: delay[idx - 1])
             }
         }
+    }
+    
+    private func setUnderWaterView() {
+        
+        underWaterView.frame.size = CGSize(width: view.frame.width, height: view.frame.height * (1 - CGFloat(gaugeView.getGaugeValue())) * 0.8)
+        underWaterView.frame.origin.x = 0.0
+        underWaterView.frame.origin.y = (view.frame.height * 0.2) + (view.frame.height * CGFloat(gaugeView.getGaugeValue() * 0.8))
+        underWaterView.backgroundColor = .clear
+        underWaterView.alpha = 0.9
+        underWaterView.isUserInteractionEnabled = false
     }
     
     // MARK: - [start] floating base View setting and moving
@@ -171,6 +187,8 @@ extension GaugeViewController: GaugeWaveAnimationViewDelegate {
     func sendFigureToGaugeViewController() {
         let newFigure = gaugeView.getGaugeValue()
         setFloatingAreaView(newFigure: newFigure)
+        underWaterView.frame.size = CGSize(width: view.frame.width, height: view.frame.height * (1 - CGFloat(newFigure) * 0.8))
+        underWaterView.frame.origin.y = (view.frame.height * 0.2) + (view.frame.height * CGFloat(newFigure * 0.8))
     }
     
     func actionTouchedUpOutside() {
@@ -183,15 +201,13 @@ extension GaugeViewController: GaugeWaveAnimationViewDelegate {
     }
     
     func actionTouchedInCancelArea() {
-        print("in")
-        let figure = gaugeView.getGaugeValue()
-        print(figure)
+        dismissArea.backgroundColor = .red
+
     }
     
     func actionTouchedOutCancelArea() {
-        print("out")
+        dismissArea.backgroundColor = .clear
     }
-    
 }
 
 // MARK: - SVGTextViewDelegate
@@ -229,14 +245,18 @@ extension GaugeViewController: SVGTextViewDelegate {
         dismissArea.frame.size = CGSize(width: view.frame.width, height: view.frame.height * 0.1)
         dismissArea.center = CGPoint(x: view.frame.width / 2, y: view.frame.height * 0.05)
         dismissArea.backgroundColor = .clear
-        dismissArea.setImage(UIImage.init(systemName: "x.circle"), for: .normal)
-        dismissArea.tintColor = .gray
-        dismissArea.alpha = 0.3
-        dismissArea.addTarget(self, action: #selector(changeDismissAreaColor), for: .touchDragInside)
+        dismissArea.setImage(UIImage.init(systemName: "xmark"), for: .normal)
+        dismissArea.tintColor = .brown
+        dismissArea.imageView?.frame.size = CGSize(width: dismissArea.frame.height / 2, height: dismissArea.frame.height / 2)
+        dismissArea.imageView?.center = CGPoint(x: dismissArea.frame.width / 2, y: dismissArea.frame.height + dismissArea.imageView!.frame.height / 2)
+        
+        dismissArea.alpha = 0.2
+        dismissArea.addTarget(self, action: #selector(changeDismissAreaColor), for: .touchUpInside)
     }
     
     @objc func changeDismissAreaColor() {
         dismissArea.backgroundColor = .red
+        self.dismissGaugeViewController()
     }
     
 }

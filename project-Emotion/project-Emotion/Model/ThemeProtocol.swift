@@ -20,7 +20,7 @@ import Macaw
 class CellTheme: ThemeProtocol  {
     
     static let shared = CellTheme()
-
+    
     let nodeGroup = try! SVGParser.parse(path: "emotions") as! Group
     private var svgNodes = [Node]()
     
@@ -39,41 +39,37 @@ class CellTheme: ThemeProtocol  {
     
     func getNodeByFigure(figure: Float, currentNode: Node?) -> Node? {
         
-        if let oldNode = currentNode {
-            
-            if figure <= 0.2 {
-                if  oldNode != self.svgNodes[0] {
-                    return self.svgNodes[0]
-                } else {
-                    return nil
-                }
-            } else if figure <= 0.4 {
-                if  oldNode != self.svgNodes[1] {
-                    return self.svgNodes[1]
-                } else {
-                    return nil
-                }
-            } else if figure <= 0.6 {
-                if  oldNode != self.svgNodes[2] {
-                    return self.svgNodes[2]
-                } else {
-                    return nil
-                }
-            } else if figure <= 0.8 {
-                if  oldNode != self.svgNodes[3] {
-                    return self.svgNodes[3]
-                } else {
-                    return nil
-                }
+        if figure <= 0.2 {
+            if  currentNode != self.svgNodes[0] {
+                return self.svgNodes[0]
             } else {
-                if  oldNode != self.svgNodes[4] {
-                    return self.svgNodes[4]
-                } else {
-                    return nil
-                }
+                return nil
+            }
+        } else if figure <= 0.4 {
+            if  currentNode != self.svgNodes[1] {
+                return self.svgNodes[1]
+            } else {
+                return nil
+            }
+        } else if figure <= 0.6 {
+            if  currentNode != self.svgNodes[2] {
+                return self.svgNodes[2]
+            } else {
+                return nil
+            }
+        } else if figure <= 0.8 {
+            if  currentNode != self.svgNodes[3] {
+                return self.svgNodes[3]
+            } else {
+                return nil
+            }
+        } else {
+            if  currentNode != self.svgNodes[4] {
+                return self.svgNodes[4]
+            } else {
+                return nil
             }
         }
-        return nil
     }
     
     func getStartingNode() -> Node {
