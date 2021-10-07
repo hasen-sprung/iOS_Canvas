@@ -1,9 +1,3 @@
-//
-//  SettingViewController.swift
-//  project-Emotion
-//
-//  Created by Jaeyoung Lee on 2021/09/29.
-//
 
 import UIKit
 
@@ -20,7 +14,6 @@ class SettingViewController: UIViewController {
     }
     @IBAction func pressedTestBtn(_ sender: UIButton) {
         print("change color")
-//        Theme.shared.colors = newColors
     }
     
     @IBAction func pressedThemeDefault(_ sender: Any) {

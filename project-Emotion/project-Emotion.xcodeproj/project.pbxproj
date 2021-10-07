@@ -95,7 +95,6 @@
 		355622B827015FB500EBD775 /* Constants */ = {
 			isa = PBXGroup;
 			children = (
-				355622B927015FD000EBD775 /* Colors.swift */,
 				35FDFD74270D89E30027E4CD /* Constants.swift */,
 			);
 			path = Constants;
@@ -121,6 +120,7 @@
 		4FB312AA2703FA6500CA0EC0 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				355622B927015FD000EBD775 /* Colors.swift */,
 				4FB312AB2703FAB700CA0EC0 /* Theme.swift */,
 			);
 			path = Model;

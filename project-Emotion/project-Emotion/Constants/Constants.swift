@@ -1,9 +1,3 @@
-//
-//  Constants.swift
-//  project-Emotion
-//
-//  Created by Jaeyoung Lee on 2021/10/06.
-//
 
 import Foundation
 import UIKit

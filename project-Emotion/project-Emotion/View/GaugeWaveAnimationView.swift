@@ -41,12 +41,6 @@ class GaugeWaveAnimationView: UIView {
     private var backgroundColorBottom = ThemeManager.shared.getThemeInstance().getColor().gauge.bottom {
         didSet{ updateBackgroundGradient() }
     }
-//    private var backgroundColorTop = ThemeManager.shared.colors.gaugeColor.top {
-//        didSet{ updateBackgroundGradient() }
-//    }
-//    private var backgroundColorBottom = ThemeManager.shared.colors.gaugeColor.bottom {
-//        didSet{ updateBackgroundGradient() }
-//    }
     
     //MARK: - init
     override init(frame : CGRect) {

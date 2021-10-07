@@ -1,9 +1,3 @@
-//
-//  MainViewController.swift
-//  project-Emotion
-//
-//  Created by Jaeyoung Lee on 2021/09/29.
-//
 
 import UIKit
 
