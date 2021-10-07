@@ -2,83 +2,74 @@
 import UIKit
 import Macaw
 
-@objc protocol ThemeProtocol {
-    
-    var nodeGroup: Group { get }
-    
-    func setNodes()
-    
-    @objc optional func getNodeGroup() -> Group
-    
-    func getNodeByFigure(figure: Float, currentNode: Node?) -> Node?
-    
-    func getStartingNode() -> Node
-    
-    func getCurrentColor(figure: Float) -> Int
+protocol ThemeProtocol {
+
+    func instanceSVGImages() -> [Node]
 }
 
-class CellTheme: ThemeProtocol  {
+class Theme: ThemeProtocol {
     
-    static let shared = CellTheme()
-    
-    let nodeGroup = try! SVGParser.parse(path: "emotions") as! Group
-    private var svgNodes = [Node]()
-    
-    var colors: ThemeColors = ThemeColors(theme: defaultColor)
-    
-    private init() {}
-    
-    func setNodes() {
+    func instanceSVGImages() -> [Node] {
         
-        svgNodes.append(self.nodeGroup.nodeBy(tag: "svg_1")!)
-        svgNodes.append(self.nodeGroup.nodeBy(tag: "svg_2")!)
-        svgNodes.append(self.nodeGroup.nodeBy(tag: "svg_3")!)
-        svgNodes.append(self.nodeGroup.nodeBy(tag: "svg_4")!)
-        svgNodes.append(self.nodeGroup.nodeBy(tag: "svg_5")!)
+        return [Node]()
     }
     
-    func getNodeByFigure(figure: Float, currentNode: Node?) -> Node? {
+    func getNodeByFigure(figure: Float, currentNode: Node?, svgNodes: [Node]) -> Node? {
         
         if figure <= 0.2 {
-            if  currentNode != self.svgNodes[0] {
-                return self.svgNodes[0]
+            if  currentNode != svgNodes[0] {
+                return svgNodes[0]
             } else {
                 return nil
             }
         } else if figure <= 0.4 {
-            if  currentNode != self.svgNodes[1] {
-                return self.svgNodes[1]
+            if  currentNode != svgNodes[1] {
+                return svgNodes[1]
             } else {
                 return nil
             }
         } else if figure <= 0.6 {
-            if  currentNode != self.svgNodes[2] {
-                return self.svgNodes[2]
+            if  currentNode != svgNodes[2] {
+                return svgNodes[2]
             } else {
                 return nil
             }
         } else if figure <= 0.8 {
-            if  currentNode != self.svgNodes[3] {
-                return self.svgNodes[3]
+            if  currentNode != svgNodes[3] {
+                return svgNodes[3]
             } else {
                 return nil
             }
         } else {
-            if  currentNode != self.svgNodes[4] {
-                return self.svgNodes[4]
+            if  currentNode != svgNodes[4] {
+                return svgNodes[4]
             } else {
                 return nil
             }
         }
     }
+}
+
+class CellTheme: Theme  {
     
-    func getStartingNode() -> Node {
+    static let shared = CellTheme()
+    
+    override func instanceSVGImages() -> [Node] {
         
-        return self.svgNodes[2]
+        let nodeGroup = try! SVGParser.parse(resource: "cellImages") as! Group
+        var svgNodes = [Node]()
+        
+        svgNodes.append(nodeGroup.nodeBy(tag: "svg_1")!)
+        svgNodes.append(nodeGroup.nodeBy(tag: "svg_2")!)
+        svgNodes.append(nodeGroup.nodeBy(tag: "svg_3")!)
+        svgNodes.append(nodeGroup.nodeBy(tag: "svg_4")!)
+        svgNodes.append(nodeGroup.nodeBy(tag: "svg_5")!)
+        
+        return svgNodes
     }
     
     func getCurrentColor(figure: Float) -> Int {
-        let color = Theme.shared.colors.gaugeColor.top.toColor(Theme.shared.colors.gaugeColor.bottom, percentage: CGFloat(figure) * 100)
+        let color = ThemeManager.shared.colors.gaugeColor.top.toColor(ThemeManager.shared.colors.gaugeColor.bottom, percentage: CGFloat(figure) * 100)
         let value = UInt(color.hexStringFromColor().dropFirst(2), radix: 16) ?? 0
         return Int(value)
     }

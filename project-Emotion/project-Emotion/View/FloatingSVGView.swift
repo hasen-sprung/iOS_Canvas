@@ -15,6 +15,9 @@ class FloatingSVGView: MacawView {
     
     var floatingSVGViewDelegate: FloatingSVGViewDelegate?
     
+    var theme = CellTheme.shared
+    var themeSVGImages: [Node]!
+    
     private var SVGWidth: CGFloat = 50.0
     private var SVGHeight: CGFloat = 50.0
     private var animationRangeX: CGFloat = 5.0
@@ -55,7 +58,7 @@ class FloatingSVGView: MacawView {
             self.feedbackGenerator = UINotificationFeedbackGenerator()
             self.feedbackGenerator?.prepare()
             
-            CellTheme.shared.setNodes()
+            themeSVGImages =  theme.instanceSVGImages()
             
             self.frame.size = CGSize(width: CGFloat(width), height: CGFloat(height))
             self.center = CGPoint(x: (superview.frame.width / 2) + centerX,
@@ -84,7 +87,7 @@ class FloatingSVGView: MacawView {
         
         let newNode: Node!
         
-        newNode = CellTheme.shared.getNodeByFigure(figure: figure, currentNode: currentSVG)
+        newNode = theme.getNodeByFigure(figure: figure, currentNode: currentSVG, svgNodes: themeSVGImages)
         if newNode != nil {
             svgView.node = newNode
             currentSVG = newNode
@@ -152,7 +155,7 @@ class FloatingSVGView: MacawView {
         
         svgView.frame.size = CGSize(width: self.frame.width, height: self.frame.height)
         svgView.center = CGPoint(x: self.frame.width / 2, y: self.frame.width / 2)
-        svgView.node = CellTheme.shared.getStartingNode()
+        svgView.node = theme.getNodeByFigure(figure: 0.5, currentNode: nil, svgNodes: themeSVGImages)!
         self.currentSVG = svgView.node
         svgView.backgroundColor = .clear
         setSVGColor(figure: 0.5)

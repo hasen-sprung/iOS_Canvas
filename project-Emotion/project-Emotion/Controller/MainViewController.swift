@@ -37,15 +37,15 @@ class MainViewController: UIViewController {
         
         switch themeColor {
         case defaultColor:
-            Theme.shared.colors = ThemeColors(theme: defaultColor)
+            ThemeManager.shared.colors = ThemeColors(theme: defaultColor)
         case customColor:
-            Theme.shared.colors = ThemeColors(theme: customColor)
+            ThemeManager.shared.colors = ThemeColors(theme: customColor)
         case seoulColor:
-            Theme.shared.colors = ThemeColors(theme: seoulColor)
+            ThemeManager.shared.colors = ThemeColors(theme: seoulColor)
         default:
             print("error")
         }
-        view.backgroundColor = Theme.shared.colors.mainViewBackground
+        view.backgroundColor = ThemeManager.shared.colors.mainViewBackground
     }
 
     // MARK: - Navigation

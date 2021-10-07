@@ -38,7 +38,7 @@ class SettingViewController: UIViewController {
     // MARK: - User Default에 변경값 저장, 테마싱글톤에 현재 선택된 테마 적용
     func changeThemeColorSetUserDefault(themeColor: Int) {
         UserDefaults.standard.set(themeColor, forKey: userDefaultColor)
-        Theme.shared.colors = ThemeColors(theme: themeColor)
+        ThemeManager.shared.colors = ThemeColors(theme: themeColor)
         print("changed the user default color to \(themeColor)")
     }
 }

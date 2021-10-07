@@ -52,7 +52,7 @@ class GaugeViewController: UIViewController {
         gaugeView.startWaveAnimation()
         // MARK: - init Floating SVG and Play Animation
         initAndPlayFloatingSVGAnimation()
-        view.backgroundColor = Theme.shared.colors.gaugeViewBackground
+        view.backgroundColor = ThemeManager.shared.colors.gaugeViewBackground
         // MARK: - play underwater Animation
         underWaterView.startUnderWaterSVGAnimation()
     }
