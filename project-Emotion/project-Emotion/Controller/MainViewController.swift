@@ -18,6 +18,11 @@ class MainViewController: UIViewController {
         
         setTheme()
         setAddRecordButton()
+        view.backgroundColor = Theme.shared.mainViewColor
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        setTheme()
+        view.backgroundColor = Theme.shared.mainViewColor
     }
     
     func setAddRecordButton() {
@@ -30,9 +35,20 @@ class MainViewController: UIViewController {
     }
     // MARK: - Set Theme
     func setTheme() {
-        let data = userDefaults.integer(forKey: userDefaultColor)
+        let themeColor = userDefaults.integer(forKey: userDefaultColor)
         
-        print(data)
+        switch themeColor {
+        case defaultColor:
+            Theme.shared.mainViewColor = red900
+        case customColor:
+            Theme.shared.mainViewColor = indigo500
+        case seoulColor:
+            Theme.shared.mainViewColor = pink900
+        default:
+            print("error")
+            
+        }
+        print("set theme with \(themeColor)")
     }
 
     // MARK: - Navigation

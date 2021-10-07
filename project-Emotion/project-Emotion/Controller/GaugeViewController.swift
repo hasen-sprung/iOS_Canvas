@@ -17,7 +17,7 @@ class GaugeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .white
+        view.backgroundColor = Theme.shared.mainViewColor
         // 테마 싱글톤의 기본 색상을 적용시킨다.
         Theme.shared.colors = ThemeColors()
         // MARK: - floating svg 객체들을 생성
