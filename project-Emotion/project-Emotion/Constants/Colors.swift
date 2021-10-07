@@ -9,7 +9,7 @@ struct GaugeColor {
 }
 
 // 이렇게 짜면 변경이 될 때 여기만 바꾸면 되니까 괜찮은건지 다른데서도 다 바꿔야 하니까 좋은건지 모르겠네
-struct TestColor {
+struct ThemeColors {
     
     // TODO: BackGround at view
     var mainViewBackground: UIColor
@@ -38,21 +38,11 @@ struct TestColor {
     }
 }
 
-// 기본 세포 테마 색상
-struct ThemeColors {
-    var gaugeViewBackgroundColor = UIColor(hex: 0xFFFCDB)
-    var gaugeViewColorBottom = UIColor(hex: 0xA29FFF)
-    var gaugeViewColorTop = UIColor(hex: 0xFFB5AF)
-    var mainViewBackgroundColor = UIColor(hex: 0xA29FFF)
-    var mainViewBackgroundSubColor = UIColor(hex: 0x706DD3)
-}
-
 // MARK: - 테마 클래스를 싱글톤으로 관리(?)
 class Theme {
     static let shared = Theme()
-    var mainViewColor: UIColor = .white
     
-    var colors: ThemeColors = ThemeColors()
+    var colors: ThemeColors = ThemeColors(theme: defaultColor)
     // SVG이미지 파일
     
     private init() {}

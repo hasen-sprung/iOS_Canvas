@@ -14,8 +14,8 @@ protocol GaugeWaveAnimationViewDelegate {
 class GaugeWaveAnimationView: UIView {
     
     //MARK: - properties
-    var cancelAreaInGaugeView: CGFloat = 0.1
-    var safeAreaInGaugeView: CGFloat = 0.2 //0.0 ~ 1.0
+    var cancelAreaInGaugeView: CGFloat = CGFloat(cancelAreaRatio)
+    var safeAreaInGaugeView: CGFloat = CGFloat(safeAreaRatio)
     var delegate: GaugeWaveAnimationViewDelegate?
     var panGestureRecognizer: UIPanGestureRecognizer = UIPanGestureRecognizer()
     var waveView: WaveAnimationView = WaveAnimationView()
@@ -34,10 +34,11 @@ class GaugeWaveAnimationView: UIView {
         let layer = CAGradientLayer()
         return layer
     }()
-    private var backgroundColorTop = Theme.shared.colors.gaugeViewColorTop {
+    // TODO: 외부 의존성을 줄이기 위해서 싱글톤 사용안하고 테마값 적용 + willAppear에서 리셋
+    private var backgroundColorTop = Theme.shared.colors.gaugeColor.top {
         didSet{ updateBackgroundGradient() }
     }
-    private var backgroundColorBottom = Theme.shared.colors.gaugeViewColorBottom {
+    private var backgroundColorBottom = Theme.shared.colors.gaugeColor.bottom {
         didSet{ updateBackgroundGradient() }
     }
     
@@ -66,7 +67,6 @@ class GaugeWaveAnimationView: UIView {
     }
     
     func initGaugeView() {
-        self.backgroundColor = Theme.shared.colors.gaugeViewBackgroundColor
         touchedOutLocationY = superviewFrame.height / 2
         waveView.frame.origin.y = touchedOutLocationY
     }
@@ -80,8 +80,7 @@ extension GaugeWaveAnimationView {
     func setWaveView(frame: CGRect) {
         let resizedFrameWithSafeArea: CGRect = CGRect(origin: frame.origin, size: CGSize(width: frame.width, height: frame.height * (1.0 - safeAreaInGaugeView)))
         
-        self.backgroundColor = Theme.shared.colors.gaugeViewBackgroundColor
-        waveView = WaveAnimationView(frame: resizedFrameWithSafeArea, frontColor: Theme.shared.colors.gaugeViewColorBottom, backColor: Theme.shared.colors.gaugeViewColorTop)
+        waveView = WaveAnimationView(frame: resizedFrameWithSafeArea, frontColor: backgroundColorBottom, backColor: backgroundColorTop)
         waveView.progress = 1
         
         // MARK: - set gradient view
@@ -169,10 +168,10 @@ extension GaugeWaveAnimationView {
     
     // MARK: - 두 개의 그라데이션이 제스쳐의 위치에 따라 변경되는 액션을 설정해준다.
     func setGradientAnimation() {
-        let action = changedBackgroundColor(topColor: Theme.shared.colors.gaugeViewColorTop,
-                                            topSubColor: Theme.shared.colors.gaugeViewColorBottom,
-                                            bottomColor: Theme.shared.colors.gaugeViewColorBottom,
-                                            bottomSubColor: Theme.shared.colors.gaugeViewColorBottom)
+        let action = changedBackgroundColor(topColor: backgroundColorTop,
+                                            topSubColor: backgroundColorBottom,
+                                            bottomColor: backgroundColorBottom,
+                                            bottomSubColor: backgroundColorBottom)
         
         actionScrubber = ActionScrubber(action: action)
         initGaugeView()

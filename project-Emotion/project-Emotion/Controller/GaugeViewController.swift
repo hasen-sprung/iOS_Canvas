@@ -17,9 +17,8 @@ class GaugeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = Theme.shared.mainViewColor
         // 테마 싱글톤의 기본 색상을 적용시킨다.
-        Theme.shared.colors = ThemeColors()
+        //Theme.shared.colors = ThemeColors()
         // MARK: - floating svg 객체들을 생성
         createFloatingSVGViews()
         // MARK: - wave를 따라다닐 view setting
@@ -48,6 +47,7 @@ class GaugeViewController: UIViewController {
         gaugeView.startWaveAnimation()
         // MARK: - init Floating SVG and Play Animation
         initAndPlayFloatingSVGAnimation()
+        view.backgroundColor = Theme.shared.colors.gaugeViewBackground
     }
     
     override func viewDidAppear(_ animated: Bool) {

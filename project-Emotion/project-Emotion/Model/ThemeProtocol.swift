@@ -24,7 +24,7 @@ class CellTheme: ThemeProtocol  {
     let nodeGroup = try! SVGParser.parse(path: "emotions") as! Group
     private var svgNodes = [Node]()
     
-    var colors: ThemeColors = ThemeColors()
+    var colors: ThemeColors = ThemeColors(theme: defaultColor)
     
     private init() {}
     
@@ -82,7 +82,7 @@ class CellTheme: ThemeProtocol  {
     }
     
     func getCurrentColor(figure: Float) -> Int {
-        let color = Theme.shared.colors.gaugeViewColorTop.toColor(Theme.shared.colors.gaugeViewColorBottom, percentage: CGFloat(figure) * 100)
+        let color = Theme.shared.colors.gaugeColor.top.toColor(Theme.shared.colors.gaugeColor.bottom, percentage: CGFloat(figure) * 100)
         let value = UInt(color.hexStringFromColor().dropFirst(2), radix: 16) ?? 0
         return Int(value)
     }

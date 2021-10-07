@@ -15,6 +15,9 @@ let defaultColor: Int = 0
 let customColor: Int = 1
 let seoulColor: Int = 2
 
+// MARK: - Safe Area Ratio
+let safeAreaRatio: Float = 0.2
+let cancelAreaRatio: Float = 0.1
 
 // ??: constants로 hex를 string으로 잡아놓고 컨버트해서 사용 vs UIColors를 Constants로 사용
 // 개인적인 생각은 UIColor로 상수화하는게 연산을 한번 줄여줘서 더 빠르지만 용량을 많이 차지할거 같다.

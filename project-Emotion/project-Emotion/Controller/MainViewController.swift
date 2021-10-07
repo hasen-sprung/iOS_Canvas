@@ -16,13 +16,11 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setTheme()
+        setThemeInMainView()
         setAddRecordButton()
-        view.backgroundColor = Theme.shared.mainViewColor
     }
     override func viewWillAppear(_ animated: Bool) {
-        setTheme()
-        view.backgroundColor = Theme.shared.mainViewColor
+        setThemeInMainView()
     }
     
     func setAddRecordButton() {
@@ -34,27 +32,26 @@ class MainViewController: UIViewController {
         addRecordButton.center = CGPoint(x: mainViewWidth / 2, y: mainViewHeight - (mainViewWidth / 4))
     }
     // MARK: - Set Theme
-    func setTheme() {
+    func setThemeInMainView() {
         let themeColor = userDefaults.integer(forKey: userDefaultColor)
         
         switch themeColor {
         case defaultColor:
-            Theme.shared.mainViewColor = red900
+            Theme.shared.colors = ThemeColors(theme: defaultColor)
         case customColor:
-            Theme.shared.mainViewColor = indigo500
+            Theme.shared.colors = ThemeColors(theme: customColor)
         case seoulColor:
-            Theme.shared.mainViewColor = pink900
+            Theme.shared.colors = ThemeColors(theme: seoulColor)
         default:
             print("error")
-            
         }
-        print("set theme with \(themeColor)")
+        view.backgroundColor = Theme.shared.colors.mainViewBackground
     }
 
     // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // if 메인에서 게이지뷰로 전달할 데이터가 있으면 전달.
-        guard let gaugeViewController = segue.destination as? GaugeViewController else { return }
+        //guard let gaugeViewController = segue.destination as? GaugeViewController else { return }
     }
     
     @IBAction func pressedAddRecordButton(_ sender: UIButton) {

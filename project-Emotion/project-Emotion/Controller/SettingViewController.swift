@@ -20,24 +20,25 @@ class SettingViewController: UIViewController {
     }
     @IBAction func pressedTestBtn(_ sender: UIButton) {
         print("change color")
-        let newColors = ThemeColors(gaugeViewBackgroundColor: .darkGray, gaugeViewColorBottom: .red, gaugeViewColorTop: .blue, mainViewBackgroundColor: .black, mainViewBackgroundSubColor: .brown)
-        Theme.shared.colors = newColors
+//        Theme.shared.colors = newColors
     }
     
     @IBAction func pressedThemeDefault(_ sender: Any) {
-        changeThemeColor(themeColor: defaultColor)
+        changeThemeColorSetUserDefault(themeColor: defaultColor)
     }
     
     @IBAction func pressedThemeCustom(_ sender: Any) {
-        changeThemeColor(themeColor: customColor)
+        changeThemeColorSetUserDefault(themeColor: customColor)
     }
     
     @IBAction func pressedThemeNew(_ sender: Any) {
-        changeThemeColor(themeColor: seoulColor)
+        changeThemeColorSetUserDefault(themeColor: seoulColor)
     }
     
-    func changeThemeColor(themeColor: Int) {
+    // MARK: - User Default에 변경값 저장, 테마싱글톤에 현재 선택된 테마 적용
+    func changeThemeColorSetUserDefault(themeColor: Int) {
         UserDefaults.standard.set(themeColor, forKey: userDefaultColor)
+        Theme.shared.colors = ThemeColors(theme: themeColor)
         print("changed the user default color to \(themeColor)")
     }
 }
