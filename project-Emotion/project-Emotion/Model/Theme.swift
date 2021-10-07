@@ -6,6 +6,29 @@ protocol ThemeProtocol {
     func setColor()
 }
 
+class ThemeManager {
+    
+    static let shared = ThemeManager()
+    private var userThemeValue = 0
+    
+    func setUserThemeValue(themeValue: Int) {
+        userThemeValue = themeValue
+    }
+    
+    private init() {}
+    
+    func getThemeInstance() -> Theme {
+        switch userThemeValue {
+        case 0:
+            return CellTheme.shared
+        case 1:
+            return TestTheme.shared
+        default:
+            return CellTheme.shared
+        }
+    }
+}
+
 class Theme {
     
     internal var color: Colors!
@@ -15,6 +38,16 @@ class Theme {
     }
     func instanceSVGImages() -> [Node] {
         return [Node]()
+    }
+    
+    func getCurrentColor(figure: Float) -> Int {
+        if let top = color?.gauge.top, let bot = color?.gauge.bottom {
+            let color = top.toColor(bot, percentage: CGFloat(figure) * 100)
+            let value = UInt(color.hexStringFromColor().dropFirst(2), radix: 16) ?? 0
+            return Int(value)
+        } else {
+            return 0
+        }
     }
     
     func getNodeByFigure(figure: Float, currentNode: Node?, svgNodes: [Node]) -> Node? {
@@ -55,15 +88,11 @@ class Theme {
 
 class CellTheme: Theme, ThemeProtocol  {
     
-//            mainViewBackground = cellMV
-//            gaugeViewBackground = cellGV
-//            gaugeColor = GaugeColor(top: cellGVTop, middle: cellGVMiddle, bottom: cellGVBottom)
     static let shared = CellTheme()
     
     private override init() {
         super.init()
         setColor()
-        print("init singleton")
     }
     
     internal func setColor() {
@@ -87,35 +116,37 @@ class CellTheme: Theme, ThemeProtocol  {
         return svgNodes
     }
     
-    func getCurrentColor(figure: Float) -> Int {
-        if let top = color?.gauge.top, let bot = color?.gauge.bottom {
-            let color = top.toColor(bot, percentage: CGFloat(figure) * 100)
-            let value = UInt(color.hexStringFromColor().dropFirst(2), radix: 16) ?? 0
-            return Int(value)
-        } else {
-            return 0
-        }
+    
+}
+
+class TestTheme: Theme, ThemeProtocol {
+    static let shared = TestTheme()
+    
+    private override init() {
+        super.init()
+        setColor()
+    }
+    
+    internal func setColor() {
+        let gaugeColor = GaugeColor(top: indigo100, middle: indigo500, bottom: indigo900)
+        let viewColor = ViewColor(main: red900, gauge: red500)
+        
+        color = Colors(gauge: gaugeColor, view: viewColor)
+    }
+    
+    override func instanceSVGImages() -> [Node] {
+        
+        let nodeGroup = try! SVGParser.parse(resource: "cellImages") as! Group
+        var svgNodes = [Node]()
+        
+        svgNodes.append(nodeGroup.nodeBy(tag: "svg_1")!)
+        svgNodes.append(nodeGroup.nodeBy(tag: "svg_1")!)
+        svgNodes.append(nodeGroup.nodeBy(tag: "svg_1")!)
+        svgNodes.append(nodeGroup.nodeBy(tag: "svg_1")!)
+        svgNodes.append(nodeGroup.nodeBy(tag: "svg_1")!)
+        
+        return svgNodes
     }
     
 }
 
-class ThemeManager {
-    
-    static let shared = ThemeManager()
-    private var userThemeValue = 0
-    
-    func setUserThemeValue(themeValue: Int) {
-        userThemeValue = themeValue
-    }
-    
-    private init() {}
-    
-    func getThemeInstance() -> Theme {
-        switch userThemeValue {
-        case 0:
-            return CellTheme.shared
-        default:
-            return CellTheme.shared
-        }
-    }
-}
