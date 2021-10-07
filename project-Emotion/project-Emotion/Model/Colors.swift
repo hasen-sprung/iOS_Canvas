@@ -8,44 +8,15 @@ struct GaugeColor {
     var bottom: UIColor
 }
 
-// 이렇게 짜면 변경이 될 때 여기만 바꾸면 되니까 괜찮은건지 다른데서도 다 바꿔야 하니까 좋은건지 모르겠네
-struct ThemeColors {
-    
-    // TODO: BackGround at view
-    var mainViewBackground: UIColor
-    var gaugeViewBackground: UIColor
-    var gaugeColor: GaugeColor
-    
-    init(theme: Int) {
-        switch theme {
-        case defaultColor:
-            mainViewBackground = cellMV
-            gaugeViewBackground = cellGV
-            gaugeColor = GaugeColor(top: cellGVTop, middle: cellGVMiddle, bottom: cellGVBottom)
-        case customColor:
-            mainViewBackground = indigo500
-            gaugeViewBackground = indigo100
-            gaugeColor = GaugeColor(top: pink100, middle: red500, bottom: red900)
-        case seoulColor:
-            mainViewBackground = pink100
-            gaugeViewBackground = pink100
-            gaugeColor = GaugeColor(top: indigo100, middle: indigo500, bottom: indigo900)
-        default:
-            mainViewBackground = indigo500
-            gaugeViewBackground = indigo100
-            gaugeColor = GaugeColor(top: pink100, middle: pink500, bottom: pink900)
-        }
-    }
+struct ViewColor {
+    var main: UIColor
+    var gauge: UIColor
 }
 
-// MARK: - 테마 클래스를 싱글톤으로 관리(?)
-class Theme {
-    static let shared = Theme()
+struct Colors {
+    var gauge : GaugeColor
+    var view: ViewColor
     
-    var colors: ThemeColors = ThemeColors(theme: defaultColor)
-    // SVG이미지 파일
-    
-    private init() {}
 }
 
 extension UIColor {

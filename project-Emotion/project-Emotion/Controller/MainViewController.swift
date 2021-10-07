@@ -1,9 +1,3 @@
-//
-//  MainViewController.swift
-//  project-Emotion
-//
-//  Created by Jaeyoung Lee on 2021/09/29.
-//
 
 import UIKit
 
@@ -13,14 +7,17 @@ class MainViewController: UIViewController {
     @IBOutlet weak var gotoSettingButton: UIButton!
     let userDefaults = UserDefaults.standard
     
+    var theme = ThemeManager.shared.getThemeInstance()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setThemeInMainView()
+        getUserDefault()
         setAddRecordButton()
     }
     override func viewWillAppear(_ animated: Bool) {
-        setThemeInMainView()
+        theme = ThemeManager.shared.getThemeInstance()
+        self.view.backgroundColor = theme.getColor().view.main
     }
     
     func setAddRecordButton() {
@@ -31,21 +28,10 @@ class MainViewController: UIViewController {
         addRecordButton.frame.size = CGSize(width: buttonSize, height: buttonSize)
         addRecordButton.center = CGPoint(x: mainViewWidth / 2, y: mainViewHeight - (mainViewWidth / 4))
     }
-    // MARK: - Set Theme
-    func setThemeInMainView() {
-        let themeColor = userDefaults.integer(forKey: userDefaultColor)
-        
-        switch themeColor {
-        case defaultColor:
-            Theme.shared.colors = ThemeColors(theme: defaultColor)
-        case customColor:
-            Theme.shared.colors = ThemeColors(theme: customColor)
-        case seoulColor:
-            Theme.shared.colors = ThemeColors(theme: seoulColor)
-        default:
-            print("error")
-        }
-        view.backgroundColor = Theme.shared.colors.mainViewBackground
+    // MARK: - Get User Default
+    func getUserDefault() {
+        let themeValue = userDefaults.integer(forKey: userDefaultColor)
+        ThemeManager.shared.setUserThemeValue(themeValue: themeValue)
     }
 
     // MARK: - Navigation

@@ -13,6 +13,9 @@ class UnderWaterSVGView: UIView {
     var underWaterSVGs = [UIView]()
     var svgView = [SVGView]()
     
+    var theme = ThemeManager.shared.getThemeInstance()
+    var themeSVGImages: [Node]!
+    
     func setUnderWaterSVGs() {
         
         let centerX: [CGFloat] = [0.40, 0.60, 0.45, 0.62, 0.42, 0.65]
@@ -31,8 +34,8 @@ class UnderWaterSVGView: UIView {
                                      y: self.frame.height * 1.5 * centerY[idx - 1])
             newView.backgroundColor = .clear
             
-            CellTheme.shared.setNodes()
-            newSVGView.node = CellTheme.shared.getNodeByFigure(figure: randFigure, currentNode: nil) ?? CellTheme.shared.getStartingNode()
+            themeSVGImages = theme.instanceSVGImages()
+            newSVGView.node = theme.getNodeByFigure(figure: randFigure, currentNode: nil, svgNodes: themeSVGImages) ?? theme.getNodeByFigure(figure: 0.5, currentNode: nil, svgNodes: themeSVGImages)!
             let fillShape = (newSVGView.node as! Group).contents.first as! Shape
             fillShape.fill = Color(CellTheme.shared.getCurrentColor(figure: randFigure))
             fillShape.stroke = Stroke(fill: Color.white, width: 3)
@@ -40,7 +43,6 @@ class UnderWaterSVGView: UIView {
             newSVGView.frame.size = CGSize(width: newView.frame.width, height: newView.frame.height)
             newSVGView.center = CGPoint(x: newView.frame.width / 2, y: newView.frame.height / 2)
             newSVGView.backgroundColor = .clear
-            
             newView.addSubview(newSVGView)
             
             svgView.append(newSVGView)
