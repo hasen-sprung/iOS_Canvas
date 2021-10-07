@@ -29,8 +29,8 @@ let indigo500: UIColor = UIColor(hex: 0x3F51B5)
 let indigo100: UIColor = UIColor(hex: 0xC5CAE9)
 
 // MARK: - Cell Theme Colors
-let cellGVTop: UIColor = UIColor(hex: 0xFFB5AF)
+let cellGVTop: UIColor = UIColor(hex: 0xFCFFB9)
+let cellGVMiddle: UIColor = UIColor(hex: 0xFFB5AF)
 let cellGVBottom: UIColor = UIColor(hex: 0xA29FFF)
-let cellGVMiddle: UIColor = .white
-let cellGV: UIColor = UIColor(hex: 0xFFFCDB)
-let cellMV: UIColor = UIColor(hex: 0xA29FFF)
+let cellGV: UIColor = UIColor(hex: 0xFFFEF0)
+let cellMV: UIColor = UIColor(hex: 0xFFFEF0)

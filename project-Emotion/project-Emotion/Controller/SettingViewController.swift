@@ -3,17 +3,14 @@ import UIKit
 
 class SettingViewController: UIViewController {
 
-    @IBOutlet weak var testBtn: UIButton!
     @IBOutlet weak var ThemeDefaultBtn: UIButton!
     @IBOutlet weak var ThemeCustomBtn: UIButton!
     @IBOutlet weak var ThemeNewBtn: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-    }
-    @IBAction func pressedTestBtn(_ sender: UIButton) {
-        print("change color")
     }
     
     @IBAction func pressedThemeDefault(_ sender: Any) {
@@ -32,6 +29,7 @@ class SettingViewController: UIViewController {
     func changeThemeColorSetUserDefault(themeValue: Int) {
         UserDefaults.standard.set(themeValue, forKey: userDefaultColor)
         ThemeManager.shared.setUserThemeValue(themeValue: themeValue)
+        self.view.backgroundColor = ThemeManager.shared.getThemeInstance().getColor().view.main
         print("changed the user default color to \(themeValue)")
     }
 }

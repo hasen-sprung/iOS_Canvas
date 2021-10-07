@@ -41,6 +41,9 @@ class GaugeWaveAnimationView: UIView {
     private var backgroundColorBottom = ThemeManager.shared.getThemeInstance().getColor().gauge.bottom {
         didSet{ updateBackgroundGradient() }
     }
+    private var backgroundColorMiddle = ThemeManager.shared.getThemeInstance().getColor().gauge.middle {
+        didSet{ updateBackgroundGradient() }
+    }
     
     //MARK: - init
     override init(frame : CGRect) {
@@ -64,11 +67,6 @@ class GaugeWaveAnimationView: UIView {
         
         let value = (touchedOutLocationY - safeAreaHeight) / waveViewHeight
         return Float(value)
-    }
-    
-    func initGaugeView() {
-        touchedOutLocationY = superviewFrame.height / 2
-        waveView.frame.origin.y = touchedOutLocationY
     }
     
 }
@@ -131,6 +129,7 @@ extension GaugeWaveAnimationView {
                 if let d = delegate { d.actionTouchedUpOutside() }
             }
             touchedOutLocationY = location.y
+            // MARK: - 물결뷰의 프레임을 현재 터치 위치에 맞게 움직인다
             waveView.frame.origin.y = touchedOutLocationY
             actionScrubber?.update(t: Double(touchedPointRelativeRatio))
         }
@@ -151,10 +150,10 @@ extension GaugeWaveAnimationView {
     
     private func updateBackgroundGradient() {
         
-        gradientLayer.colors = [backgroundColorTop.cgColor, backgroundColorBottom.cgColor]
+        gradientLayer.colors = [backgroundColorTop.cgColor, backgroundColorMiddle.cgColor, backgroundColorBottom.cgColor]
         gradientLayer.startPoint = CGPoint(x: 0.5, y: 0)
         gradientLayer.endPoint = CGPoint(x: 0.5, y: 1)
-        gradientLayer.locations = [0.0, 1.0]
+        gradientLayer.locations = [0.0, 0.5, 1.0]
         
         waveView.backColor = backgroundColorTop
         waveView.frontColor = backgroundColorBottom
@@ -169,32 +168,61 @@ extension GaugeWaveAnimationView {
     // MARK: - 두 개의 그라데이션이 제스쳐의 위치에 따라 변경되는 액션을 설정해준다.
     func setGradientAnimation() {
         let action = changedBackgroundColor(topColor: backgroundColorTop,
-                                            topSubColor: backgroundColorBottom,
+                                            topSubColor: backgroundColorMiddle,
                                             bottomColor: backgroundColorBottom,
-                                            bottomSubColor: backgroundColorBottom)
+                                            bottomSubColor: backgroundColorBottom,
+                                            middleColor: backgroundColorMiddle,
+                                            middleSubColor: backgroundColorBottom
+        )
         
         actionScrubber = ActionScrubber(action: action)
-        initGaugeView()
+        touchedOutLocationY = superviewFrame.height / 2
+        waveView.frame.origin.y = touchedOutLocationY
     }
     
-    func changedBackgroundColor(topColor: UIColor, topSubColor: UIColor, bottomColor: UIColor, bottomSubColor: UIColor) -> FiniteTimeAction {
+    func changedBackgroundColor(topColor: UIColor, topSubColor: UIColor, bottomColor: UIColor, bottomSubColor: UIColor, middleColor: UIColor, middleSubColor: UIColor) -> FiniteTimeAction {
         //scrubbable을 사용할 때는 딱 한번만 불림.
         let duration = 2.0
-        // Change background color
-        let changeBackgroundColorTop = InterpolationAction(from: topColor,
+        
+        // MARK: - First Action: Top -> Middle
+        let changeGaugeColorTop = InterpolationAction(from: topColor,
                                                            to: topSubColor,
                                                            duration: duration,
                                                            easing: .linear,
                                                            update: { [unowned self] in self.backgroundColorTop = $0 })
         
-        let changeBackgroundColorBottom = InterpolationAction(from: bottomColor,
+        let changeGaugeColorBottom = InterpolationAction(from: bottomColor,
                                                               to: bottomSubColor,
                                                               duration: duration,
                                                               easing: .linear,
                                                               update: { [unowned self] in self.backgroundColorBottom = $0 })
-        // Create group
-        let group = ActionGroup(actions: changeBackgroundColorTop, changeBackgroundColorBottom)
         
-        return group
+        let changeGaugeColorMiddle = InterpolationAction(from: middleColor,
+                                                              to: middleSubColor,
+                                                              duration: duration,
+                                                              easing: .linear,
+                                                              update: { [unowned self] in self.backgroundColorMiddle = $0 })
+        
+        let firstAction = ActionGroup(actions: changeGaugeColorTop, changeGaugeColorBottom, changeGaugeColorMiddle)
+        
+        // MARK: - Second Action: middle -> bottom
+        let midToBotAtTopColor = InterpolationAction(from: middleColor,
+                                              to: bottomColor,
+                                              duration: duration,
+                                              easing: .linear,
+                                              update: { [unowned self] in self.backgroundColorTop = $0 })
+        
+        let midToBotAtBottomColor = InterpolationAction(from: bottomColor,
+                                                 to: bottomSubColor,
+                                                 duration: duration,
+                                                 easing: .linear,
+                                                 update: { [unowned self] in self.backgroundColorBottom = $0 })
+        
+        let secondAction = ActionGroup(actions: midToBotAtTopColor, midToBotAtBottomColor)
+        
+        // Sequence action
+        let sequenceAction = ActionSequence(actions: firstAction, secondAction)
+    
+        return sequenceAction
     }
 }

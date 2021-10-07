@@ -40,13 +40,20 @@ class Theme {
         return [Node]()
     }
     
+    // MARK: - 3가지의 그라데이션 색상을 추적하는 함수, 중간(0.5)을 기준으로 각각의 비율에 맞춰서 3 색상 사이의 값을 리턴해준다.
     func getCurrentColor(figure: Float) -> Int {
-        if let top = color?.gauge.top, let bot = color?.gauge.bottom {
-            let color = top.toColor(bot, percentage: CGFloat(figure) * 100)
+        let top = color.gauge.top
+        let bot = color.gauge.bottom
+        let mid = color.gauge.middle
+        
+        if figure < 0.5 {
+            let color = top.toColor(mid, percentage: CGFloat(figure * 2) * 100)
             let value = UInt(color.hexStringFromColor().dropFirst(2), radix: 16) ?? 0
             return Int(value)
         } else {
-            return 0
+            let color = mid.toColor(bot, percentage: CGFloat(figure / 2) * 100)
+            let value = UInt(color.hexStringFromColor().dropFirst(2), radix: 16) ?? 0
+            return Int(value)
         }
     }
     

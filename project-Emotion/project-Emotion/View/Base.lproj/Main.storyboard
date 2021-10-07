@@ -76,15 +76,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JTA-d1-2bC">
-                                <rect key="frame" x="112" y="184" width="108" height="31"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" title="color change"/>
-                                <connections>
-                                    <action selector="pressedTestBtn:" destination="OMa-iC-MdF" eventType="touchUpInside" id="s8j-Jb-8cS"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Krr-hB-Si2">
                                 <rect key="frame" x="95" y="354" width="143" height="31"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -127,7 +118,6 @@
                         <outlet property="ThemeCustomBtn" destination="Krr-hB-Si2" id="6xx-5a-nNg"/>
                         <outlet property="ThemeDefaultBtn" destination="gIu-vV-yFp" id="6mz-jT-GGG"/>
                         <outlet property="ThemeNewBtn" destination="zta-9s-7Dw" id="udF-Rs-0u7"/>
-                        <outlet property="testBtn" destination="JTA-d1-2bC" id="vq4-3w-rJQ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4jF-hA-O0D" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
