@@ -2,9 +2,18 @@
 import UIKit
 import Macaw
 
+@objc protocol FloatingSVGViewDelegate {
+    
+    func setSVGTextView()
+    
+    func setSVGTextViewField()
+    
+    func textViewToFloatingSVG()
+}
+
 class FloatingSVGView: MacawView {
     
-    var svgTextViewDelegate: SVGTextViewDelegate?
+    var floatingSVGViewDelegate: FloatingSVGViewDelegate?
     
     private var SVGWidth: CGFloat = 50.0
     private var SVGHeight: CGFloat = 50.0
@@ -89,7 +98,7 @@ class FloatingSVGView: MacawView {
     func changeSVGToTextField() {
         
         zoomInSVGShape()
-        if let delegate = svgTextViewDelegate { delegate.setSVGTextView() }
+        if let delegate = floatingSVGViewDelegate { delegate.setSVGTextView() }
     }
     
     private func zoomInSVGShape() {
@@ -100,7 +109,7 @@ class FloatingSVGView: MacawView {
             self.svgView.frame.size = CGSize(width: self.SVGWidth * 50, height: self.SVGHeight * 50)
             self.center = CGPoint(x: (superview?.frame.width)! / 2, y: 0)
         }) { (completed) in
-            if let delegate = self.svgTextViewDelegate { delegate.setSVGTextViewField() }
+            if let delegate = self.floatingSVGViewDelegate { delegate.setSVGTextViewField() }
         }
     }
     
@@ -112,23 +121,29 @@ class FloatingSVGView: MacawView {
             self.svgView.frame.size = CGSize(width: self.SVGWidth, height: self.SVGHeight)
             self.center = CGPoint(x: SVGCenterX, y: SVGCenterY)
         }) { (completed) in
-            if let delegate = self.svgTextViewDelegate {
+            if let delegate = self.floatingSVGViewDelegate {
                 delegate.textViewToFloatingSVG()
             }       
+        }
+    }
+    
+    func minimalizeSVGShape() {
+        
+        UIView.animate(withDuration: 0.1, delay: animationDelay, options: [.curveEaseOut], animations: { [self] in
+            
+            self.frame.size = CGSize(width: self.SVGWidth, height: self.SVGHeight)
+            self.svgView.frame.size = CGSize(width: self.SVGWidth, height: self.SVGHeight)
+            self.center = CGPoint(x: SVGCenterX, y: SVGCenterY)
+        }) { (completed) in
+            if let delegate = self.floatingSVGViewDelegate {
+                delegate.textViewToFloatingSVG()
+            }
         }
     }
     
     private func setSVGColor(figure: Float) {
         
         let svgShape = (svgView.node as! Group).contents.first as! Shape
-//        svgShape.fill = LinearGradient(
-//            stops: [
-//                Stop(offset: 0.0, color: Color(val: 0xffffff)),
-//                Stop(offset: 0.4, color: Color(val: CellTheme.shared.getCurrentColor(figure: figure))),
-//                Stop(offset: 0.6, color: Color(val: CellTheme.shared.getCurrentColor(figure: figure))),
-//                Stop(offset: 1.0, color: Color(val: 0xffffff))
-//            ])
-        
         svgShape.fill = Color(CellTheme.shared.getCurrentColor(figure: figure))
         svgShape.stroke = Stroke(fill: Color.white, width: 3)
     }

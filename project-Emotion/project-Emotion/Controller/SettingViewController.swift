@@ -10,6 +10,9 @@ import UIKit
 class SettingViewController: UIViewController {
 
     @IBOutlet weak var testBtn: UIButton!
+    @IBOutlet weak var ThemeDefaultBtn: UIButton!
+    @IBOutlet weak var ThemeCustomBtn: UIButton!
+    @IBOutlet weak var ThemeNewBtn: UIButton!
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -17,19 +20,25 @@ class SettingViewController: UIViewController {
     }
     @IBAction func pressedTestBtn(_ sender: UIButton) {
         print("change color")
-        let newColors = ThemeColors(gaugeViewBackgroundColor: .darkGray, gaugeViewColorBottom: .red, gaugeViewColorTop: .blue, mainViewBackgroundColor: .black, mainViewBackgroundSubColor: .brown)
-        Theme.shared.colors = newColors
+//        Theme.shared.colors = newColors
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    @IBAction func pressedThemeDefault(_ sender: Any) {
+        changeThemeColorSetUserDefault(themeColor: defaultColor)
     }
-    */
-
+    
+    @IBAction func pressedThemeCustom(_ sender: Any) {
+        changeThemeColorSetUserDefault(themeColor: customColor)
+    }
+    
+    @IBAction func pressedThemeNew(_ sender: Any) {
+        changeThemeColorSetUserDefault(themeColor: seoulColor)
+    }
+    
+    // MARK: - User Default에 변경값 저장, 테마싱글톤에 현재 선택된 테마 적용
+    func changeThemeColorSetUserDefault(themeColor: Int) {
+        UserDefaults.standard.set(themeColor, forKey: userDefaultColor)
+        Theme.shared.colors = ThemeColors(theme: themeColor)
+        print("changed the user default color to \(themeColor)")
+    }
 }

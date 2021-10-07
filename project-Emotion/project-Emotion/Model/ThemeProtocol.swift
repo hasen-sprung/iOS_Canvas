@@ -20,11 +20,11 @@ import Macaw
 class CellTheme: ThemeProtocol  {
     
     static let shared = CellTheme()
-
+    
     let nodeGroup = try! SVGParser.parse(path: "emotions") as! Group
     private var svgNodes = [Node]()
     
-    var colors: ThemeColors = ThemeColors()
+    var colors: ThemeColors = ThemeColors(theme: defaultColor)
     
     private init() {}
     
@@ -39,41 +39,37 @@ class CellTheme: ThemeProtocol  {
     
     func getNodeByFigure(figure: Float, currentNode: Node?) -> Node? {
         
-        if let oldNode = currentNode {
-            
-            if figure <= 0.36 {
-                if  oldNode != self.svgNodes[0] {
-                    return self.svgNodes[0]
-                } else {
-                    return nil
-                }
-            } else if figure > 0.36 && figure <= 0.52 {
-                if  oldNode != self.svgNodes[1] {
-                    return self.svgNodes[1]
-                } else {
-                    return nil
-                }
-            } else if figure > 0.52 && figure <= 0.68 {
-                if  oldNode != self.svgNodes[2] {
-                    return self.svgNodes[2]
-                } else {
-                    return nil
-                }
-            } else if figure > 0.68 && figure <= 0.84 {
-                if  oldNode != self.svgNodes[3] {
-                    return self.svgNodes[3]
-                } else {
-                    return nil
-                }
+        if figure <= 0.2 {
+            if  currentNode != self.svgNodes[0] {
+                return self.svgNodes[0]
             } else {
-                if  oldNode != self.svgNodes[4] {
-                    return self.svgNodes[4]
-                } else {
-                    return nil
-                }
+                return nil
+            }
+        } else if figure <= 0.4 {
+            if  currentNode != self.svgNodes[1] {
+                return self.svgNodes[1]
+            } else {
+                return nil
+            }
+        } else if figure <= 0.6 {
+            if  currentNode != self.svgNodes[2] {
+                return self.svgNodes[2]
+            } else {
+                return nil
+            }
+        } else if figure <= 0.8 {
+            if  currentNode != self.svgNodes[3] {
+                return self.svgNodes[3]
+            } else {
+                return nil
+            }
+        } else {
+            if  currentNode != self.svgNodes[4] {
+                return self.svgNodes[4]
+            } else {
+                return nil
             }
         }
-        return nil
     }
     
     func getStartingNode() -> Node {
@@ -82,7 +78,7 @@ class CellTheme: ThemeProtocol  {
     }
     
     func getCurrentColor(figure: Float) -> Int {
-        let color = Theme.shared.colors.gaugeViewColorTop.toColor(Theme.shared.colors.gaugeViewColorBottom, percentage: CGFloat(figure) * 100)
+        let color = Theme.shared.colors.gaugeColor.top.toColor(Theme.shared.colors.gaugeColor.bottom, percentage: CGFloat(figure) * 100)
         let value = UInt(color.hexStringFromColor().dropFirst(2), radix: 16) ?? 0
         return Int(value)
     }

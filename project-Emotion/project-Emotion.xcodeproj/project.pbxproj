@@ -12,6 +12,7 @@
 		35015B342704389D00A813FA /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35015B332704389D00A813FA /* SettingViewController.swift */; };
 		355622BA27015FD000EBD775 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355622B927015FD000EBD775 /* Colors.swift */; };
 		355622BC2701600A00EBD775 /* GaugeWaveAnimationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355622BB2701600A00EBD775 /* GaugeWaveAnimationView.swift */; };
+		35FDFD75270D89E30027E4CD /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35FDFD74270D89E30027E4CD /* Constants.swift */; };
 		4F0F800127019D8E00FC1E6A /* FloatingSVGView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0F800027019D8E00FC1E6A /* FloatingSVGView.swift */; };
 		4F0F80142702C68800FC1E6A /* svg_2.svg in Resources */ = {isa = PBXBuildFile; fileRef = 4F0F800F2702C68700FC1E6A /* svg_2.svg */; };
 		4F0F80152702C68800FC1E6A /* svg_5.svg in Resources */ = {isa = PBXBuildFile; fileRef = 4F0F80102702C68700FC1E6A /* svg_5.svg */; };
@@ -19,7 +20,8 @@
 		4F0F80172702C68800FC1E6A /* svg_3.svg in Resources */ = {isa = PBXBuildFile; fileRef = 4F0F80122702C68700FC1E6A /* svg_3.svg */; };
 		4F0F80182702C68800FC1E6A /* svg_1.svg in Resources */ = {isa = PBXBuildFile; fileRef = 4F0F80132702C68700FC1E6A /* svg_1.svg */; };
 		4F0F801A2702CA8E00FC1E6A /* emotions.svg in Resources */ = {isa = PBXBuildFile; fileRef = 4F0F80192702CA8E00FC1E6A /* emotions.svg */; };
-		4F26D9FE270ADAE60018E6BB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4F26D9FD270ADAE60018E6BB /* GoogleService-Info.plist */; };
+		4F362338270D3CB0000D680B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4F362337270D3CAF000D680B /* GoogleService-Info.plist */; };
+		4F36233A270D5AE9000D680B /* UnderWaterSVGView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F362339270D5AE9000D680B /* UnderWaterSVGView.swift */; };
 		4FA269D6270A970C00E0330B /* SVGTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA269D5270A970C00E0330B /* SVGTextView.swift */; };
 		4FB312AC2703FAB700CA0EC0 /* ThemeProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FB312AB2703FAB700CA0EC0 /* ThemeProtocol.swift */; };
 		4FEFF16826EB211E00BEE94C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FEFF16726EB211E00BEE94C /* AppDelegate.swift */; };
@@ -38,6 +40,7 @@
 		35015B332704389D00A813FA /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		355622B927015FD000EBD775 /* Colors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		355622BB2701600A00EBD775 /* GaugeWaveAnimationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GaugeWaveAnimationView.swift; sourceTree = "<group>"; };
+		35FDFD74270D89E30027E4CD /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		45EB1485D1F5767E6CBCAA89 /* Pods-project-Emotion.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-project-Emotion.debug.xcconfig"; path = "Target Support Files/Pods-project-Emotion/Pods-project-Emotion.debug.xcconfig"; sourceTree = "<group>"; };
 		4F0F800027019D8E00FC1E6A /* FloatingSVGView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingSVGView.swift; sourceTree = "<group>"; };
 		4F0F800F2702C68700FC1E6A /* svg_2.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = svg_2.svg; sourceTree = "<group>"; };
@@ -46,7 +49,8 @@
 		4F0F80122702C68700FC1E6A /* svg_3.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = svg_3.svg; sourceTree = "<group>"; };
 		4F0F80132702C68700FC1E6A /* svg_1.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = svg_1.svg; sourceTree = "<group>"; };
 		4F0F80192702CA8E00FC1E6A /* emotions.svg */ = {isa = PBXFileReference; lastKnownFileType = text; path = emotions.svg; sourceTree = "<group>"; };
-		4F26D9FD270ADAE60018E6BB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		4F362337270D3CAF000D680B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		4F362339270D5AE9000D680B /* UnderWaterSVGView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnderWaterSVGView.swift; sourceTree = "<group>"; };
 		4FA269D5270A970C00E0330B /* SVGTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SVGTextView.swift; sourceTree = "<group>"; };
 		4FB312AB2703FAB700CA0EC0 /* ThemeProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeProtocol.swift; sourceTree = "<group>"; };
 		4FEFF16426EB211E00BEE94C /* project-Emotion.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "project-Emotion.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -82,6 +86,7 @@
 				4F0F800027019D8E00FC1E6A /* FloatingSVGView.swift */,
 				4FA269D5270A970C00E0330B /* SVGTextView.swift */,
 				4FEFF16D26EB211E00BEE94C /* Main.storyboard */,
+				4F362339270D5AE9000D680B /* UnderWaterSVGView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -101,6 +106,7 @@
 			isa = PBXGroup;
 			children = (
 				355622B927015FD000EBD775 /* Colors.swift */,
+				35FDFD74270D89E30027E4CD /* Constants.swift */,
 			);
 			path = Constants;
 			sourceTree = "<group>";
@@ -166,7 +172,7 @@
 				4FEFF17526EB212100BEE94C /* LaunchScreen.storyboard */,
 				4FEFF17826EB212100BEE94C /* Info.plist */,
 				4FEFF17026EB211E00BEE94C /* project_Emotion.xcdatamodeld */,
-				4F26D9FD270ADAE60018E6BB /* GoogleService-Info.plist */,
+				4F362337270D3CAF000D680B /* GoogleService-Info.plist */,
 			);
 			path = "project-Emotion";
 			sourceTree = "<group>";
@@ -245,7 +251,7 @@
 				4FEFF17426EB212100BEE94C /* Assets.xcassets in Resources */,
 				4F0F80142702C68800FC1E6A /* svg_2.svg in Resources */,
 				4FEFF16F26EB211E00BEE94C /* Main.storyboard in Resources */,
-				4F26D9FE270ADAE60018E6BB /* GoogleService-Info.plist in Resources */,
+				4F362338270D3CB0000D680B /* GoogleService-Info.plist in Resources */,
 				4F0F801A2702CA8E00FC1E6A /* emotions.svg in Resources */,
 				4F0F80162702C68800FC1E6A /* svg_4.svg in Resources */,
 			);
@@ -307,7 +313,9 @@
 				4FB312AC2703FAB700CA0EC0 /* ThemeProtocol.swift in Sources */,
 				4FEFF17226EB211E00BEE94C /* project_Emotion.xcdatamodeld in Sources */,
 				35015B302704385B00A813FA /* AnalysisViewController.swift in Sources */,
+				35FDFD75270D89E30027E4CD /* Constants.swift in Sources */,
 				4FEFF16826EB211E00BEE94C /* AppDelegate.swift in Sources */,
+				4F36233A270D5AE9000D680B /* UnderWaterSVGView.swift in Sources */,
 				4FA269D6270A970C00E0330B /* SVGTextView.swift in Sources */,
 				355622BC2701600A00EBD775 /* GaugeWaveAnimationView.swift in Sources */,
 				4FEFF16A26EB211E00BEE94C /* SceneDelegate.swift in Sources */,
@@ -460,7 +468,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_TEAM = 8QSTXVD8H9;
 				INFOPLIST_FILE = "project-Emotion/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -481,7 +489,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_TEAM = 8QSTXVD8H9;
 				INFOPLIST_FILE = "project-Emotion/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
