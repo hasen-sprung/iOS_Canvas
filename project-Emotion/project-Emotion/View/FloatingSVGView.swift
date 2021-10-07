@@ -15,7 +15,7 @@ class FloatingSVGView: MacawView {
     
     var floatingSVGViewDelegate: FloatingSVGViewDelegate?
     
-    var theme = CellTheme.shared
+    var theme = ThemeManager.shared.getThemeInstance()
     var themeSVGImages: [Node]!
     
     private var SVGWidth: CGFloat = 50.0

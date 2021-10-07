@@ -8,6 +8,17 @@ struct GaugeColor {
     var bottom: UIColor
 }
 
+struct ViewColor {
+    var main: UIColor
+    var gauge: UIColor
+}
+
+struct Colors {
+    var gauge : GaugeColor
+    var view: ViewColor
+    
+}
+
 // 이렇게 짜면 변경이 될 때 여기만 바꾸면 되니까 괜찮은건지 다른데서도 다 바꿔야 하니까 좋은건지 모르겠네
 struct ThemeColors {
     
@@ -39,14 +50,6 @@ struct ThemeColors {
 }
 
 // MARK: - 테마 클래스를 싱글톤으로 관리(?)
-class ThemeManager {
-    static let shared = ThemeManager()
-    
-    var colors: ThemeColors = ThemeColors(theme: defaultColor)
-    // SVG이미지 파일
-    
-    private init() {}
-}
 
 extension UIColor {
     // MARK: - 해당 색상까지의 중간 색들을 비율에 따라 가져오는 함수

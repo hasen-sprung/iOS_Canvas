@@ -35,12 +35,18 @@ class GaugeWaveAnimationView: UIView {
         return layer
     }()
     // TODO: 외부 의존성을 줄이기 위해서 싱글톤 사용안하고 테마값 적용 + willAppear에서 리셋
-    private var backgroundColorTop = ThemeManager.shared.colors.gaugeColor.top {
+    private var backgroundColorTop = ThemeManager.shared.getThemeInstance().getColor().gauge.top {
         didSet{ updateBackgroundGradient() }
     }
-    private var backgroundColorBottom = ThemeManager.shared.colors.gaugeColor.bottom {
+    private var backgroundColorBottom = ThemeManager.shared.getThemeInstance().getColor().gauge.bottom {
         didSet{ updateBackgroundGradient() }
     }
+//    private var backgroundColorTop = ThemeManager.shared.colors.gaugeColor.top {
+//        didSet{ updateBackgroundGradient() }
+//    }
+//    private var backgroundColorBottom = ThemeManager.shared.colors.gaugeColor.bottom {
+//        didSet{ updateBackgroundGradient() }
+//    }
     
     //MARK: - init
     override init(frame : CGRect) {

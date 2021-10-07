@@ -24,21 +24,21 @@ class SettingViewController: UIViewController {
     }
     
     @IBAction func pressedThemeDefault(_ sender: Any) {
-        changeThemeColorSetUserDefault(themeColor: defaultColor)
+        changeThemeColorSetUserDefault(themeValue: defaultColor)
     }
     
     @IBAction func pressedThemeCustom(_ sender: Any) {
-        changeThemeColorSetUserDefault(themeColor: customColor)
+        changeThemeColorSetUserDefault(themeValue: customColor)
     }
     
     @IBAction func pressedThemeNew(_ sender: Any) {
-        changeThemeColorSetUserDefault(themeColor: seoulColor)
+        changeThemeColorSetUserDefault(themeValue: seoulColor)
     }
     
     // MARK: - User Default에 변경값 저장, 테마싱글톤에 현재 선택된 테마 적용
-    func changeThemeColorSetUserDefault(themeColor: Int) {
-        UserDefaults.standard.set(themeColor, forKey: userDefaultColor)
-        ThemeManager.shared.colors = ThemeColors(theme: themeColor)
-        print("changed the user default color to \(themeColor)")
+    func changeThemeColorSetUserDefault(themeValue: Int) {
+        UserDefaults.standard.set(themeValue, forKey: userDefaultColor)
+        ThemeManager.shared.setUserThemeValue(themeValue: themeValue)
+        print("changed the user default color to \(themeValue)")
     }
 }

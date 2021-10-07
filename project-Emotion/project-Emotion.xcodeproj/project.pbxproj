@@ -18,7 +18,7 @@
 		4F362338270D3CB0000D680B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4F362337270D3CAF000D680B /* GoogleService-Info.plist */; };
 		4F36233A270D5AE9000D680B /* UnderWaterSVGView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F362339270D5AE9000D680B /* UnderWaterSVGView.swift */; };
 		4FA269D6270A970C00E0330B /* SVGTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA269D5270A970C00E0330B /* SVGTextView.swift */; };
-		4FB312AC2703FAB700CA0EC0 /* ThemeProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FB312AB2703FAB700CA0EC0 /* ThemeProtocol.swift */; };
+		4FB312AC2703FAB700CA0EC0 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FB312AB2703FAB700CA0EC0 /* Theme.swift */; };
 		4FEFF16826EB211E00BEE94C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FEFF16726EB211E00BEE94C /* AppDelegate.swift */; };
 		4FEFF16A26EB211E00BEE94C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FEFF16926EB211E00BEE94C /* SceneDelegate.swift */; };
 		4FEFF16C26EB211E00BEE94C /* GaugeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FEFF16B26EB211E00BEE94C /* GaugeViewController.swift */; };
@@ -42,7 +42,7 @@
 		4F362337270D3CAF000D680B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		4F362339270D5AE9000D680B /* UnderWaterSVGView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnderWaterSVGView.swift; sourceTree = "<group>"; };
 		4FA269D5270A970C00E0330B /* SVGTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SVGTextView.swift; sourceTree = "<group>"; };
-		4FB312AB2703FAB700CA0EC0 /* ThemeProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeProtocol.swift; sourceTree = "<group>"; };
+		4FB312AB2703FAB700CA0EC0 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		4FEFF16426EB211E00BEE94C /* project-Emotion.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "project-Emotion.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4FEFF16726EB211E00BEE94C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4FEFF16926EB211E00BEE94C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -121,7 +121,7 @@
 		4FB312AA2703FA6500CA0EC0 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				4FB312AB2703FAB700CA0EC0 /* ThemeProtocol.swift */,
+				4FB312AB2703FAB700CA0EC0 /* Theme.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -290,7 +290,7 @@
 				35015B342704389D00A813FA /* SettingViewController.swift in Sources */,
 				4F0F800127019D8E00FC1E6A /* FloatingSVGView.swift in Sources */,
 				355622BA27015FD000EBD775 /* Colors.swift in Sources */,
-				4FB312AC2703FAB700CA0EC0 /* ThemeProtocol.swift in Sources */,
+				4FB312AC2703FAB700CA0EC0 /* Theme.swift in Sources */,
 				4FEFF17226EB211E00BEE94C /* project_Emotion.xcdatamodeld in Sources */,
 				35015B302704385B00A813FA /* AnalysisViewController.swift in Sources */,
 				35FDFD75270D89E30027E4CD /* Constants.swift in Sources */,

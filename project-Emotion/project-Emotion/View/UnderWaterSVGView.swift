@@ -13,7 +13,7 @@ class UnderWaterSVGView: UIView {
     var underWaterSVGs = [UIView]()
     var svgView = [SVGView]()
     
-    var theme = CellTheme.shared
+    var theme = ThemeManager.shared.getThemeInstance()
     var themeSVGImages: [Node]!
     
     func setUnderWaterSVGs() {

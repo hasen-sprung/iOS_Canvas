@@ -15,6 +15,8 @@ class GaugeViewController: UIViewController {
     
     private var svgTextBackgroundView: SVGTextView!
     
+    private let theme = ThemeManager.shared.getThemeInstance()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -52,7 +54,7 @@ class GaugeViewController: UIViewController {
         gaugeView.startWaveAnimation()
         // MARK: - init Floating SVG and Play Animation
         initAndPlayFloatingSVGAnimation()
-        view.backgroundColor = ThemeManager.shared.colors.gaugeViewBackground
+        view.backgroundColor = theme.getColor().view.gauge
         // MARK: - play underwater Animation
         underWaterView.startUnderWaterSVGAnimation()
     }

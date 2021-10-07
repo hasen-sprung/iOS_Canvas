@@ -3,14 +3,17 @@ import UIKit
 import Macaw
 
 protocol ThemeProtocol {
-
-    func instanceSVGImages() -> [Node]
+    func setColor()
 }
 
-class Theme: ThemeProtocol {
+class Theme {
     
+    internal var color: Colors!
+    
+    func getColor() -> Colors {
+        return color
+    }
     func instanceSVGImages() -> [Node] {
-        
         return [Node]()
     }
     
@@ -50,9 +53,25 @@ class Theme: ThemeProtocol {
     }
 }
 
-class CellTheme: Theme  {
+class CellTheme: Theme, ThemeProtocol  {
     
+//            mainViewBackground = cellMV
+//            gaugeViewBackground = cellGV
+//            gaugeColor = GaugeColor(top: cellGVTop, middle: cellGVMiddle, bottom: cellGVBottom)
     static let shared = CellTheme()
+    
+    private override init() {
+        super.init()
+        setColor()
+        print("init singleton")
+    }
+    
+    internal func setColor() {
+        let gaugeColor = GaugeColor(top: cellGVTop, middle: cellGVMiddle, bottom: cellGVBottom)
+        let viewColor = ViewColor(main: cellMV, gauge: cellGV)
+        
+        color = Colors(gauge: gaugeColor, view: viewColor)
+    }
     
     override func instanceSVGImages() -> [Node] {
         
@@ -69,8 +88,34 @@ class CellTheme: Theme  {
     }
     
     func getCurrentColor(figure: Float) -> Int {
-        let color = ThemeManager.shared.colors.gaugeColor.top.toColor(ThemeManager.shared.colors.gaugeColor.bottom, percentage: CGFloat(figure) * 100)
-        let value = UInt(color.hexStringFromColor().dropFirst(2), radix: 16) ?? 0
-        return Int(value)
+        if let top = color?.gauge.top, let bot = color?.gauge.bottom {
+            let color = top.toColor(bot, percentage: CGFloat(figure) * 100)
+            let value = UInt(color.hexStringFromColor().dropFirst(2), radix: 16) ?? 0
+            return Int(value)
+        } else {
+            return 0
+        }
+    }
+    
+}
+
+class ThemeManager {
+    
+    static let shared = ThemeManager()
+    private var userThemeValue = 0
+    
+    func setUserThemeValue(themeValue: Int) {
+        userThemeValue = themeValue
+    }
+    
+    private init() {}
+    
+    func getThemeInstance() -> Theme {
+        switch userThemeValue {
+        case 0:
+            return CellTheme.shared
+        default:
+            return CellTheme.shared
+        }
     }
 }
