@@ -12,6 +12,7 @@
 		35015B342704389D00A813FA /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35015B332704389D00A813FA /* SettingViewController.swift */; };
 		355622BA27015FD000EBD775 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355622B927015FD000EBD775 /* Colors.swift */; };
 		355622BC2701600A00EBD775 /* GaugeWaveAnimationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355622BB2701600A00EBD775 /* GaugeWaveAnimationView.swift */; };
+		35C37F71271060CF00B13F74 /* AnimationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35C37F70271060CF00B13F74 /* AnimationView.swift */; };
 		35FDFD75270D89E30027E4CD /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35FDFD74270D89E30027E4CD /* Constants.swift */; };
 		4F0F800127019D8E00FC1E6A /* FloatingSVGView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0F800027019D8E00FC1E6A /* FloatingSVGView.swift */; };
 		4F0F801A2702CA8E00FC1E6A /* cellImages.svg in Resources */ = {isa = PBXBuildFile; fileRef = 4F0F80192702CA8E00FC1E6A /* cellImages.svg */; };
@@ -35,6 +36,7 @@
 		35015B332704389D00A813FA /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		355622B927015FD000EBD775 /* Colors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		355622BB2701600A00EBD775 /* GaugeWaveAnimationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GaugeWaveAnimationView.swift; sourceTree = "<group>"; };
+		35C37F70271060CF00B13F74 /* AnimationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationView.swift; sourceTree = "<group>"; };
 		35FDFD74270D89E30027E4CD /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		45EB1485D1F5767E6CBCAA89 /* Pods-project-Emotion.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-project-Emotion.debug.xcconfig"; path = "Target Support Files/Pods-project-Emotion/Pods-project-Emotion.debug.xcconfig"; sourceTree = "<group>"; };
 		4F0F800027019D8E00FC1E6A /* FloatingSVGView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingSVGView.swift; sourceTree = "<group>"; };
@@ -77,6 +79,7 @@
 				4FA269D5270A970C00E0330B /* SVGTextView.swift */,
 				4FEFF16D26EB211E00BEE94C /* Main.storyboard */,
 				4F362339270D5AE9000D680B /* UnderWaterSVGView.swift */,
+				35C37F70271060CF00B13F74 /* AnimationView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -292,6 +295,7 @@
 				355622BA27015FD000EBD775 /* Colors.swift in Sources */,
 				4FB312AC2703FAB700CA0EC0 /* Theme.swift in Sources */,
 				4FEFF17226EB211E00BEE94C /* project_Emotion.xcdatamodeld in Sources */,
+				35C37F71271060CF00B13F74 /* AnimationView.swift in Sources */,
 				35015B302704385B00A813FA /* AnalysisViewController.swift in Sources */,
 				35FDFD75270D89E30027E4CD /* Constants.swift in Sources */,
 				4FEFF16826EB211E00BEE94C /* AppDelegate.swift in Sources */,
