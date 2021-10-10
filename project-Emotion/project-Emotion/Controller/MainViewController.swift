@@ -24,6 +24,8 @@ class MainViewController: UIViewController {
         setAddRecordButton()
     }
     override func viewWillAppear(_ animated: Bool) {
+
+        scheduler.removeAll()
         // core data에 추가된 데이터가 있을수 있으므로 뷰의 데이터를 리로드
         theme = ThemeManager.shared.getThemeInstance()
         self.view.backgroundColor = theme.getColor().view.main
@@ -33,6 +35,18 @@ class MainViewController: UIViewController {
             if let views = recordViews {
                 view.addSubview(views[i])
                 actionMoveFrame(from: views[i].center, to: view.center, view: views[i])
+            }
+        }
+        
+        print(view.subviews.count)
+        print(recordViews?.count)
+    }
+    override func viewDidDisappear(_ animated: Bool) {
+        // MARK: - 기존에 뷰에 추가되었던 서브뷰들을 제거 : 흐음 근데 이 방법이 최선인가? 메인뷰로 갈때마다 생성 삭제를 반복하는게 최선일까요?
+        // 변경사항이 있을 경우 (새로운 서브뷰가 추가될때)만 그 뷰만 추가되고 삭제되면 더 좋을거 같다.
+        if let views = recordViews {
+            for view in views {
+                view.removeFromSuperview()
             }
         }
     }
@@ -110,7 +124,6 @@ extension MainViewController {
 
 // MARK: - Animation
 extension MainViewController {
-    
     
     func actionMoveFrame(from: CGPoint, to: CGPoint, view: UIView) {
         
