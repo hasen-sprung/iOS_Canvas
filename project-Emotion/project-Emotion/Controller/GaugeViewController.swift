@@ -136,7 +136,7 @@ class GaugeViewController: UIViewController {
         underWaterView.frame.origin.x = 0.0
         underWaterView.frame.origin.y = view.frame.height * 0.2
         underWaterView.backgroundColor = .clear
-        underWaterView.alpha = 0.9
+        underWaterView.alpha = 1.0
         underWaterView.isUserInteractionEnabled = false
         underWaterView.clipsToBounds = true
     }
@@ -190,6 +190,7 @@ extension GaugeViewController: GaugeWaveAnimationViewDelegate {
     
     func sendFigureToGaugeViewController() {
         let newFigure = gaugeView.getGaugeValue()
+        
         setFloatingAreaView(newFigure: newFigure)
         
         let fullHight = view.frame.size.height * 0.8
@@ -200,6 +201,7 @@ extension GaugeViewController: GaugeWaveAnimationViewDelegate {
         underWaterView.frame.size.height = currentHeight - changedHeight
         underWaterView.frame.origin.y = underWaterView.frame.origin.y + changedHeight
         underWaterView.bounds.origin.y = underWaterView.bounds.origin.y + changedHeight
+        underWaterView.addRemoveSVGByFigure(figure: newFigure)
     }
     
     func actionTouchedUpOutside() {
