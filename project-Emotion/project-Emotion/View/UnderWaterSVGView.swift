@@ -16,10 +16,10 @@ class UnderWaterSVGView: UIView {
     var theme = ThemeManager.shared.getThemeInstance()
     var themeSVGImages: [Node]!
     
+    let centerX: [CGFloat] = [0.40, 0.60, 0.45, 0.62, 0.42, 0.65]
+    let centerY: [CGFloat] = [0.17, 0.36, 0.49, 0.61, 0.76, 0.88]
+    
     func setUnderWaterSVGs() {
-        
-        let centerX: [CGFloat] = [0.40, 0.60, 0.45, 0.62, 0.42, 0.65]
-        let centerY: [CGFloat] = [0.21, 0.36, 0.47, 0.61, 0.76, 0.98]
         
         for idx in 1...6 {
             let newView = UIView()
@@ -31,7 +31,7 @@ class UnderWaterSVGView: UIView {
             newView.frame.size = CGSize(width: randSize,
                                         height: randSize)
             newView.center = CGPoint(x: self.frame.width * centerX[idx - 1],
-                                     y: self.frame.height * 1.5 * centerY[idx - 1])
+                                     y: self.frame.height * centerY[idx - 1])
             newView.backgroundColor = .clear
             
             themeSVGImages = theme.instanceSVGImages()
