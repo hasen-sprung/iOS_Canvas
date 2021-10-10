@@ -16,12 +16,12 @@ class UnderWaterSVGView: UIView {
     var theme = ThemeManager.shared.getThemeInstance()
     var themeSVGImages: [Node]!
     
+    let centerX: [CGFloat] = [0.40, 0.60, 0.45, 0.62, 0.42, 0.65]
+    let centerY: [CGFloat] = [0.17, 0.36, 0.49, 0.61, 0.76, 0.88]
+    
     func setUnderWaterSVGs() {
         
-        let centerX: [CGFloat] = [0.40, 0.60, 0.45, 0.62, 0.42, 0.65]
-        let centerY: [CGFloat] = [0.21, 0.36, 0.47, 0.61, 0.76, 0.98]
-        
-        for idx in 1...6 {
+        for idx in 1...centerX.count {
             let newView = UIView()
             let newSVGView = SVGView()
             
@@ -31,8 +31,9 @@ class UnderWaterSVGView: UIView {
             newView.frame.size = CGSize(width: randSize,
                                         height: randSize)
             newView.center = CGPoint(x: self.frame.width * centerX[idx - 1],
-                                     y: self.frame.height * 1.5 * centerY[idx - 1])
+                                     y: self.frame.height * centerY[idx - 1])
             newView.backgroundColor = .clear
+            newView.alpha = 0.9
             
             themeSVGImages = theme.instanceSVGImages()
             newSVGView.node = theme.getNodeByFigure(figure: randFigure, currentNode: nil, svgNodes: themeSVGImages) ?? theme.getNodeByFigure(figure: 0.5, currentNode: nil, svgNodes: themeSVGImages)!
@@ -43,6 +44,7 @@ class UnderWaterSVGView: UIView {
             newSVGView.frame.size = CGSize(width: newView.frame.width, height: newView.frame.height)
             newSVGView.center = CGPoint(x: newView.frame.width / 2, y: newView.frame.height / 2)
             newSVGView.backgroundColor = .clear
+            
             newView.addSubview(newSVGView)
             
             svgView.append(newSVGView)
@@ -72,7 +74,31 @@ class UnderWaterSVGView: UIView {
             underWaterSVGs[idx].transform = CGAffineTransform(rotationAngle: randAngle * CGFloat(Double.pi) / 180)
             self.addSubview(underWaterSVGs[idx])
         }
+    }
+    
+    func addRemoveSVGByFigure(figure: Float) {
         
         
+        for idx in 0...underWaterSVGs.count - 1 {
+        
+            if  centerY[idx]  < CGFloat(figure) + 0.1 {
+                
+                if underWaterSVGs[idx].alpha <= 0.9 && underWaterSVGs[idx].alpha >= 0.8 {
+                    underWaterSVGs[idx].fadeOut(duration: 0.5)
+                }
+            } else {
+                
+                let randFigure: Float = Float.random(in: 0.0 ... 1.0)
+                
+                if underWaterSVGs[idx].alpha >= 0.0 && underWaterSVGs[idx].alpha <= 0.1 {
+                    
+                    svgView[idx].node = theme.getNodeByFigure(figure: randFigure, currentNode: nil, svgNodes: themeSVGImages) ?? theme.getNodeByFigure(figure: 0.5, currentNode: nil, svgNodes: themeSVGImages)!
+                    let fillShape = (svgView[idx].node as! Group).contents.first as! Shape
+                    fillShape.fill = Color(CellTheme.shared.getCurrentColor(figure: randFigure))
+                    fillShape.stroke = Stroke(fill: Color.white, width: 3)
+                    underWaterSVGs[idx].customFadeIn(duration: 0.5)
+                }
+            }
+        }
     }
 }

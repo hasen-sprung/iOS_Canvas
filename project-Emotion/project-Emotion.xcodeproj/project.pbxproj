@@ -75,8 +75,8 @@
 				355622BB2701600A00EBD775 /* GaugeWaveAnimationView.swift */,
 				4F0F800027019D8E00FC1E6A /* FloatingSVGView.swift */,
 				4FA269D5270A970C00E0330B /* SVGTextView.swift */,
-				4FEFF16D26EB211E00BEE94C /* Main.storyboard */,
 				4F362339270D5AE9000D680B /* UnderWaterSVGView.swift */,
+				4FEFF16D26EB211E00BEE94C /* Main.storyboard */,
 			);
 			path = View;
 			sourceTree = "<group>";

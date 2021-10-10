@@ -35,6 +35,7 @@ class GaugeViewController: UIViewController {
         view.addSubview(gaugeView)
         view.addSubview(underWaterView)
         underWaterView.setUnderWaterSVGs()
+        
         view.addSubview(floatingAreaView)
         view.addSubview(dismissArea)
         for idx in 1...floatingSVGViews.count {
@@ -131,12 +132,13 @@ class GaugeViewController: UIViewController {
     
     private func setUnderWaterView() {
         
-        underWaterView.frame.size = CGSize(width: view.frame.width, height: view.frame.height * (1 - CGFloat(gaugeView.getGaugeValue())) * 0.8)
+        underWaterView.frame.size = CGSize(width: view.frame.width, height: view.frame.height * 0.8)
         underWaterView.frame.origin.x = 0.0
-        underWaterView.frame.origin.y = (view.frame.height * 0.2) + (view.frame.height * CGFloat(gaugeView.getGaugeValue() * 0.8))
+        underWaterView.frame.origin.y = view.frame.height * 0.2
         underWaterView.backgroundColor = .clear
-        underWaterView.alpha = 0.9
+        underWaterView.alpha = 1.0
         underWaterView.isUserInteractionEnabled = false
+        underWaterView.clipsToBounds = true
     }
     
     // MARK: - [start] floating base View setting and moving
@@ -188,9 +190,18 @@ extension GaugeViewController: GaugeWaveAnimationViewDelegate {
     
     func sendFigureToGaugeViewController() {
         let newFigure = gaugeView.getGaugeValue()
+        
         setFloatingAreaView(newFigure: newFigure)
-        underWaterView.frame.size = CGSize(width: view.frame.width, height: view.frame.height * (1 - CGFloat(newFigure) * 0.8))
-        underWaterView.frame.origin.y = (view.frame.height * 0.2) + (view.frame.height * CGFloat(newFigure * 0.8))
+        
+        let fullHight = view.frame.size.height * 0.8
+        let currentHeight = underWaterView.frame.size.height
+        let newHeight = fullHight * CGFloat(1 - newFigure)
+        let changedHeight = currentHeight - newHeight
+        
+        underWaterView.frame.size.height = currentHeight - changedHeight
+        underWaterView.frame.origin.y = underWaterView.frame.origin.y + changedHeight
+        underWaterView.bounds.origin.y = underWaterView.bounds.origin.y + changedHeight
+        underWaterView.addRemoveSVGByFigure(figure: newFigure)
     }
     
     func actionTouchedUpOutside() {
