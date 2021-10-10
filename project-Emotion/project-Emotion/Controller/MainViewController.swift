@@ -17,7 +17,6 @@ class MainViewController: UIViewController {
     @IBOutlet weak var selectMonthButton: UIButton!
     
     let userDefaults = UserDefaults.standard
-    private let scheduler = ActionScheduler()
     
     private var currentRecords: [Record] = [Record]()
     
@@ -25,28 +24,16 @@ class MainViewController: UIViewController {
     private let dateManager = DateManager.shared
     private let recordManager = RecordManager.shared
     
-    var testView : UIView = {
-        let view = UIView(frame: CGRect(origin: CGPoint(x: 50, y: 50), size: CGSize(width: 50, height: 50)))
-        view.backgroundColor = .red
-        
-        return view
-    }()
     
-    var testView2 : UIView = {
-        let view = UIView(frame: CGRect(origin: CGPoint(x: 550, y: 50), size: CGSize(width: 50, height: 50)))
-        view.backgroundColor = .blue
-        
-        return view
-    }()
+    var recordViews: [UIView]?
+    let viewCounts: Int = 5
+    private let scheduler = ActionScheduler()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // core data에서 모든 기록데이터를 로드
-        view.addSubview(testView)
-        view.addSubview(testView2)
-        
-        actionMoveFrame(from: testView2.center, to: view.center, view: testView2, size: testView2.frame.size, option: 0)
-        actionMoveFrame(from: testView.center, to: view.center, view: testView, size: testView.frame.size, option: 0)
+        //view.addSubview(testView)
+        //view.addSubview(testView2)
         
         getUserDefault()
         setAddRecordButton()
@@ -59,6 +46,14 @@ class MainViewController: UIViewController {
         // core data에 추가된 데이터가 있을수 있으므로 뷰의 데이터를 리로드
         theme = ThemeManager.shared.getThemeInstance()
         self.view.backgroundColor = theme.getColor().view.main
+        
+        recordViews = setRecordViews(counts: viewCounts)
+        for i in 0..<viewCounts {
+            if let views = recordViews {
+                view.addSubview(views[i])
+                actionMoveFrame(from: views[i].center, to: view.center, view: views[i])
+            }
+        }
         currentRecords = recordManager.getMatchingRecords()
 
     }
@@ -153,6 +148,7 @@ class MainViewController: UIViewController {
         dateManager.changeDate(val: -1)
         dateLabel.text = dateManager.getCurrentDateString()
         currentRecords = recordManager.getMatchingRecords()
+        
     }
     
     func setAddRecordButton() {
@@ -185,24 +181,61 @@ class MainViewController: UIViewController {
     }
     
 }
+// MARK: - Set SVG Location
+
+extension MainViewController {
+    func setRecordViews(counts: Int) -> [UIView] {
+        var views = [UIView]()
+        
+        for _ in 0 ..< counts {
+            let view = UIView()
+            // coredata에서 그림 삽입.
+            setRandomLocation(view: view)
+            view.backgroundColor = .brown
+            view.frame.size = CGSize(width: 50, height: 50)
+            
+            views.append(view)
+        }
+        
+        return views
+        
+    }
+    
+    func setRandomLocation(view: UIView) {
+        // 뷰 범위를 벗어나지 않기 위해서 safe area추가
+        let maxX = self.view.frame.maxX //self.superview.frame.maxX
+        let maxY = self.view.frame.maxY
+        let minX: CGFloat = 0
+        let minY: CGFloat = 0
+        
+        view.center = CGPoint(x: CGFloat.random(in: minX...maxX), y: CGFloat.random(in: minY...maxY))
+    }
+    
+    func setRecordViewLocation(viewCount: Int) {
+//        switch viewCount {
+//        case 0...10:
+//            print("10")
+//        case 11...20:
+//            print("20")
+//        default:
+//            print("Too many")
+//        }
+    }
+}
 
 // MARK: - Animation
 extension MainViewController {
     
     
-    func actionMoveFrame(from: CGPoint, to: CGPoint, view: UIView, size: CGSize, option: Int) {
+    func actionMoveFrame(from: CGPoint, to: CGPoint, view: UIView) {
         
-        let fromRect = CGRect(origin: from, size: size)
-        let toRect = CGRect(origin: to, size: size)
+        let fromRect = CGRect(origin: from, size: view.frame.size)
+        let toRect = CGRect(origin: to, size: view.frame.size)
         let duration = 1.0
         let action = InterpolationAction(from: fromRect, to: toRect, duration: duration, easing: .exponentialInOut) {
             view.frame = $0
         }
-        if option == 0 {
-            scheduler.run(action: action.repeatedForever())
-        } else {
-            scheduler.run(action: action.yoyo())
-        }
+        scheduler.run(action: action.yoyo().repeatedForever())
         
     }
 }
