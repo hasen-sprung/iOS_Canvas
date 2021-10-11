@@ -27,8 +27,58 @@
                                     <action selector="pressedAddRecordButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="eXb-j9-s2O"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PrK-eD-e67" userLabel="settingButton">
-                                <rect key="frame" x="319" y="93" width="18" height="22"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="06y-f8-lwb">
+                                <rect key="frame" x="327" y="135" width="67" height="31"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="button"/>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ase-V4-uHN">
+                                <rect key="frame" x="186" y="140" width="42" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NZr-41-GqK">
+                                <rect key="frame" x="87" y="57" width="240" height="54"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="czV-xT-TEt">
+                                        <rect key="frame" x="87" y="12" width="67" height="31"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="Button"/>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jjN-DI-05f">
+                                        <rect key="frame" x="165" y="12" width="67" height="31"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="Button"/>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="x5i-1i-8pS">
+                                        <rect key="frame" x="8" y="12" width="67" height="31"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="Button"/>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jHo-45-gg9">
+                                <rect key="frame" x="20" y="135" width="67" height="31"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="button"/>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                        <color key="backgroundColor" name="defaultMainViewColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="13p-Vu-kbE">
+                        <barButtonItem key="rightBarButtonItem" style="plain" id="kpj-6d-y49">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="PrK-eD-e67" userLabel="settingButton">
+                                <rect key="frame" x="376" y="11" width="18" height="22"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                 <state key="normal" image="person.fill" catalog="system"/>
@@ -36,21 +86,25 @@
                                     <action selector="pressedGotoSettingButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="dfN-PO-cry"/>
                                 </connections>
                             </button>
-                        </subviews>
-                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
-                        <color key="backgroundColor" name="defaultMainViewColor"/>
-                    </view>
-                    <navigationItem key="navigationItem" id="13p-Vu-kbE"/>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="addRecordButton" destination="BER-sR-zqF" id="SV4-yO-UU8"/>
+                        <outlet property="dateBackwardButton" destination="jHo-45-gg9" id="Tec-f9-ZlR"/>
+                        <outlet property="dateForwardButton" destination="06y-f8-lwb" id="A8I-R7-FgC"/>
+                        <outlet property="dateLabel" destination="ase-V4-uHN" id="Ycr-1e-nX0"/>
                         <outlet property="gotoSettingButton" destination="PrK-eD-e67" id="C6H-ge-PPi"/>
+                        <outlet property="selectDateView" destination="NZr-41-GqK" id="rGS-71-KqH"/>
+                        <outlet property="selectDayButton" destination="x5i-1i-8pS" id="s14-Ee-Sju"/>
+                        <outlet property="selectMonthButton" destination="jjN-DI-05f" id="Gcg-z0-Amn"/>
+                        <outlet property="selectWeekButton" destination="czV-xT-TEt" id="pVZ-gg-KmB"/>
                         <segue destination="stT-4X-6R3" kind="presentation" identifier="mainToGauge" modalPresentationStyle="fullScreen" id="fyE-QF-8ly"/>
                         <segue destination="OMa-iC-MdF" kind="show" identifier="mainToSetting" id="iMy-J2-pW4"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1958" y="138"/>
+            <point key="canvasLocation" x="1957.9710144927537" y="137.94642857142856"/>
         </scene>
         <!--Gauge View Controller-->
         <scene sceneID="dLy-Pa-qCf">
