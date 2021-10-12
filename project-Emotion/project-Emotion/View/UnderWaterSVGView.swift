@@ -47,6 +47,8 @@ class UnderWaterSVGView: UIView {
             
             svgView.append(newSVGView)
             underWaterSVGs.append(newView)
+         //   let randAngle: CGFloat = CGFloat.random(in: 0.0 ... 360.0)
+        //    underWaterSVGs[idx - 1].transform = CGAffineTransform(rotationAngle: randAngle * CGFloat(Double.pi) / 180)
         }
     }
         
