@@ -15,6 +15,8 @@ class MainViewController: UIViewController {
     @IBOutlet weak var selectWeekButton: UIButton!
     @IBOutlet weak var selectMonthButton: UIButton!
     
+    private let recordTableView = RecordTableView()
+    
     let userDefaults = UserDefaults.standard
     
     private var currentRecords: [Record] = [Record]()
@@ -32,12 +34,25 @@ class MainViewController: UIViewController {
         setDateLabel()
         setSelectDateView()
         
+        setRecordTableView()
     }
+    
     override func viewWillAppear(_ animated: Bool) {
         theme = ThemeManager.shared.getThemeInstance()
         self.view.backgroundColor = theme.getColor().view.main
+        
         currentRecords = recordManager.getMatchingRecords()
 
+        setRecordTableView()
+    }
+    
+    private func setRecordTableView() {
+        
+        recordTableView.setRecordsIntoTableView(currentRecords)
+        recordTableView.frame.size = CGSize(width: view.frame.width, height: view.frame.height * 0.7)
+        recordTableView.frame.origin = CGPoint(x: 0, y: view.frame.height * 0.25)
+        recordTableView.backgroundColor = .white
+        view.addSubview(recordTableView)
     }
     
     private func setSelectDateView() {
