@@ -75,7 +75,7 @@ class SVGTextView: UIView {
     private func setDateLabel() {
         
         let df = DateFormatter()
-        df.dateFormat = "yyyy년 M월 d일 a h시 mm분"
+        df.dateFormat = "M월 d일 a h시 mm분"
         df.locale = Locale(identifier:"ko_KR")
         
         let dateString = df.string(from: self.date!)

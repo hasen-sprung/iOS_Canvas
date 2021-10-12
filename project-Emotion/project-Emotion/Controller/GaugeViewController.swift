@@ -15,10 +15,18 @@ class GaugeViewController: UIViewController {
     
     private var svgTextBackgroundView: SVGTextView!
     
+    
     private let theme = ThemeManager.shared.getThemeInstance()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+//        let backgroundImageView = UIImageView()
+//        backgroundImageView.frame = view.frame
+//        backgroundImageView.center = view.center
+//        backgroundImageView.image = UIImage(named: "simple")
+//        view.addSubview(backgroundImageView)
+        
         
         // 테마 싱글톤의 기본 색상을 적용시킨다.
         //Theme.shared.colors = ThemeColors()
@@ -58,6 +66,8 @@ class GaugeViewController: UIViewController {
         view.backgroundColor = theme.getColor().view.gauge
         // MARK: - play underwater Animation
         underWaterView.startUnderWaterSVGAnimation()
+        
+        gaugeView.alpha = 0.8
     }
     
     override func viewDidAppear(_ animated: Bool) {
