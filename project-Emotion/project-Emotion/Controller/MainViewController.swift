@@ -16,6 +16,8 @@ class MainViewController: UIViewController {
     @IBOutlet weak var selectWeekButton: UIButton!
     @IBOutlet weak var selectMonthButton: UIButton!
     
+    private let recordTableView = RecordTableView()
+    
     let userDefaults = UserDefaults.standard
     
     private var currentRecords: [Record] = [Record]()
@@ -39,6 +41,7 @@ class MainViewController: UIViewController {
         setDateLabel()
         setSelectDateView()
         
+        setRecordTableView()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -46,6 +49,7 @@ class MainViewController: UIViewController {
         // core data에 추가된 데이터가 있을수 있으므로 뷰의 데이터를 리로드
         theme = ThemeManager.shared.getThemeInstance()
         self.view.backgroundColor = theme.getColor().view.main
+        
         currentRecords = recordManager.getMatchingRecords()
         
         // TODO: 각자의 클래스들을 지우고 초기화하는 작업은 언제해주는게 좋을까?
@@ -88,6 +92,15 @@ class MainViewController: UIViewController {
     
     @IBAction func pressedGotoSettingButton(_ sender: UIButton) {
         performSegue(withIdentifier: "mainToSetting", sender: nil)
+    }
+    
+    private func setRecordTableView() {
+        
+        recordTableView.setRecordsIntoTableView(currentRecords)
+        recordTableView.frame.size = CGSize(width: view.frame.width, height: view.frame.height * 0.7)
+        recordTableView.frame.origin = CGPoint(x: 0, y: view.frame.height * 0.25)
+        recordTableView.backgroundColor = .white
+        view.addSubview(recordTableView)
     }
     
 }
