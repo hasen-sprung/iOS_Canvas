@@ -10,7 +10,7 @@ class MainViewController: UIViewController {
     var theme = ThemeManager.shared.getThemeInstance()
     
     var recordViews: [UIView]?
-    let viewCounts: Int = 10
+    let viewCounts: Int = 9
     private let scheduler = ActionScheduler()
     
     override func viewDidLoad() {
@@ -78,6 +78,7 @@ extension MainViewController {
     
     func setRecordViews(counts: Int) -> [UIView] {
         var views = [UIView]()
+        var rotateViews = [UIView]()
         
         for _ in 0 ..< counts {
             let view = UIView()
@@ -85,14 +86,60 @@ extension MainViewController {
             // coredata에서 그림 삽입.
             view.frame.size = CGSize(width: randSize, height: randSize)
             view.backgroundColor = .brown
-            setRandomViewCenter(view: view)
+            //setRandomViewCenter(view: view)
             
+            // Affine을 돌리기 전/후의 center 는 같다.
+            //view.transform = CGAffineTransform(rotationAngle: randAngle * CGFloat(Double.pi) / 180)
+            print("--------")
+//            print(view.frame.size.width)
+//            print(view.frame.size.height)
+//            print(view.bounds.width)
+//            print(view.bounds.height)
+            
+//            let newView = UIView(frame: CGRect(origin: view.center, size: CGSize(width: view.frame.size.width * 1.2, height: view.frame.size.height * 1.2)))
+//            newView.backgroundColor = .red
+//            newView.transform = view.transform
+//            self.view.addSubview(newView)
+            
+            // MARK: - 이게 이상하게 출력이 되나?? rotate를 한 후에
+//            let fromRect = CGRect(origin: view.frame.origin, size: view.frame.size)
+//            let newView = UIView(frame: fromRect)
+//            newView.backgroundColor = .red
+//            self.view.addSubview(newView)
+            
+            
+            print(view.center.x)
+            print(view.center.y)
             views.append(view)
-            self.view.addSubview(view)
+            //self.view.addSubview(view)
             
+            print(view.center.x)
+            print(view.center.y)
             let randFigure: Float = Float.random(in: 0.0 ... 1.0)
             actionByFigure(view: view, figure: randFigure)
+            
+            // MARK: - rotate view
+            print(view.center.x)
+            print(view.center.y)
+            
+            let rotateView = UIView()
+            print(rotateView.frame.origin.x)
+            print(rotateView.frame.origin.y)
+            //rotateView.frame.origin = view.frame.origin
+            setRandomViewCenter(view: rotateView)
+            
+            rotateView.addSubview(view)
+            self.view.addSubview(rotateView)
+            
+            let randAngle: CGFloat = CGFloat.random(in: 0.0 ... 360.0)
+            rotateView.transform = CGAffineTransform(rotationAngle: randAngle)
         }
+        
+//        for i in 0 ..< counts {
+//            let randAngle: CGFloat = CGFloat.random(in: 0.0 ... 360.0)
+//            views[i].transform = CGAffineTransform(rotationAngle: randAngle  * CGFloat(Double.pi) / 180)
+//        }
+        
         return views
     }
     
@@ -110,18 +157,38 @@ extension MainViewController {
     
 }
 
+class ActionProperty {
+    var duration: Double = 0.0
+    var rangeFrom: Float = 0.0
+    var rangeTo: Float = 0.0
+    
+}
+
 // MARK: - Animation
 extension MainViewController {
+    // MARK: - make action squence and group
+//    func makeAction() -> FiniteTimeAction {
+//
+//        let randomMoveDistanceX = CGFloat.random(in: 20...30) * CGFloat.random(in: -1...1)
+//        let randomMoveDistanceY = CGFloat.random(in: 20...30) * CGFloat.random(in: -1...1)
+//
+//        let action = InterpolationAction(from: fromRect, to: toRect, duration: duration, easing: .bounceIn) {
+//            view.frame = $0
+//        }
+//
+//        return action
+//
+//    }
     
     // MARK: - 지이잉
     func fastMoveAction(view: UIView) -> FiniteTimeAction {
-        let randomMoveDistanceX = CGFloat.random(in: -10...10)
-        let randomMoveDistanceY = CGFloat.random(in: -10...10)
+        let randomMoveDistanceX = CGFloat.random(in: 20...30) * CGFloat.random(in: -1...1)
+        let randomMoveDistanceY = CGFloat.random(in: 20...30) * CGFloat.random(in: -1...1)
         
         let fromRect = CGRect(origin: view.center, size: view.frame.size)
         let toRect = CGRect(origin: CGPoint(x: view.center.x + randomMoveDistanceX, y: view.center.y + randomMoveDistanceY), size: view.frame.size)
         
-        let duration = Double.random(in: 0.1...0.1)
+        let duration = Double.random(in: 0.3...0.3)
         
         let action = InterpolationAction(from: fromRect, to: toRect, duration: duration, easing: .bounceIn) {
             view.frame = $0
@@ -130,8 +197,8 @@ extension MainViewController {
         return action
     }
     func test2(view: UIView) -> FiniteTimeAction {
-        let randomMoveDistanceX = CGFloat.random(in: -20...20)
-        let randomMoveDistanceY = CGFloat.random(in: -20...20)
+        let randomMoveDistanceX = CGFloat.random(in: 20...30) * CGFloat.random(in: -1...1)
+        let randomMoveDistanceY = CGFloat.random(in: 20...30) * CGFloat.random(in: -1...1)
         
         let fromRect = CGRect(origin: view.center, size: view.frame.size)
         let toRect = CGRect(origin: CGPoint(x: view.center.x + randomMoveDistanceX, y: view.center.y + randomMoveDistanceY), size: view.frame.size)
@@ -144,8 +211,8 @@ extension MainViewController {
         return action
     }
     func test3(view: UIView) -> FiniteTimeAction {
-        let randomMoveDistanceX = CGFloat.random(in: -20...20)
-        let randomMoveDistanceY = CGFloat.random(in: -20...20)
+        let randomMoveDistanceX = CGFloat.random(in: 20...30) * CGFloat.random(in: -1...1)
+        let randomMoveDistanceY = CGFloat.random(in: 20...30) * CGFloat.random(in: -1...1)
         
         let fromRect = CGRect(origin: view.center, size: view.frame.size)
         let toRect = CGRect(origin: CGPoint(x: view.center.x + randomMoveDistanceX, y: view.center.y + randomMoveDistanceY), size: view.frame.size)
@@ -157,13 +224,25 @@ extension MainViewController {
         
         return action
     }
-    func test4(view: UIView) -> FiniteTimeAction {
-        let randomMoveDistanceX = CGFloat.random(in: -20...20)
-        let randomMoveDistanceY = CGFloat.random(in: -20...20)
+    
+    // MARK: - 크기와 위치를 조절해서 애니메이션 효과.
+    
+    func moveUpDownAction(view: UIView, moveUpDownLen: CGFloat, sizeMultiple: CGFloat) -> FiniteTimeAction {
         
-        let fromRect = CGRect(origin: view.center, size: view.frame.size)
-        let toRect = CGRect(origin: CGPoint(x: view.center.x + randomMoveDistanceX, y: view.center.y + randomMoveDistanceY), size: view.frame.size)
-        let duration = Double.random(in: 1.0...1.5)
+        let moveUpLength: CGFloat = moveUpDownLen
+        let sizeUpFrame: CGFloat = sizeMultiple
+        // 새로운 뷰의 가운데를 맞춰주기 위해 더 좋은 방법이 있으면 코드 수정해도 됨
+        let newView = UIView(frame: CGRect(origin: view.center, size: CGSize(width: view.frame.size.width * sizeUpFrame, height: view.frame.size.height * sizeUpFrame)))
+        newView.center = view.center
+        
+//        let randAngle: CGFloat = CGFloat.random(in: 0.0 ... 360.0)
+//        view.transform = CGAffineTransform(rotationAngle: randAngle  * CGFloat(Double.pi) / 180)
+//        newView.transform = CGAffineTransform(rotationAngle: randAngle  * CGFloat(Double.pi) / 180)
+//        newView.center = view.center
+        
+        let fromRect = CGRect(origin: view.frame.origin, size: view.frame.size)
+        let toRect = CGRect(origin: CGPoint(x: newView.frame.origin.x, y: newView.frame.origin.y - moveUpLength), size: newView.frame.size)
+        let duration = 1.0
         
         let action = InterpolationAction(from: fromRect, to: toRect, duration: duration, easing: .sineInOut) {
             view.frame = $0
@@ -171,9 +250,12 @@ extension MainViewController {
         
         return action
     }
+    
+    
     func slowMoveAction(view: UIView) -> FiniteTimeAction {
-        let randomMoveDistanceX = CGFloat.random(in: -30...30)
-        let randomMoveDistanceY = CGFloat.random(in: -30...30)
+        let randomMoveDistanceX = CGFloat.random(in: 20...30) * CGFloat.random(in: -1...1)
+        let randomMoveDistanceY = CGFloat.random(in: 20...30) * CGFloat.random(in: -1...1)
+        
         let fromRect = CGRect(origin: view.center, size: view.frame.size)
         let toRect = CGRect(origin: CGPoint(x: view.center.x + randomMoveDistanceX, y: view.center.y + randomMoveDistanceY), size: view.frame.size)
         let duration = Double.random(in: 1.5...2.0)
@@ -189,23 +271,24 @@ extension MainViewController {
         
         var action: FiniteTimeAction
         if figure < 0.2 {
-            action = fastMoveAction(view: view)
+            //action = fastMoveAction(view: view)
             view.backgroundColor = cellGVMiddle
         } else if figure < 0.4 {
-            action = test2(view: view)
+            //action = test2(view: view)
             view.backgroundColor = cellGVTop
         } else if figure < 0.6 {
-            action = test3(view: view)
+            //action = test3(view: view)
             view.backgroundColor = cellGVBottom
         } else if figure < 0.8 {
-            action = test4(view: view)
             view.backgroundColor = pink100
         } else {
-            action = slowMoveAction(view: view)
+            //action = slowMoveAction(view: view)
             view.backgroundColor = indigo500
         }
+        action = moveUpDownAction(view: view, moveUpDownLen: 10, sizeMultiple: 1.2)
         
         scheduler.run(action: action.yoyo().repeatedForever())
     }
+    //delay, 겹치는 문제, rotate
     
 }
