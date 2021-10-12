@@ -26,7 +26,7 @@ class DateManager {
         return dateMode
     }
     
-    func moveDate(val: Int) {
+    func changeDate(val: Int) {
         
         if dateMode == 0 {
             

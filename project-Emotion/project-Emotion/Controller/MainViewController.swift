@@ -17,8 +17,11 @@ class MainViewController: UIViewController {
     
     let userDefaults = UserDefaults.standard
     
-    var theme = ThemeManager.shared.getThemeInstance()
-    let dateManager = DateManager.shared
+    private var currentRecords: [Record] = [Record]()
+    
+    private var theme = ThemeManager.shared.getThemeInstance()
+    private let dateManager = DateManager.shared
+    private let recordManager = RecordManager.shared
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,6 +36,8 @@ class MainViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         theme = ThemeManager.shared.getThemeInstance()
         self.view.backgroundColor = theme.getColor().view.main
+        currentRecords = recordManager.getMatchingRecords()
+
     }
     
     private func setSelectDateView() {
@@ -61,18 +66,21 @@ class MainViewController: UIViewController {
         
         dateManager.setDateMode(newMode: 0)
         dateLabel.text = dateManager.getCurrentDateString()
+        currentRecords = recordManager.getMatchingRecords()
     }
     
     @objc func changeDateModeToWeek() {
         
         dateManager.setDateMode(newMode: 1)
         dateLabel.text = dateManager.getCurrentDateString()
+        currentRecords = recordManager.getMatchingRecords()
     }
     
     @objc func changeDateModeToMonth() {
         
         dateManager.setDateMode(newMode: 2)
         dateLabel.text = dateManager.getCurrentDateString()
+        currentRecords = recordManager.getMatchingRecords()
     }
     
     private func setDateLabel() {
@@ -81,6 +89,7 @@ class MainViewController: UIViewController {
         dateLabel.center = CGPoint(x: view.frame.width * 0.5, y: view.frame.height * 0.2)
         dateLabel.text = dateManager.getCurrentDateString()
         dateLabel.textAlignment = .center
+        dateLabel.textColor = .black
     }
     
     private func setDateButtons() {
@@ -97,7 +106,6 @@ class MainViewController: UIViewController {
         dateBackwardButton.addTarget(self, action: #selector(dateBackwardButtonPressed), for: .touchUpInside)
         dateBackwardButton.backgroundColor = .clear
         dateBackwardButton.setTitle("", for: .normal)
-        
     }
     
     private func setDateForwardButton() {
@@ -112,14 +120,16 @@ class MainViewController: UIViewController {
     
     @objc func dateForwardButtonPressed() {
         
-        dateManager.moveDate(val: 1)
+        dateManager.changeDate(val: 1)
         dateLabel.text = dateManager.getCurrentDateString()
+        currentRecords = recordManager.getMatchingRecords()
     }
     
     @objc func dateBackwardButtonPressed() {
         
-        dateManager.moveDate(val: -1)
+        dateManager.changeDate(val: -1)
         dateLabel.text = dateManager.getCurrentDateString()
+        currentRecords = recordManager.getMatchingRecords()
     }
     
     func setAddRecordButton() {

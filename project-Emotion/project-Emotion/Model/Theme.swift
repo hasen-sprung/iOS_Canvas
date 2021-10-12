@@ -36,6 +36,7 @@ class Theme {
     func getColor() -> Colors {
         return color
     }
+    
     func instanceSVGImages() -> [Node] {
         return [Node]()
     }
