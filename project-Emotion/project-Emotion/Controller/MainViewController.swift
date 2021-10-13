@@ -24,6 +24,7 @@ class MainViewController: UIViewController {
     private let dateManager = DateManager.shared
     private let recordManager = RecordManager.shared
     
+    
     // MARK: - Record Animation Property
     var recordViews: [UIView]?
     let viewCounts: Int = 15 //coredata의 개수로 나중에 제거될 속성
