@@ -90,10 +90,6 @@ class MainViewController: UIViewController {
         performSegue(withIdentifier: "mainToGauge", sender: nil)
     }
     
-    @IBAction func pressedGotoSettingButton(_ sender: UIButton) {
-        performSegue(withIdentifier: "mainToSetting", sender: nil)
-    }
-    
     private func setRecordTableView() {
         
         recordTableView.setRecordsIntoTableView(currentRecords)
@@ -103,6 +99,9 @@ class MainViewController: UIViewController {
         view.addSubview(recordTableView)
     }
     
+    @IBAction func pressedGotoSettingButton(_ sender: UIButton) {
+        performSegue(withIdentifier: "mainToSetting", sender: nil)
+    }
 }
 
 extension MainViewController {
