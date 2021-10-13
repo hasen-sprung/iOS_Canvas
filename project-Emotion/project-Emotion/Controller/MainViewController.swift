@@ -47,6 +47,7 @@ class MainViewController: UIViewController {
         self.view.backgroundColor = theme.getColor().view.main
         currentRecords = recordManager.getMatchingRecords()
         
+        // TODO: 각자의 클래스들을 지우고 초기화하는 작업은 언제해주는게 좋을까?
         // 애니메이션 : 기존에 있던 액션 삭제
         scheduler.removeAll()
         // core data의 개수만큼 뷰 생성
