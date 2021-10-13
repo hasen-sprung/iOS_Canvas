@@ -19,7 +19,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BER-sR-zqF" userLabel="addRecordButton">
-                                <rect key="frame" x="197" y="744" width="20" height="20"/>
+                                <rect key="frame" x="197" y="812.5" width="20" height="19"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                 <state key="normal" backgroundImage="plus.circle" catalog="system"/>
@@ -28,7 +28,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="06y-f8-lwb">
-                                <rect key="frame" x="327" y="135" width="67" height="31"/>
+                                <rect key="frame" x="327" y="73" width="67" height="31"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="button"/>
@@ -41,7 +41,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NZr-41-GqK">
-                                <rect key="frame" x="87" y="57" width="240" height="54"/>
+                                <rect key="frame" x="50" y="57" width="314" height="54"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="czV-xT-TEt">
@@ -71,6 +71,11 @@
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="button"/>
                             </button>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HDn-4B-E5C" customClass="RecordAnimationView" customModule="project_Emotion">
+                                <rect key="frame" x="50" y="188" width="300" height="500"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" name="defaultMainViewColor"/>
@@ -94,6 +99,7 @@
                         <outlet property="dateForwardButton" destination="06y-f8-lwb" id="A8I-R7-FgC"/>
                         <outlet property="dateLabel" destination="ase-V4-uHN" id="Ycr-1e-nX0"/>
                         <outlet property="gotoSettingButton" destination="PrK-eD-e67" id="C6H-ge-PPi"/>
+                        <outlet property="recordAnimationView" destination="HDn-4B-E5C" id="uiO-aV-GFb"/>
                         <outlet property="selectDateView" destination="NZr-41-GqK" id="rGS-71-KqH"/>
                         <outlet property="selectDayButton" destination="x5i-1i-8pS" id="s14-Ee-Sju"/>
                         <outlet property="selectMonthButton" destination="jjN-DI-05f" id="Gcg-z0-Amn"/>
