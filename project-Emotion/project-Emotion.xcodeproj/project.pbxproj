@@ -82,11 +82,8 @@
 				4F0F800027019D8E00FC1E6A /* FloatingSVGView.swift */,
 				4FA269D5270A970C00E0330B /* SVGTextView.swift */,
 				4F362339270D5AE9000D680B /* UnderWaterSVGView.swift */,
-<<<<<<< HEAD
 				4FEFF16D26EB211E00BEE94C /* Main.storyboard */,
-=======
 				35C37F70271060CF00B13F74 /* AnimationView.swift */,
->>>>>>> b208afbe3285d373cb161f3bc6476128e9e5e506
 			);
 			path = View;
 			sourceTree = "<group>";
