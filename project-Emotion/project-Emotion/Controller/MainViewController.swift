@@ -1,6 +1,7 @@
 
 import UIKit
 import TweenKit
+import Macaw
 
 class MainViewController: UIViewController {
     
@@ -40,8 +41,14 @@ class MainViewController: UIViewController {
         setDateButtons()
         setDateLabel()
         setSelectDateView()
-        
         setRecordTableView()
+        
+        recordTableView.register(UITableViewCell.self,
+                               forCellReuseIdentifier: "TableViewCell")
+        recordTableView.dataSource = self
+        recordTableView.delegate = self
+        view.addSubview(recordTableView)
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -57,7 +64,7 @@ class MainViewController: UIViewController {
         scheduler.removeAll()
         // core data의 개수만큼 뷰 생성
         recordViews = setAnimationAtRecordViews(recordCounts: viewCounts, randomRotate: true)
-        print(view.subviews.count)
+        
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -88,15 +95,6 @@ class MainViewController: UIViewController {
     
     @IBAction func pressedAddRecordButton(_ sender: UIButton) {
         performSegue(withIdentifier: "mainToGauge", sender: nil)
-    }
-    
-    private func setRecordTableView() {
-        
-        recordTableView.setRecordsIntoTableView(currentRecords)
-        recordTableView.frame.size = CGSize(width: view.frame.width, height: view.frame.height * 0.7)
-        recordTableView.frame.origin = CGPoint(x: 0, y: view.frame.height * 0.25)
-        recordTableView.backgroundColor = .white
-        view.addSubview(recordTableView)
     }
     
     @IBAction func pressedGotoSettingButton(_ sender: UIButton) {
@@ -133,6 +131,7 @@ extension MainViewController {
         dateManager.setDateMode(newMode: 0)
         dateLabel.text = dateManager.getCurrentDateString()
         currentRecords = recordManager.getMatchingRecords()
+        recordTableView.reloadData()
     }
     
     @objc func changeDateModeToWeek() {
@@ -140,6 +139,7 @@ extension MainViewController {
         dateManager.setDateMode(newMode: 1)
         dateLabel.text = dateManager.getCurrentDateString()
         currentRecords = recordManager.getMatchingRecords()
+        recordTableView.reloadData()
     }
     
     @objc func changeDateModeToMonth() {
@@ -147,6 +147,7 @@ extension MainViewController {
         dateManager.setDateMode(newMode: 2)
         dateLabel.text = dateManager.getCurrentDateString()
         currentRecords = recordManager.getMatchingRecords()
+        recordTableView.reloadData()
     }
     
     private func setDateLabel() {
@@ -189,6 +190,7 @@ extension MainViewController {
         dateManager.changeDate(val: 1)
         dateLabel.text = dateManager.getCurrentDateString()
         currentRecords = recordManager.getMatchingRecords()
+        recordTableView.reloadData()
     }
     
     @objc func dateBackwardButtonPressed() {
@@ -196,6 +198,7 @@ extension MainViewController {
         dateManager.changeDate(val: -1)
         dateLabel.text = dateManager.getCurrentDateString()
         currentRecords = recordManager.getMatchingRecords()
+        recordTableView.reloadData()
     }
 }
 
@@ -348,6 +351,66 @@ extension MainViewController {
         let delay = Double.random(in: 0.0...0.5)
         let sequence = ActionSequence(actions: DelayAction(duration: delay), action)
         scheduler.run(action: sequence.yoyo().repeatedForever())
+    }
+    
+}
+
+extension MainViewController: UITableViewDelegate, UITableViewDataSource {
+    
+    
+    private func setRecordTableView() {
+        
+        recordTableView.setRecordsIntoTableView(currentRecords)
+        recordTableView.frame.size = CGSize(width: view.frame.width, height: view.frame.height * 0.4)
+        recordTableView.frame.origin = CGPoint(x: 0, y: view.frame.height * 0.25)
+        recordTableView.backgroundColor = .clear
+        view.addSubview(recordTableView)
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+        return currentRecords.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "TableViewCell",
+                                                     for: indexPath)
+        let svgImages = theme.instanceSVGImages()
+        
+        let recordSVGView = SVGView(frame: CGRect(x: cell.frame.width * 0.1,
+                                             y: 0,
+                                             width: cell.frame.height,
+                                             height: cell.frame.height))
+        let recordTimeLabel = UILabel(frame: CGRect(x: cell.frame.width * 0.3,
+                                                   y: 0,
+                                                   width: cell.frame.width * 0.3,
+                                                   height: cell.frame.height))
+        
+        let gauge = currentRecords[indexPath.row].gaugeLevel
+        let time = currentRecords[indexPath.row].createdDate
+        let memo = currentRecords[indexPath.row].memo
+        
+        let df = DateFormatter()
+        df.dateFormat = "h시 mm분"
+        df.locale = Locale(identifier:"ko_KR")
+        let timeString = df.string(from: time!)
+        
+        recordTimeLabel.text = timeString
+        recordTimeLabel.textAlignment = .left
+        recordTimeLabel.backgroundColor = .clear
+        recordTimeLabel.textColor = .black
+        
+        recordSVGView.backgroundColor = .clear
+        recordSVGView.node = theme.getNodeByFigure(figure: gauge, currentNode: nil, svgNodes: svgImages) ?? Node()
+        let svgShape = (recordSVGView.node as! Group).contents.first as! Shape
+        svgShape.fill = Color(CellTheme.shared.getCurrentColor(figure: gauge))
+        
+        cell.backgroundColor = .clear
+        cell.addSubview(recordSVGView)
+        cell.addSubview(recordTimeLabel)
+        
+        return cell
     }
     
 }

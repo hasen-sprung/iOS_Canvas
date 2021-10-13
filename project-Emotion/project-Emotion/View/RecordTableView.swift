@@ -7,7 +7,7 @@
 
 import UIKit
 
-class RecordTableView: UITableView, UITableViewDelegate {
+class RecordTableView: UITableView {
     
     var records: [Record] = [Record]()
     
@@ -16,20 +16,6 @@ class RecordTableView: UITableView, UITableViewDelegate {
         self.records = newRecords
         register(UITableViewCell.self, forCellReuseIdentifier: "TableViewCell")
         self.reloadData()
-    }
-    
-    func tableView(_ tableView: UITableView,
-                   numberOfRowsInSection section: Int) -> Int {
-        return records.count
-    }
-    
-    private func tableView(_ tableView: UITableView,
-                   cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell: UITableViewCell = tableView.dequeueReusableCell (withIdentifier: "TableViewCell")!
-        
-        cell.textLabel?.text = records[indexPath.row].memo
-        
-        return cell
     }
     
 }
