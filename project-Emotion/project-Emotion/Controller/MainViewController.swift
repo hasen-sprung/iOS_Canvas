@@ -389,7 +389,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
         
         let gauge = currentRecords[indexPath.row].gaugeLevel
         let time = currentRecords[indexPath.row].createdDate
-        let memo = currentRecords[indexPath.row].memo
+//        let memo = currentRecords[indexPath.row].memo
         
         let df = DateFormatter()
         df.dateFormat = "h시 mm분"
