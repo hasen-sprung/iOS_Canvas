@@ -44,7 +44,7 @@ class MainViewController: UIViewController {
         setRecordTableView()
         
         recordTableView.register(UITableViewCell.self,
-                               forCellReuseIdentifier: "TableViewCell")
+                                 forCellReuseIdentifier: "TableViewCell")
         recordTableView.dataSource = self
         recordTableView.delegate = self
         view.addSubview(recordTableView)
@@ -52,7 +52,7 @@ class MainViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-
+        
         // core data에 추가된 데이터가 있을수 있으므로 뷰의 데이터를 리로드
         theme = ThemeManager.shared.getThemeInstance()
         self.view.backgroundColor = theme.getColor().view.main
@@ -63,13 +63,13 @@ class MainViewController: UIViewController {
         // 애니메이션 : 기존에 있던 액션 삭제
         scheduler.removeAll()
         // core data의 개수만큼 뷰 생성
-        recordViews = setAnimationAtRecordViews(recordCounts: viewCounts, randomRotate: true)
+        //        recordViews = setAnimationAtRecordViews(recordCounts: viewCounts, randomRotate: true)
         
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         // MARK: - 기존에 뷰에 추가되었던 서브뷰들을 제거 : 흐음 근데 이 방법이 최선인가? 메인뷰로 갈때마다 생성 삭제를 반복하는게 최선일까요?
-        clearSubviews(views: recordViews)
+        //        clearSubviews(views: recordViews)
     }
     
     func setAddRecordButton() {
@@ -86,7 +86,7 @@ class MainViewController: UIViewController {
         let themeValue = userDefaults.integer(forKey: userDefaultColor)
         ThemeManager.shared.setUserThemeValue(themeValue: themeValue)
     }
-
+    
     // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // if 메인에서 게이지뷰로 전달할 데이터가 있으면 전달.
@@ -128,26 +128,17 @@ extension MainViewController {
     
     @objc func changeDateModeToDate() {
         
-        dateManager.setDateMode(newMode: 0)
-        dateLabel.text = dateManager.getCurrentDateString()
-        currentRecords = recordManager.getMatchingRecords()
-        recordTableView.reloadData()
+        modeChangeButtonsPressed(mode: 0)
     }
     
     @objc func changeDateModeToWeek() {
         
-        dateManager.setDateMode(newMode: 1)
-        dateLabel.text = dateManager.getCurrentDateString()
-        currentRecords = recordManager.getMatchingRecords()
-        recordTableView.reloadData()
+        modeChangeButtonsPressed(mode: 1)
     }
     
     @objc func changeDateModeToMonth() {
         
-        dateManager.setDateMode(newMode: 2)
-        dateLabel.text = dateManager.getCurrentDateString()
-        currentRecords = recordManager.getMatchingRecords()
-        recordTableView.reloadData()
+        modeChangeButtonsPressed(mode: 2)
     }
     
     private func setDateLabel() {
@@ -187,18 +178,29 @@ extension MainViewController {
     
     @objc func dateForwardButtonPressed() {
         
-        dateManager.changeDate(val: 1)
-        dateLabel.text = dateManager.getCurrentDateString()
-        currentRecords = recordManager.getMatchingRecords()
-        recordTableView.reloadData()
+        dateChangeButtonsPressed(val: 1)
     }
     
     @objc func dateBackwardButtonPressed() {
         
-        dateManager.changeDate(val: -1)
+        dateChangeButtonsPressed(val: -1)
+    }
+    
+    private func modeChangeButtonsPressed(mode: Int) {
+        
+        dateManager.setDateMode(newMode: mode)
         dateLabel.text = dateManager.getCurrentDateString()
         currentRecords = recordManager.getMatchingRecords()
-        recordTableView.reloadData()
+        recordTableView.removeAllSubviewAndReload()
+        
+    }
+    
+    private func dateChangeButtonsPressed(val: Int) {
+        
+        dateManager.changeDate(val: val)
+        dateLabel.text = dateManager.getCurrentDateString()
+        currentRecords = recordManager.getMatchingRecords()
+        recordTableView.removeAllSubviewAndReload()
     }
 }
 
@@ -360,7 +362,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     
     private func setRecordTableView() {
         
-        recordTableView.setRecordsIntoTableView(currentRecords)
+        recordTableView.rowHeight = UITableView.automaticDimension
         recordTableView.frame.size = CGSize(width: view.frame.width, height: view.frame.height * 0.4)
         recordTableView.frame.origin = CGPoint(x: 0, y: view.frame.height * 0.25)
         recordTableView.backgroundColor = .clear
@@ -374,43 +376,12 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "TableViewCell",
-                                                     for: indexPath)
-        let svgImages = theme.instanceSVGImages()
-        
-        let recordSVGView = SVGView(frame: CGRect(x: cell.frame.width * 0.1,
-                                             y: 0,
-                                             width: cell.frame.height,
-                                             height: cell.frame.height))
-        let recordTimeLabel = UILabel(frame: CGRect(x: cell.frame.width * 0.3,
-                                                   y: 0,
-                                                   width: cell.frame.width * 0.3,
-                                                   height: cell.frame.height))
-        
-        let gauge = currentRecords[indexPath.row].gaugeLevel
-        let time = currentRecords[indexPath.row].createdDate
-//        let memo = currentRecords[indexPath.row].memo
-        
-        let df = DateFormatter()
-        df.dateFormat = "h시 mm분"
-        df.locale = Locale(identifier:"ko_KR")
-        let timeString = df.string(from: time!)
-        
-        recordTimeLabel.text = timeString
-        recordTimeLabel.textAlignment = .left
-        recordTimeLabel.backgroundColor = .clear
-        recordTimeLabel.textColor = .black
-        
-        recordSVGView.backgroundColor = .clear
-        recordSVGView.node = theme.getNodeByFigure(figure: gauge, currentNode: nil, svgNodes: svgImages) ?? Node()
-        let svgShape = (recordSVGView.node as! Group).contents.first as! Shape
-        svgShape.fill = Color(CellTheme.shared.getCurrentColor(figure: gauge))
-        
-        cell.backgroundColor = .clear
-        cell.addSubview(recordSVGView)
-        cell.addSubview(recordTimeLabel)
-        
+        let cell = recordTableView.makeDayCell(tableView, indexPath, currentRecords)
         return cell
     }
     
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        
+        return UITableView.automaticDimension
+    }
 }
