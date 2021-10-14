@@ -55,6 +55,11 @@ class MainViewController: UIViewController {
         currentRecords = recordManager.getMatchingRecords()
         
         recordAnimationView.runAnimation(records: currentRecords)
+        
+        let seeder = DataHelper()
+        if currentRecords.count < 50 {
+            seeder.seedRecords()
+        }
     }
     
     override func viewDidDisappear(_ animated: Bool) {
