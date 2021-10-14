@@ -13,7 +13,7 @@ class DataHelper {
     
     private let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
 
-    func seedRecords() {
+    private func seedRecords() {
         
         for _ in 1 ... 100 {
 
@@ -38,5 +38,16 @@ class DataHelper {
         }
         
         (UIApplication.shared.delegate as! AppDelegate).saveContext()
+    }
+    
+    func loadSeeder() {
+    
+        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+        let recordsRequest = Record.fetchRequest()
+        let recordCount = try! context.fetch(recordsRequest)
+        
+        if  recordCount.count < 50 {
+            self.seedRecords()
+        }
     }
 }

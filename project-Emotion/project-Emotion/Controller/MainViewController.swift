@@ -59,9 +59,7 @@ class MainViewController: UIViewController {
         recordAnimationView.runAnimation(records: currentRecords)
         
         let seeder = DataHelper()
-        if currentRecords.count < 50 {
-            seeder.seedRecords()
-        }
+        seeder.loadSeeder()
         // 처음 뷰가 로드될 때는 항상 animated subview
         changeSubView(token: true)
     }
