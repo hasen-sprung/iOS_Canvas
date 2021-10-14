@@ -225,6 +225,7 @@ extension MainViewController {
         currentRecords = recordManager.getMatchingRecords()
         recordTableView.removeAllSubviewAndReload()
         
+        recordAnimationView.reloadAnimation(records: currentRecords)
     }
     
     private func dateChangeButtonsPressed(val: Int) {
@@ -233,6 +234,8 @@ extension MainViewController {
         dateLabel.text = dateManager.getCurrentDateString()
         currentRecords = recordManager.getMatchingRecords()
         recordTableView.removeAllSubviewAndReload()
+        
+        recordAnimationView.reloadAnimation(records: currentRecords)
     }
 }
 
