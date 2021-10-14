@@ -27,6 +27,8 @@ class MainViewController: UIViewController {
     private let dateManager = DateManager.shared
     private let recordManager = RecordManager.shared
     
+    private var changeSubViewToken = true
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -53,13 +55,15 @@ class MainViewController: UIViewController {
         self.view.backgroundColor = theme.getColor().view.main
         
         currentRecords = recordManager.getMatchingRecords()
-        
+
         recordAnimationView.runAnimation(records: currentRecords)
         
         let seeder = DataHelper()
         if currentRecords.count < 50 {
             seeder.seedRecords()
         }
+        // 처음 뷰가 로드될 때는 항상 animated subview
+        changeSubView(token: true)
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -85,6 +89,34 @@ class MainViewController: UIViewController {
     @IBAction func pressedGotoSettingButton(_ sender: UIButton) {
         performSegue(withIdentifier: "mainToSetting", sender: nil)
     }
+}
+
+// MARK: - motion shake to change subview
+
+extension MainViewController {
+    
+    override func motionBegan(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
+        if motion == .motionShake {
+            changeSubView(token: changeSubViewToken)
+            motionEnded(motion, with: event)
+        }
+    }
+    
+    // MARK: - token: True이면 애니메이션 뷰 -> 테이블 뷰
+    private func changeSubView(token: Bool) {
+        if token == true {
+            recordAnimationView.isHidden = false
+            recordTableView.isHidden = true
+            
+            changeSubViewToken = false
+        } else {
+            recordAnimationView.isHidden = true
+            recordTableView.isHidden = false
+            
+            changeSubViewToken = true
+        }
+    }
+    
 }
 
 extension MainViewController {
@@ -197,6 +229,7 @@ extension MainViewController {
         currentRecords = recordManager.getMatchingRecords()
         recordTableView.removeAllSubviewAndReload()
         
+        recordAnimationView.reloadAnimation(records: currentRecords)
     }
     
     private func dateChangeButtonsPressed(val: Int) {
@@ -205,6 +238,8 @@ extension MainViewController {
         dateLabel.text = dateManager.getCurrentDateString()
         currentRecords = recordManager.getMatchingRecords()
         recordTableView.removeAllSubviewAndReload()
+        
+        recordAnimationView.reloadAnimation(records: currentRecords)
     }
 }
 
