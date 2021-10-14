@@ -40,7 +40,6 @@ class RecordAnimationView: UIView {
     func setAnimationAtRecordViews(records: [Record], randomRotate: Bool) -> [UIView] {
         
         var recordViews = [UIView]()
-        let svgImages = theme.instanceSVGImages()
         
         for idx in 0 ..< records.count {
             let animatedView = UIView()
@@ -54,6 +53,7 @@ class RecordAnimationView: UIView {
             
             // MARK: - Set SVG images by figure
             // TODO: figure에 따라 노드에서 적합한 이미지를 가져오는 함수가 필요함
+            let svgImages = theme.instanceSVGImages()
             let newSVGView = SVGView(frame: CGRect(origin: .zero, size: animatedView.frame.size))
             newSVGView.backgroundColor = .clear
             newSVGView.node = theme.getNodeByFigure(figure: figure, currentNode: nil, svgNodes: svgImages)!
