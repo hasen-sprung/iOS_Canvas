@@ -90,6 +90,8 @@ class RecordAnimationView: UIView {
         let minY: CGFloat = 0
         
         var isOverlap = true
+        var ratio = overlapRatio
+        var overlapCount = 0
         
         while isOverlap {
             view.center = CGPoint(x: CGFloat.random(in: minX...maxX), y: CGFloat.random(in: minY...maxY))
@@ -98,10 +100,16 @@ class RecordAnimationView: UIView {
             }
             for rv in recordViews {
                 let checkViewBound = CGRect(origin: rv.frame.origin,
-                                            size: CGSize(width: rv.frame.size.width * overlapRatio,
-                                                         height: rv.frame.size.height * overlapRatio))
+                                            size: CGSize(width: rv.frame.size.width * ratio,
+                                                         height: rv.frame.size.height * ratio))
                 if view.frame.intersects(checkViewBound) {
                     isOverlap = true
+                    overlapCount += 1
+                    if overlapCount > 10 {
+                        ratio -= 0.1
+                        // TODO: 더 elegant한 방법은 없을까?
+                        //print(ratio)
+                    }
                     break
                 } else {
                     isOverlap = false
