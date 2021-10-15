@@ -42,38 +42,37 @@ class RecordAnimationView: UIView {
         var recordViews = [UIView]()
         
         for idx in 0 ..< records.count {
-            let animatedView = UIView()
             let figure = records[idx].gaugeLevel
             
-            // MARK: - Set size and Animation by figure
             // TODO: view의 크기는 Record가 생성된 시간에 따라 결정됨 private setRecordViewSize()
-            let randSize: CGFloat = CGFloat.random(in: 25.0...55.0)
-            animatedView.frame.size = CGSize(width: randSize, height: randSize)
-            animatedView.backgroundColor = .clear
+            let randCGFloat: CGFloat = CGFloat.random(in: 25.0...55.0)
+            let randSize: CGSize = CGSize(width: randCGFloat, height: randCGFloat)
             
             // MARK: - Set SVG images by figure
             // TODO: figure에 따라 노드에서 적합한 이미지를 가져오는 함수가 필요함
             let svgImages = theme.instanceSVGImages()
-            let newSVGView = SVGView(frame: CGRect(origin: .zero, size: animatedView.frame.size))
+            let newSVGView = SVGView(frame: CGRect(origin: .zero, size: randSize))
             newSVGView.backgroundColor = .clear
             newSVGView.node = theme.getNodeByFigure(figure: figure, currentNode: nil, svgNodes: svgImages)!
             let svgShape = (newSVGView.node as! Group).contents.first as! Shape
             svgShape.fill = Color(CellTheme.shared.getCurrentColor(figure: figure))
             
-            animatedView.addSubview(newSVGView)
             setActionByFigure(view: newSVGView, figure: figure)
             
             // MARK: - set random location and rotate record view
             let rotateView = UIView()
-            let randAngle: CGFloat = CGFloat.random(in: 0.0...360.0)
+            rotateView.frame.size = randSize
+            setRandomLocationRecordView(view: rotateView, superView: self, recordViews: recordViews, overlapRatio: 0.5)
             
-            setRandomLocationRecordView(view: rotateView, superView: self)
+            // MARK: - random rotate
+
+            let randAngle: CGFloat = CGFloat.random(in: 0.0...360.0)
             if randomRotate {
                 rotateView.transform = CGAffineTransform(rotationAngle: randAngle)
             }
             
             // MARK: - connect view
-            rotateView.addSubview(animatedView)
+            rotateView.addSubview(newSVGView)
             self.addSubview(rotateView) //TODO: 현재는 메인뷰에 바로 서브뷰를 추가하지만 애니메이션 뷰에 추가하도록 수정
             recordViews.append(rotateView)
         }
@@ -81,15 +80,34 @@ class RecordAnimationView: UIView {
         return recordViews
     }
     
-    private func setRandomLocationRecordView(view: UIView, superView: UIView) {
+    // MARK: - view의 랜덤 위치를 정한다 (중첩되는 부분을 관리할 수 있다.)
+    
+    private func setRandomLocationRecordView(view: UIView, superView: UIView, recordViews: [UIView], overlapRatio: CGFloat) {
         // TODO: 겹치는 부분에 대한 미세한 정의, 완전하게 겹치는건 안되지만 살짝 겹치는건 괜찮다.
-        
         let maxX = superView.bounds.width
         let maxY = superView.bounds.height
         let minX: CGFloat = 0
         let minY: CGFloat = 0
         
-        view.center = CGPoint(x: CGFloat.random(in: minX...maxX), y: CGFloat.random(in: minY...maxY))
+        var isOverlap = true
+        
+        while isOverlap {
+            view.center = CGPoint(x: CGFloat.random(in: minX...maxX), y: CGFloat.random(in: minY...maxY))
+            if recordViews.count == 0 {
+                break
+            }
+            for rv in recordViews {
+                let checkViewBound = CGRect(origin: rv.frame.origin,
+                                            size: CGSize(width: rv.frame.size.width * overlapRatio,
+                                                         height: rv.frame.size.height * overlapRatio))
+                if view.frame.intersects(checkViewBound) {
+                    isOverlap = true
+                    break
+                } else {
+                    isOverlap = false
+                }
+            }
+        }
     }
     
     // MARK: - figure에 따라 애니메이션 동작이 달라진다.
