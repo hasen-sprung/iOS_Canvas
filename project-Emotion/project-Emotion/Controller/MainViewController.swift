@@ -32,21 +32,22 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        recordTableView.dataSource = self
+        recordTableView.delegate = self
+        
         getUserDefault()
         setAddRecordButton()
         setDateButtons()
         setDateLabel()
         setSelectDateView()
+        
         setRecordTableView()
         setRecordAnimationView()
         
-        recordTableView.register(UITableViewCell.self,
-                                 forCellReuseIdentifier: "TableViewCell")
-        recordTableView.dataSource = self
-        recordTableView.delegate = self
         view.addSubview(recordTableView)
-        
     }
+    
+    
     
     override func viewWillAppear(_ animated: Bool) {
         
@@ -225,7 +226,7 @@ extension MainViewController {
         dateManager.setDateMode(newMode: mode)
         dateLabel.text = dateManager.getCurrentDateString()
         currentRecords = recordManager.getMatchingRecords()
-        recordTableView.removeAllSubviewAndReload()
+        recordTableView.reloadData()
         
         recordAnimationView.reloadAnimation(records: currentRecords)
     }
@@ -235,7 +236,7 @@ extension MainViewController {
         dateManager.changeDate(val: val)
         dateLabel.text = dateManager.getCurrentDateString()
         currentRecords = recordManager.getMatchingRecords()
-        recordTableView.removeAllSubviewAndReload()
+        recordTableView.reloadData()
         
         recordAnimationView.reloadAnimation(records: currentRecords)
     }
@@ -249,6 +250,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
         recordTableView.frame.size = CGSize(width: view.frame.width, height: view.frame.height * 0.4)
         recordTableView.frame.origin = CGPoint(x: 0, y: view.frame.height * 0.25)
         recordTableView.backgroundColor = .clear
+        recordTableView.setCellConfig()
         view.addSubview(recordTableView)
     }
     
@@ -259,12 +261,9 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = recordTableView.makeDayCell(tableView, indexPath, currentRecords)
-        return cell
-    }
-    
-    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "RecordTableViewCell", for: indexPath) as! RecordTableViewCell
+
         
-        return UITableView.automaticDimension
+        return cell
     }
 }
