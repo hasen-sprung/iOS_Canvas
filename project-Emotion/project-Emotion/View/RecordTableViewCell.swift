@@ -37,17 +37,19 @@ class RecordTableViewCell: UITableViewCell {
     
     func setCellContents(records: [Record], indexPath: IndexPath) {
         
+        
         let time = records[indexPath.row].createdDate
         let figure = records[indexPath.row].gaugeLevel
         let memo = records[indexPath.row].memo
+        let color = CellTheme.shared.getCurrentColor(figure: figure)
         svgView.backgroundColor = .clear
-        SvgImageView.backgroundColor = .lightGray
+        SvgImageView.backgroundColor = .white
         SvgImageView.layer.cornerRadius = SvgImageView.frame.width / 2
         let svgImages = theme.instanceSVGImages()
         let currentImage = theme.getNodeByFigure(figure: records[indexPath.row].gaugeLevel, currentNode: nil, svgNodes: svgImages) ?? Node()
         svgView.node = currentImage
         let svgShape = (svgView.node as! Group).contents.first as! Shape
-        svgShape.fill = Color(CellTheme.shared.getCurrentColor(figure: figure))
+        svgShape.fill = Color(color)
         
         var timeString = "오전 0:00"
         let df = DateFormatter()
@@ -58,13 +60,18 @@ class RecordTableViewCell: UITableViewCell {
         }
         
         timeLabel.text = timeString
-        memoBackgroundView.backgroundColor = .clear
+        memoBackgroundView.backgroundColor = .white
+        memoBackgroundView.layer.cornerRadius = 15
         memoView.text = memo
         memoView.backgroundColor = .clear
         memoView.frame.size = CGSize(width: memoView.frame.width, height: memoView.optimalHeight)
-        if memoView.text == nil {
+        if memoView.text?.count == 0 {
+            memoBackgroundView.backgroundColor = .clear
             memoView.alpha = 0.0
         }
+        
+        self.contentView.backgroundColor = .clear// UIColor(hex: color)
+        self.contentView.layer.cornerRadius = 15
     }
     
     private func setCellContentsLayout() {
@@ -73,12 +80,6 @@ class RecordTableViewCell: UITableViewCell {
         self.contentView.backgroundColor = .clear
     }
     
-//    override func layoutSubviews() {
-//        super.layoutSubviews()
-//
-//        contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 5, left: 0, bottom: 5, right: 0))
-//    }
-//    
 }
 
 extension UILabel {
