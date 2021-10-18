@@ -14,7 +14,7 @@ class UnderWaterSVGView: UIView {
     var svgView = [SVGView]()
     
     var theme = ThemeManager.shared.getThemeInstance()
-    var themeSVGImages: [Node]!
+    var themeSVGImages = [Node]()
     
     let centerX: [CGFloat] = [0.40, 0.60, 0.45, 0.62, 0.42, 0.65]
     let centerY: [CGFloat] = [0.17, 0.36, 0.49, 0.61, 0.76, 0.88]
@@ -36,7 +36,7 @@ class UnderWaterSVGView: UIView {
             newView.alpha = 0.9
             
             themeSVGImages = theme.instanceSVGImages()
-            newSVGView.node = theme.getNodeByFigure(figure: randFigure, currentNode: nil, svgNodes: themeSVGImages) ?? theme.getNodeByFigure(figure: 0.5, currentNode: nil, svgNodes: themeSVGImages)!
+            newSVGView.node = theme.getNodeByFigure(figure: randFigure, currentNode: nil, svgNodes: themeSVGImages) ?? Node()
             let fillShape = (newSVGView.node as! Group).contents.first as! Shape
             fillShape.fill = Color(CellTheme.shared.getCurrentColor(figure: randFigure))
             fillShape.stroke = Stroke(fill: Color.white, width: 3)
@@ -49,8 +49,6 @@ class UnderWaterSVGView: UIView {
             
             svgView.append(newSVGView)
             underWaterSVGs.append(newView)
-         //   let randAngle: CGFloat = CGFloat.random(in: 0.0 ... 360.0)
-        //    underWaterSVGs[idx - 1].transform = CGAffineTransform(rotationAngle: randAngle * CGFloat(Double.pi) / 180)
         }
     }
         
@@ -94,7 +92,7 @@ class UnderWaterSVGView: UIView {
                 
                 if underWaterSVGs[idx].alpha >= 0.0 && underWaterSVGs[idx].alpha <= 0.1 {
                     
-                    svgView[idx].node = theme.getNodeByFigure(figure: randFigure, currentNode: nil, svgNodes: themeSVGImages) ?? theme.getNodeByFigure(figure: 0.5, currentNode: nil, svgNodes: themeSVGImages)!
+                    svgView[idx].node = theme.getNodeByFigure(figure: randFigure, currentNode: nil, svgNodes: themeSVGImages) ?? theme.getNodeByFigure(figure: 0.5, currentNode: nil, svgNodes: themeSVGImages) ?? Node()
                     let fillShape = (svgView[idx].node as! Group).contents.first as! Shape
                     fillShape.fill = Color(CellTheme.shared.getCurrentColor(figure: randFigure))
                     fillShape.stroke = Stroke(fill: Color.white, width: 3)

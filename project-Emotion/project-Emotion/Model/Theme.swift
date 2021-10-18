@@ -112,16 +112,23 @@ class CellTheme: Theme, ThemeProtocol  {
     
     override func instanceSVGImages() -> [Node] {
         
-        let nodeGroup = try! SVGParser.parse(resource: "cellImages") as! Group
-        var svgNodes = [Node]()
-        
-        svgNodes.append(nodeGroup.nodeBy(tag: "svg_1")!)
-        svgNodes.append(nodeGroup.nodeBy(tag: "svg_2")!)
-        svgNodes.append(nodeGroup.nodeBy(tag: "svg_3")!)
-        svgNodes.append(nodeGroup.nodeBy(tag: "svg_4")!)
-        svgNodes.append(nodeGroup.nodeBy(tag: "svg_5")!)
-        
-        return svgNodes
+        do {
+            
+            let nodeGroup = try SVGParser.parse(resource: "cellImages") as! Group
+            var svgNodes = [Node]()
+            
+            svgNodes.append(nodeGroup.nodeBy(tag: "svg_1") ?? Node())
+            svgNodes.append(nodeGroup.nodeBy(tag: "svg_2") ?? Node())
+            svgNodes.append(nodeGroup.nodeBy(tag: "svg_3") ?? Node())
+            svgNodes.append(nodeGroup.nodeBy(tag: "svg_4") ?? Node())
+            svgNodes.append(nodeGroup.nodeBy(tag: "svg_5") ?? Node())
+            
+            return svgNodes
+        } catch {
+            
+            print("svg parsing error _ ", error)
+            return [Node]()
+        }
     }
     
     
@@ -144,16 +151,23 @@ class TestTheme: Theme, ThemeProtocol {
     
     override func instanceSVGImages() -> [Node] {
         
-        let nodeGroup = try! SVGParser.parse(resource: "cellImages") as! Group
-        var svgNodes = [Node]()
-        
-        svgNodes.append(nodeGroup.nodeBy(tag: "svg_1")!)
-        svgNodes.append(nodeGroup.nodeBy(tag: "svg_1")!)
-        svgNodes.append(nodeGroup.nodeBy(tag: "svg_1")!)
-        svgNodes.append(nodeGroup.nodeBy(tag: "svg_1")!)
-        svgNodes.append(nodeGroup.nodeBy(tag: "svg_1")!)
-        
-        return svgNodes
+        do {
+            
+            let nodeGroup = try SVGParser.parse(resource: "cellImages") as! Group
+            var svgNodes = [Node]()
+            
+            svgNodes.append(nodeGroup.nodeBy(tag: "svg_1") ?? Node())
+            svgNodes.append(nodeGroup.nodeBy(tag: "svg_2") ?? Node())
+            svgNodes.append(nodeGroup.nodeBy(tag: "svg_3") ?? Node())
+            svgNodes.append(nodeGroup.nodeBy(tag: "svg_4") ?? Node())
+            svgNodes.append(nodeGroup.nodeBy(tag: "svg_5") ?? Node())
+            
+            return svgNodes
+        } catch {
+            
+            print("svg parsing error _ ", error)
+            return [Node]()
+        }
     }
     
 }

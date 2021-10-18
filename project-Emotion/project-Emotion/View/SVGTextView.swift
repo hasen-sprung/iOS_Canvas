@@ -7,7 +7,7 @@
 
 import UIKit
 
-@objc protocol SVGTextViewDelegate {
+protocol SVGTextViewDelegate {
     
     func dismissTextViewSVG()
     
@@ -78,7 +78,10 @@ class SVGTextView: UIView {
         df.dateFormat = "M월 d일 a h시 mm분"
         df.locale = Locale(identifier:"ko_KR")
         
-        let dateString = df.string(from: self.date!)
+        var dateString = ""
+        if let date = self.date {
+             dateString = df.string(from: date)
+        }
         
         dateLabel.frame.size = CGSize(width: textBaseView.frame.width * 0.8, height: textBaseView.frame.height * 0.125)
         dateLabel.center = CGPoint(x: textBaseView.frame.width / 2, y: textBaseView.frame.height * 0.0625)

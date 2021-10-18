@@ -19,7 +19,7 @@ class RecordManager {
     
     func getMatchingRecords(currentDate: Date = DateManager.shared.getCurrentDate(),
                             currentMode: Int = DateManager.shared.getCurrentDateMode()) -> [Record] {
-
+        
         var records = [Record]()
         
         var calendar = Calendar.current
@@ -32,12 +32,12 @@ class RecordManager {
             let dateFrom = calendar.startOfDay(for: currentDate)
             let dateTo = calendar.date(byAdding: .day, value: 1, to: dateFrom)
             
-            print("Date : ", dateFrom, " ~ ", dateTo!)
-            
-            let fromPredicate = NSPredicate(format: "%@ <= %K", dateFrom as NSDate, #keyPath(Record.createdDate))
-            let toPredicate = NSPredicate(format: "%K < %@", #keyPath(Record.createdDate), dateTo! as NSDate)
-            let datePredicate = NSCompoundPredicate(andPredicateWithSubpredicates: [fromPredicate, toPredicate])
-            recordsRequest.predicate = datePredicate
+            if let dateTo = dateTo {
+                let fromPredicate = NSPredicate(format: "%@ <= %K", dateFrom as NSDate, #keyPath(Record.createdDate))
+                let toPredicate = NSPredicate(format: "%K < %@", #keyPath(Record.createdDate), dateTo as NSDate)
+                let datePredicate = NSCompoundPredicate(andPredicateWithSubpredicates: [fromPredicate, toPredicate])
+                recordsRequest.predicate = datePredicate
+            }
             do { records = try context.fetch(recordsRequest) } catch { print("context Error") }
             
             return records
@@ -47,27 +47,29 @@ class RecordManager {
             let dateFrom = calendar.startOfDay(for: currentDate)
             let dateTo = calendar.date(byAdding: .day, value: 6, to: dateFrom)
             
-            print("Date : ", dateFrom, " ~ ", dateTo!)
-            
-            let fromPredicate = NSPredicate(format: "%@ <= %K", dateFrom as NSDate, #keyPath(Record.createdDate))
-            let toPredicate = NSPredicate(format: "%K < %@", #keyPath(Record.createdDate), dateTo! as NSDate)
-            let datePredicate = NSCompoundPredicate(andPredicateWithSubpredicates: [fromPredicate, toPredicate])
-            recordsRequest.predicate = datePredicate
+            if let dateTo = dateTo {
+                let fromPredicate = NSPredicate(format: "%@ <= %K", dateFrom as NSDate, #keyPath(Record.createdDate))
+                let toPredicate = NSPredicate(format: "%K < %@", #keyPath(Record.createdDate), dateTo as NSDate)
+                let datePredicate = NSCompoundPredicate(andPredicateWithSubpredicates: [fromPredicate, toPredicate])
+                recordsRequest.predicate = datePredicate
+            }
             do { records = try context.fetch(recordsRequest) } catch { print("context Error") }
             
             return records
             
         } else if currentMode == 2 {
             
-            let dateFrom = calendar.dateInterval(of: .month, for: currentDate)?.start
-            let dateTo = calendar.date(byAdding: .month, value: 1, to: dateFrom!)
+            guard let dateFrom = calendar.dateInterval(of: .month, for: currentDate)?.start else { return records }
             
-            print("Date : ", dateFrom!, " ~ ", dateTo!)
+            let dateTo = calendar.date(byAdding: .month, value: 1, to: dateFrom)
             
-            let fromPredicate = NSPredicate(format: "%@ <= %K", dateFrom! as NSDate, #keyPath(Record.createdDate))
-            let toPredicate = NSPredicate(format: "%K < %@", #keyPath(Record.createdDate), dateTo! as NSDate)
-            let datePredicate = NSCompoundPredicate(andPredicateWithSubpredicates: [fromPredicate, toPredicate])
-            recordsRequest.predicate = datePredicate
+            if let dateTo = dateTo {
+                
+                let fromPredicate = NSPredicate(format: "%@ <= %K", dateFrom as NSDate, #keyPath(Record.createdDate))
+                let toPredicate = NSPredicate(format: "%K < %@", #keyPath(Record.createdDate), dateTo as NSDate)
+                let datePredicate = NSCompoundPredicate(andPredicateWithSubpredicates: [fromPredicate, toPredicate])
+                recordsRequest.predicate = datePredicate
+            }
             do { records = try context.fetch(recordsRequest) } catch { print("context Error") }
             
             return records

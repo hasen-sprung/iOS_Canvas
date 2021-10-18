@@ -30,21 +30,21 @@ class DateManager {
         
         if dateMode == 0 {
             
-            currentDate = Calendar.current.date(byAdding: .day, value: val, to: currentDate)!
+            currentDate = Calendar.current.date(byAdding: .day, value: val, to: currentDate) ?? Date()
             
         } else if dateMode == 1 {
             
-            currentDate = Calendar.current.date(byAdding: .weekOfMonth, value: val, to: currentDate)!
+            currentDate = Calendar.current.date(byAdding: .weekOfMonth, value: val, to: currentDate) ?? Date()
             
         } else if dateMode == 2 {
             
-            currentDate = Calendar.current.date(byAdding: .month, value: val, to: currentDate)!
+            currentDate = Calendar.current.date(byAdding: .month, value: val, to: currentDate) ?? Date()
         }
     }
     
     func getCurrentDateString() -> String {
         
-        let dateString: String!
+        var dateString: String = ""
         
         if dateMode == 0 {
             
@@ -58,9 +58,9 @@ class DateManager {
             currentDate = currentDate.startOfWeek()
             
             var tempDate = currentDate
-            var tempDateString: String!
+            var tempDateString: String = ""
             
-            tempDate = Calendar.current.date(byAdding: .day, value: 6, to: tempDate)!
+            tempDate = Calendar.current.date(byAdding: .day, value: 6, to: tempDate) ?? Date()
             dateFormat.dateFormat = "M월 d일"
             dateString = dateFormat.string(from: self.currentDate)
             tempDateString = dateFormat.string(from: tempDate)
@@ -91,6 +91,6 @@ extension Calendar {
 }
 extension Date {
     func startOfWeek(using calendar: Calendar = .gregorian) -> Date {
-        calendar.dateComponents([.calendar, .yearForWeekOfYear, .weekOfYear], from: self).date!
+        calendar.dateComponents([.calendar, .yearForWeekOfYear, .weekOfYear], from: self).date ?? Date()
     }
 }
