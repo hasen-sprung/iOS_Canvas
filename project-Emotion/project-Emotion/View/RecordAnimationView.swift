@@ -105,10 +105,9 @@ class RecordAnimationView: UIView {
                 if view.frame.intersects(checkViewBound) {
                     isOverlap = true
                     overlapCount += 1
+                    // TODO: 더 elegant한 방법은 없을까?
                     if overlapCount > 10 {
                         ratio -= 0.1
-                        // TODO: 더 elegant한 방법은 없을까?
-                        //print(ratio)
                     }
                     break
                 } else {
@@ -124,24 +123,21 @@ class RecordAnimationView: UIView {
         
         var action: FiniteTimeAction
         
-        action = moveUpDownAction(view: view, moveUpDownLen: 10, sizeMultiple: 1.2)
+        switch figure {
+        default:
+            action = moveUpDownAction(view: view, moveUpDownLen: 10, sizeMultiple: 1.2)
+        }
         
-//        if figure < 0.2 {
-//
-//        } else if figure < 0.4 {
-//
-//        } else if figure < 0.6 {
-//
-//        } else if figure < 0.8 {
-//
-//        } else {
-//
-//        }
-        
+        action = addDelayAction(action: action)
+        scheduler.run(action: action.yoyo().repeatedForever())
+    }
+    
+    private func addDelayAction(action: FiniteTimeAction) -> ActionSequence {
         // MARK: - delay: 액션이 실행되기전 잠깐 멈칫하는 시간을 앞 뒤 언제든 설정할 수 있음
         let delay = Double.random(in: 0.0...0.5)
         let sequence = ActionSequence(actions: DelayAction(duration: delay), action)
-        scheduler.run(action: sequence.yoyo().repeatedForever())
+        
+        return sequence
     }
 }
 
@@ -150,8 +146,8 @@ extension RecordAnimationView {
     
     private func fastMoveAction(view: UIView) -> FiniteTimeAction {
         
-        let randomMoveDistanceX = CGFloat.random(in: 20...30) * CGFloat.random(in: -1...1)
-        let randomMoveDistanceY = CGFloat.random(in: 20...30) * CGFloat.random(in: -1...1)
+        let randomMoveDistanceX = CGFloat.random(in: 10...12) * CGFloat.random(in: -1...1)
+        let randomMoveDistanceY = CGFloat.random(in: 10...12) * CGFloat.random(in: -1...1)
         
         let fromRect = CGRect(origin: view.center, size: view.frame.size)
         let toRect = CGRect(origin: CGPoint(x: view.center.x + randomMoveDistanceX, y: view.center.y + randomMoveDistanceY), size: view.frame.size)

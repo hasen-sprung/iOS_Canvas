@@ -119,10 +119,24 @@
                     <view key="view" contentMode="scaleToFill" id="xsb-Q2-c8Q">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="IOW-KP-jIa" userLabel="background">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                            </imageView>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="ApZ-3J-bLp"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="IOW-KP-jIa" secondAttribute="trailing" id="0XR-D2-v4y"/>
+                            <constraint firstItem="IOW-KP-jIa" firstAttribute="top" secondItem="xsb-Q2-c8Q" secondAttribute="top" id="ffy-3y-e5o"/>
+                            <constraint firstItem="IOW-KP-jIa" firstAttribute="leading" secondItem="xsb-Q2-c8Q" secondAttribute="leading" id="ilq-hq-ogO"/>
+                            <constraint firstAttribute="bottom" secondItem="IOW-KP-jIa" secondAttribute="bottom" id="mYP-De-8iZ"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="0xm-NB-RpQ"/>
+                    <connections>
+                        <outlet property="background" destination="IOW-KP-jIa" id="F71-sK-Yp8"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bqx-QP-eQa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

@@ -5,6 +5,7 @@ import CoreData
 
 class GaugeViewController: UIViewController {
     
+    @IBOutlet weak var background: UIImageView!
     private let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
     private let gaugeView = GaugeWaveAnimationView(frame: UIScreen.main.bounds)
@@ -12,24 +13,13 @@ class GaugeViewController: UIViewController {
     private var floatingSVGViews = [FloatingSVGView]()
     private let dismissArea = UIButton()
     private let underWaterView = UnderWaterSVGView()
-    
     private var svgTextBackgroundView: SVGTextView!
-    
     
     private let theme = ThemeManager.shared.getThemeInstance()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        let backgroundImageView = UIImageView()
-//        backgroundImageView.frame = view.frame
-//        backgroundImageView.center = view.center
-//        backgroundImageView.image = UIImage(named: "simple")
-//        view.addSubview(backgroundImageView)
-        
-        
-        // 테마 싱글톤의 기본 색상을 적용시킨다.
-        //Theme.shared.colors = ThemeColors()
         // MARK: - under water view setting
         setUnderWaterView()
         // MARK: - floating svg 객체들을 생성

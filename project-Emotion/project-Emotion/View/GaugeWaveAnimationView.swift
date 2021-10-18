@@ -57,6 +57,13 @@ class GaugeWaveAnimationView: UIView {
     }
     
     required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        superviewFrame = self.frame
+        
+        touchedOutLocationY = superviewFrame.height / 2
+        setPanGesture()
+        setWaveView(frame: self.frame)
+        self.addSubview(waveView)
         fatalError("init(coder:) has not been implemented")
     }
     
