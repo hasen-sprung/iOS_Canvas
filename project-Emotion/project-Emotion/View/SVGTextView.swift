@@ -7,7 +7,7 @@
 
 import UIKit
 
-@objc protocol SVGTextViewDelegate {
+protocol SVGTextViewDelegate {
     
     func dismissTextViewSVG()
     

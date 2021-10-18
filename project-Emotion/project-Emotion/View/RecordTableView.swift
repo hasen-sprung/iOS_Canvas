@@ -22,6 +22,5 @@ class RecordTableView: UITableView {
         self.register(nibName, forCellReuseIdentifier: "RecordTableViewCell")
         self.estimatedRowHeight = 200.0
         self.rowHeight = UITableView.automaticDimension
-
     }
 }
