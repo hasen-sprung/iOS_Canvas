@@ -19,6 +19,7 @@ class MainViewController: UIViewController {
     
     @IBOutlet weak var recordAnimationView: RecordAnimationView!
     private let recordTableView = RecordTableView()
+    private let recordModalLabel = UILabel()
     
     private var currentRecords: [Record] = [Record]()
     
@@ -39,6 +40,7 @@ class MainViewController: UIViewController {
         setSelectDateView()
         setRecordTableView()
         setRecordAnimationView()
+        setRecordModalLabel()
         
         recordTableView.register(UITableViewCell.self,
                                  forCellReuseIdentifier: "TableViewCell")
@@ -126,6 +128,7 @@ extension MainViewController {
         recordAnimationView.backgroundColor = .clear
         recordAnimationView.frame.size = CGSize(width: mainViewWidth * 0.8, height: mainViewHeight * 0.6)
         recordAnimationView.center = CGPoint(x: mainViewWidth / 2, y: mainViewHeight * 0.55 )
+        recordAnimationView.delegate = self
     }
     
     private func setAddRecordButton() {
@@ -266,5 +269,37 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         
         return UITableView.automaticDimension
+    }
+}
+
+// MARK: - RecordAnimationView Delegate
+extension MainViewController: RecordAnimationViewDelegate {
+    func tapActionRecordView() {
+        recordModalLabel.fadeOut()
+    }
+    
+    func openRecordTextView(index: Int) {
+        print(currentRecords[index].gaugeLevel)
+        if let text = currentRecords[index].memo {
+            recordModalLabel.text = text
+        }
+        let figure = currentRecords[index].gaugeLevel
+        recordModalLabel.backgroundColor = UIColor(hex: theme.getCurrentColor(figure: figure))
+        
+        recordModalLabel.fadeOut()
+        recordModalLabel.fadeIn()
+    }
+    
+    private func setRecordModalLabel() {
+        
+        recordModalLabel.frame.size = CGSize(width: 300, height: 100)
+        recordModalLabel.center = CGPoint(x: view.frame.width * 0.5, y: view.frame.height * 0.8)
+        recordModalLabel.text = "hello world"
+        recordModalLabel.textAlignment = .center
+        recordModalLabel.textColor = .black
+        recordModalLabel.backgroundColor = indigo500
+        recordModalLabel.fadeOut(duration: 0)
+        
+        view.addSubview(recordModalLabel)
     }
 }

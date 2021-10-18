@@ -3,10 +3,18 @@ import UIKit
 import TweenKit
 import Macaw
 
+// MARK: - Delegate
+
+protocol RecordAnimationViewDelegate {
+    func openRecordTextView(index: Int)
+    func tapActionRecordView()
+}
+
 // MARK: - Set Record Image, Animation, Size, Location, Rotate
 
 class RecordAnimationView: UIView {
     
+    var delegate: RecordAnimationViewDelegate?
     var recordViews: [UIView]?
     private let scheduler = ActionScheduler() //main view 애니메이션 관리자
     let theme = ThemeManager.shared.getThemeInstance()
@@ -36,8 +44,32 @@ class RecordAnimationView: UIView {
         }
     }
     
+    // MARK: - set tap gesture
+    private func setTapGesture(view: UIView) {
+        let gesture = UITapGestureRecognizer(target: self, action: #selector(tapAction))
+        view.addGestureRecognizer(gesture)
+    }
+    
+    @objc func tapAction(_ sender: UITapGestureRecognizer) {
+        if let view: RotateView = sender.view as? RotateView {
+            view.fadeOut()
+            view.fadeIn()
+            if let d = delegate, let idx = view.recordIndex {
+                d.openRecordTextView(index: idx)
+            }
+        }
+    }
+    
+    @objc func tapRecordViewAction(_ sender: UITapGestureRecognizer) {
+        if let d = delegate {
+            d.tapActionRecordView()
+        }
+    }
+    
     // MARK: - Record들에 적합한 사이즈와 이미지, 액션을 결정해준다
-    func setAnimationAtRecordViews(records: [Record], randomRotate: Bool) -> [UIView] {
+    private func setAnimationAtRecordViews(records: [Record], randomRotate: Bool) -> [UIView] {
+        let gesture = UITapGestureRecognizer(target: self, action: #selector(tapRecordViewAction))
+        self.addGestureRecognizer(gesture)
         
         var recordViews = [UIView]()
         
@@ -60,15 +92,15 @@ class RecordAnimationView: UIView {
             setActionByFigure(view: newSVGView, figure: figure)
             
             // MARK: - set random location and rotate record view
-            let rotateView = UIView()
+            let rotateView = RotateView()
+            rotateView.recordIndex = idx
             rotateView.frame.size = randSize
             setRandomLocationRecordView(view: rotateView, superView: self, recordViews: recordViews, overlapRatio: 0.5)
+            setTapGesture(view: rotateView)
             
             // MARK: - random rotate
-
-            let randAngle: CGFloat = CGFloat.random(in: 0.0...360.0)
             if randomRotate {
-                rotateView.transform = CGAffineTransform(rotationAngle: randAngle)
+                rotateView.transform = CGAffineTransform(rotationAngle: CGFloat.random(in: 0.0...360.0))
             }
             
             // MARK: - connect view
@@ -197,4 +229,8 @@ extension RecordAnimationView {
         
         return action
     }
+}
+
+class RotateView: UIView {
+    var recordIndex: Int?
 }
