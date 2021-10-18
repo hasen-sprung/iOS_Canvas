@@ -21,11 +21,11 @@ class GaugeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        let backgroundImageView = UIImageView()
-//        backgroundImageView.frame = view.frame
-//        backgroundImageView.center = view.center
-//        backgroundImageView.image = UIImage(named: "simple")
-//        view.addSubview(backgroundImageView)
+        //        let backgroundImageView = UIImageView()
+        //        backgroundImageView.frame = view.frame
+        //        backgroundImageView.center = view.center
+        //        backgroundImageView.image = UIImage(named: "simple")
+        //        view.addSubview(backgroundImageView)
         
         
         // 테마 싱글톤의 기본 색상을 적용시킨다.
@@ -74,7 +74,7 @@ class GaugeViewController: UIViewController {
         
     }
     override func viewWillDisappear(_ animated: Bool) {
-
+        
     }
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -100,7 +100,7 @@ class GaugeViewController: UIViewController {
     private func createFloatingSVGViews() {
         
         for _ in 1...2 {
-        floatingSVGViews.append(FloatingSVGView(frame: CGRect(x: 0, y: 0, width: 0, height: 0)))
+            floatingSVGViews.append(FloatingSVGView(frame: CGRect(x: 0, y: 0, width: 0, height: 0)))
         }
     }
     
@@ -225,7 +225,7 @@ extension GaugeViewController: GaugeWaveAnimationViewDelegate {
     
     func actionTouchedInCancelArea() {
         dismissArea.backgroundColor = .red
-
+        
     }
     
     func actionTouchedOutCancelArea() {
@@ -243,7 +243,7 @@ extension GaugeViewController: SVGTextViewDelegate {
     }
     
     func saveRecord(date: Date, figure: Float, text: String?) {
-
+        
         let newRecord = Record(context: context)
         
         newRecord.createdDate = date
@@ -271,7 +271,9 @@ extension GaugeViewController: SVGTextViewDelegate {
         dismissArea.setImage(UIImage.init(systemName: "xmark"), for: .normal)
         dismissArea.tintColor = .brown
         dismissArea.imageView?.frame.size = CGSize(width: dismissArea.frame.height / 2, height: dismissArea.frame.height / 2)
-        dismissArea.imageView?.center = CGPoint(x: dismissArea.frame.width / 2, y: dismissArea.frame.height + dismissArea.imageView!.frame.height / 2)
+        if let imageView = dismissArea.imageView {
+            imageView.center = CGPoint(x: dismissArea.frame.width / 2, y: dismissArea.frame.height + imageView.frame.height / 2)
+        }
         
         dismissArea.alpha = 0.2
         dismissArea.addTarget(self, action: #selector(changeDismissAreaColor), for: .touchUpInside)

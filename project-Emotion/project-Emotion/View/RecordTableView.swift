@@ -10,9 +10,6 @@ import Macaw
 
 class RecordTableView: UITableView {
     
-    let theme = ThemeManager.shared.getThemeInstance()
-    
-    
     override func reloadData() {
         super.reloadData()
     }

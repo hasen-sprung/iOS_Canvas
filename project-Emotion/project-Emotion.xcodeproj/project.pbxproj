@@ -91,8 +91,8 @@
 				4FA269D5270A970C00E0330B /* SVGTextView.swift */,
 				4F362339270D5AE9000D680B /* UnderWaterSVGView.swift */,
 				4F0E340527157AA7006F19A7 /* RecordTableView.swift */,
-				3548DD082716BD2500A93AF7 /* RecordAnimationView.swift */,
 				4F0E340D27194224006F19A7 /* RecordTableViewCell.swift */,
+				3548DD082716BD2500A93AF7 /* RecordAnimationView.swift */,
 				4FEFF16D26EB211E00BEE94C /* Main.storyboard */,
 				4F0E340B27193D0E006F19A7 /* RecordTableViewCell.xib */,
 			);
