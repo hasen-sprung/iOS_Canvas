@@ -16,6 +16,7 @@ class RecordTableViewCell: UITableViewCell {
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var memoView: UILabel!
     @IBOutlet weak var svgView: SVGView!
+    @IBOutlet weak var memoBackgroundView: UIView!
     
     
     let theme = ThemeManager.shared.getThemeInstance()
@@ -57,7 +58,9 @@ class RecordTableViewCell: UITableViewCell {
         }
         
         timeLabel.text = timeString
+        memoBackgroundView.backgroundColor = .clear
         memoView.text = memo
+        memoView.backgroundColor = .clear
         memoView.frame.size = CGSize(width: memoView.frame.width, height: memoView.optimalHeight)
         if memoView.text == nil {
             memoView.alpha = 0.0
@@ -70,12 +73,12 @@ class RecordTableViewCell: UITableViewCell {
         self.contentView.backgroundColor = .clear
     }
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
-
-        contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 5, left: 0, bottom: 5, right: 0))
-    }
-    
+//    override func layoutSubviews() {
+//        super.layoutSubviews()
+//
+//        contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 5, left: 0, bottom: 5, right: 0))
+//    }
+//    
 }
 
 extension UILabel {
