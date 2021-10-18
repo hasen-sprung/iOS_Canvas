@@ -11,12 +11,12 @@ import CoreData
 
 
 class RecordTableViewCell: UITableViewCell {
-
+    
     @IBOutlet weak var SvgImageView: UIView!
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var memoView: UILabel!
     @IBOutlet weak var svgView: SVGView!
-
+    
     
     let theme = ThemeManager.shared.getThemeInstance()
     
@@ -27,10 +27,10 @@ class RecordTableViewCell: UITableViewCell {
         
         setCellContentsLayout()
     }
-
+    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
+        
         // Configure the view for the selected state
     }
     
@@ -50,14 +50,15 @@ class RecordTableViewCell: UITableViewCell {
         
         var timeString = "오전 0:00"
         let df = DateFormatter()
-         df.dateFormat = "a hh:mm"
-         df.locale = Locale(identifier:"ko_KR")
+        df.dateFormat = "a hh:mm"
+        df.locale = Locale(identifier:"ko_KR")
         if let newTime = time {
             timeString = df.string(from: newTime)
         }
         
         timeLabel.text = timeString
         memoView.text = memo
+        memoView.frame.size = CGSize(width: memoView.frame.width, height: memoView.optimalHeight)
         if memoView.text == nil {
             memoView.alpha = 0.0
         }
@@ -68,5 +69,27 @@ class RecordTableViewCell: UITableViewCell {
         self.backgroundColor = .clear
         self.contentView.backgroundColor = .clear
     }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
 
+        contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 5, left: 0, bottom: 5, right: 0))
+    }
+    
+}
+
+extension UILabel {
+    var optimalHeight : CGFloat {
+        get {
+            let label = UILabel(frame: CGRect(x: 0, y: 0, width: self.frame.width, height: CGFloat.greatestFiniteMagnitude))
+            label.numberOfLines = 0
+            label.lineBreakMode = self.lineBreakMode
+            label.font = self.font
+            label.text = self.text
+            
+            label.sizeToFit()
+            
+            return label.frame.height
+        }
+    }
 }
