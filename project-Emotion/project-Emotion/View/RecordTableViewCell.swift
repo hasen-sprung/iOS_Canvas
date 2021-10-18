@@ -48,13 +48,19 @@ class RecordTableViewCell: UITableViewCell {
         let svgShape = (svgView.node as! Group).contents.first as! Shape
         svgShape.fill = Color(CellTheme.shared.getCurrentColor(figure: figure))
         
+        var timeString = "오전 0:00"
+        let df = DateFormatter()
+         df.dateFormat = "a hh:mm"
+         df.locale = Locale(identifier:"ko_KR")
+        if let newTime = time {
+            timeString = df.string(from: newTime)
+        }
         
-        
+        timeLabel.text = timeString
         memoView.text = memo
         if memoView.text == nil {
             memoView.alpha = 0.0
         }
-        
     }
     
     private func setCellContentsLayout() {
