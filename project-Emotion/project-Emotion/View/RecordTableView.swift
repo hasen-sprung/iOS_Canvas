@@ -17,8 +17,11 @@ class RecordTableView: UITableView {
     }
     
     func setCellConfig() {
-        self.rowHeight = self.frame.height * 0.5
+        
         let nibName = UINib(nibName: "RecordTableViewCell", bundle: nil)
         self.register(nibName, forCellReuseIdentifier: "RecordTableViewCell")
+        self.estimatedRowHeight = 200.0
+        self.rowHeight = UITableView.automaticDimension
+
     }
 }
