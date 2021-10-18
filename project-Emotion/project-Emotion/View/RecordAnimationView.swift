@@ -3,10 +3,18 @@ import UIKit
 import TweenKit
 import Macaw
 
+// MARK: - Delegate
+
+protocol RecordAnimationViewDelegate {
+    func openRecordTextView(index: Int)
+    func tapActionRecordView()
+}
+
 // MARK: - Set Record Image, Animation, Size, Location, Rotate
 
 class RecordAnimationView: UIView {
     
+    var delegate: RecordAnimationViewDelegate?
     var recordViews: [UIView]?
     private let scheduler = ActionScheduler() //main view 애니메이션 관리자
     let theme = ThemeManager.shared.getThemeInstance()
@@ -36,44 +44,67 @@ class RecordAnimationView: UIView {
         }
     }
     
+    // MARK: - set tap gesture
+    private func setTapGesture(view: UIView) {
+        let gesture = UITapGestureRecognizer(target: self, action: #selector(tapAction))
+        view.addGestureRecognizer(gesture)
+    }
+    
+    @objc func tapAction(_ sender: UITapGestureRecognizer) {
+        if let view: RotateView = sender.view as? RotateView {
+            view.fadeOut()
+            view.fadeIn()
+            if let d = delegate, let idx = view.recordIndex {
+                d.openRecordTextView(index: idx)
+            }
+        }
+    }
+    
+    @objc func tapRecordViewAction(_ sender: UITapGestureRecognizer) {
+        if let d = delegate {
+            d.tapActionRecordView()
+        }
+    }
+    
     // MARK: - Record들에 적합한 사이즈와 이미지, 액션을 결정해준다
-    func setAnimationAtRecordViews(records: [Record], randomRotate: Bool) -> [UIView] {
+    private func setAnimationAtRecordViews(records: [Record], randomRotate: Bool) -> [UIView] {
+        let gesture = UITapGestureRecognizer(target: self, action: #selector(tapRecordViewAction))
+        self.addGestureRecognizer(gesture)
         
         var recordViews = [UIView]()
         
         for idx in 0 ..< records.count {
-            let animatedView = UIView()
             let figure = records[idx].gaugeLevel
             
-            // MARK: - Set size and Animation by figure
             // TODO: view의 크기는 Record가 생성된 시간에 따라 결정됨 private setRecordViewSize()
-            let randSize: CGFloat = CGFloat.random(in: 25.0...55.0)
-            animatedView.frame.size = CGSize(width: randSize, height: randSize)
-            animatedView.backgroundColor = .clear
+            let randCGFloat: CGFloat = CGFloat.random(in: 25.0...55.0)
+            let randSize: CGSize = CGSize(width: randCGFloat, height: randCGFloat)
             
             // MARK: - Set SVG images by figure
             // TODO: figure에 따라 노드에서 적합한 이미지를 가져오는 함수가 필요함
             let svgImages = theme.instanceSVGImages()
-            let newSVGView = SVGView(frame: CGRect(origin: .zero, size: animatedView.frame.size))
+            let newSVGView = SVGView(frame: CGRect(origin: .zero, size: randSize))
             newSVGView.backgroundColor = .clear
             newSVGView.node = theme.getNodeByFigure(figure: figure, currentNode: nil, svgNodes: svgImages)!
             let svgShape = (newSVGView.node as! Group).contents.first as! Shape
             svgShape.fill = Color(CellTheme.shared.getCurrentColor(figure: figure))
             
-            animatedView.addSubview(newSVGView)
             setActionByFigure(view: newSVGView, figure: figure)
             
             // MARK: - set random location and rotate record view
-            let rotateView = UIView()
-            let randAngle: CGFloat = CGFloat.random(in: 0.0...360.0)
+            let rotateView = RotateView()
+            rotateView.recordIndex = idx
+            rotateView.frame.size = randSize
+            setRandomLocationRecordView(view: rotateView, superView: self, recordViews: recordViews, overlapRatio: 0.5)
+            setTapGesture(view: rotateView)
             
-            setRandomLocationRecordView(view: rotateView, superView: self)
+            // MARK: - random rotate
             if randomRotate {
-                rotateView.transform = CGAffineTransform(rotationAngle: randAngle)
+                rotateView.transform = CGAffineTransform(rotationAngle: CGFloat.random(in: 0.0...360.0))
             }
             
             // MARK: - connect view
-            rotateView.addSubview(animatedView)
+            rotateView.addSubview(newSVGView)
             self.addSubview(rotateView) //TODO: 현재는 메인뷰에 바로 서브뷰를 추가하지만 애니메이션 뷰에 추가하도록 수정
             recordViews.append(rotateView)
         }
@@ -81,15 +112,41 @@ class RecordAnimationView: UIView {
         return recordViews
     }
     
-    private func setRandomLocationRecordView(view: UIView, superView: UIView) {
+    // MARK: - view의 랜덤 위치를 정한다 (중첩되는 부분을 관리할 수 있다.)
+    
+    private func setRandomLocationRecordView(view: UIView, superView: UIView, recordViews: [UIView], overlapRatio: CGFloat) {
         // TODO: 겹치는 부분에 대한 미세한 정의, 완전하게 겹치는건 안되지만 살짝 겹치는건 괜찮다.
-        
         let maxX = superView.bounds.width
         let maxY = superView.bounds.height
         let minX: CGFloat = 0
         let minY: CGFloat = 0
         
-        view.center = CGPoint(x: CGFloat.random(in: minX...maxX), y: CGFloat.random(in: minY...maxY))
+        var isOverlap = true
+        var ratio = overlapRatio
+        var overlapCount = 0
+        
+        while isOverlap {
+            view.center = CGPoint(x: CGFloat.random(in: minX...maxX), y: CGFloat.random(in: minY...maxY))
+            if recordViews.count == 0 {
+                break
+            }
+            for rv in recordViews {
+                let checkViewBound = CGRect(origin: rv.frame.origin,
+                                            size: CGSize(width: rv.frame.size.width * ratio,
+                                                         height: rv.frame.size.height * ratio))
+                if view.frame.intersects(checkViewBound) {
+                    isOverlap = true
+                    overlapCount += 1
+                    // TODO: 더 elegant한 방법은 없을까?
+                    if overlapCount > 10 {
+                        ratio -= 0.1
+                    }
+                    break
+                } else {
+                    isOverlap = false
+                }
+            }
+        }
     }
     
     // MARK: - figure에 따라 애니메이션 동작이 달라진다.
@@ -98,24 +155,21 @@ class RecordAnimationView: UIView {
         
         var action: FiniteTimeAction
         
-        action = moveUpDownAction(view: view, moveUpDownLen: 10, sizeMultiple: 1.2)
+        switch figure {
+        default:
+            action = moveUpDownAction(view: view, moveUpDownLen: 10, sizeMultiple: 1.2)
+        }
         
-//        if figure < 0.2 {
-//
-//        } else if figure < 0.4 {
-//
-//        } else if figure < 0.6 {
-//
-//        } else if figure < 0.8 {
-//
-//        } else {
-//
-//        }
-        
+        action = addDelayAction(action: action)
+        scheduler.run(action: action.yoyo().repeatedForever())
+    }
+    
+    private func addDelayAction(action: FiniteTimeAction) -> ActionSequence {
         // MARK: - delay: 액션이 실행되기전 잠깐 멈칫하는 시간을 앞 뒤 언제든 설정할 수 있음
         let delay = Double.random(in: 0.0...0.5)
         let sequence = ActionSequence(actions: DelayAction(duration: delay), action)
-        scheduler.run(action: sequence.yoyo().repeatedForever())
+        
+        return sequence
     }
 }
 
@@ -124,8 +178,8 @@ extension RecordAnimationView {
     
     private func fastMoveAction(view: UIView) -> FiniteTimeAction {
         
-        let randomMoveDistanceX = CGFloat.random(in: 20...30) * CGFloat.random(in: -1...1)
-        let randomMoveDistanceY = CGFloat.random(in: 20...30) * CGFloat.random(in: -1...1)
+        let randomMoveDistanceX = CGFloat.random(in: 10...12) * CGFloat.random(in: -1...1)
+        let randomMoveDistanceY = CGFloat.random(in: 10...12) * CGFloat.random(in: -1...1)
         
         let fromRect = CGRect(origin: view.center, size: view.frame.size)
         let toRect = CGRect(origin: CGPoint(x: view.center.x + randomMoveDistanceX, y: view.center.y + randomMoveDistanceY), size: view.frame.size)
@@ -175,4 +229,8 @@ extension RecordAnimationView {
         
         return action
     }
+}
+
+class RotateView: UIView {
+    var recordIndex: Int?
 }
