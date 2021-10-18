@@ -67,19 +67,6 @@ class RecordTableViewCell: UITableViewCell {
         
         self.backgroundColor = .clear
         self.contentView.backgroundColor = .clear
-        
-//        SvgImageView.frame.size = CGSize(width: self.frame.size.height * 0.6, height: self.frame.size.height * 0.6)
-//        SvgImageView.center = CGPoint(x: self.frame.size.width * 0.3, y: self.frame.size.height * 0.4)
-//        SvgImageView.clipsToBounds = true
-//        SvgImageView.backgroundColor = .clear
-//
-//        timeLabel.frame.size = CGSize(width: self.frame.size.height * 0.6, height: self.frame.size.height * 0.15)
-//        timeLabel.center = CGPoint(x: self.frame.size.width * 0.3, y: self.frame.size.height * 0.875)
-//        timeLabel.backgroundColor = .cyan
-//
-//        memoView.frame.size = CGSize(width: self.frame.size.width * 0.4, height: self.frame.size.height * 0.8)
-//        memoView.center = CGPoint(x: self.frame.size.width * 0.75, y: self.frame.size.height * 0.5)
-//        memoView.backgroundColor = .cyan
     }
 
 }

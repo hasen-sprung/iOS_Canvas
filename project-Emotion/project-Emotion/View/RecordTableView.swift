@@ -12,6 +12,7 @@ class RecordTableView: UITableView {
     
     let theme = ThemeManager.shared.getThemeInstance()
     
+    
     override func reloadData() {
         super.reloadData()
     }
@@ -22,6 +23,7 @@ class RecordTableView: UITableView {
         self.register(nibName, forCellReuseIdentifier: "RecordTableViewCell")
         self.estimatedRowHeight = 200.0
         self.rowHeight = UITableView.automaticDimension
+        self.separatorStyle = .none
     }
     
     
