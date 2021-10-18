@@ -7,14 +7,18 @@
 
 import UIKit
 import Macaw
+import CoreData
 
 
 class RecordTableViewCell: UITableViewCell {
 
-    @IBOutlet weak var svgImageView: SVGView!
+    @IBOutlet weak var SvgImageView: UIView!
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var memoView: UILabel!
+    @IBOutlet weak var svgView: SVGView!
+
     
+    let theme = ThemeManager.shared.getThemeInstance()
     
     let currentTheme = ThemeManager.shared.getThemeInstance()
     
@@ -32,6 +36,24 @@ class RecordTableViewCell: UITableViewCell {
     
     func setCellContents(records: [Record], indexPath: IndexPath) {
         
+        let time = records[indexPath.row].createdDate
+        let figure = records[indexPath.row].gaugeLevel
+        let memo = records[indexPath.row].memo
+        svgView.backgroundColor = .clear
+        SvgImageView.backgroundColor = .lightGray
+        SvgImageView.layer.cornerRadius = SvgImageView.frame.width / 2
+        let svgImages = theme.instanceSVGImages()
+        let currentImage = theme.getNodeByFigure(figure: records[indexPath.row].gaugeLevel, currentNode: nil, svgNodes: svgImages) ?? Node()
+        svgView.node = currentImage
+        let svgShape = (svgView.node as! Group).contents.first as! Shape
+        svgShape.fill = Color(CellTheme.shared.getCurrentColor(figure: figure))
+        
+        
+        
+        memoView.text = memo
+        if memoView.text == nil {
+            memoView.alpha = 0.0
+        }
         
     }
     
@@ -40,19 +62,18 @@ class RecordTableViewCell: UITableViewCell {
         self.backgroundColor = .clear
         self.contentView.backgroundColor = .clear
         
-        svgImageView.frame.size = CGSize(width: self.frame.size.height * 0.6, height: self.frame.size.height * 0.6)
-        svgImageView.center = CGPoint(x: self.frame.size.width * 0.3, y: self.frame.size.height * 0.4)
-        svgImageView.layer.cornerRadius = svgImageView.frame.width / 2
-        svgImageView.clipsToBounds = true
-        svgImageView.backgroundColor = .cyan
-        
-        timeLabel.frame.size = CGSize(width: self.frame.size.height * 0.6, height: self.frame.size.height * 0.15)
-        timeLabel.center = CGPoint(x: self.frame.size.width * 0.3, y: self.frame.size.height * 0.875)
-        timeLabel.backgroundColor = .cyan
-        
-        memoView.frame.size = CGSize(width: self.frame.size.width * 0.4, height: self.frame.size.height * 0.8)
-        memoView.center = CGPoint(x: self.frame.size.width * 0.75, y: self.frame.size.height * 0.5)
-        memoView.backgroundColor = .cyan
+//        SvgImageView.frame.size = CGSize(width: self.frame.size.height * 0.6, height: self.frame.size.height * 0.6)
+//        SvgImageView.center = CGPoint(x: self.frame.size.width * 0.3, y: self.frame.size.height * 0.4)
+//        SvgImageView.clipsToBounds = true
+//        SvgImageView.backgroundColor = .clear
+//
+//        timeLabel.frame.size = CGSize(width: self.frame.size.height * 0.6, height: self.frame.size.height * 0.15)
+//        timeLabel.center = CGPoint(x: self.frame.size.width * 0.3, y: self.frame.size.height * 0.875)
+//        timeLabel.backgroundColor = .cyan
+//
+//        memoView.frame.size = CGSize(width: self.frame.size.width * 0.4, height: self.frame.size.height * 0.8)
+//        memoView.center = CGPoint(x: self.frame.size.width * 0.75, y: self.frame.size.height * 0.5)
+//        memoView.backgroundColor = .cyan
     }
 
 }

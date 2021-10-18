@@ -23,4 +23,18 @@ class RecordTableView: UITableView {
         self.estimatedRowHeight = 200.0
         self.rowHeight = UITableView.automaticDimension
     }
+    
+    
+    func removeAllSubviewAndReload() {
+        
+        for section in 0 ..< self.numberOfSections {
+            for row in 0 ..< self.numberOfRows(inSection: section) {
+                
+                if let cell = self.cellForRow(at: IndexPath(row: row, section: section)) as? RecordTableViewCell {
+                    
+                    cell.svgView.removeFromSuperview()
+                }
+            }
+        }
+    }
 }

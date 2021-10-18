@@ -28,9 +28,19 @@
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="csb-IH-xVa">
                                 <rect key="frame" x="0.0" y="0.0" width="80" height="80"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uza-qz-HAu" customClass="SVGView" customModule="Macaw">
+                                        <rect key="frame" x="17" y="17" width="46" height="46"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                    </view>
+                                </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="80" id="Bga-24-vZu"/>
+                                    <constraint firstItem="uza-qz-HAu" firstAttribute="centerY" secondItem="csb-IH-xVa" secondAttribute="centerY" id="HBV-N2-tpe"/>
+                                    <constraint firstItem="uza-qz-HAu" firstAttribute="top" secondItem="csb-IH-xVa" secondAttribute="top" constant="17" id="IiT-QE-M1c"/>
+                                    <constraint firstItem="uza-qz-HAu" firstAttribute="leading" secondItem="csb-IH-xVa" secondAttribute="leading" constant="17" id="U2s-5M-ID7"/>
+                                    <constraint firstItem="uza-qz-HAu" firstAttribute="centerX" secondItem="csb-IH-xVa" secondAttribute="centerX" id="X6n-Vp-wRm"/>
                                     <constraint firstAttribute="width" constant="80" id="wWo-da-olS"/>
                                 </constraints>
                             </view>
@@ -55,8 +65,9 @@
             </tableViewCellContentView>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <connections>
+                <outlet property="SvgImageView" destination="csb-IH-xVa" id="0LY-4p-e3B"/>
                 <outlet property="memoView" destination="3Ij-Ja-M5b" id="LbA-LD-UsS"/>
-                <outlet property="svgImageView" destination="csb-IH-xVa" id="0LY-4p-e3B"/>
+                <outlet property="svgView" destination="uza-qz-HAu" id="HhQ-xm-031"/>
                 <outlet property="timeLabel" destination="ls4-cC-VeB" id="cdC-kw-oFi"/>
             </connections>
             <point key="canvasLocation" x="98.550724637681171" y="11.049107142857142"/>
