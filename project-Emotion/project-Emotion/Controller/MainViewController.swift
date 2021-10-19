@@ -115,6 +115,7 @@ extension MainViewController {
             recordTableView.isHidden = false
             
             changeSubViewToken = true
+            recordModalLabel.fadeOut(duration: 0)
         }
     }
     
@@ -291,14 +292,18 @@ extension MainViewController: RecordAnimationViewDelegate {
     }
     
     private func setRecordModalLabel() {
+        let width = 300
+        let height = 100
         
-        recordModalLabel.frame.size = CGSize(width: 300, height: 100)
+        recordModalLabel.frame.size = CGSize(width: width, height: height)
         recordModalLabel.center = CGPoint(x: view.frame.width * 0.5, y: view.frame.height * 0.8)
         recordModalLabel.text = "hello world"
         recordModalLabel.textAlignment = .center
         recordModalLabel.textColor = .black
         recordModalLabel.backgroundColor = indigo500
         recordModalLabel.fadeOut(duration: 0)
+        recordModalLabel.clipsToBounds = true
+        recordModalLabel.layer.cornerRadius = CGFloat(height / 4)
         
         view.addSubview(recordModalLabel)
     }
