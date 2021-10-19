@@ -144,7 +144,7 @@ class TestTheme: Theme, ThemeProtocol {
     
     internal func setColor() {
         let gaugeColor = GaugeColor(top: indigo100, middle: indigo500, bottom: indigo900)
-        let viewColor = ViewColor(main: red900, gauge: red500)
+        let viewColor = ViewColor(main: indigo100, gauge: pink100)
         
         color = Colors(gauge: gaugeColor, view: viewColor)
     }
