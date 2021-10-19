@@ -60,9 +60,11 @@ class RecordTableViewCell: UITableViewCell {
         }
         
         timeLabel.text = timeString
+        timeLabel.textColor = .black
         memoBackgroundView.backgroundColor = .white
         memoBackgroundView.layer.cornerRadius = 15
         memoView.text = memo
+        memoView.textColor = .black
         memoView.backgroundColor = .clear
         memoView.frame.size = CGSize(width: memoView.frame.width, height: memoView.optimalHeight)
         if memoView.text?.count == 0 {
