@@ -93,11 +93,15 @@ class SVGTextView: UIView {
     
     private func setTextView() {
         
+        textView.delegate = self
+        textView.textContainer.maximumNumberOfLines = 15
+        textView.textContainer.lineBreakMode = .byTruncatingTail
         textView.frame.size = CGSize(width: textBaseView.frame.width * 0.8, height: textBaseView.frame.height * 0.65)
         textView.center = CGPoint(x: textBaseView.frame.width / 2, y: textBaseView.frame.height * 0.45)
         textView.textColor = .black
         textView.backgroundColor = .white
         textView.font = UIFont.systemFont(ofSize: 17, weight: .semibold)
+        
     }
     
     private func setButtons() {
@@ -181,6 +185,14 @@ class SVGTextView: UIView {
             delegate.finishGaugeEvent()
         }
     }
+}
+
+// textView의 글자수 제한
+extension SVGTextView: UITextViewDelegate {
     
-    
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        let newText = (textView.text as NSString).replacingCharacters(in: range, with: text)
+        let numberOfChars = newText.count
+        return numberOfChars < 141
+    }
 }

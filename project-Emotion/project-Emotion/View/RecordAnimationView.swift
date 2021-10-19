@@ -17,7 +17,6 @@ class RecordAnimationView: UIView {
     var delegate: RecordAnimationViewDelegate?
     var recordViews: [UIView]?
     private let scheduler = ActionScheduler() //main view 애니메이션 관리자
-    let theme = ThemeManager.shared.getThemeInstance()
     
     func stopAnimation() {
         clearSubviews(views: recordViews)
@@ -68,6 +67,7 @@ class RecordAnimationView: UIView {
     
     // MARK: - Record들에 적합한 사이즈와 이미지, 액션을 결정해준다
     private func setAnimationAtRecordViews(records: [Record], randomRotate: Bool) -> [UIView] {
+        let theme = ThemeManager.shared.getThemeInstance()
         let gesture = UITapGestureRecognizer(target: self, action: #selector(tapRecordViewAction))
         self.addGestureRecognizer(gesture)
         
@@ -87,7 +87,7 @@ class RecordAnimationView: UIView {
             newSVGView.backgroundColor = .clear
             newSVGView.node = theme.getNodeByFigure(figure: figure, currentNode: nil, svgNodes: svgImages)!
             let svgShape = (newSVGView.node as! Group).contents.first as! Shape
-            svgShape.fill = Color(CellTheme.shared.getCurrentColor(figure: figure))
+            svgShape.fill = Color(theme.getCurrentColor(figure: figure))
             
             setActionByFigure(view: newSVGView, figure: figure)
             

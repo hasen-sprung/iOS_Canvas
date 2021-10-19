@@ -41,6 +41,7 @@ class GaugeViewController: UIViewController {
         }
         
         // MARK: - Delegate 위임
+        
         gaugeView.delegate = self
         floatingSVGViews[0].floatingSVGViewDelegate = self
     }
