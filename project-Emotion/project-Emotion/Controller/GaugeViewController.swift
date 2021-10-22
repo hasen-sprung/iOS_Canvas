@@ -97,12 +97,12 @@ class GaugeViewController: UIViewController {
     
     private func initAndPlayFloatingSVGAnimation() {
         
-        let svgSize: [CGFloat] = [65.0, 40.0, 50.0]
+        let svgSize: [CGFloat] = [45.0, 40.0, 50.0]
         let rangeX: [CGFloat] = [5.0, 14.0, -5.0]
-        let rangeY: [CGFloat] = [-30.0, -40.0, -50.0]
+        let rangeY: [CGFloat] = [-20.0, -40.0, -50.0]
         let centerX: [CGFloat] = [0.0, 150, -130]
         let centerY: [CGFloat] = [5.0, 23.0, 33.0]
-        let duration: [TimeInterval] = [0.9, 0.7, 1.1]
+        let duration: [TimeInterval] = [1.2, 0.7, 1.1]
         let delay: [TimeInterval] = [0.2, 0, 0.1]
         
         for idx in 0...(floatingSVGViews.count - 1) {

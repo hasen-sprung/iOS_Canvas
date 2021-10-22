@@ -25,8 +25,8 @@ class UnderWaterSVGView: UIView {
             let newView = UIView()
             let newSVGView = SVGView()
             
-            let randSize: CGFloat = CGFloat.random(in: 45.0 ... 55.0)
-            let randFigure: Float = Float.random(in: 0.0 ... 1.0)
+            let randSize: CGFloat = CGFloat.random(in: 30.0 ... 42.0)
+            let randFigure: Float = Float.random(in: 0.0 ... 0.7)
             
             newView.frame.size = CGSize(width: randSize,
                                         height: randSize)
