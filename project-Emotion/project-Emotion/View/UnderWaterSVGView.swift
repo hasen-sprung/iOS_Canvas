@@ -25,8 +25,8 @@ class UnderWaterSVGView: UIView {
             let newView = UIView()
             let newSVGView = SVGView()
             
-            let randSize: CGFloat = CGFloat.random(in: 30.0 ... 42.0)
-            let randFigure: Float = Float.random(in: 0.0 ... 0.7)
+            let randSize: CGFloat = CGFloat.random(in: 35.0 ... 45.0)
+            let randFigure: Float = Float.random(in: 0.0 ... 1.0)
             
             newView.frame.size = CGSize(width: randSize,
                                         height: randSize)
@@ -58,13 +58,14 @@ class UnderWaterSVGView: UIView {
             let randAngle: CGFloat = CGFloat.random(in: 0.0 ... 360.0)
             let randDuration: TimeInterval = TimeInterval.random(in: 0.5 ... 1.0)
             let randDelay: TimeInterval = TimeInterval.random(in: 0.0 ... 0.5)
+            let randRange: Float = Float.random(in: 10 ... 20)
             
             UIView.animate(withDuration: randDuration, delay: randDelay, options: [.repeat, .autoreverse], animations: {
                 [self] in
                 
                 self.underWaterSVGs[idx].frame.size = CGSize(width: self.underWaterSVGs[idx].frame.width * 1.1,
                                                              height: self.underWaterSVGs[idx].frame.height * 1.2)
-                self.underWaterSVGs[idx].center = CGPoint(x: self.underWaterSVGs[idx].center.x, y: self.underWaterSVGs[idx].center.y - 30)
+                self.underWaterSVGs[idx].center = CGPoint(x: self.underWaterSVGs[idx].center.x, y: self.underWaterSVGs[idx].center.y - CGFloat(randRange))
                 self.svgView[idx].frame.size = CGSize(width: self.underWaterSVGs[idx].frame.width * 1.1,
                                                       height: self.underWaterSVGs[idx].frame.height * 1.2)
                 
