@@ -16,8 +16,23 @@ class UnderWaterSVGView: UIView {
     var theme = ThemeManager.shared.getThemeInstance()
     var themeSVGImages = [Node]()
     
-    let centerX: [CGFloat] = [0.40, 0.60, 0.45, 0.62, 0.42, 0.65]
-    let centerY: [CGFloat] = [0.17, 0.36, 0.49, 0.61, 0.76, 0.88]
+    let centerX: [CGFloat] = [CGFloat.random(in: 0.3 ... 0.5),
+                              CGFloat.random(in: 0.5 ... 0.7),
+                              CGFloat.random(in: 0.3 ... 0.5),
+                              CGFloat.random(in: 0.5 ... 0.7),
+                              CGFloat.random(in: 0.3 ... 0.5),
+                              CGFloat.random(in: 0.5 ... 0.7),
+                              CGFloat.random(in: 0.3 ... 0.5),
+                              CGFloat.random(in: 0.5 ... 0.7)]
+    
+    let centerY: [CGFloat] = [CGFloat.random(in: 0.18 ... 0.25),
+                              CGFloat.random(in: 0.28 ... 0.35),
+                              CGFloat.random(in: 0.38 ... 0.45),
+                              CGFloat.random(in: 0.48 ... 0.55),
+                              CGFloat.random(in: 0.58 ... 0.65),
+                              CGFloat.random(in: 0.68 ... 0.75),
+                              CGFloat.random(in: 0.78 ... 0.85),
+                              CGFloat.random(in: 0.88 ... 0.95)]
     
     func setUnderWaterSVGs() {
         
