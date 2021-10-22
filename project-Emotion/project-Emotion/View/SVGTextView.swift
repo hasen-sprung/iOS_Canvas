@@ -127,7 +127,7 @@ class SVGTextView: UIView {
         buttonTriggerView.layer.cornerRadius = buttonTriggerView.frame.height / 2
         buttonTriggerView.backgroundColor = .white
         buttonTriggerView.layer.shadowColor = UIColor.gray.cgColor
-        buttonTriggerView.layer.shadowOpacity = 1.0
+        buttonTriggerView.layer.shadowOpacity = 0.3
         buttonTriggerView.layer.shadowOffset = CGSize.zero
         buttonTriggerView.layer.shadowRadius = 6
     }
@@ -155,7 +155,7 @@ class SVGTextView: UIView {
     
     @objc func dismissTextView() {
         
-        UIView.animate(withDuration: 0.3, delay: 0.0, options: [.curveEaseOut], animations: { [self] in
+        UIView.animate(withDuration: 0.1, delay: 0.0, options: [.curveEaseOut], animations: { [self] in
             
             self.buttonTriggerView.center = CGPoint(x: buttonBaseView.frame.width * 0.25, y: buttonBaseView.frame.height / 2)
             self.completeButton.setTitleColor(.white, for: .normal)
