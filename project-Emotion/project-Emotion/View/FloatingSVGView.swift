@@ -64,7 +64,7 @@ class FloatingSVGView: MacawView {
             self.center = CGPoint(x: (superview.frame.width / 2) + centerX,
                                   y: (superview.frame.height / 2) + centerY)
             self.backgroundColor = .clear
-            self.alpha = 0.95
+            self.alpha = 1
             self.SVGWidth = width
             self.SVGHeight = height
             self.animationRangeX = rangeX
@@ -148,7 +148,6 @@ class FloatingSVGView: MacawView {
         
         let svgShape = (svgView.node as! Group).contents.first as! Shape
         svgShape.fill = Color(CellTheme.shared.getCurrentColor(figure: figure))
-        svgShape.stroke = Stroke(fill: Color.white, width: 3)
     }
     
     private func setStartingSVG() {
@@ -183,7 +182,7 @@ public extension UIView {
     
     func customFadeIn(duration: TimeInterval = 1.0) {
         UIView.animate(withDuration: duration, animations: {
-            self.alpha = 0.9
+            self.alpha = 1
         })
     }
     

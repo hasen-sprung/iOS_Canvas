@@ -173,7 +173,7 @@ class GaugeViewController: UIViewController {
     @objc func appearTextField() {
         
         floatingSVGViews[0].changeSVGToTextField()
-        floatingSVGViews[0].alpha = 0.95
+        floatingSVGViews[0].alpha = 1
         floatingSVGViews[1].alpha = 0.0
     }
     // [end] appear textField (when figure settled)
@@ -307,7 +307,7 @@ extension GaugeViewController: FloatingSVGViewDelegate {
         
         svgTextBackgroundView.removeFromSuperview()
         floatingSVGViews[0].alpha = 0.0
-        floatingSVGViews[1].alpha = 0.95
+        floatingSVGViews[1].alpha = 1
     }
     
 }
