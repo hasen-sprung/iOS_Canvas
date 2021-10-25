@@ -20,7 +20,7 @@ class MainViewController: UIViewController {
     @IBOutlet weak var selectMonthButton: UIButton!
     
     @IBOutlet weak var recordAnimationView: RecordAnimationView!
-    private let recordTableView = RecordTableView()
+
     private let recordModalLabel = UILabel()
     
     private var currentRecords: [Record] = [Record]()
@@ -35,23 +35,16 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        recordTableView.dataSource = self
-        recordTableView.delegate = self
-        
         getUserDefault()
         setAddRecordButton()
         setDateButtons()
         setDateLabel()
         setSelectDateView()
         
-        setRecordTableView()
         setRecordAnimationView()
         setRecordModalLabel()
         
-        view.addSubview(recordTableView)
     }
-    
-    
     
     override func viewWillAppear(_ animated: Bool) {
         
@@ -109,12 +102,10 @@ extension MainViewController {
     private func changeSubView(token: Bool) {
         if token == true {
             recordAnimationView.isHidden = false
-            recordTableView.isHidden = true
             
             changeSubViewToken = false
         } else {
             recordAnimationView.isHidden = true
-            recordTableView.isHidden = false
             
             changeSubViewToken = true
             recordModalLabel.fadeOut(duration: 0)
@@ -232,7 +223,6 @@ extension MainViewController {
         dateManager.setDateMode(newMode: mode)
         dateLabel.text = dateManager.getCurrentDateString()
         currentRecords = recordManager.getMatchingRecords()
-        recordTableView.reloadData()
         
         recordAnimationView.reloadAnimation(records: currentRecords)
     }
@@ -242,36 +232,8 @@ extension MainViewController {
         dateManager.changeDate(val: val)
         dateLabel.text = dateManager.getCurrentDateString()
         currentRecords = recordManager.getMatchingRecords()
-        recordTableView.reloadData()
         
         recordAnimationView.reloadAnimation(records: currentRecords)
-    }
-}
-
-extension MainViewController: UITableViewDelegate, UITableViewDataSource {
-    
-    private func setRecordTableView() {
-        
-        recordTableView.rowHeight = UITableView.automaticDimension
-        recordTableView.frame.size = CGSize(width: view.frame.width, height: view.frame.height * 0.6)
-        recordTableView.frame.origin = CGPoint(x: 0, y: view.frame.height * 0.25)
-        recordTableView.backgroundColor = .clear
-        recordTableView.setCellConfig()
-        view.addSubview(recordTableView)
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
-        return currentRecords.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        let cell = tableView.dequeueReusableCell(withIdentifier: "RecordTableViewCell", for: indexPath) as! RecordTableViewCell
-        
-        cell.setCellContents(records: currentRecords, indexPath: indexPath)
-        
-        return cell
     }
 }
 
