@@ -81,6 +81,11 @@
                         <color key="backgroundColor" name="defaultMainViewColor"/>
                     </view>
                     <navigationItem key="navigationItem" id="13p-Vu-kbE">
+                        <barButtonItem key="leftBarButtonItem" title="Item" image="book.fill" catalog="system" id="jSp-77-kwL">
+                            <connections>
+                                <segue destination="grw-vL-f6H" kind="show" id="P55-v2-VVu"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" style="plain" id="kpj-6d-y49">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="PrK-eD-e67" userLabel="settingButton">
                                 <rect key="frame" x="376" y="11" width="18" height="22"/>
@@ -98,6 +103,7 @@
                         <outlet property="dateBackwardButton" destination="jHo-45-gg9" id="Tec-f9-ZlR"/>
                         <outlet property="dateForwardButton" destination="06y-f8-lwb" id="A8I-R7-FgC"/>
                         <outlet property="dateLabel" destination="ase-V4-uHN" id="Ycr-1e-nX0"/>
+                        <outlet property="goToArchiveButton" destination="jSp-77-kwL" id="vOQ-Da-hsl"/>
                         <outlet property="gotoSettingButton" destination="PrK-eD-e67" id="C6H-ge-PPi"/>
                         <outlet property="recordAnimationView" destination="HDn-4B-E5C" id="uiO-aV-GFb"/>
                         <outlet property="selectDateView" destination="NZr-41-GqK" id="rGS-71-KqH"/>
@@ -111,6 +117,22 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1957.9710144927537" y="137.94642857142856"/>
+        </scene>
+        <!--Archive View Controller-->
+        <scene sceneID="mgz-Pc-ntT">
+            <objects>
+                <viewController id="grw-vL-f6H" customClass="ArchiveViewController" customModule="project_Emotion" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="1FD-Fk-n7P">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="3P5-cG-UsJ"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="K1x-Fl-zGJ"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Aah-ej-nZU" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1010" y="846"/>
         </scene>
         <!--Gauge View Controller-->
         <scene sceneID="dLy-Pa-qCf">
@@ -233,6 +255,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="book.fill" catalog="system" width="128" height="95"/>
         <image name="circle.fill" catalog="system" width="128" height="121"/>
         <image name="person.fill" catalog="system" width="128" height="120"/>
         <image name="plus.circle" catalog="system" width="128" height="121"/>

@@ -11,6 +11,8 @@ class MainViewController: UIViewController {
     @IBOutlet weak var dateForwardButton: UIButton!
     @IBOutlet weak var dateBackwardButton: UIButton!
     @IBOutlet weak var dateLabel: UILabel!
+    @IBOutlet weak var goToArchiveButton: UIBarButtonItem!
+
     
     @IBOutlet weak var selectDateView: UIView!
     @IBOutlet weak var selectDayButton: UIButton!
