@@ -38,7 +38,6 @@ class MainViewController: UIViewController {
         getUserDefault()
         setAddRecordButton()
         setDateButtons()
-        setDateLabel()
         setSelectDateView()
         
         setRecordAnimationView()
@@ -52,7 +51,9 @@ class MainViewController: UIViewController {
         theme = ThemeManager.shared.getThemeInstance()
         self.view.backgroundColor = theme.getColor().view.main
         
+        dateManager.setCurrentDateForNow()
         currentRecords = recordManager.getMatchingRecords()
+        setDateLabel()
 
         recordAnimationView.runAnimation(records: currentRecords)
         

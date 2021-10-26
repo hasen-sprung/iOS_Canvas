@@ -125,14 +125,41 @@
                     <view key="view" contentMode="scaleToFill" id="1FD-Fk-n7P">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="b3k-oB-qpx" customClass="DateNavigationView" customModule="project_Emotion" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="88" width="414" height="100"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="100" id="1Rk-Kd-Dj2"/>
+                                </constraints>
+                            </view>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="aSG-3f-sBV" customClass="RecordTableView" customModule="project_Emotion" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="188" width="414" height="674"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </tableView>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="3P5-cG-UsJ"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="b3k-oB-qpx" firstAttribute="trailing" secondItem="3P5-cG-UsJ" secondAttribute="trailing" id="7DR-IL-ava"/>
+                            <constraint firstItem="aSG-3f-sBV" firstAttribute="leading" secondItem="3P5-cG-UsJ" secondAttribute="leading" id="Aan-l1-Fs7"/>
+                            <constraint firstItem="aSG-3f-sBV" firstAttribute="top" secondItem="b3k-oB-qpx" secondAttribute="bottom" id="KWH-yo-86D"/>
+                            <constraint firstItem="aSG-3f-sBV" firstAttribute="trailing" secondItem="3P5-cG-UsJ" secondAttribute="trailing" id="WQu-hf-0bA"/>
+                            <constraint firstItem="aSG-3f-sBV" firstAttribute="bottom" secondItem="3P5-cG-UsJ" secondAttribute="bottom" id="qkI-TG-72L"/>
+                            <constraint firstItem="b3k-oB-qpx" firstAttribute="top" secondItem="3P5-cG-UsJ" secondAttribute="top" id="ty0-Cs-XQD"/>
+                            <constraint firstItem="aSG-3f-sBV" firstAttribute="top" secondItem="b3k-oB-qpx" secondAttribute="bottom" id="wdu-bl-llw"/>
+                            <constraint firstItem="b3k-oB-qpx" firstAttribute="leading" secondItem="3P5-cG-UsJ" secondAttribute="leading" id="yta-e2-JcA"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="K1x-Fl-zGJ"/>
+                    <connections>
+                        <outlet property="dateNavigationView" destination="b3k-oB-qpx" id="WqC-gR-6WX"/>
+                        <outlet property="recordTableView" destination="aSG-3f-sBV" id="tH8-t4-1pk"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Aah-ej-nZU" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1010" y="846"/>
+            <point key="canvasLocation" x="1000" y="917"/>
         </scene>
         <!--Gauge View Controller-->
         <scene sceneID="dLy-Pa-qCf">
@@ -162,7 +189,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bqx-QP-eQa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1958" y="846"/>
+            <point key="canvasLocation" x="1999" y="917"/>
         </scene>
         <!--Setting View Controller-->
         <scene sceneID="N2W-1C-b1S">
@@ -218,7 +245,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4jF-hA-O0D" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2871" y="846"/>
+            <point key="canvasLocation" x="3001" y="917"/>
         </scene>
         <!--Analysis View Controller-->
         <scene sceneID="5aJ-yg-m7f">

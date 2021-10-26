@@ -16,6 +16,12 @@ class DateManager {
     private let dateFormat = DateFormatter()
     private var dateMode = 0 // 0 -> Day, 1 -> Week, 2 -> Month
     
+    func setCurrentDateForNow() {
+        
+        currentDate = Date()
+        dateMode = 0
+    }
+    
     func getCurrentDate() -> Date {
         
         return currentDate

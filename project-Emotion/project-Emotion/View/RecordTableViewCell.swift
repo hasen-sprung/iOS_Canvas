@@ -20,7 +20,6 @@ class RecordTableViewCell: UITableViewCell {
     
     
     let theme = ThemeManager.shared.getThemeInstance()
-    
     let currentTheme = ThemeManager.shared.getThemeInstance()
     
     override func awakeFromNib() {
