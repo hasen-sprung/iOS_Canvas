@@ -90,13 +90,46 @@ class DateManager {
             dateMode = 0
         }
     }
+    
+    func getDateList(currentRecords: [Record]) -> [String] {
+        
+        var dateList = [String]()
+        let dateString: String?
+        
+        dateFormat.dateFormat = "M월 d일"
+        dateString = dateFormat.string(from: self.currentDate)
+        
+        for idx in 0 ..< currentRecords.count {
+            
+            let year = currentRecords[idx].createdDate?.year
+            let month = currentRecords[idx].createdDate?.month
+            let day = currentRecords[idx].createdDate?.day
+            
+            
+        }
+        
+        return dateList
+    }
 }
 
 extension Calendar {
     static let gregorian = Calendar(identifier: .gregorian)
 }
 extension Date {
+    
     func startOfWeek(using calendar: Calendar = .gregorian) -> Date {
         calendar.dateComponents([.calendar, .yearForWeekOfYear, .weekOfYear], from: self).date ?? Date()
+    }
+    
+    public var year: Int {
+        return Calendar.current.component(.year, from: self)
+    }
+    
+    public var month: Int {
+         return Calendar.current.component(.month, from: self)
+    }
+    
+    public var day: Int {
+         return Calendar.current.component(.day, from: self)
     }
 }

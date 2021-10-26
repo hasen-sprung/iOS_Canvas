@@ -37,10 +37,6 @@ class ArchiveViewController: UIViewController {
         setSwipeActions()
         view.addSubview(recordTableView)
     }
-    
-    @objc func swipeScreen() {
-        
-    }
 }
 
 extension ArchiveViewController: UITableViewDelegate, UITableViewDataSource {
@@ -64,6 +60,26 @@ extension ArchiveViewController: UITableViewDelegate, UITableViewDataSource {
         cell.setCellContents(records: currentRecords, indexPath: indexPath)
         
         return cell
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        
+        if dateManager.getCurrentDateMode() == 0 {
+            return 1
+        } else {
+            return 2
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        
+        
+        if dateManager.getCurrentDateMode() == 0 {
+            let daySection = ""
+            return daySection
+        } else {
+            return "hey"
+        }
     }
 }
 
