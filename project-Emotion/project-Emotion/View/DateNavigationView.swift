@@ -70,6 +70,11 @@ class DateNavigationView: UIView {
         self.addSubview(dateLabel)
     }
     
+    func setLabelText() {
+        
+        if let delegate = delegate { dateLabel.text = delegate.getDateString() }
+    }
+    
     private func addTargetForButtons() {
         
 

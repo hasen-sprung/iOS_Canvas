@@ -8,7 +8,7 @@
 import UIKit
 
 class ArchiveViewController: UIViewController {
-
+    
     
     @IBOutlet weak var dateNavigationView: DateNavigationView!
     @IBOutlet weak var recordTableView: RecordTableView!
@@ -20,11 +20,13 @@ class ArchiveViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false // 밀어서 뒤로가기 기능 제거
         recordTableView.dataSource = self
         recordTableView.delegate = self
         dateNavigationView.delegate = self
         setRecordTableView()
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -32,7 +34,12 @@ class ArchiveViewController: UIViewController {
         dateManager.setCurrentDateForNow()
         dateNavigationView.setDateNavigationLayout()
         currentRecords = recordManager.getMatchingRecords()
+        setSwipeActions()
         view.addSubview(recordTableView)
+    }
+    
+    @objc func swipeScreen() {
+        
     }
 }
 
@@ -69,6 +76,35 @@ extension ArchiveViewController: DateNavigationViewDelegate {
     
     func changeDateMode(mode: Int) {
         dateManager.setDateMode(newMode: mode)
+        currentRecords = recordManager.getMatchingRecords()
+        recordTableView.reloadData()
+    }
+}
+
+extension ArchiveViewController {
+    
+    private func setSwipeActions() {
+        let swipeRight = UISwipeGestureRecognizer(target: self, action:  #selector(handleSwipeRightGesture))
+        swipeRight.direction = .right
+        let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipeLeftGesture))
+        swipeLeft.direction = .left
+        
+        recordTableView.addGestureRecognizer(swipeRight)
+        recordTableView.addGestureRecognizer(swipeLeft)
+    }
+    
+    @objc func handleSwipeRightGesture(recognizer: UISwipeGestureRecognizer) {
+        print("This swipe is backward")
+        dateManager.changeDate(val: -1)
+        dateNavigationView.setLabelText()
+        currentRecords = recordManager.getMatchingRecords()
+        recordTableView.reloadData()
+    }
+    
+    @objc func handleSwipeLeftGesture(recognizer: UISwipeGestureRecognizer) {
+        print("This swipe is forward")
+        dateManager.changeDate(val: 1)
+        dateNavigationView.setLabelText()
         currentRecords = recordManager.getMatchingRecords()
         recordTableView.reloadData()
     }
