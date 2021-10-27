@@ -40,6 +40,7 @@ class RecordManager {
             }
             do { records = try context.fetch(recordsRequest) } catch { print("context Error") }
             
+            records.sort(by: {$0.createdDate?.timeIntervalSinceNow ?? Date().timeIntervalSinceNow < $1.createdDate?.timeIntervalSinceNow ?? Date().timeIntervalSinceNow})
             return records
             
         } else if currentMode == 1 {
@@ -55,6 +56,7 @@ class RecordManager {
             }
             do { records = try context.fetch(recordsRequest) } catch { print("context Error") }
             
+            records.sort(by: {$0.createdDate?.timeIntervalSinceNow ?? Date().timeIntervalSinceNow < $1.createdDate?.timeIntervalSinceNow ?? Date().timeIntervalSinceNow})
             return records
             
         } else if currentMode == 2 {
@@ -72,6 +74,7 @@ class RecordManager {
             }
             do { records = try context.fetch(recordsRequest) } catch { print("context Error") }
             
+            records.sort(by: {$0.createdDate?.timeIntervalSinceNow ?? Date().timeIntervalSinceNow < $1.createdDate?.timeIntervalSinceNow ?? Date().timeIntervalSinceNow})
             return records
         }
         

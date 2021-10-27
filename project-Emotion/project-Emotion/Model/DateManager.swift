@@ -91,21 +91,29 @@ class DateManager {
         }
     }
     
-    func getDateList(currentRecords: [Record]) -> [String] {
+    func getDateList(currentRecords: [Record]) -> [String : Int] {
         
-        var dateList = [String]()
-        let dateString: String?
+        var dateList = [String : Int]()
+        var dateString: String?
+        var lastDate = ""
+        var itemCount = 0
         
         dateFormat.dateFormat = "M월 d일"
-        dateString = dateFormat.string(from: self.currentDate)
+        
         
         for idx in 0 ..< currentRecords.count {
             
-            let year = currentRecords[idx].createdDate?.year
-            let month = currentRecords[idx].createdDate?.month
-            let day = currentRecords[idx].createdDate?.day
-            
-            
+            dateString = dateFormat.string(from: currentRecords[idx].createdDate ?? Date())
+            if lastDate != dateString {
+                
+                if lastDate != "" {
+                    dateList.updateValue(itemCount, forKey: lastDate)
+                }
+                lastDate = dateString ?? ""
+                dateList.updateValue(0, forKey: lastDate)
+                itemCount = 0
+            }
+            itemCount += 1
         }
         
         return dateList
