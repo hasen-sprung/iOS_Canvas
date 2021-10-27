@@ -42,7 +42,7 @@ class MainViewController: UIViewController {
         self.view.backgroundColor = theme.getColor().view.main
         
         dateManager.initalizeDate()
-        currentRecords = recordManager.getMatchingRecords()
+        currentRecords = recordManager.getLastRecords(userCount: 10)
 
         recordAnimationView.runAnimation(records: currentRecords)
         

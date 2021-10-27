@@ -106,5 +106,20 @@ class RecordManager {
         return dateCounts
     }
     
-    
+    func getLastRecords(userCount: Int) -> [Record]{
+        
+        var records = [Record]()
+        var newRecord = [Record]()
+        let recordsRequest = Record.fetchRequest()
+        
+        do { records = try context.fetch(recordsRequest) } catch { print("context Error") }
+        
+        records.sort(by: {$0.createdDate?.timeIntervalSinceNow ?? Date().timeIntervalSinceNow < $1.createdDate?.timeIntervalSinceNow ?? Date().timeIntervalSinceNow})
+        
+        for idx in records.count - userCount ..< records.count {
+            newRecord.append(records[idx])
+        }
+        
+        return newRecord
+    }
 }
