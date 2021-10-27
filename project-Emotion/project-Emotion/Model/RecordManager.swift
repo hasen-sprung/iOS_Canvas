@@ -15,6 +15,8 @@ class RecordManager {
     private init() { }
     
     private let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    private let dateFormat = DateFormatter()
+
     
     
     func getMatchingRecords(currentDate: Date = DateManager.shared.getCurrentDate(),
@@ -40,6 +42,7 @@ class RecordManager {
             }
             do { records = try context.fetch(recordsRequest) } catch { print("context Error") }
             
+            records.sort(by: {$0.createdDate?.timeIntervalSinceNow ?? Date().timeIntervalSinceNow < $1.createdDate?.timeIntervalSinceNow ?? Date().timeIntervalSinceNow})
             return records
             
         } else if currentMode == 1 {
@@ -55,6 +58,7 @@ class RecordManager {
             }
             do { records = try context.fetch(recordsRequest) } catch { print("context Error") }
             
+            records.sort(by: {$0.createdDate?.timeIntervalSinceNow ?? Date().timeIntervalSinceNow < $1.createdDate?.timeIntervalSinceNow ?? Date().timeIntervalSinceNow})
             return records
             
         } else if currentMode == 2 {
@@ -72,10 +76,34 @@ class RecordManager {
             }
             do { records = try context.fetch(recordsRequest) } catch { print("context Error") }
             
+            records.sort(by: {$0.createdDate?.timeIntervalSinceNow ?? Date().timeIntervalSinceNow < $1.createdDate?.timeIntervalSinceNow ?? Date().timeIntervalSinceNow})
             return records
         }
         
         return records
+    }
+    
+    func getDateList(currentRecords: [Record]) -> [DateCount] {
+        
+        var dateCounts = [DateCount]()
+        var lastDate = ""
+        dateFormat.dateFormat = "M월 d일"
+        
+        for idx in 0 ..< currentRecords.count {
+            
+            let newDate = dateFormat.string(from: currentRecords[idx].createdDate ?? Date())
+            if newDate != lastDate {
+                let dateCount = DateCount()
+                
+                dateCount.setDate(newDate: newDate)
+                
+                let newCount = currentRecords.filter({dateFormat.string(from: $0.createdDate ?? Date()) == newDate}).count
+                dateCount.setCount(newCount: newCount)
+                lastDate = newDate
+                dateCounts.append(dateCount)
+            }
+        }
+        return dateCounts
     }
     
     

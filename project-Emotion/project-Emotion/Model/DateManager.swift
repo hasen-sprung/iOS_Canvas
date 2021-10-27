@@ -16,6 +16,12 @@ class DateManager {
     private let dateFormat = DateFormatter()
     private var dateMode = 0 // 0 -> Day, 1 -> Week, 2 -> Month
     
+    func setCurrentDateForNow() {
+        
+        currentDate = Date()
+        dateMode = 0
+    }
+    
     func getCurrentDate() -> Date {
         
         return currentDate
@@ -90,7 +96,48 @@ extension Calendar {
     static let gregorian = Calendar(identifier: .gregorian)
 }
 extension Date {
+    
     func startOfWeek(using calendar: Calendar = .gregorian) -> Date {
         calendar.dateComponents([.calendar, .yearForWeekOfYear, .weekOfYear], from: self).date ?? Date()
+    }
+    
+    public var year: Int {
+        return Calendar.current.component(.year, from: self)
+    }
+    
+    public var month: Int {
+         return Calendar.current.component(.month, from: self)
+    }
+    
+    public var day: Int {
+         return Calendar.current.component(.day, from: self)
+    }
+}
+
+
+class DateCount {
+    
+    private var date: String?
+    private var count: Int?
+    
+    init() {
+        date = ""
+        count = 0
+    }
+    
+    func getDate() -> String? {
+        return date
+    }
+    
+    func getCount() -> Int? {
+        return count
+    }
+    
+    func setDate(newDate: String?) {
+        date = newDate
+    }
+    
+    func setCount(newCount: Int?) {
+        count = newCount
     }
 }

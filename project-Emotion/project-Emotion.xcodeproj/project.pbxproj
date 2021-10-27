@@ -24,6 +24,8 @@
 		4F0F801A2702CA8E00FC1E6A /* cellImages.svg in Resources */ = {isa = PBXBuildFile; fileRef = 4F0F80192702CA8E00FC1E6A /* cellImages.svg */; };
 		4F362338270D3CB0000D680B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4F362337270D3CAF000D680B /* GoogleService-Info.plist */; };
 		4F36233A270D5AE9000D680B /* UnderWaterSVGView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F362339270D5AE9000D680B /* UnderWaterSVGView.swift */; };
+		4F57293F2726994600F92DF9 /* ArchiveViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F57293E2726994600F92DF9 /* ArchiveViewController.swift */; };
+		4F57294327269C6200F92DF9 /* DateNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F57294227269C6200F92DF9 /* DateNavigationView.swift */; };
 		4FA269D6270A970C00E0330B /* SVGTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA269D5270A970C00E0330B /* SVGTextView.swift */; };
 		4FB312AC2703FAB700CA0EC0 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FB312AB2703FAB700CA0EC0 /* Theme.swift */; };
 		4FEFF16826EB211E00BEE94C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FEFF16726EB211E00BEE94C /* AppDelegate.swift */; };
@@ -55,6 +57,8 @@
 		4F0F80192702CA8E00FC1E6A /* cellImages.svg */ = {isa = PBXFileReference; lastKnownFileType = text; path = cellImages.svg; sourceTree = "<group>"; };
 		4F362337270D3CAF000D680B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		4F362339270D5AE9000D680B /* UnderWaterSVGView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnderWaterSVGView.swift; sourceTree = "<group>"; };
+		4F57293E2726994600F92DF9 /* ArchiveViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArchiveViewController.swift; sourceTree = "<group>"; };
+		4F57294227269C6200F92DF9 /* DateNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateNavigationView.swift; sourceTree = "<group>"; };
 		4FA269D5270A970C00E0330B /* SVGTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SVGTextView.swift; sourceTree = "<group>"; };
 		4FB312AB2703FAB700CA0EC0 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		4FEFF16426EB211E00BEE94C /* project-Emotion.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "project-Emotion.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -93,6 +97,7 @@
 				4F0E340527157AA7006F19A7 /* RecordTableView.swift */,
 				4F0E340D27194224006F19A7 /* RecordTableViewCell.swift */,
 				3548DD082716BD2500A93AF7 /* RecordAnimationView.swift */,
+				4F57294227269C6200F92DF9 /* DateNavigationView.swift */,
 				4FEFF16D26EB211E00BEE94C /* Main.storyboard */,
 				4F0E340B27193D0E006F19A7 /* RecordTableViewCell.xib */,
 			);
@@ -106,6 +111,7 @@
 				35015B2F2704385B00A813FA /* AnalysisViewController.swift */,
 				35015B312704387000A813FA /* MainViewController.swift */,
 				35015B332704389D00A813FA /* SettingViewController.swift */,
+				4F57293E2726994600F92DF9 /* ArchiveViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -175,8 +181,8 @@
 				4FB312AA2703FA6500CA0EC0 /* Model */,
 				355622B727015F9C00EBD775 /* Controller */,
 				355622B627015F8700EBD775 /* View */,
-				4FEFF17326EB212100BEE94C /* Assets.xcassets */,
 				4FEFF17526EB212100BEE94C /* LaunchScreen.storyboard */,
+				4FEFF17326EB212100BEE94C /* Assets.xcassets */,
 				4FEFF17826EB212100BEE94C /* Info.plist */,
 				4F362337270D3CAF000D680B /* GoogleService-Info.plist */,
 			);
@@ -321,12 +327,14 @@
 				4F0E33FA27143530006F19A7 /* RecordManager.swift in Sources */,
 				35FDFD75270D89E30027E4CD /* Constants.swift in Sources */,
 				4FEFF16826EB211E00BEE94C /* AppDelegate.swift in Sources */,
+				4F57293F2726994600F92DF9 /* ArchiveViewController.swift in Sources */,
 				4F36233A270D5AE9000D680B /* UnderWaterSVGView.swift in Sources */,
 				4F0E340627157AA7006F19A7 /* RecordTableView.swift in Sources */,
 				4FA269D6270A970C00E0330B /* SVGTextView.swift in Sources */,
 				355622BC2701600A00EBD775 /* GaugeWaveAnimationView.swift in Sources */,
 				4FEFF16A26EB211E00BEE94C /* SceneDelegate.swift in Sources */,
 				4F0E340E27194224006F19A7 /* RecordTableViewCell.swift in Sources */,
+				4F57294327269C6200F92DF9 /* DateNavigationView.swift in Sources */,
 				35015B322704387000A813FA /* MainViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

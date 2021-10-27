@@ -15,7 +15,7 @@ class RecordTableView: UITableView {
     }
     
     func setCellConfig() {
-        
+        self.backgroundColor = .clear
         let nibName = UINib(nibName: "RecordTableViewCell", bundle: nil)
         self.register(nibName, forCellReuseIdentifier: "RecordTableViewCell")
         self.estimatedRowHeight = 200.0

@@ -20,7 +20,6 @@ class RecordTableViewCell: UITableViewCell {
     
     
     let theme = ThemeManager.shared.getThemeInstance()
-    
     let currentTheme = ThemeManager.shared.getThemeInstance()
     
     override func awakeFromNib() {
@@ -69,7 +68,6 @@ class RecordTableViewCell: UITableViewCell {
         memoView.frame.size = CGSize(width: memoView.frame.width, height: memoView.optimalHeight)
         if memoView.text?.count == 0 {
             memoBackgroundView.backgroundColor = .clear
-            memoView.alpha = 0.0
         }
         
         self.contentView.backgroundColor = .clear// UIColor(hex: color)
