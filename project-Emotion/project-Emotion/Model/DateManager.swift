@@ -16,10 +16,14 @@ class DateManager {
     private let dateFormat = DateFormatter()
     private var dateMode = 0 // 0 -> Day, 1 -> Week, 2 -> Month
     
-    func setCurrentDateForNow() {
+    func initalizeDate() {
         
         currentDate = Date()
         dateMode = 0
+    }
+    
+    func setToday() {
+        currentDate = Date()
     }
     
     func getCurrentDate() -> Date {
@@ -84,7 +88,10 @@ class DateManager {
     
     func setDateMode(newMode: Int) {
         
-        if newMode >= 0 && newMode <= 3 {
+        if newMode == dateMode {
+            return
+        } else if newMode >= 0 && newMode <= 3 {
+            setToday()
             dateMode = newMode
         } else {
             dateMode = 0

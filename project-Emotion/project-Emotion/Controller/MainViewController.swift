@@ -41,7 +41,7 @@ class MainViewController: UIViewController {
         theme = ThemeManager.shared.getThemeInstance()
         self.view.backgroundColor = theme.getColor().view.main
         
-        dateManager.setCurrentDateForNow()
+        dateManager.initalizeDate()
         currentRecords = recordManager.getMatchingRecords()
 
         recordAnimationView.runAnimation(records: currentRecords)

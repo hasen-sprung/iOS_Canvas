@@ -47,7 +47,7 @@ class RecordManager {
             
         } else if currentMode == 1 {
             
-            let dateFrom = calendar.startOfDay(for: currentDate)
+            let dateFrom = calendar.startOfDay(for: currentDate.startOfWeek())
             let dateTo = calendar.date(byAdding: .day, value: 6, to: dateFrom)
             
             if let dateTo = dateTo {

@@ -33,7 +33,7 @@ class ArchiveViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         
-        dateManager.setCurrentDateForNow()
+        dateManager.initalizeDate()
         dateNavigationView.setDateNavigationLayout()
         currentRecords = recordManager.getMatchingRecords()
         setSwipeActions()
