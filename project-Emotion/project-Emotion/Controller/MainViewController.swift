@@ -41,13 +41,15 @@ class MainViewController: UIViewController {
         theme = ThemeManager.shared.getThemeInstance()
         self.view.backgroundColor = theme.getColor().view.main
         
+        let seeder = DataHelper()
+        seeder.loadSeeder()
+        
         dateManager.initalizeDate()
         currentRecords = recordManager.getLastRecords(userCount: 10)
 
         recordAnimationView.runAnimation(records: currentRecords)
         
-        let seeder = DataHelper()
-        seeder.loadSeeder()
+        
         // 처음 뷰가 로드될 때는 항상 animated subview
         changeSubView(token: true)
     }
