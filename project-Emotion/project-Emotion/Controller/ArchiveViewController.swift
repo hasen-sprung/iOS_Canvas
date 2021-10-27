@@ -17,11 +17,13 @@ class ArchiveViewController: UIViewController {
     
     private let dateManager = DateManager.shared
     private let recordManager = RecordManager.shared
+    private var countRecordsByDate: [DateCount]?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false // 밀어서 뒤로가기 기능 제거
+        view.backgroundColor = .white
         recordTableView.dataSource = self
         recordTableView.delegate = self
         dateNavigationView.delegate = self
@@ -35,6 +37,7 @@ class ArchiveViewController: UIViewController {
         dateNavigationView.setDateNavigationLayout()
         currentRecords = recordManager.getMatchingRecords()
         setSwipeActions()
+        countRecordsByDate = recordManager.getDateList(currentRecords: currentRecords)
         view.addSubview(recordTableView)
     }
 }
@@ -48,9 +51,20 @@ extension ArchiveViewController: UITableViewDelegate, UITableViewDataSource {
         recordTableView.setCellConfig()
     }
     
+    func numberOfSections(in tableView: UITableView) -> Int {
+        let countRecordsByDate = recordManager.getDateList(currentRecords: currentRecords)
+        
+        return countRecordsByDate.count
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        
+        return countRecordsByDate?[section].getDate() ?? "error"
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return currentRecords.count
+        return countRecordsByDate?[section].getCount() ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -73,6 +87,7 @@ extension ArchiveViewController: DateNavigationViewDelegate {
     func changeDateMode(mode: Int) {
         dateManager.setDateMode(newMode: mode)
         currentRecords = recordManager.getMatchingRecords()
+        countRecordsByDate = recordManager.getDateList(currentRecords: currentRecords)
         recordTableView.reloadData()
     }
 }
@@ -94,6 +109,7 @@ extension ArchiveViewController {
         dateManager.changeDate(val: -1)
         dateNavigationView.setLabelText()
         currentRecords = recordManager.getMatchingRecords()
+        countRecordsByDate = recordManager.getDateList(currentRecords: currentRecords)
         recordTableView.reloadData()
     }
     
@@ -102,6 +118,7 @@ extension ArchiveViewController {
         dateManager.changeDate(val: 1)
         dateNavigationView.setLabelText()
         currentRecords = recordManager.getMatchingRecords()
+        countRecordsByDate = recordManager.getDateList(currentRecords: currentRecords)
         recordTableView.reloadData()
     }
 }

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="zrN-gA-FWL">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="zrN-gA-FWL">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -27,52 +27,8 @@
                                     <action selector="pressedAddRecordButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="eXb-j9-s2O"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="06y-f8-lwb">
-                                <rect key="frame" x="327" y="73" width="67" height="31"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" title="button"/>
-                            </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ase-V4-uHN">
-                                <rect key="frame" x="186" y="140" width="42" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NZr-41-GqK">
-                                <rect key="frame" x="50" y="57" width="314" height="54"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="czV-xT-TEt">
-                                        <rect key="frame" x="87" y="12" width="67" height="31"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="plain" title="Button"/>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jjN-DI-05f">
-                                        <rect key="frame" x="165" y="12" width="67" height="31"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="plain" title="Button"/>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="x5i-1i-8pS">
-                                        <rect key="frame" x="8" y="12" width="67" height="31"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="plain" title="Button"/>
-                                    </button>
-                                </subviews>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                            </view>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jHo-45-gg9">
-                                <rect key="frame" x="20" y="135" width="67" height="31"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" title="button"/>
-                            </button>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HDn-4B-E5C" customClass="RecordAnimationView" customModule="project_Emotion">
-                                <rect key="frame" x="50" y="188" width="300" height="500"/>
+                                <rect key="frame" x="0.0" y="88" width="414" height="716"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </view>
@@ -100,16 +56,9 @@
                     </navigationItem>
                     <connections>
                         <outlet property="addRecordButton" destination="BER-sR-zqF" id="SV4-yO-UU8"/>
-                        <outlet property="dateBackwardButton" destination="jHo-45-gg9" id="Tec-f9-ZlR"/>
-                        <outlet property="dateForwardButton" destination="06y-f8-lwb" id="A8I-R7-FgC"/>
-                        <outlet property="dateLabel" destination="ase-V4-uHN" id="Ycr-1e-nX0"/>
                         <outlet property="goToArchiveButton" destination="jSp-77-kwL" id="vOQ-Da-hsl"/>
                         <outlet property="gotoSettingButton" destination="PrK-eD-e67" id="C6H-ge-PPi"/>
                         <outlet property="recordAnimationView" destination="HDn-4B-E5C" id="uiO-aV-GFb"/>
-                        <outlet property="selectDateView" destination="NZr-41-GqK" id="rGS-71-KqH"/>
-                        <outlet property="selectDayButton" destination="x5i-1i-8pS" id="s14-Ee-Sju"/>
-                        <outlet property="selectMonthButton" destination="jjN-DI-05f" id="Gcg-z0-Amn"/>
-                        <outlet property="selectWeekButton" destination="czV-xT-TEt" id="pVZ-gg-KmB"/>
                         <segue destination="stT-4X-6R3" kind="presentation" identifier="mainToGauge" modalPresentationStyle="fullScreen" id="fyE-QF-8ly"/>
                         <segue destination="OMa-iC-MdF" kind="show" identifier="mainToSetting" id="iMy-J2-pW4"/>
                     </connections>

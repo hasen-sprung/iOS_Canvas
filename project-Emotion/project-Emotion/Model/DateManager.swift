@@ -90,34 +90,6 @@ class DateManager {
             dateMode = 0
         }
     }
-    
-    func getDateList(currentRecords: [Record]) -> [String : Int] {
-        
-        var dateList = [String : Int]()
-        var dateString: String?
-        var lastDate = ""
-        var itemCount = 0
-        
-        dateFormat.dateFormat = "M월 d일"
-        
-        
-        for idx in 0 ..< currentRecords.count {
-            
-            dateString = dateFormat.string(from: currentRecords[idx].createdDate ?? Date())
-            if lastDate != dateString {
-                
-                if lastDate != "" {
-                    dateList.updateValue(itemCount, forKey: lastDate)
-                }
-                lastDate = dateString ?? ""
-                dateList.updateValue(0, forKey: lastDate)
-                itemCount = 0
-            }
-            itemCount += 1
-        }
-        
-        return dateList
-    }
 }
 
 extension Calendar {
@@ -139,5 +111,33 @@ extension Date {
     
     public var day: Int {
          return Calendar.current.component(.day, from: self)
+    }
+}
+
+
+class DateCount {
+    
+    private var date: String?
+    private var count: Int?
+    
+    init() {
+        date = ""
+        count = 0
+    }
+    
+    func getDate() -> String? {
+        return date
+    }
+    
+    func getCount() -> Int? {
+        return count
+    }
+    
+    func setDate(newDate: String?) {
+        date = newDate
+    }
+    
+    func setCount(newCount: Int?) {
+        count = newCount
     }
 }
