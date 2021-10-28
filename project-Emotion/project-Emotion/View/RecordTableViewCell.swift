@@ -17,30 +17,23 @@ class RecordTableViewCell: UITableViewCell {
     @IBOutlet weak var memoView: UILabel!
     @IBOutlet weak var svgView: SVGView!
     @IBOutlet weak var memoBackgroundView: UIView!
-    
-    
     let theme = ThemeManager.shared.getThemeInstance()
-    let currentTheme = ThemeManager.shared.getThemeInstance()
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        
         setCellContentsLayout()
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-        
         // Configure the view for the selected state
     }
     
     func setCellContents(records: [Record], indexPath: IndexPath) {
-        
-        
         let time = records[indexPath.row].createdDate
         let figure = records[indexPath.row].gaugeLevel
         let memo = records[indexPath.row].memo
-        let color = CellTheme.shared.getCurrentColor(figure: figure)
+        let color = theme.getCurrentColor(figure: figure)
         svgView.backgroundColor = .clear
         SvgImageView.backgroundColor = .white
         SvgImageView.layer.cornerRadius = SvgImageView.frame.width / 2

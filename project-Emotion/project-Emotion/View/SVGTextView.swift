@@ -48,7 +48,7 @@ class SVGTextView: UIView {
     
     private func getCurrentColor() -> Int{
         
-        return CellTheme.shared.getCurrentColor(figure: self.figure ?? 0.5)
+        return DefaultTheme.shared.getCurrentColor(figure: self.figure ?? 0.5)
     }
     
     private func setTextBaseView() {

@@ -291,7 +291,7 @@ extension GaugeViewController: FloatingSVGViewDelegate {
         
         svgTextBackgroundView.frame.size = CGSize(width: view.frame.width, height: view.frame.height)
         svgTextBackgroundView.center = CGPoint(x: view.frame.width / 2, y: view.frame.height / 2)
-        svgTextBackgroundView.backgroundColor = UIColor(hex: CellTheme.shared.getCurrentColor(figure: figure))
+        svgTextBackgroundView.backgroundColor = UIColor(hex: DefaultTheme.shared.getCurrentColor(figure: figure))
         svgTextBackgroundView.alpha = 0.0
         
         view.addSubview(svgTextBackgroundView)

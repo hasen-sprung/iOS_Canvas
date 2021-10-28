@@ -53,7 +53,7 @@ class UnderWaterSVGView: UIView {
             themeSVGImages = theme.instanceSVGImages()
             newSVGView.node = theme.getNodeByFigure(figure: randFigure, currentNode: nil, svgNodes: themeSVGImages) ?? Node()
             let fillShape = (newSVGView.node as! Group).contents.first as! Shape
-            fillShape.fill = Color(CellTheme.shared.getCurrentColor(figure: randFigure))
+            fillShape.fill = Color(DefaultTheme.shared.getCurrentColor(figure: randFigure))
             
             newSVGView.frame.size = CGSize(width: newView.frame.width, height: newView.frame.height)
             newSVGView.center = CGPoint(x: newView.frame.width / 2, y: newView.frame.height / 2)
@@ -109,7 +109,7 @@ class UnderWaterSVGView: UIView {
                     
                     svgView[idx].node = theme.getNodeByFigure(figure: randFigure, currentNode: nil, svgNodes: themeSVGImages) ?? theme.getNodeByFigure(figure: 0.5, currentNode: nil, svgNodes: themeSVGImages) ?? Node()
                     let fillShape = (svgView[idx].node as! Group).contents.first as! Shape
-                    fillShape.fill = Color(CellTheme.shared.getCurrentColor(figure: randFigure))
+                    fillShape.fill = Color(DefaultTheme.shared.getCurrentColor(figure: randFigure))
                     underWaterSVGs[idx].customFadeIn(duration: 0.5)
                 }
             }

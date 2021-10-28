@@ -1,7 +1,5 @@
-
 import UIKit
 
-// MARK: - Gauge Color
 struct GaugeColor {
     var top: UIColor
     var middle: UIColor
@@ -13,10 +11,18 @@ struct ViewColor {
     var gauge: UIColor
 }
 
+struct ShapeColor {
+    var heart: UIColor
+    var circle: UIColor
+    var triangle: UIColor
+    var rectangle: UIColor
+    var line: UIColor
+}
+
 struct Colors {
     var gauge : GaugeColor
     var view: ViewColor
-    
+    var shape: ShapeColor?
 }
 
 extension UIColor {
@@ -42,11 +48,9 @@ extension UIColor {
     // MARK: - From UIColor to String
     func hexStringFromColor() -> String {
         let components = self.cgColor.components
-        
         let r: CGFloat = components?[0] ?? 0.0
         let g: CGFloat = components?[1] ?? 0.0
         let b: CGFloat = components?[2] ?? 0.0
-        
         let hexString = String.init(format: "0x%02lX%02lX%02lX", lroundf(Float(r * 255)), lroundf(Float(g * 255)), lroundf(Float(b * 255)))
         return hexString
     }

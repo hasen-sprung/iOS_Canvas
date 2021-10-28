@@ -147,7 +147,7 @@ class FloatingSVGView: MacawView {
     private func setSVGColor(figure: Float) {
         
         let svgShape = (svgView.node as! Group).contents.first as! Shape
-        svgShape.fill = Color(CellTheme.shared.getCurrentColor(figure: figure))
+        svgShape.fill = Color(DefaultTheme.shared.getCurrentColor(figure: figure))
     }
     
     private func setStartingSVG() {

@@ -45,7 +45,7 @@ class MainViewController: UIViewController {
         seeder.loadSeeder()
         
         dateManager.initalizeDate()
-        currentRecords = recordManager.getLastRecords(userCount: 10)
+        currentRecords = recordManager.getLastRecords(userCount: 50)
 
         recordAnimationView.runAnimation(records: currentRecords)
         
