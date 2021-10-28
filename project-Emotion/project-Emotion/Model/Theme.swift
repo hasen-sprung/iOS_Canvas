@@ -114,7 +114,7 @@ class CellTheme: Theme, ThemeProtocol  {
         
         do {
             
-            let nodeGroup = try SVGParser.parse(resource: "cellImages") as! Group
+            let nodeGroup = try SVGParser.parse(resource: "defaultImages") as! Group
             var svgNodes = [Node]()
             
             svgNodes.append(nodeGroup.nodeBy(tag: "svg_1") ?? Node())
