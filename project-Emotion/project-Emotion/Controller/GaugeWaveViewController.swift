@@ -11,75 +11,78 @@ import Macaw
 class GaugeWaveViewController: UIViewController {
     
     private var backgroundShapes = [SVGView]()
+    private let gaugeView = GaugeWaveAnimationView(frame: UIScreen.main.bounds)
     
     private let theme = ThemeManager.shared.getThemeInstance()
     private let svgImages = ThemeManager.shared.getThemeInstance().instanceSVGImages()
+    private var currentImage: Node?
     
-    private let changeImageButton = UIButton()
+    private var animationEndTag: [Bool]?
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        gaugeView.delegate = self
         view.backgroundColor = .white
-        setBackgroound()
-        setChangeImageButton() // test용
+        setBackground()
+        view.addSubview(gaugeView)
         
     }
     
-    private func setChangeImageButton() {
+    override func viewWillAppear(_ animated: Bool) {
         
-        changeImageButton.frame.size = CGSize(width: 100, height: 40)
-        changeImageButton.center = CGPoint(x: view.frame.width / 2, y: view.frame.height * 0.9)
-        changeImageButton.addTarget(self, action: #selector(changeImage), for: .touchUpInside)
-        changeImageButton.backgroundColor = .cyan
-        view.addSubview(changeImageButton)
+        gaugeView.startWaveAnimation()
     }
     
-    var index = 3
-    @objc func changeImage() {
+    
+    private func changeImage(figure: Float) {
         
-        let images: [Float] = [0.9, 0.7, 0.5, 0.3, 0.1]
+        let ignoreAnimationImage = theme.getNodeByFigure(figure: 0.9, currentNode: currentImage, svgNodes: svgImages)
         
         if backgroundShapes.count > 0 {
             
-            
-            let newImage = theme.getNodeByFigure(figure: images[index], currentNode: nil, svgNodes: svgImages) ?? Node()
-            setImageColor(image: newImage, figure: images[index])
-            
-            for idx in 0 ..< backgroundShapes.count {
+            if let newImage = theme.getNodeByFigure(figure: figure, currentNode: currentImage, svgNodes: svgImages) {
+                setImageColor(image: newImage, figure: figure)
                 
-                if index != 0 && index != 1 {
+                for idx in 0 ..< backgroundShapes.count {
                     
-                    let rootGroup = [backgroundShapes[idx].node].group()
-                    backgroundShapes[idx].node = rootGroup
-                    let animation = rootGroup.contentsVar.animation(to: [newImage], during: 0.3).onComplete {
-                        self.backgroundShapes[idx].node = newImage
+                    if animationEndTag?[idx] == true {
+                        if currentImage != ignoreAnimationImage && newImage != ignoreAnimationImage {
+                            
+                            animationEndTag?[idx] = false
+                            self.currentImage = newImage
+                            let rootGroup = [backgroundShapes[idx].node].group()
+                            backgroundShapes[idx].node = rootGroup
+                            let animation = rootGroup.contentsVar.animation(to: [newImage], during: 0.2).onComplete {
+                                self.animationEndTag?[idx] = true
+                                self.backgroundShapes[idx].node = newImage
+                            }
+                            animation.play()
+                        } else {
+                            self.currentImage = newImage
+                            self.backgroundShapes[idx].node = newImage
+                        }
                     }
-                    animation.play()
-                } else {
-                    self.backgroundShapes[idx].node = newImage
+                    
                 }
-            }
-            
-            index += 1
-            if index > 4 {
-                index = 0
             }
         }
     }
     
-    private func setBackgroound() {
-        
-        setShapes()
-    }
-    
-    
-    private func setShapes() {
+    private func setBackground() {
         
         let centerX: [CGFloat] = [10.0, 30.0, 50.0, 70.0, 90.0]
         let centerY: [CGFloat] = [20.0, 40.0, 60.0, 80.0]
         
-        let currentIamge = theme.getNodeByFigure(figure: 0.5, currentNode: nil, svgNodes: svgImages)
+        setShapes(centerX: centerX, centerY: centerY)
+        setAnimationEndTag(centerX: centerX, centerY: centerY)
+    }
+    
+    
+    private func setShapes(centerX: [CGFloat], centerY: [CGFloat]) {
+        
+        currentImage = theme.getNodeByFigure(figure: gaugeView.getGaugeValue(), currentNode: nil, svgNodes: svgImages)
         
         for y in 0 ..< centerY.count {
             
@@ -94,12 +97,20 @@ class GaugeWaveViewController: UIViewController {
                 newView.center = CGPoint(x: getRatioLen(ratio: centerX[x], tag: 0) + getRatioLen(ratio: CGFloat.random(in: -3 ... 3), tag: 0),
                                          y: getRatioLen(ratio: centerY[y], tag: 1) + getRatioLen(ratio: CGFloat.random(in: -6 ... 6), tag: 1))
                 newView.backgroundColor = .clear
-                newView.node = currentIamge ?? Node()
+                newView.node = currentImage ?? Node()
                 setImageColor(image: newView.node, figure: 0.5)
                 newView.transform = CGAffineTransform(rotationAngle: randAngle * CGFloat(Double.pi) / 180)
                 backgroundShapes.append(newView)
                 view.addSubview(newView)
             }
+        }
+    }
+    
+    private func setAnimationEndTag(centerX: [CGFloat], centerY: [CGFloat]) {
+        
+        animationEndTag = [Bool]()
+        for _ in 0 ..< (centerX.count * centerY.count) {
+            animationEndTag?.append(true)
         }
     }
     
@@ -116,5 +127,31 @@ class GaugeWaveViewController: UIViewController {
         
         let fillShape = (image as! Group).contents.first as! Shape
         fillShape.fill = Color(theme.getCurrentColor(figure: figure))
+    }
+}
+
+extension GaugeWaveViewController: GaugeWaveAnimationViewDelegate {
+    
+    func sendFigureToGaugeViewController() {
+        
+        let newFigure = gaugeView.getGaugeValue()
+        changeImage(figure: newFigure)
+        
+    }
+    
+    func actionTouchedUpOutside() {
+        
+    }
+    
+    func actionTouchedUpOutsideInSafeArea() {
+        
+    }
+    
+    func actionTouchedInCancelArea() {
+        
+    }
+    
+    func actionTouchedOutCancelArea() {
+        
     }
 }

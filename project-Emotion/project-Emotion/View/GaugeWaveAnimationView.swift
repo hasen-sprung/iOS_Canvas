@@ -35,13 +35,13 @@ class GaugeWaveAnimationView: UIView {
         return layer
     }()
     // TODO: 외부 의존성을 줄이기 위해서 싱글톤 사용안하고 테마값 적용 + willAppear에서 리셋
-    private var backgroundColorTop = ThemeManager.shared.getThemeInstance().getColor().gauge.top {
+    private var backgroundColorTop = UIColor.systemPink {
         didSet{ updateBackgroundGradient() }
     }
-    private var backgroundColorBottom = ThemeManager.shared.getThemeInstance().getColor().gauge.bottom {
+    private var backgroundColorBottom = UIColor.systemPink {
         didSet{ updateBackgroundGradient() }
     }
-    private var backgroundColorMiddle = ThemeManager.shared.getThemeInstance().getColor().gauge.middle {
+    private var backgroundColorMiddle = UIColor.systemPink {
         didSet{ updateBackgroundGradient() }
     }
     
@@ -85,7 +85,7 @@ extension GaugeWaveAnimationView {
     func setWaveView(frame: CGRect) {
         let resizedFrameWithSafeArea: CGRect = CGRect(origin: frame.origin, size: CGSize(width: frame.width, height: frame.height * (1.0 - safeAreaInGaugeView)))
         
-        waveView = WaveAnimationView(frame: resizedFrameWithSafeArea, frontColor: backgroundColorBottom, backColor: backgroundColorTop)
+        waveView = WaveAnimationView(frame: resizedFrameWithSafeArea, frontColor: backgroundColorBottom, backColor: UIColor.systemPink)
         waveView.progress = 1
         
         // MARK: - set gradient view
@@ -157,7 +157,7 @@ extension GaugeWaveAnimationView {
     
     private func updateBackgroundGradient() {
         
-        gradientLayer.colors = [backgroundColorTop.cgColor, backgroundColorMiddle.cgColor, backgroundColorBottom.cgColor]
+        gradientLayer.colors = [UIColor.systemPink, UIColor.systemPink, UIColor.systemPink]
         gradientLayer.startPoint = CGPoint(x: 0.5, y: 0)
         gradientLayer.endPoint = CGPoint(x: 0.5, y: 1)
         gradientLayer.locations = [0.0, 0.5, 1.0]
