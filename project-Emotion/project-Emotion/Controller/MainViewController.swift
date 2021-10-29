@@ -39,13 +39,13 @@ class MainViewController: UIViewController {
         
         // core data에 추가된 데이터가 있을수 있으므로 뷰의 데이터를 리로드
         theme = ThemeManager.shared.getThemeInstance()
-        self.view.backgroundColor = theme.getColor().view.main
+        self.view.backgroundColor = .white
         
         let seeder = DataHelper()
         seeder.loadSeeder()
         
         dateManager.initalizeDate()
-        currentRecords = recordManager.getLastRecords(userCount: 50)
+        currentRecords = recordManager.getLastRecords(userCount: 30)
 
         recordAnimationView.runAnimation(records: currentRecords)
         
