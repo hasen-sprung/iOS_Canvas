@@ -14,19 +14,18 @@ class GaugeWaveViewController: UIViewController {
     
     private let theme = ThemeManager.shared.getThemeInstance()
     private let svgImages = ThemeManager.shared.getThemeInstance().instanceSVGImages()
-    private var currentIamge: Node?
     
     private let changeImageButton = UIButton()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         view.backgroundColor = .white
         setBackgroound()
         setChangeImageButton() // test용
         
     }
-
+    
     private func setChangeImageButton() {
         
         changeImageButton.frame.size = CGSize(width: 100, height: 40)
@@ -39,14 +38,27 @@ class GaugeWaveViewController: UIViewController {
     var index = 3
     @objc func changeImage() {
         
-        let images: [Float] = [0.1, 0.3, 0.5, 0.7, 0.9]
+        let images: [Float] = [0.9, 0.7, 0.5, 0.3, 0.1]
         
         if backgroundShapes.count > 0 {
-            let newImage = theme.getNodeByFigure(figure: images[index], currentNode: nil, svgNodes: svgImages)
-            setImageColor(image: newImage ?? Node(), figure: images[index])
+            
+            
+            let newImage = theme.getNodeByFigure(figure: images[index], currentNode: nil, svgNodes: svgImages) ?? Node()
+            setImageColor(image: newImage, figure: images[index])
             
             for idx in 0 ..< backgroundShapes.count {
-                backgroundShapes[idx].node = newImage ?? Node()
+                
+                if index != 0 && index != 1 {
+                    
+                    let rootGroup = [backgroundShapes[idx].node].group()
+                    backgroundShapes[idx].node = rootGroup
+                    let animation = rootGroup.contentsVar.animation(to: [newImage], during: 0.3).onComplete {
+                        self.backgroundShapes[idx].node = newImage
+                    }
+                    animation.play()
+                } else {
+                    self.backgroundShapes[idx].node = newImage
+                }
             }
             
             index += 1
@@ -67,7 +79,7 @@ class GaugeWaveViewController: UIViewController {
         let centerX: [CGFloat] = [10.0, 30.0, 50.0, 70.0, 90.0]
         let centerY: [CGFloat] = [20.0, 40.0, 60.0, 80.0]
         
-        currentIamge = theme.getNodeByFigure(figure: 0.5, currentNode: nil, svgNodes: svgImages)
+        let currentIamge = theme.getNodeByFigure(figure: 0.5, currentNode: nil, svgNodes: svgImages)
         
         for y in 0 ..< centerY.count {
             
