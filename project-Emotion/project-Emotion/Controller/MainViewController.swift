@@ -39,7 +39,7 @@ class MainViewController: UIViewController {
         
         // core data에 추가된 데이터가 있을수 있으므로 뷰의 데이터를 리로드
         theme = ThemeManager.shared.getThemeInstance()
-        self.view.backgroundColor = .white
+        self.view.backgroundColor = UIColor(hex: 0xFAEBD7)
         
         let seeder = DataHelper()
         seeder.loadSeeder()

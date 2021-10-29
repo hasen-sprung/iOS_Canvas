@@ -29,7 +29,7 @@ class GaugeWaveViewController: UIViewController {
         self.feedbackGenerator?.prepare()
         
         gaugeView.delegate = self
-        view.backgroundColor = .white
+        view.backgroundColor = UIColor(hex: 0xFAEBD7)
         setDismissButton()
         setBackground()
         view.addSubview(gaugeView)
@@ -148,7 +148,7 @@ class GaugeWaveViewController: UIViewController {
         
         dismissButton.backgroundColor = .clear
         dismissButton.setTitle("", for: .normal)
-        dismissButton.alpha = 0.4
+        dismissButton.alpha = 0.6
     }
     
     private func dismissGaugeViewController() {
@@ -174,13 +174,13 @@ extension GaugeWaveViewController: GaugeWaveAnimationViewDelegate {
     
     func actionTouchedUpOutsideInSafeArea() {
         
-        dismissButton.backgroundColor = .systemPink
+        dismissButton.backgroundColor = UIColor(hex: 0xDE68A5)
         dismissGaugeViewController()
     }
     
     func actionTouchedInCancelArea() {
         
-        dismissButton.backgroundColor = .systemPink
+        dismissButton.backgroundColor = UIColor(hex: 0xDE68A5)
     }
     
     func actionTouchedOutCancelArea() {
