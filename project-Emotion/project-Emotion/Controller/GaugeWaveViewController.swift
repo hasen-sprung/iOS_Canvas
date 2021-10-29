@@ -18,13 +18,19 @@ class GaugeWaveViewController: UIViewController {
     private var currentImage: [Node]?
     
     private var animationEndTag: [Bool]?
+    private var feedbackGenerator: UINotificationFeedbackGenerator?
     
+    @IBOutlet weak var dismissButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.feedbackGenerator = UINotificationFeedbackGenerator()
+        self.feedbackGenerator?.prepare()
+        
         gaugeView.delegate = self
         view.backgroundColor = .white
+        setDismissButton()
         setBackground()
         view.addSubview(gaugeView)
         
@@ -63,6 +69,9 @@ class GaugeWaveViewController: UIViewController {
                             self.backgroundShapes[idx].node = newImage
                         }
                     }
+                    if idx == 0 {
+                        feedbackGenerator?.notificationOccurred(.success)
+                    }
                     
                 }
             }
@@ -100,8 +109,8 @@ class GaugeWaveViewController: UIViewController {
                 newView.frame.size = CGSize(width: newWidth, height: newHeight)
                 newView.center = CGPoint(x: getRatioLen(ratio: centerX[x], tag: 0),
                                          y: getRatioLen(ratio: centerY[y], tag: 1))
-//                newView.center = CGPoint(x: getRatioLen(ratio: centerX[x], tag: 0) + getRatioLen(ratio: CGFloat.random(in: -3 ... 3), tag: 0),
-//                                         y: getRatioLen(ratio: centerY[y], tag: 1) + getRatioLen(ratio: CGFloat.random(in: -6 ... 6), tag: 1))
+                //                newView.center = CGPoint(x: getRatioLen(ratio: centerX[x], tag: 0) + getRatioLen(ratio: CGFloat.random(in: -3 ... 3), tag: 0),
+                //                                         y: getRatioLen(ratio: centerY[y], tag: 1) + getRatioLen(ratio: CGFloat.random(in: -6 ... 6), tag: 1))
                 newView.backgroundColor = .clear
                 newView.node = currentImage?[y * centerX.count + x] ?? Node()
                 setImageColor(image: newView.node, figure: 0.5)
@@ -134,6 +143,20 @@ class GaugeWaveViewController: UIViewController {
         let fillShape = (image as! Group).contents.first as! Shape
         fillShape.fill = Color(theme.getCurrentColor(figure: figure))
     }
+    
+    private func setDismissButton() {
+        
+        dismissButton.backgroundColor = .clear
+        dismissButton.setTitle("", for: .normal)
+        dismissButton.alpha = 0.4
+    }
+    
+    private func dismissGaugeViewController() {
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+            self.dismiss(animated: true, completion: nil)
+        }
+    }
 }
 
 extension GaugeWaveViewController: GaugeWaveAnimationViewDelegate {
@@ -151,13 +174,17 @@ extension GaugeWaveViewController: GaugeWaveAnimationViewDelegate {
     
     func actionTouchedUpOutsideInSafeArea() {
         
+        dismissButton.backgroundColor = .systemPink
+        dismissGaugeViewController()
     }
     
     func actionTouchedInCancelArea() {
         
+        dismissButton.backgroundColor = .systemPink
     }
     
     func actionTouchedOutCancelArea() {
         
+        dismissButton.backgroundColor = .clear
     }
 }
