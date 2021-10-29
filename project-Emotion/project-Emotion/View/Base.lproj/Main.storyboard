@@ -9,6 +9,21 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--Gauge Wave View Controller-->
+        <scene sceneID="57h-rr-TLX">
+            <objects>
+                <viewController id="egz-6a-JRp" customClass="GaugeWaveViewController" customModule="project_Emotion" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="BKY-Wd-8zD">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="6dZ-8Y-5wG"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="kWW-Mr-Ffd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2809" y="-886"/>
+        </scene>
         <!--Main View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
@@ -25,6 +40,7 @@
                                 <state key="normal" backgroundImage="plus.circle" catalog="system"/>
                                 <connections>
                                     <action selector="pressedAddRecordButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="eXb-j9-s2O"/>
+                                    <segue destination="egz-6a-JRp" kind="presentation" modalPresentationStyle="fullScreen" id="onw-C7-01b"/>
                                 </connections>
                             </button>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HDn-4B-E5C" customClass="RecordAnimationView" customModule="project_Emotion">
@@ -61,7 +77,6 @@
                         <outlet property="goToArchiveButton" destination="jSp-77-kwL" id="vOQ-Da-hsl"/>
                         <outlet property="gotoSettingButton" destination="PrK-eD-e67" id="C6H-ge-PPi"/>
                         <outlet property="recordAnimationView" destination="HDn-4B-E5C" id="uiO-aV-GFb"/>
-                        <segue destination="stT-4X-6R3" kind="presentation" identifier="mainToGauge" modalPresentationStyle="fullScreen" id="fyE-QF-8ly"/>
                         <segue destination="OMa-iC-MdF" kind="show" identifier="mainToSetting" id="iMy-J2-pW4"/>
                     </connections>
                 </viewController>

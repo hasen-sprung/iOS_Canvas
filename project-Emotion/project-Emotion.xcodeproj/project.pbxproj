@@ -23,6 +23,7 @@
 		4F0F800127019D8E00FC1E6A /* FloatingSVGView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0F800027019D8E00FC1E6A /* FloatingSVGView.swift */; };
 		4F0F801A2702CA8E00FC1E6A /* cellImages.svg in Resources */ = {isa = PBXBuildFile; fileRef = 4F0F80192702CA8E00FC1E6A /* cellImages.svg */; };
 		4F10908E272A86A10008D371 /* defaultImages.svg in Resources */ = {isa = PBXBuildFile; fileRef = 4F10908D272A86A10008D371 /* defaultImages.svg */; };
+		4F109090272BD2600008D371 /* GaugeWaveViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F10908F272BD2600008D371 /* GaugeWaveViewController.swift */; };
 		4F362338270D3CB0000D680B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4F362337270D3CAF000D680B /* GoogleService-Info.plist */; };
 		4F36233A270D5AE9000D680B /* UnderWaterSVGView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F362339270D5AE9000D680B /* UnderWaterSVGView.swift */; };
 		4F57293F2726994600F92DF9 /* ArchiveViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F57293E2726994600F92DF9 /* ArchiveViewController.swift */; };
@@ -57,6 +58,7 @@
 		4F0F800027019D8E00FC1E6A /* FloatingSVGView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingSVGView.swift; sourceTree = "<group>"; };
 		4F0F80192702CA8E00FC1E6A /* cellImages.svg */ = {isa = PBXFileReference; lastKnownFileType = text; path = cellImages.svg; sourceTree = "<group>"; };
 		4F10908D272A86A10008D371 /* defaultImages.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = defaultImages.svg; sourceTree = "<group>"; };
+		4F10908F272BD2600008D371 /* GaugeWaveViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GaugeWaveViewController.swift; sourceTree = "<group>"; };
 		4F362337270D3CAF000D680B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		4F362339270D5AE9000D680B /* UnderWaterSVGView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnderWaterSVGView.swift; sourceTree = "<group>"; };
 		4F57293E2726994600F92DF9 /* ArchiveViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArchiveViewController.swift; sourceTree = "<group>"; };
@@ -114,6 +116,7 @@
 				35015B312704387000A813FA /* MainViewController.swift */,
 				35015B332704389D00A813FA /* SettingViewController.swift */,
 				4F57293E2726994600F92DF9 /* ArchiveViewController.swift */,
+				4F10908F272BD2600008D371 /* GaugeWaveViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -331,6 +334,7 @@
 				4F0E33FA27143530006F19A7 /* RecordManager.swift in Sources */,
 				35FDFD75270D89E30027E4CD /* Constants.swift in Sources */,
 				4FEFF16826EB211E00BEE94C /* AppDelegate.swift in Sources */,
+				4F109090272BD2600008D371 /* GaugeWaveViewController.swift in Sources */,
 				4F57293F2726994600F92DF9 /* ArchiveViewController.swift in Sources */,
 				4F36233A270D5AE9000D680B /* UnderWaterSVGView.swift in Sources */,
 				4F0E340627157AA7006F19A7 /* RecordTableView.swift in Sources */,
