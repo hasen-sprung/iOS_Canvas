@@ -15,7 +15,7 @@ class GaugeWaveViewController: UIViewController {
     
     private let theme = ThemeManager.shared.getThemeInstance()
     private let svgImages = ThemeManager.shared.getThemeInstance().instanceSVGImages()
-    private var currentImage: Node?
+    private var currentImage: [Node]?
     
     private var animationEndTag: [Bool]?
     
@@ -38,20 +38,19 @@ class GaugeWaveViewController: UIViewController {
     
     private func changeImage(figure: Float) {
         
-        let ignoreAnimationImage = theme.getNodeByFigure(figure: 0.9, currentNode: currentImage, svgNodes: svgImages)
+        let ignoreAnimationImage = theme.getNodeByFigure(figure: 0.9, currentNode: nil, svgNodes: svgImages)
         
         if backgroundShapes.count > 0 {
             
-            if let newImage = theme.getNodeByFigure(figure: figure, currentNode: currentImage, svgNodes: svgImages) {
-                setImageColor(image: newImage, figure: figure)
-                
-                for idx in 0 ..< backgroundShapes.count {
+            for idx in 0 ..< backgroundShapes.count {
+                if let newImage = theme.getNodeByFigure(figure: figure, currentNode: currentImage?[idx], svgNodes: svgImages) {
+                    setImageColor(image: newImage, figure: figure)
                     
                     if animationEndTag?[idx] == true {
-                        if currentImage != ignoreAnimationImage && newImage != ignoreAnimationImage {
+                        if currentImage?[idx] != ignoreAnimationImage && newImage != ignoreAnimationImage {
                             
                             animationEndTag?[idx] = false
-                            self.currentImage = newImage
+                            self.currentImage?[idx] = newImage
                             let rootGroup = [backgroundShapes[idx].node].group()
                             backgroundShapes[idx].node = rootGroup
                             let animation = rootGroup.contentsVar.animation(to: [newImage], during: 0.2).onComplete {
@@ -60,7 +59,7 @@ class GaugeWaveViewController: UIViewController {
                             }
                             animation.play()
                         } else {
-                            self.currentImage = newImage
+                            self.currentImage?[idx] = newImage
                             self.backgroundShapes[idx].node = newImage
                         }
                     }
@@ -82,7 +81,12 @@ class GaugeWaveViewController: UIViewController {
     
     private func setShapes(centerX: [CGFloat], centerY: [CGFloat]) {
         
-        currentImage = theme.getNodeByFigure(figure: gaugeView.getGaugeValue(), currentNode: nil, svgNodes: svgImages)
+        currentImage = [Node]()
+        
+        for _ in 0 ..< (centerX.count * centerY.count) {
+            
+            currentImage?.append(theme.getNodeByFigure(figure: gaugeView.getGaugeValue(), currentNode: nil, svgNodes: svgImages) ?? Node())
+        }
         
         for y in 0 ..< centerY.count {
             
@@ -94,10 +98,12 @@ class GaugeWaveViewController: UIViewController {
                 
                 let newView = SVGView()
                 newView.frame.size = CGSize(width: newWidth, height: newHeight)
-                newView.center = CGPoint(x: getRatioLen(ratio: centerX[x], tag: 0) + getRatioLen(ratio: CGFloat.random(in: -3 ... 3), tag: 0),
-                                         y: getRatioLen(ratio: centerY[y], tag: 1) + getRatioLen(ratio: CGFloat.random(in: -6 ... 6), tag: 1))
+                newView.center = CGPoint(x: getRatioLen(ratio: centerX[x], tag: 0),
+                                         y: getRatioLen(ratio: centerY[y], tag: 1))
+//                newView.center = CGPoint(x: getRatioLen(ratio: centerX[x], tag: 0) + getRatioLen(ratio: CGFloat.random(in: -3 ... 3), tag: 0),
+//                                         y: getRatioLen(ratio: centerY[y], tag: 1) + getRatioLen(ratio: CGFloat.random(in: -6 ... 6), tag: 1))
                 newView.backgroundColor = .clear
-                newView.node = currentImage ?? Node()
+                newView.node = currentImage?[y * centerX.count + x] ?? Node()
                 setImageColor(image: newView.node, figure: 0.5)
                 newView.transform = CGAffineTransform(rotationAngle: randAngle * CGFloat(Double.pi) / 180)
                 backgroundShapes.append(newView)
