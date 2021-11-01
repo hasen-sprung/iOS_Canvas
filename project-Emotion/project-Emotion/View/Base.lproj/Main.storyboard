@@ -17,6 +17,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KJu-xZ-GxO">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lMm-nN-Jxs">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="104"/>
                                 <constraints>
@@ -30,13 +34,18 @@
                         <viewLayoutGuide key="safeArea" id="6dZ-8Y-5wG"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="KJu-xZ-GxO" firstAttribute="top" secondItem="BKY-Wd-8zD" secondAttribute="top" id="3Yi-HH-gdX"/>
                             <constraint firstItem="lMm-nN-Jxs" firstAttribute="top" secondItem="BKY-Wd-8zD" secondAttribute="top" id="58W-sJ-MxB"/>
                             <constraint firstItem="lMm-nN-Jxs" firstAttribute="leading" secondItem="6dZ-8Y-5wG" secondAttribute="leading" id="BvW-Bv-N0Q"/>
+                            <constraint firstItem="KJu-xZ-GxO" firstAttribute="leading" secondItem="6dZ-8Y-5wG" secondAttribute="leading" id="KcW-gq-jwz"/>
+                            <constraint firstItem="KJu-xZ-GxO" firstAttribute="trailing" secondItem="6dZ-8Y-5wG" secondAttribute="trailing" id="RoL-0S-Swe"/>
                             <constraint firstItem="lMm-nN-Jxs" firstAttribute="trailing" secondItem="6dZ-8Y-5wG" secondAttribute="trailing" id="aBB-av-BI0"/>
+                            <constraint firstAttribute="bottom" secondItem="KJu-xZ-GxO" secondAttribute="bottom" id="inA-w1-aXk"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="dismissButton" destination="lMm-nN-Jxs" id="aoi-14-CB6"/>
+                        <outlet property="gaugeBackgroundView" destination="KJu-xZ-GxO" id="2g9-z4-4V0"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kWW-Mr-Ffd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

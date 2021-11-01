@@ -13,6 +13,8 @@ protocol GaugeWaveAnimationViewDelegate {
 
 class GaugeWaveAnimationView: UIView {
     
+    
+    var gaugeColor = UIColor(hex: 0xE8AA8F)//UIColor(hex: 0xDE68A5)
     //MARK: - properties
     var cancelAreaInGaugeView: CGFloat = CGFloat(cancelAreaRatio)
     var safeAreaInGaugeView: CGFloat = CGFloat(safeAreaRatio)
@@ -34,16 +36,6 @@ class GaugeWaveAnimationView: UIView {
         let layer = CAGradientLayer()
         return layer
     }()
-    // TODO: 외부 의존성을 줄이기 위해서 싱글톤 사용안하고 테마값 적용 + willAppear에서 리셋
-    private var backgroundColorTop = UIColor(hex: 0xDE68A5) {
-        didSet{ updateBackgroundGradient() }
-    }
-    private var backgroundColorBottom = UIColor(hex: 0xDE68A5) {
-        didSet{ updateBackgroundGradient() }
-    }
-    private var backgroundColorMiddle = UIColor(hex: 0xDE68A5) {
-        didSet{ updateBackgroundGradient() }
-    }
     
     //MARK: - init
     override init(frame : CGRect) {
@@ -83,9 +75,10 @@ class GaugeWaveAnimationView: UIView {
 extension GaugeWaveAnimationView {
     
     func setWaveView(frame: CGRect) {
-        let resizedFrameWithSafeArea: CGRect = CGRect(origin: frame.origin, size: CGSize(width: frame.width, height: frame.height * (1.0 - safeAreaInGaugeView)))
+        let resizedFrameWithSafeArea: CGRect = CGRect(origin: CGPoint(x: frame.origin.x, y: frame.origin.y), size: CGSize(width: frame.width, height: frame.height * (1.0 - safeAreaInGaugeView)))
         
-        waveView = WaveAnimationView(frame: resizedFrameWithSafeArea, frontColor: backgroundColorBottom, backColor: UIColor(hex: 0xDE68A5))
+        
+        waveView = WaveAnimationView(frame: resizedFrameWithSafeArea, frontColor: gaugeColor, backColor: gaugeColor)
         waveView.progress = 1
         
         // MARK: - set gradient view
@@ -157,13 +150,10 @@ extension GaugeWaveAnimationView {
     
     private func updateBackgroundGradient() {
         
-        gradientLayer.colors = [UIColor(hex: 0xDE68A5), UIColor(hex: 0xDE68A5), UIColor(hex: 0xDE68A5)]
+        gradientLayer.colors = [gaugeColor]
         gradientLayer.startPoint = CGPoint(x: 0.5, y: 0)
         gradientLayer.endPoint = CGPoint(x: 0.5, y: 1)
         gradientLayer.locations = [0.0, 0.5, 1.0]
-        
-        waveView.backColor = backgroundColorTop
-        waveView.frontColor = backgroundColorBottom
         
     }
 }
@@ -174,15 +164,7 @@ extension GaugeWaveAnimationView {
     
     // MARK: - 두 개의 그라데이션이 제스쳐의 위치에 따라 변경되는 액션을 설정해준다.
     func setGradientAnimation() {
-        let action = changedBackgroundColor(topColor: backgroundColorTop,
-                                            topSubColor: backgroundColorMiddle,
-                                            bottomColor: backgroundColorBottom,
-                                            bottomSubColor: backgroundColorBottom,
-                                            middleColor: backgroundColorMiddle,
-                                            middleSubColor: backgroundColorBottom
-        )
         
-        actionScrubber = ActionScrubber(action: action)
         touchedOutLocationY = superviewFrame.height / 2
         waveView.frame.origin.y = touchedOutLocationY
     }
@@ -196,19 +178,19 @@ extension GaugeWaveAnimationView {
                                                            to: topSubColor,
                                                            duration: duration,
                                                            easing: .linear,
-                                                           update: { [unowned self] in self.backgroundColorTop = $0 })
+                                                           update: { [unowned self] in self.gaugeColor = $0 })
         
         let changeGaugeColorBottom = InterpolationAction(from: bottomColor,
                                                               to: bottomSubColor,
                                                               duration: duration,
                                                               easing: .linear,
-                                                              update: { [unowned self] in self.backgroundColorBottom = $0 })
+                                                              update: { [unowned self] in self.gaugeColor = $0 })
         
         let changeGaugeColorMiddle = InterpolationAction(from: middleColor,
                                                               to: middleSubColor,
                                                               duration: duration,
                                                               easing: .linear,
-                                                              update: { [unowned self] in self.backgroundColorMiddle = $0 })
+                                                              update: { [unowned self] in self.gaugeColor = $0 })
         
         let firstAction = ActionGroup(actions: changeGaugeColorTop, changeGaugeColorBottom, changeGaugeColorMiddle)
         
@@ -217,13 +199,13 @@ extension GaugeWaveAnimationView {
                                               to: bottomColor,
                                               duration: duration,
                                               easing: .linear,
-                                              update: { [unowned self] in self.backgroundColorTop = $0 })
+                                              update: { [unowned self] in self.gaugeColor = $0 })
         
         let midToBotAtBottomColor = InterpolationAction(from: bottomColor,
                                                  to: bottomSubColor,
                                                  duration: duration,
                                                  easing: .linear,
-                                                 update: { [unowned self] in self.backgroundColorBottom = $0 })
+                                                 update: { [unowned self] in self.gaugeColor = $0 })
         
         let secondAction = ActionGroup(actions: midToBotAtTopColor, midToBotAtBottomColor)
         

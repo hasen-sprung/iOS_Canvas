@@ -10,6 +10,9 @@ import Macaw
 
 class GaugeWaveViewController: UIViewController {
     
+    @IBOutlet weak var gaugeBackgroundView: UIView!
+    private var innerShadowSize: CGFloat = 5
+    
     private var backgroundShapes = [SVGView]()
     private let gaugeView = GaugeWaveAnimationView(frame: UIScreen.main.bounds)
     
@@ -29,10 +32,11 @@ class GaugeWaveViewController: UIViewController {
         self.feedbackGenerator?.prepare()
         
         gaugeView.delegate = self
-        view.backgroundColor = UIColor(hex: 0xFAEBD7)
+        setgaugeBackgroundViewShadow()
+        gaugeBackgroundView.backgroundColor = UIColor(hex: 0xFAEBD7)
         setDismissButton()
         setBackground()
-        view.addSubview(gaugeView)
+        gaugeBackgroundView.addSubview(gaugeView)
         
     }
     
@@ -41,6 +45,13 @@ class GaugeWaveViewController: UIViewController {
         gaugeView.startWaveAnimation()
     }
     
+    
+    private func setgaugeBackgroundViewShadow() {
+        
+        gaugeBackgroundView.addShadow(to: [.left, .right],
+                                      radius: innerShadowSize,
+                                      color: UIColor.gray.cgColor)
+    }
     
     private func changeImage(figure: Float) {
         
@@ -80,7 +91,7 @@ class GaugeWaveViewController: UIViewController {
     
     private func setBackground() {
         
-        let centerX: [CGFloat] = [10.0, 30.0, 50.0, 70.0, 90.0]
+        let centerX: [CGFloat] = [10.0, 36.3, 62.6, 90.0]
         let centerY: [CGFloat] = [20.0, 40.0, 60.0, 80.0]
         
         setShapes(centerX: centerX, centerY: centerY)
@@ -100,7 +111,7 @@ class GaugeWaveViewController: UIViewController {
         for y in 0 ..< centerY.count {
             
             for x in 0 ..< centerX.count {
-                
+
                 let newWidth = CGFloat.random(in: 20 ... 40)
                 let newHeight = CGFloat.random(in: 20 ... 40)
                 let randAngle: CGFloat = CGFloat.random(in: 0.0 ... 360.0)
@@ -109,14 +120,13 @@ class GaugeWaveViewController: UIViewController {
                 newView.frame.size = CGSize(width: newWidth, height: newHeight)
                 newView.center = CGPoint(x: getRatioLen(ratio: centerX[x], tag: 0),
                                          y: getRatioLen(ratio: centerY[y], tag: 1))
-                //                newView.center = CGPoint(x: getRatioLen(ratio: centerX[x], tag: 0) + getRatioLen(ratio: CGFloat.random(in: -3 ... 3), tag: 0),
-                //                                         y: getRatioLen(ratio: centerY[y], tag: 1) + getRatioLen(ratio: CGFloat.random(in: -6 ... 6), tag: 1))
+
                 newView.backgroundColor = .clear
                 newView.node = currentImage?[y * centerX.count + x] ?? Node()
                 setImageColor(image: newView.node, figure: 0.5)
                 newView.transform = CGAffineTransform(rotationAngle: randAngle * CGFloat(Double.pi) / 180)
                 backgroundShapes.append(newView)
-                view.addSubview(newView)
+                gaugeBackgroundView.addSubview(newView)
             }
         }
     }
@@ -132,9 +142,9 @@ class GaugeWaveViewController: UIViewController {
     private func getRatioLen(ratio: CGFloat, tag: Int) -> CGFloat {
         
         if tag == 0 {
-            return (view.frame.width * ratio) / 100
+            return (gaugeBackgroundView.frame.width * ratio) / 100
         } else {
-            return (view.frame.height * ratio) / 100
+            return (gaugeBackgroundView.frame.height * ratio) / 100
         }
     }
     
@@ -186,5 +196,50 @@ extension GaugeWaveViewController: GaugeWaveAnimationViewDelegate {
     func actionTouchedOutCancelArea() {
         
         dismissButton.backgroundColor = .clear
+    }
+}
+
+extension UIView {
+    
+    func addShadow(to edges: [UIRectEdge], radius: CGFloat = 3.0, opacity: Float = 0.6, color: CGColor = UIColor.black.cgColor) {
+
+        let fromColor = color
+        let toColor = UIColor.clear.cgColor
+        let viewFrame = self.frame
+        for edge in edges {
+            let gradientLayer = CAGradientLayer()
+            gradientLayer.colors = [fromColor, toColor]
+            gradientLayer.opacity = opacity
+
+            switch edge {
+            case .top:
+                gradientLayer.startPoint = CGPoint(x: 0.5, y: 0.0)
+                gradientLayer.endPoint = CGPoint(x: 0.5, y: 1.0)
+                gradientLayer.frame = CGRect(x: 0.0, y: 0.0, width: viewFrame.width, height: radius)
+            case .bottom:
+                gradientLayer.startPoint = CGPoint(x: 0.5, y: 1.0)
+                gradientLayer.endPoint = CGPoint(x: 0.5, y: 0.0)
+                gradientLayer.frame = CGRect(x: 0.0, y: viewFrame.height - radius, width: viewFrame.width, height: radius)
+            case .left:
+                gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.5)
+                gradientLayer.endPoint = CGPoint(x: 1.0, y: 0.5)
+                gradientLayer.frame = CGRect(x: 0.0, y: 0.0, width: radius, height: viewFrame.height)
+            case .right:
+                gradientLayer.startPoint = CGPoint(x: 1.0, y: 0.5)
+                gradientLayer.endPoint = CGPoint(x: 0.0, y: 0.5)
+                gradientLayer.frame = CGRect(x: viewFrame.width - radius, y: 0.0, width: radius, height: viewFrame.height)
+            default:
+                break
+            }
+            self.layer.addSublayer(gradientLayer)
+        }
+    }
+
+    func removeAllShadows() {
+        if let sublayers = self.layer.sublayers, !sublayers.isEmpty {
+            for sublayer in sublayers {
+                sublayer.removeFromSuperlayer()
+            }
+        }
     }
 }
