@@ -31,6 +31,7 @@ class GaugeWaveViewController: UIViewController {
         self.feedbackGenerator = UINotificationFeedbackGenerator()
         self.feedbackGenerator?.prepare()
         
+        view.backgroundColor = .darkGray
         gaugeView.delegate = self
         setgaugeBackgroundViewShadow()
         gaugeBackgroundView.backgroundColor = UIColor(hex: 0xFAEBD7)
@@ -51,6 +52,7 @@ class GaugeWaveViewController: UIViewController {
         gaugeBackgroundView.addShadow(to: [.left, .right],
                                       radius: innerShadowSize,
                                       color: UIColor.gray.cgColor)
+        gaugeView.clipsToBounds = true
     }
     
     private func changeImage(figure: Float) {

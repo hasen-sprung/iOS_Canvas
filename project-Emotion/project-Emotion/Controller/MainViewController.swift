@@ -8,6 +8,7 @@ class MainViewController: UIViewController {
     @IBOutlet weak var addRecordButton: UIButton!
     @IBOutlet weak var gotoSettingButton: UIButton!
     @IBOutlet weak var goToArchiveButton: UIBarButtonItem!
+    
     @IBOutlet weak var recordAnimationView: RecordAnimationView!
 
     private let recordModalLabel = UILabel()
@@ -24,19 +25,19 @@ class MainViewController: UIViewController {
         getUserDefault()
         setAddRecordButton()
         setRecordAnimationView()
-        setRecordModalLabel()
+//        setRecordModalLabel()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         // core data에 추가된 데이터가 있을수 있으므로 뷰의 데이터를 리로드
         theme = ThemeManager.shared.getThemeInstance()
-        self.view.backgroundColor = .white//UIColor(hex: 0xFAEBD7)
+        self.view.backgroundColor = .darkGray//UIColor(hex: 0xFAEBD7)
         
         let seeder = DataHelper()
         seeder.loadSeeder()
         
         dateManager.initalizeDate()
-        currentRecords = recordManager.getLastRecords(userCount: 30)
+        currentRecords = recordManager.getLastRecords(userCount: 20)
         recordAnimationView.runAnimation(records: currentRecords)
         // 처음 뷰가 로드될 때는 항상 animated subview
         changeSubView(token: true)
@@ -98,16 +99,18 @@ extension MainViewController {
     private func setRecordAnimationView() {
         let mainViewWidth = self.view.frame.width
         let mainViewHeight = self.view.frame.height
-        let width = mainViewWidth * 0.8
-        let height = mainViewHeight * 0.65
+        let width = mainViewWidth * 0.65
+        let height = mainViewHeight * 0.4
         
         recordAnimationView.clipsToBounds = true
-        recordAnimationView.layer.borderWidth = 10
-        recordAnimationView.layer.borderColor = UIColor.black.cgColor
-        recordAnimationView.backgroundColor = .white
+//        recordAnimationView.layer.borderWidth = 10
+//        recordAnimationView.layer.borderColor = UIColor.black.cgColor
+        recordAnimationView.backgroundColor = UIColor(hex: 0xFAEBD7)
         recordAnimationView.frame.size = CGSize(width: width, height: height)
-        //recordAnimationView.center = CGPoint(x: mainViewWidth / 2, y: mainViewHeight / 2 )
-        recordAnimationView.frame.origin = CGPoint(x: mainViewWidth * 0.1, y: mainViewHeight * 0.05)
+        recordAnimationView.center = CGPoint(x: mainViewWidth / 2, y: mainViewHeight / 2 )
+        recordAnimationView.addShadow(to: [.left, .top], radius: 3, color: UIColor.black.cgColor)
+        recordAnimationView.addShadow(to: [.right, .bottom], radius: 1, color: UIColor.black.cgColor)
+//        recordAnimationView.frame.origin = CGPoint(x: mainViewWidth * 0.1, y: mainViewHeight * 0.05)
         recordAnimationView.delegate = self
     }
     
