@@ -112,10 +112,10 @@ class RecordAnimationView: UIView {
     // MARK: - view의 랜덤 위치를 정한다 (중첩되는 부분을 관리할 수 있다.)
     private func setRandomLocationRecordView(view: UIView, superView: UIView, recordViews: [UIView], overlapRatio: CGFloat) {
         // TODO: 겹치는 부분에 대한 미세한 정의, 완전하게 겹치는건 안되지만 살짝 겹치는건 괜찮다.
-        let maxX = superView.bounds.width
-        let maxY = superView.bounds.height
-        let minX: CGFloat = 0
-        let minY: CGFloat = 0
+        let maxX = superView.bounds.width - 10
+        let maxY = superView.bounds.height - 10
+        let minX: CGFloat = 0 + 10
+        let minY: CGFloat = 0 + 10
         
         var isOverlap = true
         var ratio = overlapRatio

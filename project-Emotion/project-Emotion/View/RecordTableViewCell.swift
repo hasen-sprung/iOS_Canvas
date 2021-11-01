@@ -9,7 +9,6 @@ import UIKit
 import Macaw
 import CoreData
 
-
 class RecordTableViewCell: UITableViewCell {
     
     @IBOutlet weak var SvgImageView: UIView!
