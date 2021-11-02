@@ -1,10 +1,3 @@
-//
-//  DateManager.swift
-//  project-Emotion
-//
-//  Created by Junhong Park on 2021/10/10.
-//
-
 import UIKit
 
 class DateManager {
