@@ -34,3 +34,10 @@ let cellGVMiddle: UIColor = UIColor(hex: 0xFFB5AF)
 let cellGVBottom: UIColor = UIColor(hex: 0xA29FFF)
 let cellGV: UIColor = UIColor(hex: 0xFFFEF0)
 let cellMV: UIColor = UIColor(hex: 0xFFFEF0)
+
+// MARK: - Default Colors
+let defaultRed: UIColor = UIColor(hex: 0xB23020)
+let defaultYellow: UIColor = UIColor(hex: 0xEBC96E)
+let defaultGreen: UIColor = UIColor(hex: 0x6BC1B1)
+let defaultBlue: UIColor = UIColor(hex: 0x557CCF)
+let defaultPurple: UIColor = UIColor(hex: 0x9D28F1)

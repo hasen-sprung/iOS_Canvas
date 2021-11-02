@@ -7,7 +7,7 @@
 
 import UIKit
 
-@objc protocol SVGTextViewDelegate {
+protocol SVGTextViewDelegate {
     
     func dismissTextViewSVG()
     
@@ -48,7 +48,7 @@ class SVGTextView: UIView {
     
     private func getCurrentColor() -> Int{
         
-        return CellTheme.shared.getCurrentColor(figure: self.figure ?? 0.5)
+        return DefaultTheme.shared.getCurrentColor(figure: self.figure ?? 0.5)
     }
     
     private func setTextBaseView() {
@@ -78,7 +78,10 @@ class SVGTextView: UIView {
         df.dateFormat = "M월 d일 a h시 mm분"
         df.locale = Locale(identifier:"ko_KR")
         
-        let dateString = df.string(from: self.date!)
+        var dateString = ""
+        if let date = self.date {
+             dateString = df.string(from: date)
+        }
         
         dateLabel.frame.size = CGSize(width: textBaseView.frame.width * 0.8, height: textBaseView.frame.height * 0.125)
         dateLabel.center = CGPoint(x: textBaseView.frame.width / 2, y: textBaseView.frame.height * 0.0625)
@@ -90,11 +93,15 @@ class SVGTextView: UIView {
     
     private func setTextView() {
         
+        textView.delegate = self
+        textView.textContainer.maximumNumberOfLines = 15
+        textView.textContainer.lineBreakMode = .byTruncatingTail
         textView.frame.size = CGSize(width: textBaseView.frame.width * 0.8, height: textBaseView.frame.height * 0.65)
         textView.center = CGPoint(x: textBaseView.frame.width / 2, y: textBaseView.frame.height * 0.45)
         textView.textColor = .black
         textView.backgroundColor = .white
         textView.font = UIFont.systemFont(ofSize: 17, weight: .semibold)
+        
     }
     
     private func setButtons() {
@@ -120,7 +127,7 @@ class SVGTextView: UIView {
         buttonTriggerView.layer.cornerRadius = buttonTriggerView.frame.height / 2
         buttonTriggerView.backgroundColor = .white
         buttonTriggerView.layer.shadowColor = UIColor.gray.cgColor
-        buttonTriggerView.layer.shadowOpacity = 1.0
+        buttonTriggerView.layer.shadowOpacity = 0.3
         buttonTriggerView.layer.shadowOffset = CGSize.zero
         buttonTriggerView.layer.shadowRadius = 6
     }
@@ -148,7 +155,7 @@ class SVGTextView: UIView {
     
     @objc func dismissTextView() {
         
-        UIView.animate(withDuration: 0.3, delay: 0.0, options: [.curveEaseOut], animations: { [self] in
+        UIView.animate(withDuration: 0.1, delay: 0.0, options: [.curveEaseOut], animations: { [self] in
             
             self.buttonTriggerView.center = CGPoint(x: buttonBaseView.frame.width * 0.25, y: buttonBaseView.frame.height / 2)
             self.completeButton.setTitleColor(.white, for: .normal)
@@ -178,6 +185,14 @@ class SVGTextView: UIView {
             delegate.finishGaugeEvent()
         }
     }
+}
+
+// textView의 글자수 제한
+extension SVGTextView: UITextViewDelegate {
     
-    
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        let newText = (textView.text as NSString).replacingCharacters(in: range, with: text)
+        let numberOfChars = newText.count
+        return numberOfChars < 141
+    }
 }

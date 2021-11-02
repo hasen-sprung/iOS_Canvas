@@ -5,6 +5,7 @@ import CoreData
 
 class GaugeViewController: UIViewController {
     
+    @IBOutlet weak var background: UIImageView!
     private let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
     private let gaugeView = GaugeWaveAnimationView(frame: UIScreen.main.bounds)
@@ -12,24 +13,13 @@ class GaugeViewController: UIViewController {
     private var floatingSVGViews = [FloatingSVGView]()
     private let dismissArea = UIButton()
     private let underWaterView = UnderWaterSVGView()
-    
     private var svgTextBackgroundView: SVGTextView!
-    
     
     private let theme = ThemeManager.shared.getThemeInstance()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        let backgroundImageView = UIImageView()
-//        backgroundImageView.frame = view.frame
-//        backgroundImageView.center = view.center
-//        backgroundImageView.image = UIImage(named: "simple")
-//        view.addSubview(backgroundImageView)
-        
-        
-        // 테마 싱글톤의 기본 색상을 적용시킨다.
-        //Theme.shared.colors = ThemeColors()
         // MARK: - under water view setting
         setUnderWaterView()
         // MARK: - floating svg 객체들을 생성
@@ -51,6 +41,7 @@ class GaugeViewController: UIViewController {
         }
         
         // MARK: - Delegate 위임
+        
         gaugeView.delegate = self
         floatingSVGViews[0].floatingSVGViewDelegate = self
     }
@@ -74,7 +65,7 @@ class GaugeViewController: UIViewController {
         
     }
     override func viewWillDisappear(_ animated: Bool) {
-
+        
     }
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -100,18 +91,20 @@ class GaugeViewController: UIViewController {
     private func createFloatingSVGViews() {
         
         for _ in 1...2 {
-        floatingSVGViews.append(FloatingSVGView(frame: CGRect(x: 0, y: 0, width: 0, height: 0)))
+            floatingSVGViews.append(FloatingSVGView(frame: CGRect(x: 0, y: 0, width: 0, height: 0)))
         }
     }
     
     private func initAndPlayFloatingSVGAnimation() {
         
-        let svgSize: [CGFloat] = [65.0, 40.0, 50.0]
+        let randSize = CGFloat.random(in: 45 ... 55)
+        
+        let svgSize: [CGFloat] = [randSize, 40.0, 50.0]
         let rangeX: [CGFloat] = [5.0, 14.0, -5.0]
-        let rangeY: [CGFloat] = [-30.0, -40.0, -50.0]
+        let rangeY: [CGFloat] = [-20.0, -40.0, -50.0]
         let centerX: [CGFloat] = [0.0, 150, -130]
         let centerY: [CGFloat] = [5.0, 23.0, 33.0]
-        let duration: [TimeInterval] = [0.9, 0.7, 1.1]
+        let duration: [TimeInterval] = [1.5, 0.7, 1.1]
         let delay: [TimeInterval] = [0.2, 0, 0.1]
         
         for idx in 0...(floatingSVGViews.count - 1) {
@@ -182,7 +175,7 @@ class GaugeViewController: UIViewController {
     @objc func appearTextField() {
         
         floatingSVGViews[0].changeSVGToTextField()
-        floatingSVGViews[0].alpha = 0.95
+        floatingSVGViews[0].alpha = 1
         floatingSVGViews[1].alpha = 0.0
     }
     // [end] appear textField (when figure settled)
@@ -225,7 +218,7 @@ extension GaugeViewController: GaugeWaveAnimationViewDelegate {
     
     func actionTouchedInCancelArea() {
         dismissArea.backgroundColor = .red
-
+        
     }
     
     func actionTouchedOutCancelArea() {
@@ -243,7 +236,7 @@ extension GaugeViewController: SVGTextViewDelegate {
     }
     
     func saveRecord(date: Date, figure: Float, text: String?) {
-
+        
         let newRecord = Record(context: context)
         
         newRecord.createdDate = date
@@ -271,7 +264,9 @@ extension GaugeViewController: SVGTextViewDelegate {
         dismissArea.setImage(UIImage.init(systemName: "xmark"), for: .normal)
         dismissArea.tintColor = .brown
         dismissArea.imageView?.frame.size = CGSize(width: dismissArea.frame.height / 2, height: dismissArea.frame.height / 2)
-        dismissArea.imageView?.center = CGPoint(x: dismissArea.frame.width / 2, y: dismissArea.frame.height + dismissArea.imageView!.frame.height / 2)
+        if let imageView = dismissArea.imageView {
+            imageView.center = CGPoint(x: dismissArea.frame.width / 2, y: dismissArea.frame.height + imageView.frame.height / 2)
+        }
         
         dismissArea.alpha = 0.2
         dismissArea.addTarget(self, action: #selector(changeDismissAreaColor), for: .touchUpInside)
@@ -296,7 +291,7 @@ extension GaugeViewController: FloatingSVGViewDelegate {
         
         svgTextBackgroundView.frame.size = CGSize(width: view.frame.width, height: view.frame.height)
         svgTextBackgroundView.center = CGPoint(x: view.frame.width / 2, y: view.frame.height / 2)
-        svgTextBackgroundView.backgroundColor = UIColor(hex: CellTheme.shared.getCurrentColor(figure: figure))
+        svgTextBackgroundView.backgroundColor = UIColor(hex: DefaultTheme.shared.getCurrentColor(figure: figure))
         svgTextBackgroundView.alpha = 0.0
         
         view.addSubview(svgTextBackgroundView)
@@ -314,7 +309,7 @@ extension GaugeViewController: FloatingSVGViewDelegate {
         
         svgTextBackgroundView.removeFromSuperview()
         floatingSVGViews[0].alpha = 0.0
-        floatingSVGViews[1].alpha = 0.95
+        floatingSVGViews[1].alpha = 1
     }
     
 }
