@@ -145,13 +145,20 @@
 			path = SVG;
 			sourceTree = "<group>";
 		};
-		4FB312AA2703FA6500CA0EC0 /* Model */ = {
+		4F10909127328B6C0008D371 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
 				355622B927015FD000EBD775 /* Colors.swift */,
 				4FB312AB2703FAB700CA0EC0 /* Theme.swift */,
 				4F0E33F72712EB99006F19A7 /* DateManager.swift */,
 				4F0E33F927143530006F19A7 /* RecordManager.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		4FB312AA2703FA6500CA0EC0 /* Model */ = {
+			isa = PBXGroup;
+			children = (
 				4FEFF17026EB211E00BEE94C /* project_Emotion.xcdatamodeld */,
 				4F0E340727172FCC006F19A7 /* DataHelper.swift */,
 			);
@@ -181,6 +188,7 @@
 				4FEFF16926EB211E00BEE94C /* SceneDelegate.swift */,
 				355622B827015FB500EBD775 /* Constants */,
 				4FB312AA2703FA6500CA0EC0 /* Model */,
+				4F10909127328B6C0008D371 /* Utilities */,
 				355622B727015F9C00EBD775 /* Controller */,
 				355622B627015F8700EBD775 /* View */,
 				4FEFF17526EB212100BEE94C /* LaunchScreen.storyboard */,
