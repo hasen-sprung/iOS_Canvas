@@ -99,7 +99,7 @@ class DefaultTheme: Theme, ThemeProtocol  {
     //
     override func instanceImageSet() -> [UIImage] {
         
-        let imageName = ["Image_1", "Image_2", "Image_3", "Image_4", "Image_5"]
+        let imageName = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]
         var imageSet = [UIImage]()
         
         for name in imageName {

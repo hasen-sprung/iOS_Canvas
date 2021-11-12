@@ -10,7 +10,7 @@ import CoreData
 
 class RecordManager {
     
-    private var context: NSManagedObjectContext?// = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    private var context: NSManagedObjectContext?
     private let dateFormat = DateFormatter()
     
     static let shared = RecordManager()
