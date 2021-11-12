@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3549F25F273E4E7500C1589A /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 3549F25E273E4E7500C1589A /* SnapKit */; };
 		4F0A39D5273BC852009E3AAF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0A39D4273BC852009E3AAF /* AppDelegate.swift */; };
 		4F0A39D7273BC852009E3AAF /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0A39D6273BC852009E3AAF /* SceneDelegate.swift */; };
 		4F0A39DC273BC852009E3AAF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4F0A39DA273BC852009E3AAF /* Main.storyboard */; };
@@ -43,6 +44,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3549F25F273E4E7500C1589A /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -133,6 +135,9 @@
 			dependencies = (
 			);
 			name = Canvas;
+			packageProductDependencies = (
+				3549F25E273E4E7500C1589A /* SnapKit */,
+			);
 			productName = Canvas;
 			productReference = 4F0A39D1273BC852009E3AAF /* Canvas.app */;
 			productType = "com.apple.product-type.application";
@@ -161,6 +166,9 @@
 				Base,
 			);
 			mainGroup = 4F0A39C8273BC852009E3AAF;
+			packageReferences = (
+				3549F25D273E4E7500C1589A /* XCRemoteSwiftPackageReference "SnapKit" */,
+			);
 			productRefGroup = 4F0A39D2273BC852009E3AAF /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -418,6 +426,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		3549F25D273E4E7500C1589A /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		3549F25E273E4E7500C1589A /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3549F25D273E4E7500C1589A /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		4F0A39DD273BC852009E3AAF /* Canvas.xcdatamodeld */ = {
