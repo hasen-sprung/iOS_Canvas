@@ -1,16 +1,19 @@
 import UIKit
+import SnapKit
 
 protocol GaugeWaveAnimationViewDelegate {
     func cancelGaugeView()
     func addMemo()
 }
 
+// TODO: safearea, vc, view bc 다크모드일 때, 체크 하고 백그라운드와 WaveColor 통일시킬 것!!!
 class GaugeWaveAnimationView: UIView {
     var delegate: GaugeWaveAnimationViewDelegate?
     
     private var waveView: WaveAnimationView = WaveAnimationView()
-    private var cancelButton: UIButton = UIButton()
+    private var cancelButton: UILabel = UILabel()
     
+    private let bgColor = UIColor(red: 0.941, green: 0.941, blue: 0.953, alpha: 1)
     private let gradientColors: [CGColor] = [#colorLiteral(red: 0.947009027, green: 0.6707453132, blue: 0.8060829043, alpha: 1), #colorLiteral(red: 0.9500944018, green: 0.5744303465, blue: 0.5309768319, alpha: 1), #colorLiteral(red: 0.9510766864, green: 0.5234501958, blue: 0.3852519393, alpha: 1), #colorLiteral(red: 0.9529411765, green: 0.5215686275, blue: 0.3843137255, alpha: 1), #colorLiteral(red: 0.937254902, green: 0.737254902, blue: 0.5098039216, alpha: 1), #colorLiteral(red: 0.968627451, green: 0.8784313725, blue: 0.5803921569, alpha: 1), #colorLiteral(red: 0.8117647059, green: 0.862745098, blue: 0.7058823529, alpha: 1), #colorLiteral(red: 0.7019607843, green: 0.8431372549, blue: 0.7843137255, alpha: 1), #colorLiteral(red: 0.5058823529, green: 0.6862745098, blue: 0.7647058824, alpha: 1), #colorLiteral(red: 0.2549019608, green: 0.4549019608, blue: 0.662745098, alpha: 1)]
     private let changeCAColors: [CGColor] = [#colorLiteral(red: 0.9500944018, green: 0.5744303465, blue: 0.5309768319, alpha: 1), #colorLiteral(red: 0.9510766864, green: 0.5234501958, blue: 0.3852519393, alpha: 1), #colorLiteral(red: 0.9529411765, green: 0.5215686275, blue: 0.3843137255, alpha: 1), #colorLiteral(red: 0.937254902, green: 0.737254902, blue: 0.5098039216, alpha: 1), #colorLiteral(red: 0.968627451, green: 0.8784313725, blue: 0.5803921569, alpha: 1), #colorLiteral(red: 0.8117647059, green: 0.862745098, blue: 0.7058823529, alpha: 1), #colorLiteral(red: 0.7019607843, green: 0.8431372549, blue: 0.7843137255, alpha: 1), #colorLiteral(red: 0.5058823529, green: 0.6862745098, blue: 0.7647058824, alpha: 1), #colorLiteral(red: 0.2549019608, green: 0.4549019608, blue: 0.662745098, alpha: 1), #colorLiteral(red: 0.2549019608, green: 0.4549019608, blue: 0.662745098, alpha: 1)]
     private let colorAnimation = CABasicAnimation(keyPath: "colors")
@@ -18,6 +21,7 @@ class GaugeWaveAnimationView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        self.backgroundColor = bgColor
         setGradientLayer()
         setWaveView()
         setCancelButton()
@@ -51,7 +55,7 @@ class GaugeWaveAnimationView: UIView {
 extension GaugeWaveAnimationView {
     // MARK: - WaveAnimationView
     private func setWaveView() {
-        waveView = WaveAnimationView(frame: self.frame, color: .white)
+        waveView = WaveAnimationView(frame: self.frame, color: bgColor)
         waveView.transform = CGAffineTransform(rotationAngle: .pi)
         waveView.progress = 0.9 // 0 ~ 0.9
         waveView.waveDelay = 100.0
@@ -68,7 +72,56 @@ extension GaugeWaveAnimationView {
     
     // MARK: - CancelButton
     private func setCancelButton() {
+        let buttonSize = self.frame.width / 5
+        cancelButton.backgroundColor = .white
+        cancelButton.frame = CGRect(origin: .zero, size: CGSize(width: buttonSize, height: buttonSize))
+        setShadows(cancelButton)
         
+        self.addSubview(cancelButton)
+        cancelButton.snp.makeConstraints { make in
+            make.top.equalTo(self.snp.top).offset(20)
+            make.centerX.equalToSuperview().offset(-buttonSize / 2)
+//            make.width.height.size.equalTo(self.frame.width / 8)
+        }
+    }
+    private func setShadows(_ view: UIView) {
+        let shadows = UIView()
+        let buttonSize = self.frame.width / 5
+        
+        shadows.frame = view.frame
+        shadows.clipsToBounds = false
+        view.addSubview(shadows)
+        setLayer(shadows: shadows, cornerRadius: buttonSize * 0.25, color: UIColor(red: 0, green: 0, blue: 0, alpha: 0.06), opacity: 1, radius: buttonSize / 2, size: buttonSize / 10)
+        setLayer(shadows: shadows, cornerRadius: buttonSize * 0.25, color: UIColor(red: 1, green: 1, blue: 1, alpha: 1), opacity: 1, radius: buttonSize / 5, size: -buttonSize / 12)
+        setLayer(shadows: shadows, cornerRadius: buttonSize * 0.25, color: UIColor(red: 0.682, green: 0.682, blue: 0.753, alpha: 0.1), opacity: 1, radius: buttonSize / 9, size: buttonSize / 12, blender: true)
+        
+        let shapes = UIView()
+        
+        shapes.frame = view.frame
+        shapes.clipsToBounds = true
+        view.addSubview(shapes)
+        let layer = CALayer()
+        layer.backgroundColor = UIColor(red: 0.941, green: 0.941, blue: 0.953, alpha: 1).cgColor
+        layer.bounds = shapes.bounds
+        layer.position = shapes.center
+        shapes.layer.addSublayer(layer)
+        shapes.layer.cornerRadius = buttonSize / 4
+    }
+    private func setLayer(shadows: UIView, cornerRadius: CGFloat, color: UIColor, opacity: Float, radius: CGFloat, size: CGFloat, blender: Bool = false) {
+        let shadowPath = UIBezierPath(roundedRect: shadows.bounds, cornerRadius: cornerRadius)
+        let layer = CALayer()
+        
+        layer.shadowPath = shadowPath.cgPath
+        layer.shadowColor = color.cgColor
+        layer.shadowOpacity = opacity
+        layer.shadowRadius = radius
+        layer.shadowOffset = CGSize(width: size, height: size)
+        if blender == true {
+            layer.compositingFilter = "multiplyBlendMode"
+        }
+        layer.bounds = shadows.bounds
+        layer.position = shadows.center
+        shadows.layer.addSublayer(layer)
     }
 }
 

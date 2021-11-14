@@ -7,7 +7,7 @@ class GaugeViewController: UIViewController {
         let view = GaugeWaveAnimationView(frame: UIScreen.main.bounds)
         return view
     }()
-      
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         addSubview()
