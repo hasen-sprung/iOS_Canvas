@@ -6,12 +6,18 @@ protocol GaugeWaveAnimationViewDelegate {
     func addMemo()
 }
 
-// TODO: safearea, vc, view bc 다크모드일 때, 체크 하고 백그라운드와 WaveColor 통일시킬 것!!!
+/*
+ TODO: list
+ - background color check (in dark mode)
+ - get current color
+ - 10 ~ 100 -> 1 ~ 100 level
+ */
 class GaugeWaveAnimationView: UIView {
     var delegate: GaugeWaveAnimationViewDelegate?
     
     private var waveView: WaveAnimationView = WaveAnimationView()
-    private var cancelButton: UILabel = UILabel()
+    private var cancelButton: UIView = UIView()
+    private var shapeImage: UIImageView = UIImageView()
     
     private let bgColor = UIColor(red: 0.941, green: 0.941, blue: 0.953, alpha: 1)
     private let gradientColors: [CGColor] = [#colorLiteral(red: 0.947009027, green: 0.6707453132, blue: 0.8060829043, alpha: 1), #colorLiteral(red: 0.9500944018, green: 0.5744303465, blue: 0.5309768319, alpha: 1), #colorLiteral(red: 0.9510766864, green: 0.5234501958, blue: 0.3852519393, alpha: 1), #colorLiteral(red: 0.9529411765, green: 0.5215686275, blue: 0.3843137255, alpha: 1), #colorLiteral(red: 0.937254902, green: 0.737254902, blue: 0.5098039216, alpha: 1), #colorLiteral(red: 0.968627451, green: 0.8784313725, blue: 0.5803921569, alpha: 1), #colorLiteral(red: 0.8117647059, green: 0.862745098, blue: 0.7058823529, alpha: 1), #colorLiteral(red: 0.7019607843, green: 0.8431372549, blue: 0.7843137255, alpha: 1), #colorLiteral(red: 0.5058823529, green: 0.6862745098, blue: 0.7647058824, alpha: 1), #colorLiteral(red: 0.2549019608, green: 0.4549019608, blue: 0.662745098, alpha: 1)]
@@ -51,7 +57,7 @@ class GaugeWaveAnimationView: UIView {
     }
 }
 
-// MARK: - Set Views
+// MARK: - Wave Animation View
 extension GaugeWaveAnimationView {
     // MARK: - WaveAnimationView
     private func setWaveView() {
@@ -70,18 +76,20 @@ extension GaugeWaveAnimationView {
         waveView.stopAnimation()
     }
     
-    // MARK: - CancelButton
+}
+
+// MARK: - Cancel Button View
+extension GaugeWaveAnimationView {
     private func setCancelButton() {
         let buttonSize = self.frame.width / 5
         cancelButton.backgroundColor = .white
         cancelButton.frame = CGRect(origin: .zero, size: CGSize(width: buttonSize, height: buttonSize))
         setShadows(cancelButton)
-        
+        setShapeImage()
         self.addSubview(cancelButton)
         cancelButton.snp.makeConstraints { make in
             make.top.equalTo(self.snp.top).offset(20)
             make.centerX.equalToSuperview().offset(-buttonSize / 2)
-//            make.width.height.size.equalTo(self.frame.width / 8)
         }
     }
     private func setShadows(_ view: UIView) {
@@ -123,6 +131,15 @@ extension GaugeWaveAnimationView {
         layer.position = shadows.center
         shadows.layer.addSublayer(layer)
     }
+    private func setShapeImage() {
+        let size = cancelButton.frame.width / 1.8
+        shapeImage.frame = CGRect(origin: .zero,
+                                  size: CGSize(width: size,
+                                               height: size))
+        shapeImage.center = cancelButton.center
+        shapeImage.image = UIImage(named: "shape5")
+        cancelButton.addSubview(shapeImage)
+    }
 }
 
 // MARK: - PanGesture
@@ -135,20 +152,56 @@ extension GaugeWaveAnimationView {
     @objc func gaugeViewPanGesture(sender: UIPanGestureRecognizer) {
         let state = sender.state
         let location = sender.location(in: self)
-        let touchPoint: CGFloat = location.y / self.frame.height
+        var touchPoint: CGFloat = (location.y - self.frame.height * 0.1) / (self.frame.height * 0.9)
         
-        if touchPoint < 0.1  {
-            // TODO: change image (X)
+        if touchPoint < 0.0  {
+            shapeImage.image = UIImage(named: "closeBtn")
             if state == .ended {
                 if let d = delegate { d.cancelGaugeView() }
             }
-        } else {
-            // TODO: change image
+        } else if touchPoint > 1.0 {
+            touchPoint = 1.0
             if state == .ended {
                 if let d = delegate { d.addMemo() }
             }
-            print(touchPoint * 100)
-            waveView.frame.size.height = self.frame.height * touchPoint + (self.frame.height * 0.1)
+        } else {
+            changeImage(level: getCurrentGaugeLevel(point: touchPoint))
+            if state == .ended {
+                if let d = delegate { d.addMemo() }
+            }
+            waveView.frame.size.height = location.y + self.frame.height * 0.1
+        }
+    }
+    
+    private func getCurrentGaugeLevel(point: CGFloat) -> Int {
+        let level: Int =  Int(point * 100)
+        return abs(level - 100)
+    }
+    
+    private func changeImage(level: Int) {
+        switch level {
+        case 1...10:
+            shapeImage.image = UIImage(named: "shape1")
+        case 11...20:
+            shapeImage.image = UIImage(named: "shape2")
+        case 21...30:
+            shapeImage.image = UIImage(named: "shape3")
+        case 31...40:
+            shapeImage.image = UIImage(named: "shape4")
+        case 41...50:
+            shapeImage.image = UIImage(named: "shape5")
+        case 51...60:
+            shapeImage.image = UIImage(named: "shape6")
+        case 61...70:
+            shapeImage.image = UIImage(named: "shape7")
+        case 71...80:
+            shapeImage.image = UIImage(named: "shape8")
+        case 81...90:
+            shapeImage.image = UIImage(named: "shape9")
+        case 91...100:
+            shapeImage.image = UIImage(named: "shape10")
+        default:
+            print("범위를 벗어남")
         }
     }
 }
