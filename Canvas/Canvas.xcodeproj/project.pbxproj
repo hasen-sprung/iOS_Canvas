@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		3549F25F273E4E7500C1589A /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 3549F25E273E4E7500C1589A /* SnapKit */; };
+		3549F2612740D53600C1589A /* WaveAnimationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3549F2602740D53600C1589A /* WaveAnimationView.swift */; };
+		3549F2632740D6A800C1589A /* GaugeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3549F2622740D6A800C1589A /* GaugeViewController.swift */; };
+		3549F2672740EE7F00C1589A /* GaugeWaveAnimationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3549F2662740EE7F00C1589A /* GaugeWaveAnimationView.swift */; };
+		358BD48B274194C100ACE0E7 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 358BD48A274194C100ACE0E7 /* Constants.swift */; };
 		4F0A39D5273BC852009E3AAF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0A39D4273BC852009E3AAF /* AppDelegate.swift */; };
 		4F0A39D7273BC852009E3AAF /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0A39D6273BC852009E3AAF /* SceneDelegate.swift */; };
 		4F0A39DC273BC852009E3AAF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4F0A39DA273BC852009E3AAF /* Main.storyboard */; };
@@ -23,6 +27,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3549F2602740D53600C1589A /* WaveAnimationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaveAnimationView.swift; sourceTree = "<group>"; };
+		3549F2622740D6A800C1589A /* GaugeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GaugeViewController.swift; sourceTree = "<group>"; };
+		3549F2662740EE7F00C1589A /* GaugeWaveAnimationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GaugeWaveAnimationView.swift; sourceTree = "<group>"; };
+		358BD48A274194C100ACE0E7 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		4F0A39D1273BC852009E3AAF /* Canvas.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Canvas.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F0A39D4273BC852009E3AAF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4F0A39D6273BC852009E3AAF /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -96,6 +104,7 @@
 			isa = PBXGroup;
 			children = (
 				4F0A39DA273BC852009E3AAF /* Main.storyboard */,
+				3549F2662740EE7F00C1589A /* GaugeWaveAnimationView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -104,6 +113,7 @@
 			isa = PBXGroup;
 			children = (
 				4F0A39F9273C0660009E3AAF /* MainViewController.swift */,
+				3549F2622740D6A800C1589A /* GaugeViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -115,6 +125,8 @@
 				4F0A39EF273BCAD0009E3AAF /* RecordManager.swift */,
 				4F0A39F1273BCC9F009E3AAF /* Calandar.swift */,
 				4F0A39F5273BCFC5009E3AAF /* ThemeManager.swift */,
+				3549F2602740D53600C1589A /* WaveAnimationView.swift */,
+				358BD48A274194C100ACE0E7 /* Constants.swift */,
 			);
 			path = Utilites;
 			sourceTree = "<group>";
@@ -202,8 +214,12 @@
 				4F0A39D5273BC852009E3AAF /* AppDelegate.swift in Sources */,
 				4F0A39D7273BC852009E3AAF /* SceneDelegate.swift in Sources */,
 				4F0A39F8273BDECC009E3AAF /* DataHelper.swift in Sources */,
+				3549F2612740D53600C1589A /* WaveAnimationView.swift in Sources */,
+				358BD48B274194C100ACE0E7 /* Constants.swift in Sources */,
 				4F0A39FA273C0660009E3AAF /* MainViewController.swift in Sources */,
+				3549F2632740D6A800C1589A /* GaugeViewController.swift in Sources */,
 				4F0A39DF273BC852009E3AAF /* Canvas.xcdatamodeld in Sources */,
+				3549F2672740EE7F00C1589A /* GaugeWaveAnimationView.swift in Sources */,
 				4F0A39F6273BCFC5009E3AAF /* ThemeManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -361,7 +377,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -390,7 +406,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

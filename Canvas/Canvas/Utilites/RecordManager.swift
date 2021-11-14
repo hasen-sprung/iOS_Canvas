@@ -1,19 +1,11 @@
-//
-//  RecordManager.swift
-//  Canvas
-//
-//  Created by Junhong Park on 2021/11/10.
-//
-
 import UIKit
 import CoreData
 
 class RecordManager {
-    
     private var context: NSManagedObjectContext?
     private let dateFormat = DateFormatter()
-    
     static let shared = RecordManager()
+    
     private init() {
         print("record init")
         if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
@@ -23,12 +15,9 @@ class RecordManager {
     
     func getMatchingRecords(currentDate: Date = DateManager.shared.getCurrentDate(),
                             currentMode: DateMode = DateManager.shared.getCurrentDateMode()) -> [Record] {
-        
         var records: [Record]?
-        
         var calendar = Calendar.current
         calendar.timeZone = NSTimeZone.local
-        
         let recordsRequest = Record.fetchRequest()
         
         if currentMode == DateMode.day {
@@ -86,7 +75,6 @@ class RecordManager {
     }
     
     func getDateList(currentRecords: [Record]) -> [DateCount] {
-        
         var dateCounts = [DateCount]()
         var lastDate = ""
         dateFormat.dateFormat = "M월 d일"
@@ -109,11 +97,9 @@ class RecordManager {
     }
     
     func getLastRecords(userCount: Int) -> [Record]{
-        
         var records: [Record]?
         var newRecord = [Record]()
         let recordsRequest = Record.fetchRequest()
-        
         
         do { records = try context?.fetch(recordsRequest) } catch { print("context Error") }
         
