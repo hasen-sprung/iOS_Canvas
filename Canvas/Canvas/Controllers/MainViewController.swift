@@ -24,7 +24,13 @@ class MainViewController: UIViewController {
     }
 }
 
-// MARK: Set UI
+// MARK: - set Buttons Target
+extension MainViewController {
+    
+    
+}
+
+// MARK: - Set UI
 extension MainViewController {
     
     private func setMainViewUI() {
@@ -32,6 +38,7 @@ extension MainViewController {
         view.backgroundColor = UIColor(red: 240 / 255, green: 240 / 255, blue: 243 / 255, alpha: 1.0)
         view.addSubview(goToListIcon)
         view.addSubview(goToSettingIcon)
+        view.addSubview(addRecordIcon)
         setCanvasViewUI()
         setInfoViewUI()
         setListButtonsUI()
@@ -54,8 +61,6 @@ extension MainViewController {
     private func setListButtonsUI() {
         goToListButton.backgroundColor = .clear
         goToListButton.setImage(UIImage(named: "SmallBtnBackground"), for: .normal)
-        goToListIcon.frame.size = goToListButton.frame.size
-        goToListIcon.center = goToListButton.center
         goToListIcon.image = UIImage(named: "ListBtnIcon")
         goToListIcon.isUserInteractionEnabled = false
     }
@@ -63,8 +68,6 @@ extension MainViewController {
     private func setSettingButtonUI() {
         goToSettingButton.backgroundColor = .clear
         goToSettingButton.setImage(UIImage(named: "SmallBtnBackground"), for: .normal)
-        goToSettingIcon.frame.size = goToSettingButton.frame.size
-        goToSettingIcon.center = goToSettingButton.center
         goToSettingIcon.image = UIImage(named: "SettingBtnIcon")
         goToSettingIcon.isUserInteractionEnabled = false
     }
@@ -73,11 +76,13 @@ extension MainViewController {
         addRecordButton.backgroundColor = .clear
         addRecordButton.setImage(UIImage(named: "BigBtnBackground"), for: .normal)
         addRecordButton.contentMode = .scaleToFill
+        addRecordIcon.image = UIImage(named: "AddRecordBtnIcon")
+        addRecordIcon.isUserInteractionEnabled = false
     }
 }
 
 
-// MARK: set Layout / autoLayout refactoring 필요
+// MARK: - set Layout / autoLayout refactoring 필요
 extension MainViewController {
     
     private func setMainViewConstraints() {
@@ -114,10 +119,15 @@ extension MainViewController {
         let margin = view.frame.width * 0.175 / 2
         let buttonSize = view.frame.width / 10
         let buttonY = canvasView.frame.origin.y - buttonSize
+        // Button
         goToListButton.frame.size = CGSize(width: buttonSize,
                                            height: buttonSize)
         goToListButton.frame.origin = CGPoint(x: margin,
                                               y: buttonY)
+        // Icon
+        goToListIcon.frame.size = CGSize(width: goToListButton.frame.width * 4 / 6,
+                                         height: goToListButton.frame.width * 4 / 6)
+        goToListIcon.center = goToListButton.center
     }
     
     private func setSettingButtonConstraints() {
@@ -125,18 +135,28 @@ extension MainViewController {
         let margin = view.frame.width * 0.175 / 2
         let buttonSize = view.frame.width / 10
         let buttonY = canvasView.frame.origin.y - buttonSize
+        // Button
         goToSettingButton.frame.size = CGSize(width: buttonSize,
                                               height: buttonSize)
         goToSettingButton.frame.origin = CGPoint(x: view.frame.width - margin - buttonSize,
                                                  y: buttonY)
+        // Icon
+        goToSettingIcon.frame.size = CGSize(width: goToSettingButton.frame.width * 4 / 6,
+                                            height: goToSettingButton.frame.width * 4 / 6)
+        goToSettingIcon.center = goToSettingButton.center
     }
     
     private func setAddRecordButtonConstraints() {
         
         let endOfInfoView = infoView.frame.origin.y + infoView.frame.height
+        //Button
         addRecordButton.frame.size = CGSize(width: view.frame.width / 5,
                                             height: view.frame.width / 5)
         addRecordButton.center = CGPoint(x: view.frame.width / 1.95, y: 0)
         addRecordButton.frame.origin.y = endOfInfoView + (view.frame.height * 0.03)
+        // Icon
+        addRecordIcon.frame.size = CGSize(width: addRecordButton.frame.width * 0.35,
+                                          height: addRecordButton.frame.width * 0.35)
+        addRecordIcon.center = CGPoint(x: view.frame.width / 2, y: addRecordButton.center.y)
     }
 }
