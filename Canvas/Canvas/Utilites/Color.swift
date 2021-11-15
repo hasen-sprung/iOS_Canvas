@@ -1,10 +1,3 @@
-//
-//  Color.swift
-//  Canvas
-//
-//  Created by Junhong Park on 2021/11/15.
-//
-
 import UIKit
 
 extension UIColor {

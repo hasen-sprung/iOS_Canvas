@@ -1,10 +1,3 @@
-//
-//  DataHelper.swift
-//  Canvas
-//
-//  Created by Junhong Park on 2021/11/10.
-//
-
 import UIKit
 import CoreData
 

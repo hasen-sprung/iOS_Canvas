@@ -25,6 +25,8 @@
 		4F0A39F8273BDECC009E3AAF /* DataHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0A39F7273BDECB009E3AAF /* DataHelper.swift */; };
 		4F0A39FA273C0660009E3AAF /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0A39F9273C0660009E3AAF /* MainViewController.swift */; };
 		4F0A39FC27424C75009E3AAF /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0A39FB27424C74009E3AAF /* Color.swift */; };
+		4F0A39FE27425C39009E3AAF /* CreateRecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0A39FD27425C39009E3AAF /* CreateRecordView.swift */; };
+		4F0A3A0027425E90009E3AAF /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0A39FF27425E90009E3AAF /* Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -47,6 +49,8 @@
 		4F0A39F7273BDECB009E3AAF /* DataHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataHelper.swift; sourceTree = "<group>"; };
 		4F0A39F9273C0660009E3AAF /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		4F0A39FB27424C74009E3AAF /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
+		4F0A39FD27425C39009E3AAF /* CreateRecordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateRecordView.swift; sourceTree = "<group>"; };
+		4F0A39FF27425E90009E3AAF /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,6 +111,7 @@
 			children = (
 				4F0A39DA273BC852009E3AAF /* Main.storyboard */,
 				3549F2662740EE7F00C1589A /* GaugeWaveAnimationView.swift */,
+				4F0A39FD27425C39009E3AAF /* CreateRecordView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -130,6 +135,7 @@
 				3549F2602740D53600C1589A /* WaveAnimationView.swift */,
 				358BD48A274194C100ACE0E7 /* Constants.swift */,
 				4F0A39FB27424C74009E3AAF /* Color.swift */,
+				4F0A39FF27425E90009E3AAF /* Extension.swift */,
 			);
 			path = Utilites;
 			sourceTree = "<group>";
@@ -218,8 +224,10 @@
 				4F0A39D7273BC852009E3AAF /* SceneDelegate.swift in Sources */,
 				4F0A39F8273BDECC009E3AAF /* DataHelper.swift in Sources */,
 				3549F2612740D53600C1589A /* WaveAnimationView.swift in Sources */,
+				4F0A3A0027425E90009E3AAF /* Extension.swift in Sources */,
 				358BD48B274194C100ACE0E7 /* Constants.swift in Sources */,
 				4F0A39FA273C0660009E3AAF /* MainViewController.swift in Sources */,
+				4F0A39FE27425C39009E3AAF /* CreateRecordView.swift in Sources */,
 				4F0A39FC27424C75009E3AAF /* Color.swift in Sources */,
 				3549F2632740D6A800C1589A /* GaugeViewController.swift in Sources */,
 				4F0A39DF273BC852009E3AAF /* Canvas.xcdatamodeld in Sources */,

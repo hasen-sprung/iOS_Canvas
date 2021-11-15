@@ -8,6 +8,8 @@ class GaugeViewController: UIViewController {
         return view
     }()
     
+    private var createRecordView: CreateRecordView?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         addSubview()
@@ -40,13 +42,18 @@ class GaugeViewController: UIViewController {
 
 extension GaugeViewController: GaugeWaveAnimationViewDelegate {
     func cancelGaugeView() {
-        // TODO: go to the main view
         gaugeWaveView.removeFromSuperview()
         self.dismiss(animated: true, completion: nil)
     }
     
-    func addMemo() {
-        // TODO: add Data and go to the main view
-        print("Created the New Memo")
+    func addMemo(gaugeLevel: Int) {
+        print(gaugeLevel)
+        createRecordView = CreateRecordView()
+        createRecordView?.initCreateRecordView()
+        createRecordView?.alpha = 0.0
+        if let newView = createRecordView {
+            view.addSubview(newView)
+        }
+        createRecordView?.fadeIn()
     }
 }

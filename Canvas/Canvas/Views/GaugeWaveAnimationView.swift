@@ -3,7 +3,7 @@ import SnapKit
 
 protocol GaugeWaveAnimationViewDelegate {
     func cancelGaugeView()
-    func addMemo()
+    func addMemo(gaugeLevel: Int)
 }
 
 /*
@@ -137,7 +137,7 @@ extension GaugeWaveAnimationView {
                                   size: CGSize(width: size,
                                                height: size))
         shapeImage.center = cancelButton.center
-        shapeImage.image = UIImage(named: "shape5")
+        shapeImage.image = UIImage(named: "image_5")
         cancelButton.addSubview(shapeImage)
     }
 }
@@ -162,12 +162,12 @@ extension GaugeWaveAnimationView {
         } else if touchPoint > 1.0 {
             touchPoint = 1.0
             if state == .ended {
-                if let d = delegate { d.addMemo() }
+                if let d = delegate { d.addMemo(gaugeLevel: getCurrentGaugeLevel(point: touchPoint)) }
             }
         } else {
             changeImage(level: getCurrentGaugeLevel(point: touchPoint))
             if state == .ended {
-                if let d = delegate { d.addMemo() }
+                if let d = delegate { d.addMemo(gaugeLevel: getCurrentGaugeLevel(point: touchPoint)) }
             }
             waveView.frame.size.height = location.y + self.frame.height * 0.1
         }
@@ -181,25 +181,25 @@ extension GaugeWaveAnimationView {
     private func changeImage(level: Int) {
         switch level {
         case 1...10:
-            shapeImage.image = UIImage(named: "shape1")
+            shapeImage.image = UIImage(named: "image_1")
         case 11...20:
-            shapeImage.image = UIImage(named: "shape2")
+            shapeImage.image = UIImage(named: "image_2")
         case 21...30:
-            shapeImage.image = UIImage(named: "shape3")
+            shapeImage.image = UIImage(named: "image_3")
         case 31...40:
-            shapeImage.image = UIImage(named: "shape4")
+            shapeImage.image = UIImage(named: "image_4")
         case 41...50:
-            shapeImage.image = UIImage(named: "shape5")
+            shapeImage.image = UIImage(named: "image_5")
         case 51...60:
-            shapeImage.image = UIImage(named: "shape6")
+            shapeImage.image = UIImage(named: "image_6")
         case 61...70:
-            shapeImage.image = UIImage(named: "shape7")
+            shapeImage.image = UIImage(named: "image_7")
         case 71...80:
-            shapeImage.image = UIImage(named: "shape8")
+            shapeImage.image = UIImage(named: "image_8")
         case 81...90:
-            shapeImage.image = UIImage(named: "shape9")
+            shapeImage.image = UIImage(named: "image_9")
         case 91...100:
-            shapeImage.image = UIImage(named: "shape10")
+            shapeImage.image = UIImage(named: "image_10")
         default:
             print("범위를 벗어남")
         }
