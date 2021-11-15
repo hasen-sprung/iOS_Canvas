@@ -9,7 +9,7 @@ class CreateRecordView: UIView {
         self.backgroundColor = UIColor(r: 240, g: 240, b: 243)
         
         CRBackgroundView = UILabel()
-        CRBackgroundView.frame.size =  CGSize(width: <#T##CGFloat#>, height: <#T##CGFloat#>)//CGRect(x: 0, y: 0, width: 314, height: 384)
+//        CRBackgroundView.frame.size =  CGSize(width: <#T##CGFloat#>, height: <#T##CGFloat#>)//CGRect(x: 0, y: 0, width: 314, height: 384)
         CRBackgroundView.backgroundColor = .clear
         setCRBackgroundViewShape()
         self.addSubview(CRBackgroundView)
