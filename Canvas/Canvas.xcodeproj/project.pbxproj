@@ -12,7 +12,6 @@
 		3549F2632740D6A800C1589A /* GaugeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3549F2622740D6A800C1589A /* GaugeViewController.swift */; };
 		3549F2672740EE7F00C1589A /* GaugeWaveAnimationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3549F2662740EE7F00C1589A /* GaugeWaveAnimationView.swift */; };
 		358BD48B274194C100ACE0E7 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 358BD48A274194C100ACE0E7 /* Constants.swift */; };
-		35FE943827424724004B9C92 /* GaugeShapeLabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35FE943727424724004B9C92 /* GaugeShapeLabelView.swift */; };
 		4F0A39D5273BC852009E3AAF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0A39D4273BC852009E3AAF /* AppDelegate.swift */; };
 		4F0A39D7273BC852009E3AAF /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0A39D6273BC852009E3AAF /* SceneDelegate.swift */; };
 		4F0A39DC273BC852009E3AAF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4F0A39DA273BC852009E3AAF /* Main.storyboard */; };
@@ -33,7 +32,6 @@
 		3549F2622740D6A800C1589A /* GaugeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GaugeViewController.swift; sourceTree = "<group>"; };
 		3549F2662740EE7F00C1589A /* GaugeWaveAnimationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GaugeWaveAnimationView.swift; sourceTree = "<group>"; };
 		358BD48A274194C100ACE0E7 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
-		35FE943727424724004B9C92 /* GaugeShapeLabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GaugeShapeLabelView.swift; sourceTree = "<group>"; };
 		4F0A39D1273BC852009E3AAF /* Canvas.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Canvas.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F0A39D4273BC852009E3AAF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4F0A39D6273BC852009E3AAF /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -109,7 +107,6 @@
 			children = (
 				4F0A39DA273BC852009E3AAF /* Main.storyboard */,
 				3549F2662740EE7F00C1589A /* GaugeWaveAnimationView.swift */,
-				35FE943727424724004B9C92 /* GaugeShapeLabelView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -221,7 +218,6 @@
 				4F0A39D7273BC852009E3AAF /* SceneDelegate.swift in Sources */,
 				4F0A39F8273BDECC009E3AAF /* DataHelper.swift in Sources */,
 				3549F2612740D53600C1589A /* WaveAnimationView.swift in Sources */,
-				35FE943827424724004B9C92 /* GaugeShapeLabelView.swift in Sources */,
 				358BD48B274194C100ACE0E7 /* Constants.swift in Sources */,
 				4F0A39FA273C0660009E3AAF /* MainViewController.swift in Sources */,
 				4F0A39FC27424C75009E3AAF /* Color.swift in Sources */,
