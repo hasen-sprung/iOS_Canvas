@@ -61,7 +61,7 @@
         <!--Gauge View Controller-->
         <scene sceneID="R2J-2w-zNT">
             <objects>
-                <viewController id="cmo-2d-6Vm" customClass="GaugeViewController" customModule="Canvas" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="gaugeViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="cmo-2d-6Vm" customClass="GaugeViewController" customModule="Canvas" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="H2R-f9-SMh">
                         <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
