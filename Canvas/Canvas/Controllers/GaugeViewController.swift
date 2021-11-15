@@ -41,7 +41,8 @@ class GaugeViewController: UIViewController {
 extension GaugeViewController: GaugeWaveAnimationViewDelegate {
     func cancelGaugeView() {
         // TODO: go to the main view
-        print("Cancel the gauge view")
+        gaugeWaveView.removeFromSuperview()
+        self.dismiss(animated: true, completion: nil)
     }
     
     func addMemo() {

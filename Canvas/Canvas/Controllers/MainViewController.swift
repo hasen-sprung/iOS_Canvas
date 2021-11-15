@@ -16,26 +16,34 @@ class MainViewController: UIViewController {
     let recordManager = RecordManager.shared
     
     override func viewDidLoad() {
-        
         super.viewDidLoad()
-        
         setMainViewConstraints()
         setMainViewUI()
+        setButtonsTarget()
     }
 }
 
 // MARK: - set Buttons Target
 extension MainViewController {
     
+    private func setButtonsTarget() {
+        addRecordButton.addTarget(self, action: #selector(addRecordButtonPressed), for: .touchUpInside)
+    }
     
+    @objc func addRecordButtonPressed(_ sender: UIButton) {
+        guard let nextVC = self.storyboard?.instantiateViewController(identifier: "gaugeViewController") as? GaugeViewController else { return }
+        
+        nextVC.modalTransitionStyle = .coverVertical
+        nextVC.modalPresentationStyle = .fullScreen
+        self.present(nextVC, animated: true, completion: nil)
+    }
 }
 
 // MARK: - Set UI
 extension MainViewController {
     
     private func setMainViewUI() {
-        
-        view.backgroundColor = UIColor(red: 240 / 255, green: 240 / 255, blue: 243 / 255, alpha: 1.0)
+        view.backgroundColor = UIColor(r: 240, g: 240, b: 243)
         view.addSubview(goToListIcon)
         view.addSubview(goToSettingIcon)
         view.addSubview(addRecordIcon)
@@ -76,7 +84,8 @@ extension MainViewController {
         addRecordButton.backgroundColor = .clear
         addRecordButton.setImage(UIImage(named: "BigBtnBackground"), for: .normal)
         addRecordButton.contentMode = .scaleToFill
-        addRecordIcon.image = UIImage(named: "AddRecordBtnIcon")
+        addRecordIcon.image = UIImage(named: "AddRecordBtnIcon")?.withRenderingMode(.alwaysTemplate)
+        addRecordIcon.tintColor = UIColor(r: 163, g: 173, b: 178)
         addRecordIcon.isUserInteractionEnabled = false
     }
 }
@@ -86,7 +95,6 @@ extension MainViewController {
 extension MainViewController {
     
     private func setMainViewConstraints() {
-        
         setCanvasViewConstraints()
         // CanvasView를 중심으로 layout 구성 (반드시 canvasView가 먼저 setting 되어야 한다.)
         setInfoViewConstraints()
@@ -96,8 +104,8 @@ extension MainViewController {
     }
     
     private func setCanvasViewConstraints() {
-    
         let viewWidth = view.frame.width * 0.925
+        
         canvasView.frame.size = CGSize(width: viewWidth,
                                        height: viewWidth * 1.36)
         canvasView.center = CGPoint(x: view.frame.width / 2, y: view.frame.height * 0.425)
@@ -105,9 +113,9 @@ extension MainViewController {
     }
     
     private func setInfoViewConstraints() {
-        
         let viewWidth = canvasView.frame.width
         let endOfCanvasView = canvasView.frame.origin.y + canvasView.frame.height
+        
         infoView.frame.size = CGSize(width: viewWidth,
                                      height: viewWidth * 0.3)
         infoView.frame.origin = CGPoint(x: canvasView.frame.origin.x,
@@ -119,6 +127,7 @@ extension MainViewController {
         let margin = view.frame.width * 0.175 / 2
         let buttonSize = view.frame.width / 10
         let buttonY = canvasView.frame.origin.y - buttonSize
+        
         // Button
         goToListButton.frame.size = CGSize(width: buttonSize,
                                            height: buttonSize)
@@ -135,6 +144,7 @@ extension MainViewController {
         let margin = view.frame.width * 0.175 / 2
         let buttonSize = view.frame.width / 10
         let buttonY = canvasView.frame.origin.y - buttonSize
+        
         // Button
         goToSettingButton.frame.size = CGSize(width: buttonSize,
                                               height: buttonSize)
@@ -149,6 +159,7 @@ extension MainViewController {
     private func setAddRecordButtonConstraints() {
         
         let endOfInfoView = infoView.frame.origin.y + infoView.frame.height
+        
         //Button
         addRecordButton.frame.size = CGSize(width: view.frame.width / 5,
                                             height: view.frame.width / 5)
