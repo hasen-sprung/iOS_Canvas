@@ -31,7 +31,7 @@ class GaugeViewController: UIViewController {
     private func setSubViews() {
         view.addSubview(gaugeWaveView)
         gaugeWaveView.delegate = self
-        setCancelButton(in: gaugeWaveView)
+        setCancelButton(in: view)
     }
     
     private func setLayout() {
@@ -42,8 +42,55 @@ class GaugeViewController: UIViewController {
             make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom)
         }
         cancelButton.snp.makeConstraints { make in
-            make.top.equalTo(gaugeWaveView.snp.top).offset(20)
-            make.centerX.equalToSuperview().offset(-gaugeWaveView.frame.width / 7 / 2)
+            make.top.equalTo(view.snp.top).offset(view.frame.height * 0.075)
+            make.centerX.equalToSuperview().offset(-view.frame.width / 7 / 2)
+        }
+    }
+}
+
+// MARK: - GaugeWaveAnimationView Delegate
+extension GaugeViewController: GaugeWaveAnimationViewDelegate {
+    func touchInCancelArea() {
+        shapeImage.image = UIImage(named: "GaugeCancelIcon")
+    }
+    
+    func changedGaugeLevel() {
+        changeImage(level: gaugeWaveView.getCurrentGaugeLevel())
+    }
+    
+    func cancelGaugeView() {
+        gaugeWaveView.removeFromSuperview()
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    func createRecord() {
+        createRecordView = CreateRecordView()
+        createRecordView?.frame = view.frame
+        createRecordView?.setCreateRecordView()
+        createRecordView?.alpha = 0.0
+        
+        if let CRView = createRecordView {
+            CRView.delegate = self
+            CRView.fadeIn()
+            view.addSubview(CRView)
+        }
+        
+        UIView.animate(withDuration: 1.0, delay: 0.0, options: [.curveEaseOut], animations: { [self] in
+            gaugeWaveView.bounds.origin.y = gaugeWaveView.bounds.origin.y - view.frame.height
+        }) { (completed) in
+            self.createRecordView?.setCRTextView()
+        }
+    }
+}
+
+// MARK: - Create Record View Delegate
+extension GaugeViewController: CreateRecordViewDelegate {
+    func dismissCreateRecordView() {
+        createRecordView?.fadeOut()
+        UIView.animate(withDuration: 1.0, delay: 0.0, options: [.curveEaseOut], animations: { [self] in
+            gaugeWaveView.bounds.origin.y = gaugeWaveView.bounds.origin.y + view.frame.height
+        }) { (completed) in
+            self.createRecordView?.removeFromSuperview()
         }
     }
 }
@@ -136,32 +183,5 @@ extension GaugeViewController {
         default:
             print("범위를 벗어남")
         }
-    }
-}
-
-// MARK: - GaugeWaveAnimationView Delegate
-extension GaugeViewController: GaugeWaveAnimationViewDelegate {
-    func touchInCancelArea() {
-        shapeImage.image = UIImage(named: "GaugeCancelIcon")
-    }
-    
-    func changedGaugeLevel() {
-        changeImage(level: gaugeWaveView.getCurrentGaugeLevel())
-    }
-    
-    func cancelGaugeView() {
-        gaugeWaveView.removeFromSuperview()
-        self.dismiss(animated: true, completion: nil)
-    }
-    
-    func addMemo(gaugeLevel: Int) {
-        print(gaugeLevel)
-        createRecordView = CreateRecordView()
-        createRecordView?.initCreateRecordView()
-        createRecordView?.alpha = 0.0
-        if let newView = createRecordView {
-            view.addSubview(newView)
-        }
-        createRecordView?.fadeIn()
     }
 }

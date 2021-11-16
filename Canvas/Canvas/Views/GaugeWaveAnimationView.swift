@@ -3,7 +3,7 @@ import UIKit
 protocol GaugeWaveAnimationViewDelegate {
     func cancelGaugeView()
 
-    func addMemo(gaugeLevel: Int)
+    func createRecord()
     func changedGaugeLevel()
     func touchInCancelArea()
 }
@@ -113,12 +113,12 @@ extension GaugeWaveAnimationView {
         } else if touchPoint > 1.0 {
             touchPoint = 1.0
             if state == .ended {
-                if let d = delegate { d.addMemo(gaugeLevel: 100) }
+                if let d = delegate { d.createRecord() }
             }
         } else {
             currentGaugeLevel = calculateLevel(point: touchPoint)
             if state == .ended {
-                if let d = delegate { d.addMemo(gaugeLevel: currentGaugeLevel) }
+                if let d = delegate { d.createRecord() }
             }
             waveView.frame.size.height = location.y + self.frame.height * 0.1
         }
