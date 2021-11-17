@@ -1,5 +1,6 @@
 import UIKit
 import SnapKit
+import CoreData
 
 class GaugeViewController: UIViewController {
     private let recordManager = RecordManager.shared
@@ -87,8 +88,24 @@ extension GaugeViewController: GaugeWaveAnimationViewDelegate {
 
 // MARK: - Create Record View Delegate
 extension GaugeViewController: CreateRecordViewDelegate {
-    func saveAndSortRecord() {
+    func getGaugeLevel() -> Int {
+        return gaugeWaveView.getCurrentGaugeLevel()
+    }
+    
+    func saveRecord(newDate: Date, newGagueLevel: Int, newMemo: String?) {
         
+        // Save new Record
+        if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
+            let context = appDelegate.persistentContainer.viewContext
+            let newRecord = Record(context: context)
+            
+            newRecord.createdDate = newDate
+            newRecord.gaugeLevel = Int16(newGagueLevel)
+            if let newMemo = newMemo {
+                newRecord.memo = newMemo
+            }
+            appDelegate.saveContext()
+        }
     }
     
     func completeCreateRecordView() {

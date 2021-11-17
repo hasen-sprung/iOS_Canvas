@@ -65,7 +65,7 @@ class RecordManager {
                 let datePredicate = NSCompoundPredicate(andPredicateWithSubpredicates: [fromPredicate, toPredicate])
                 recordsRequest.predicate = datePredicate
             }
-            do { records = try context?.fetch(recordsRequest) } catch { print("context Error") }
+            do { records = try context?.fetch(recordsRequest) } catch { print("coredata fetch Error") }
             
             records?.sort(by: {$0.createdDate?.timeIntervalSinceNow ?? Date().timeIntervalSinceNow < $1.createdDate?.timeIntervalSinceNow ?? Date().timeIntervalSinceNow})
             return records ?? [Record]()
