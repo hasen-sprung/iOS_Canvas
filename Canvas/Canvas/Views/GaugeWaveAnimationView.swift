@@ -2,15 +2,11 @@ import UIKit
 
 protocol GaugeWaveAnimationViewDelegate {
     func cancelGaugeView()
-
     func createRecord()
     func changedGaugeLevel()
     func touchInCancelArea()
 }
-/*
- TODO: list
- - get current color
- */
+
 class GaugeWaveAnimationView: UIView {
     var delegate: GaugeWaveAnimationViewDelegate?
     private var waveView: WaveAnimationView = WaveAnimationView()
@@ -29,9 +25,6 @@ class GaugeWaveAnimationView: UIView {
         super.init(frame: frame)
         self.backgroundColor = bgColor
         currentGaugeLevel = 50
-        setGradientLayer()
-        setAnimationLayer()
-        setWaveView()
         setPanGesture()
     }
     
@@ -42,21 +35,27 @@ class GaugeWaveAnimationView: UIView {
     func getCurrentGaugeLevel() -> Int {
        return currentGaugeLevel
     }
+    
+    func setGaugeWaveView(with gradientColors: [CGColor], with animationColors: [CGColor]) {
+        setGradientLayer(gradientColors: gradientColors)
+        setAnimationLayer(changedColors: animationColors)
+        setWaveView()
+    }
 }
 
 // MARK: - Set Gradient Layer
 extension GaugeWaveAnimationView {
-    private func setGradientLayer() {
+    private func setGradientLayer(gradientColors: [CGColor]) {
         gradientLayer.frame = CGRect(origin: CGPoint(x: .zero,
                                                      y: self.frame.height * 0.07),
                                      size: CGSize(width: self.frame.width,
                                                   height: self.frame.height * 0.9))
-        gradientLayer.colors = defaultGradientColors.reversed()
+        gradientLayer.colors = gradientColors.reversed()
         self.layer.addSublayer(gradientLayer)
     }
     
-    private func setAnimationLayer() {
-        let colors: [CGColor] = defaultChangedGColors.reversed()
+    private func setAnimationLayer(changedColors: [CGColor]) {
+        let colors: [CGColor] = changedColors.reversed()
 
         colorAnimation.toValue = colors
         colorAnimation.duration = 1.5

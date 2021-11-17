@@ -3,14 +3,14 @@ import SnapKit
 
 class GaugeViewController: UIViewController {
     private let recordManager = RecordManager.shared
+    private let theme = ThemeManager.shared.getThemeInstance()
     private var gaugeWaveView: GaugeWaveAnimationView = {
         let view = GaugeWaveAnimationView(frame: UIScreen.main.bounds)
         return view
     }()
+    private var createRecordView: CreateRecordView?
     private var cancelButton: UIView = UIView()
     private var shapeImage: UIImageView = UIImageView()
-    
-    private var createRecordView: CreateRecordView?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,6 +31,8 @@ class GaugeViewController: UIViewController {
     private func setSubViews() {
         view.addSubview(gaugeWaveView)
         gaugeWaveView.delegate = self
+        gaugeWaveView.setGaugeWaveView(with: theme.gradientColors,
+                                       with: theme.changeGradientColors)
         setCancelButton(in: view)
     }
     
@@ -55,7 +57,11 @@ extension GaugeViewController: GaugeWaveAnimationViewDelegate {
     }
     
     func changedGaugeLevel() {
-        changeImage(level: gaugeWaveView.getCurrentGaugeLevel())
+        changeImage(level: gaugeWaveView.getCurrentGaugeLevel()) //TODO: delete after
+        // MARK: - TODO: change Color by level
+        
+        // MARK: - HOW to get color by level Test sample code TODO: DELETE AFTER
+        let newcolor = ThemeManager.shared.getThemeInstance().getColorByGaugeLevel(gaugeLevel: gaugeWaveView.getCurrentGaugeLevel())
     }
     
     func cancelGaugeView() {
