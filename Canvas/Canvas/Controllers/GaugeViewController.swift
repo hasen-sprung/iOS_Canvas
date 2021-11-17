@@ -57,11 +57,10 @@ extension GaugeViewController: GaugeWaveAnimationViewDelegate {
     }
     
     func changedGaugeLevel() {
-        changeImage(level: gaugeWaveView.getCurrentGaugeLevel()) //TODO: delete after
-        // MARK: - TODO: change Color by level
+        let level = gaugeWaveView.getCurrentGaugeLevel()
         
-        // MARK: - HOW to get color by level Test sample code TODO: DELETE AFTER
-        let newcolor = ThemeManager.shared.getThemeInstance().getColorByGaugeLevel(gaugeLevel: gaugeWaveView.getCurrentGaugeLevel())
+        shapeImage.image = theme.getImageByGaugeLevel(gaugeLevel: level)
+        shapeImage.tintColor = theme.getColorByGaugeLevel(gaugeLevel: level)
     }
     
     func cancelGaugeView() {
@@ -160,34 +159,7 @@ extension GaugeViewController {
         
         shapeImage.frame = CGRect(origin: .zero, size: CGSize(width: size, height: size))
         shapeImage.center = cancelButton.center
-        shapeImage.image = UIImage(named: "image_6")
+        shapeImage.image = UIImage(named: "default_6")
         cancelButton.addSubview(shapeImage)
-    }
-    
-    private func changeImage(level: Int) {
-        switch level {
-        case 1...10:
-            shapeImage.image = UIImage(named: "image_1")
-        case 11...20:
-            shapeImage.image = UIImage(named: "image_2")
-        case 21...30:
-            shapeImage.image = UIImage(named: "image_3")
-        case 31...40:
-            shapeImage.image = UIImage(named: "image_4")
-        case 41...50:
-            shapeImage.image = UIImage(named: "image_5")
-        case 51...60:
-            shapeImage.image = UIImage(named: "image_6")
-        case 61...70:
-            shapeImage.image = UIImage(named: "image_7")
-        case 71...80:
-            shapeImage.image = UIImage(named: "image_8")
-        case 81...90:
-            shapeImage.image = UIImage(named: "image_9")
-        case 91...100:
-            shapeImage.image = UIImage(named: "image_10")
-        default:
-            print("범위를 벗어남")
-        }
     }
 }

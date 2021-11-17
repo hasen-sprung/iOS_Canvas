@@ -14,6 +14,7 @@ class MainViewController: UIViewController {
     private let addRecordIcon = UIImageView()
     
     let recordManager = RecordManager.shared
+    let themeManager = ThemeManager.shared
     
     override func viewDidLoad() {
         super.viewDidLoad()

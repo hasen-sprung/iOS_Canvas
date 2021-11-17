@@ -24,6 +24,7 @@ class Theme {
     var backGroundColor: UIColor
     var gradientColors: [CGColor]
     var changeGradientColors: [CGColor]
+    var images: [UIImage]?
 
     init(backGroundColor: UIColor, gradientColors: [CGColor], changeGradientColors: [CGColor]) {
         self.backGroundColor = backGroundColor
@@ -35,37 +36,40 @@ class Theme {
         return [UIImage]()
     }
     
-    func getImageByGaugeLevel(gaugeLevel: Float, currentImage: UIImage?, imageSet: [UIImage]) -> UIImage? {
-        let newImage = imageSet[Int(gaugeLevel / 5)]
-        
-        if currentImage == nil {
+    func getImageByGaugeLevel(gaugeLevel: Int) -> UIImage? {
+        if let images = images, !images.isEmpty {
+            var newImage: UIImage
+            let index = (gaugeLevel - 1) / Int(100 / images.count)
+            
+            if index < images.count {
+                newImage = images[index]
+            } else {
+                newImage = images[images.count - 1]
+            }
             return newImage
         } else {
-            if currentImage == newImage {
-                return nil
-            } else {
-                return newImage
-            }
+            return nil
         }
     }
     
+    // MARK: - By Level
     // gauge level is 1 ~ 100
+    // 현재 로직에서 index는 gradientColor는 100을 기준으로 알맞게 나누어 떨어져야 에러가 없다...
+    // 일단 index가 count를 벗어나면 에러처리는 해줌
     func getColorByGaugeLevel(gaugeLevel: Int) -> UIColor {
-        var color: UIColor
         let count = gradientColors.count
-        let index = gaugeLevel / count
+        let index = (gaugeLevel) / Int(100 / count) //gaugeLevel - 1 하면 비정상적인 에러 :TODO
         
         if index < count {
             let firstColor: UIColor = UIColor(cgColor: gradientColors[index])
             let secondColor: UIColor = UIColor(cgColor: changeGradientColors[index])
             let percentage: CGFloat = CGFloat((gaugeLevel % count) * 10)
-            let newcolor = firstColor.toColor(secondColor, percentage: percentage)
+            let newColor = firstColor.toColor(secondColor, percentage: percentage)
             
-            color = newcolor
+            return newColor
         } else {
-            color = UIColor(cgColor: gradientColors[count - 1])
+            return UIColor(cgColor: gradientColors[count - 1])
         }
-        return color
     }
 }
 
@@ -79,10 +83,11 @@ class DefaultTheme: Theme {
         super.init(backGroundColor: defaultBackgroudColor,
                    gradientColors: defaultGradientColors,
                    changeGradientColors: defaultChangedGColors)
+        images = instanceImageSet()
     }
     
-    override func instanceImageSet() -> [UIImage] {
-        let imageName = ["shape1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]
+    internal override func instanceImageSet() -> [UIImage] {
+        let imageName = ["default_1", "default_2", "default_3", "default_4", "default_5", "default_6", "default_7", "default_8", "default_9", "default_10"]
         var imageSet = [UIImage]()
         
         for name in imageName {
