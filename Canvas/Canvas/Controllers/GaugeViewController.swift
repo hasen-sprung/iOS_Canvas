@@ -59,8 +59,12 @@ extension GaugeViewController: GaugeWaveAnimationViewDelegate {
     }
     
     func cancelGaugeView() {
-        gaugeWaveView.removeFromSuperview()
-        self.dismiss(animated: true, completion: nil)
+        UIView.animate(withDuration: 1.0, delay: 0.0, options: [.curveEaseOut], animations: { [self] in
+            cancelButton.alpha = 0.0
+            gaugeWaveView.bounds.origin.y = gaugeWaveView.bounds.origin.y - view.frame.height
+        }) { (completed) in
+            self.dismiss(animated: false, completion: nil)
+        }
     }
     
     func createRecord() {
@@ -68,13 +72,11 @@ extension GaugeViewController: GaugeWaveAnimationViewDelegate {
         createRecordView?.frame = view.frame
         createRecordView?.setCreateRecordView()
         createRecordView?.alpha = 0.0
-        
         if let CRView = createRecordView {
             CRView.delegate = self
             CRView.fadeIn()
             view.addSubview(CRView)
         }
-        
         UIView.animate(withDuration: 1.0, delay: 0.0, options: [.curveEaseOut], animations: { [self] in
             gaugeWaveView.bounds.origin.y = gaugeWaveView.bounds.origin.y - view.frame.height
         }) { (completed) in
@@ -85,6 +87,23 @@ extension GaugeViewController: GaugeWaveAnimationViewDelegate {
 
 // MARK: - Create Record View Delegate
 extension GaugeViewController: CreateRecordViewDelegate {
+    func saveAndSortRecord() {
+        
+    }
+    
+    func completeCreateRecordView() {
+        cancelButton.fadeOut()
+        createRecordView?.fadeOut()
+        self.gaugeWaveView.removeFromSuperview()
+        let transition: CATransition = CATransition()
+        transition.duration = 1.0
+        transition.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
+        transition.type = CATransitionType.reveal
+        transition.subtype = CATransitionSubtype.fromBottom
+        self.view.window?.layer.add(transition, forKey: nil)
+        self.dismiss(animated: false, completion: nil)
+    }
+    
     func dismissCreateRecordView() {
         createRecordView?.fadeOut()
         UIView.animate(withDuration: 1.0, delay: 0.0, options: [.curveEaseOut], animations: { [self] in

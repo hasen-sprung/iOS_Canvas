@@ -2,6 +2,8 @@ import UIKit
 
 protocol CreateRecordViewDelegate {
     func dismissCreateRecordView()
+    func completeCreateRecordView()
+    func saveAndSortRecord()
 }
 
 class CreateRecordView: UIView {
@@ -27,6 +29,7 @@ class CreateRecordView: UIView {
         setCRBackgroundViewComponents()
         CRBtnBackgroundView.isUserInteractionEnabled = true
         cancelButton.addTarget(self, action: #selector(cancelButtonPressed), for: .touchUpInside)
+        completeButton.addTarget(self, action: #selector(completeButtonPressed), for: .touchUpInside)
     }
     
     func setCRTextView() {
@@ -49,6 +52,15 @@ class CreateRecordView: UIView {
             if let d = self.delegate {
                 d.dismissCreateRecordView()
             }
+        }
+    }
+    
+    @objc func completeButtonPressed() {
+        
+        if let d = self.delegate {
+            CRTextView.endEditing(true)
+            d.completeCreateRecordView()
+            d.saveAndSortRecord()
         }
     }
 }
