@@ -29,6 +29,7 @@ extension MainViewController {
     
     private func setButtonsTarget() {
         addRecordButton.addTarget(self, action: #selector(addRecordButtonPressed), for: .touchUpInside)
+        goToListButton.addTarget(self, action: #selector(goToListButtonPressed), for: .touchUpInside)
     }
     
     @objc func addRecordButtonPressed(_ sender: UIButton) {
@@ -37,6 +38,11 @@ extension MainViewController {
         nextVC.modalTransitionStyle = .coverVertical
         nextVC.modalPresentationStyle = .fullScreen
         self.present(nextVC, animated: true, completion: nil)
+    }
+    
+    @objc func goToListButtonPressed(_ sender: UIButton) {
+        guard let nextVC = self.storyboard?.instantiateViewController(identifier: "listTableViewController") as? ListTableViewController else { return }
+        transitionVc(vc: nextVC, duration: 0.5, type: .fromLeft)
     }
 }
 
@@ -124,7 +130,6 @@ extension MainViewController {
     }
     
     private func setListButtonConstraints() {
-        
         let margin = view.frame.width * 0.175 / 2
         let buttonSize = view.frame.width / 10
         let buttonY = canvasView.frame.origin.y - buttonSize
@@ -172,3 +177,17 @@ extension MainViewController {
         addRecordIcon.center = CGPoint(x: view.frame.width / 2, y: addRecordButton.center.y)
     }
 }
+
+extension UIViewController {
+    func transitionVc(vc: UIViewController, duration: CFTimeInterval, type: CATransitionSubtype) {
+        let customVcTransition = vc
+        let transition = CATransition()
+        
+        transition.duration = duration
+        transition.type = CATransitionType.push
+        transition.subtype = type
+        transition.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
+        customVcTransition.modalPresentationStyle = .fullScreen
+        view.window!.layer.add(transition, forKey: kCATransition)
+        present(customVcTransition, animated: false, completion: nil)
+    }}

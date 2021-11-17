@@ -1,7 +1,10 @@
 import UIKit
 
 protocol CreateRecordViewDelegate {
+    func getGaugeLevel() -> Int
     func dismissCreateRecordView()
+    func completeCreateRecordView()
+    func saveRecord(newDate: Date, newGagueLevel: Int, newMemo: String?)
 }
 
 class CreateRecordView: UIView {
@@ -27,6 +30,7 @@ class CreateRecordView: UIView {
         setCRBackgroundViewComponents()
         CRBtnBackgroundView.isUserInteractionEnabled = true
         cancelButton.addTarget(self, action: #selector(cancelButtonPressed), for: .touchUpInside)
+        completeButton.addTarget(self, action: #selector(completeButtonPressed), for: .touchUpInside)
     }
     
     func setCRTextView() {
@@ -35,6 +39,7 @@ class CreateRecordView: UIView {
         CRTextView.center = CGPoint(x: CRBackgroundView.frame.width / 2,
                                     y: CRBackgroundView.frame.height / 2)
         CRTextView.backgroundColor = .clear
+        CRTextView.textColor = .black
         CRTextView.becomeFirstResponder()
         CRBackgroundView.addSubview(CRTextView)
     }
@@ -49,6 +54,17 @@ class CreateRecordView: UIView {
             if let d = self.delegate {
                 d.dismissCreateRecordView()
             }
+        }
+    }
+    
+    @objc func completeButtonPressed() {
+        
+        if let d = self.delegate {
+            CRTextView.endEditing(true)
+            d.completeCreateRecordView()
+            d.saveRecord(newDate: date,
+                         newGagueLevel: d.getGaugeLevel(),
+                         newMemo: CRTextView.text)
         }
     }
 }
@@ -118,17 +134,17 @@ extension CreateRecordView {
     
     private func setBtnIcon() {
         CRBtnIcon.frame.size = CGSize(width: CRBtnBackgroundView.frame.width / 2 * 1.2,
-                                     height: CRBtnBackgroundView.frame.height * 1.3)
+                                      height: CRBtnBackgroundView.frame.height * 1.3)
         CRBtnIcon.backgroundColor = .clear
         CRBtnIcon.image = UIImage(named: "TextBtn")
         CRBtnIcon.center = CGPoint(x: CRBtnBackgroundView.frame.width * 0.75,
-                                  y: CRBtnBackgroundView.frame.height * 0.55)
+                                   y: CRBtnBackgroundView.frame.height * 0.55)
         CRBtnBackgroundView.addSubview(CRBtnIcon)
     }
     
     private func setButtons() {
         let buttons: [UIButton : CGFloat] = [completeButton : 0.75,
-                                             cancelButton : 0.28]
+                                               cancelButton : 0.28]
         
         for button in buttons {
             (button.key).frame.size = CGSize(width: CRBtnBackgroundView.frame.width / 2,

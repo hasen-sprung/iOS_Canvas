@@ -1,5 +1,6 @@
 import UIKit
 import SnapKit
+import CoreData
 
 class GaugeViewController: UIViewController {
     private let recordManager = RecordManager.shared
@@ -64,8 +65,12 @@ extension GaugeViewController: GaugeWaveAnimationViewDelegate {
     }
     
     func cancelGaugeView() {
-        gaugeWaveView.removeFromSuperview()
-        self.dismiss(animated: true, completion: nil)
+        UIView.animate(withDuration: 1.0, delay: 0.0, options: [.curveEaseOut], animations: { [self] in
+            cancelButton.alpha = 0.0
+            gaugeWaveView.bounds.origin.y = gaugeWaveView.bounds.origin.y - view.frame.height
+        }) { (completed) in
+            self.dismiss(animated: false, completion: nil)
+        }
     }
     
     func createRecord() {
@@ -73,13 +78,11 @@ extension GaugeViewController: GaugeWaveAnimationViewDelegate {
         createRecordView?.frame = view.frame
         createRecordView?.setCreateRecordView()
         createRecordView?.alpha = 0.0
-        
         if let CRView = createRecordView {
             CRView.delegate = self
             CRView.fadeIn()
             view.addSubview(CRView)
         }
-        
         UIView.animate(withDuration: 1.0, delay: 0.0, options: [.curveEaseOut], animations: { [self] in
             gaugeWaveView.bounds.origin.y = gaugeWaveView.bounds.origin.y - view.frame.height
         }) { (completed) in
@@ -90,6 +93,39 @@ extension GaugeViewController: GaugeWaveAnimationViewDelegate {
 
 // MARK: - Create Record View Delegate
 extension GaugeViewController: CreateRecordViewDelegate {
+    func getGaugeLevel() -> Int {
+        return gaugeWaveView.getCurrentGaugeLevel()
+    }
+    
+    func saveRecord(newDate: Date, newGagueLevel: Int, newMemo: String?) {
+        if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
+            let context = appDelegate.persistentContainer.viewContext
+            let newRecord = Record(context: context)
+            
+            newRecord.createdDate = newDate
+            newRecord.gaugeLevel = Int16(newGagueLevel)
+            if let newMemo = newMemo {
+                newRecord.memo = newMemo
+            }
+            appDelegate.saveContext()
+        }
+        let paths = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.userDomainMask, true)
+        print(paths[0])
+    }
+    
+    func completeCreateRecordView() {
+        cancelButton.fadeOut()
+        createRecordView?.fadeOut()
+        self.gaugeWaveView.removeFromSuperview()
+        let transition: CATransition = CATransition()
+        transition.duration = 1.0
+        transition.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
+        transition.type = CATransitionType.reveal
+        transition.subtype = CATransitionSubtype.fromBottom
+        self.view.window?.layer.add(transition, forKey: nil)
+        self.dismiss(animated: false, completion: nil)
+    }
+    
     func dismissCreateRecordView() {
         createRecordView?.fadeOut()
         UIView.animate(withDuration: 1.0, delay: 0.0, options: [.curveEaseOut], animations: { [self] in

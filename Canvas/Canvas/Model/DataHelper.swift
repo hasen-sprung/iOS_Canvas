@@ -64,7 +64,7 @@ class DataHelper {
             
             let newRecord = NSEntityDescription.insertNewObject(forEntityName: "Record", into: context) as! Record
             newRecord.createdDate = createdDate
-            newRecord.gaugeLevel = Float.random(in: 0.0...1.0)
+            newRecord.gaugeLevel = Int16.random(in: 0...100)
             newRecord.memo = texts[Int.random(in: 0 ..< texts.count)]
         }
         
