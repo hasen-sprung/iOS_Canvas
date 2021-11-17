@@ -39,6 +39,7 @@ class CreateRecordView: UIView {
         CRTextView.center = CGPoint(x: CRBackgroundView.frame.width / 2,
                                     y: CRBackgroundView.frame.height / 2)
         CRTextView.backgroundColor = .clear
+        CRTextView.textColor = .black
         CRTextView.becomeFirstResponder()
         CRBackgroundView.addSubview(CRTextView)
     }

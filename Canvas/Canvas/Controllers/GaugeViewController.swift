@@ -93,8 +93,6 @@ extension GaugeViewController: CreateRecordViewDelegate {
     }
     
     func saveRecord(newDate: Date, newGagueLevel: Int, newMemo: String?) {
-        
-        // Save new Record
         if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
             let context = appDelegate.persistentContainer.viewContext
             let newRecord = Record(context: context)
@@ -106,6 +104,8 @@ extension GaugeViewController: CreateRecordViewDelegate {
             }
             appDelegate.saveContext()
         }
+        let paths = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.userDomainMask, true)
+        print(paths[0])
     }
     
     func completeCreateRecordView() {
