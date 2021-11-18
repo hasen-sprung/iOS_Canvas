@@ -1,6 +1,12 @@
 import UIKit
 
+protocol MainRecordsViewDelegate {
+    func openRecordTextView(index: Int)
+    func tapActionRecordView()
+}
+
 class MainRecordsView: UIView {
+    var delegate: MainRecordsViewDelegate?
     private var recordViews: [UIView] = [UIView]()
     private var recordViewsCount: Int = 10
     private var recordViewSize: CGFloat = UIScreen.main.bounds.width / 10
@@ -17,10 +23,12 @@ class MainRecordsView: UIView {
                              height: superview.frame.height * ratio)
         let newCenter = CGPoint(x: superview.center.x - superview.frame.origin.x,
                                 y: superview.center.y - superview.frame.origin.y)
+        let gesture = UITapGestureRecognizer(target: self, action: #selector(tapRecordViewAction))
         
         self.frame.size = newSize
         self.center = newCenter
         self.backgroundColor = .clear
+        self.addGestureRecognizer(gesture)
     }
     
     required init?(coder: NSCoder) {
@@ -39,7 +47,7 @@ class MainRecordsView: UIView {
         for i in 0 ..< recordViewsCount {
             if i < records.count {
                 let level: Int = Int(records[i].gaugeLevel)
-                let view = setRecordView(views: views)
+                let view = setRecordView(views: views, index: i)
                 
                 setShapeImageView(in: view,
                                   image: theme.getImageByGaugeLevel(gaugeLevel: level),
@@ -47,7 +55,7 @@ class MainRecordsView: UIView {
                 self.addSubview(view)
                 views.append(view)
             } else {
-                let view = setRecordView(views: views)
+                let view = setRecordView(views: views, index: i)
                 
                 setDefaultShapeImageView(in: view)
                 self.addSubview(view)
@@ -64,12 +72,15 @@ class MainRecordsView: UIView {
 
 // MARK: - Set Record View
 extension MainRecordsView {
-    private func setRecordView(views: [UIView]) -> UIView {
-        let view = UIView()
+    private func setRecordView(views: [UIView], index: Int) -> RecordView {
+        let view = RecordView()
         
         view.frame.size = CGSize(width: recordViewSize, height: recordViewSize)
         view.backgroundColor = .clear
+        view.index = index
         setRecordViewLocation(view: view, views: views)
+        setTapGesture(view: view)
+        view.transform = CGAffineTransform(rotationAngle: CGFloat.random(in: 0.0...360.0))
         return view
     }
     
@@ -101,7 +112,7 @@ extension MainRecordsView {
     
     private func setShapeImageView(in view: UIView, image: UIImage?, color: UIColor) {
         let shapeImage: UIImageView = UIImageView()
-        let size = view.frame.width
+        let size = view.bounds.width
         
         shapeImage.frame = CGRect(origin: .zero, size: CGSize(width: size, height: size))
         shapeImage.image = image
@@ -111,7 +122,7 @@ extension MainRecordsView {
     
     private func setDefaultShapeImageView(in view: UIView) {
         let shapeImage: UIImageView = UIImageView()
-        let size = view.frame.width
+        let size = view.bounds.width
         let index = Int.random(in: 1...10)
         let name = "default_\(index)"
         
@@ -120,4 +131,34 @@ extension MainRecordsView {
         shapeImage.tintColor = .systemGray
         view.addSubview(shapeImage)
     }
+}
+
+// MARK: - Set Tap Gesture
+extension MainRecordsView {
+    private func setTapGesture(view: UIView) {
+        let gesture = UITapGestureRecognizer(target: self, action: #selector(tapAction))
+        view.addGestureRecognizer(gesture)
+    }
+    
+    @objc func tapAction(_ sender: UITapGestureRecognizer) {
+        if let view: RecordView = sender.view as? RecordView {
+            view.fadeOut()
+            view.fadeIn()
+            if let d = delegate, let idx = view.index {
+                d.openRecordTextView(index: idx)
+            }
+        }
+    }
+    
+    @objc func tapRecordViewAction(_ sender: UITapGestureRecognizer) {
+        if let d = delegate {
+            d.tapActionRecordView()
+        }
+    }
+}
+
+// MARK: - Record View
+// 각각의 인덱스를 확인하기 위해서
+class RecordView: UIView {
+    var index: Int?
 }

@@ -86,6 +86,7 @@ extension MainViewController {
         canvasView.backgroundColor = .clear
         canvasView.image = UIImage(named: "CanvasView")
         canvasView.contentMode = .scaleAspectFill
+        canvasView.isUserInteractionEnabled = true
     }
     
     private func setRecordsViewInCanvas() {
@@ -94,6 +95,7 @@ extension MainViewController {
         canvasView.addSubview(canvasRecordsView!)
         // 메인 뷰에서 출력되는 숫자는 차후 유저디폴트로 세팅가능하게, 초기값은 10
         canvasRecordsView?.setRecordViewsCount(to: 10)
+        canvasRecordsView?.delegate = self
     }
     
     private func setInfoViewUI() {
@@ -202,5 +204,18 @@ extension MainViewController {
         addRecordIcon.frame.size = CGSize(width: addRecordButton.frame.width * 0.35,
                                           height: addRecordButton.frame.width * 0.35)
         addRecordIcon.center = CGPoint(x: view.frame.width / 2, y: addRecordButton.center.y)
+    }
+}
+
+extension MainViewController: MainRecordsViewDelegate {
+    func openRecordTextView(index: Int) {
+        print("record touch and index: \(index)")
+        // TODO: 더미 데이터 회색의 인덱스로 접근하면 터짐! 당연히 존재하지 않는 레코드니까...
+        // 회색 10개에는 뭔가 도움말 같은 것을 추가하면 될 듯, 인사말 + 버튼눌러봐 등등
+    }
+    
+    func tapActionRecordView() {
+        // 레코드 뷰 내부를 터치했을 경우 취소시키는 기능인데 필요없을 듯?
+        print("recordsview touched")
     }
 }
