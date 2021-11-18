@@ -9,7 +9,7 @@ import UIKit
 
 class ListTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
-    private let listTableView = UITableView()
+    @IBOutlet weak var listTableView: UITableView!
     @IBOutlet weak var backButton: UIButton!
     private let backButtonIcon = UIImageView()
     
@@ -21,9 +21,11 @@ class ListTableViewController: UIViewController, UITableViewDelegate, UITableVie
         super.viewDidLoad()
         
         view.backgroundColor = UIColor(r: 240, g: 240, b: 243)
+        listTableView.dataSource = self
+        listTableView.delegate = self
+        setListTableView()
         setSectionAndRecords()
         setBackButton()
-        setListTableView()
     }
     
     @objc func backButtonPressed() {
@@ -55,7 +57,6 @@ class ListTableViewController: UIViewController, UITableViewDelegate, UITableVie
                 sectionsCount.append(1)
             }
         }
-        print(dateSections)
     }
     
     private func getDateString(date: Date) -> String {
@@ -65,29 +66,6 @@ class ListTableViewController: UIViewController, UITableViewDelegate, UITableVie
         df.locale = Locale(identifier:"ko_KR")
         let dateString = df.string(from: date)
         return dateString + " " + date.dayOfWeek
-    }
-}
-
-// MARK: - Set List Table View
-extension ListTableViewController {
-    private func setListTableView() {
-        setListTableViwConstraints()
-        listTableView.backgroundColor = UIColor(r: 240, g: 240, b: 243)
-        listTableView.register(UITableViewCell.self, forCellReuseIdentifier: "listTableViewCell")
-        listTableView.dataSource = self
-        listTableView.delegate = self
-        view.addSubview(listTableView)
-    }
-    
-    private func setListTableViwConstraints() {
-        listTableView.frame.size = CGSize(width: view.frame.width,
-                                          height: view.frame.height * 0.7)
-        listTableView.center = CGPoint(x: view.frame.width / 2,
-                                       y: view.frame.height * 0.575)
-    }
-    
-    private func setListTableViewCell() {
-        
     }
 }
 
@@ -106,8 +84,28 @@ extension ListTableViewController {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        return UITableViewCell()
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "listTableViewCell", for: indexPath) as? ListTableViewCell else { return UITableViewCell() }
+        return cell
+    }
+}
+
+// MARK: - Set List Table View
+extension ListTableViewController {
+    private func setListTableView() {
+        let nibName = UINib(nibName: "ListTableViewCell", bundle: nil)
+        listTableView.register(nibName, forCellReuseIdentifier: "listTableViewCell")
+        listTableView.rowHeight  = UITableView.automaticDimension
+        listTableView.estimatedRowHeight = 80
+        setListTableViwConstraints()
+        listTableView.backgroundColor = UIColor(r: 240, g: 240, b: 243)
+        view.addSubview(listTableView)
+    }
+    
+    private func setListTableViwConstraints() {
+        listTableView.frame.size = CGSize(width: view.frame.width,
+                                          height: view.frame.height * 0.7)
+        listTableView.frame.origin = CGPoint(x: .zero,
+                                             y: view.frame.height / 6 + 3)
     }
 }
 
