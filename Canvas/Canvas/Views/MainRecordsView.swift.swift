@@ -100,10 +100,10 @@ extension MainRecordsView {
     }
     
     private func setRandomLocation(in view: UIView) -> CGPoint {
-        let maxX = view.bounds.width - recordViewSize
-        let maxY = view.bounds.height - recordViewSize
-        let minX: CGFloat = 0
-        let minY: CGFloat = 0
+        let maxX = view.bounds.width - recordViewSize - (recordViewSize / 2)
+        let maxY = view.bounds.height - recordViewSize - (recordViewSize / 2)
+        let minX: CGFloat = recordViewSize / 2
+        let minY: CGFloat = recordViewSize / 2
         let point = CGPoint(x: CGFloat.random(in: minX...maxX),
                             y: CGFloat.random(in: minY...maxY))
         
