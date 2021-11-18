@@ -39,7 +39,7 @@ class MainViewController: UIViewController {
         let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
         
         do {
-            records = try context.fetch(Record.fetchRequest())
+            records = try context.fetch(Record.fetchRequest()).reversed()
         } catch {
             print("Fetch Error \(error)")
         }
