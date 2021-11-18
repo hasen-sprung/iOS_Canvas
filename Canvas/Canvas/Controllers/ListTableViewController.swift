@@ -13,9 +13,8 @@ class ListTableViewController: UIViewController, UITableViewDelegate, UITableVie
     @IBOutlet weak var backButton: UIButton!
     private let backButtonIcon = UIImageView()
     
-    private var records: [Record]?
+    private var recordsByDate = [[Record]]()
     private var dateSections = [String]()
-    private var sectionsCount = [Int]()
     
     private let theme = ThemeManager.shared.getThemeInstance()
     
@@ -44,22 +43,28 @@ class ListTableViewController: UIViewController, UITableViewDelegate, UITableVie
             do { rawRecords = try context.fetch(request) } catch { print("context Error") }
             rawRecords?.sort(by: {$0.createdDate?.timeIntervalSinceNow ?? Date().timeIntervalSinceNow > $1.createdDate?.timeIntervalSinceNow ?? Date().timeIntervalSinceNow})
             setDateSections(sortedRecords: rawRecords ?? [Record]())
-            records = rawRecords
         }
     }
     
     private func setDateSections(sortedRecords: [Record]) {
+        var tempRecords = [Record]()
         for r in sortedRecords {
             let date = r.createdDate ?? Date()
             let dateString = getSectionDateStr(date: date)
             
             if let _ = dateSections.firstIndex(of: dateString) {
-                sectionsCount[sectionsCount.count - 1] += 1
+                tempRecords.append(r)
             } else {
                 dateSections.append(dateString)
-                sectionsCount.append(1)
+                if tempRecords.count > 0 {
+                    recordsByDate.append(tempRecords)
+                    tempRecords = [Record]()
+                }
+                tempRecords.append(r)
             }
         }
+        recordsByDate.append(tempRecords)
+        tempRecords.removeAll()
     }
     
     private func getSectionDateStr(date: Date) -> String {
@@ -83,15 +88,15 @@ extension ListTableViewController {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return sectionsCount[section]
+        return recordsByDate[section].count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "listTableViewCell", for: indexPath) as? ListTableViewCell else { return UITableViewCell() }
-        cell.timeLabel.text = getCellDateStr(date: records?[indexPath.row].createdDate ?? Date())
-        cell.shapeImage.image = theme.getImageByGaugeLevel(gaugeLevel: Int(records?[indexPath.row].gaugeLevel ?? 0))
-        cell.shapeImage.tintColor = theme.getColorByGaugeLevel(gaugeLevel: Int(records?[indexPath.row].gaugeLevel ?? 0))
-        if let memo = records?[indexPath.row].memo {
+        cell.timeLabel.text = getCellDateStr(date: recordsByDate[indexPath.section][indexPath.row].createdDate ?? Date())
+        cell.shapeImage.image = theme.getImageByGaugeLevel(gaugeLevel: Int(recordsByDate[indexPath.section][indexPath.row].gaugeLevel))
+        cell.shapeImage.tintColor = theme.getColorByGaugeLevel(gaugeLevel: Int(recordsByDate[indexPath.section][indexPath.row].gaugeLevel))
+        if let memo = recordsByDate[indexPath.section][indexPath.row].memo {
             cell.userMemo.text = memo
         }
         return cell
@@ -105,6 +110,12 @@ extension ListTableViewController {
         let dateString = df.string(from: date)
         return dateString
     }
+    
+    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        view.tintColor = .clear
+        let header = view as! UITableViewHeaderFooterView
+        header.textLabel?.textColor = UIColor.black
+    }
 }
 
 // MARK: - Set List Table View
@@ -114,6 +125,7 @@ extension ListTableViewController {
         listTableView.register(nibName, forCellReuseIdentifier: "listTableViewCell")
         listTableView.rowHeight  = UITableView.automaticDimension
         listTableView.estimatedRowHeight = 80
+        listTableView.separatorStyle = .none
         setListTableViwConstraints()
         listTableView.backgroundColor = UIColor(r: 240, g: 240, b: 243)
         view.addSubview(listTableView)
