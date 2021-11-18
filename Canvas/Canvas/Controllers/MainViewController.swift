@@ -35,9 +35,6 @@ class MainViewController: UIViewController {
         canvasRecordsView?.clearRecordViews()
     }
     
-//    private var recordViews: [UIView] = [UIView]()
-//    private let recordsViewCount: Int = 10 // 아이패드에서는 더 커질 수 있음 or 커스텀
-    
     private func updateContext() {
         let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
         
@@ -47,70 +44,6 @@ class MainViewController: UIViewController {
             print("Fetch Error \(error)")
         }
     }
-    
-//    private func setRecordViews() {
-//        var views = [UIView]()
-//
-//        updateContext()
-//        for i in 0..<recordsViewCount {
-//            if i < records.count {
-//                let view = setRecordView(views: views, color: themeManager.getThemeInstance().getColorByGaugeLevel(gaugeLevel: Int(records[i].gaugeLevel)))
-//
-//                canvasView.addSubview(view)
-//                views.append(view)
-//            } else {
-//                let view = setRecordView(views: views)
-//
-//                canvasView.addSubview(view)
-//                views.append(view)
-//            }
-//        }
-//        recordViews = views
-//    }
-    
-//    private func setRecordView(views: [UIView], color: UIColor = .systemGray) -> UIView {
-//        let view = UIView()
-//        let viewSize = UIScreen.main.bounds.width / 8
-//        
-//        view.frame.size = CGSize(width: viewSize, height: viewSize)
-//        view.backgroundColor = color
-//        setRecordViewLocation(view: view, views: views, superview: canvasView)
-//        return view
-//    }
-    
-//    private func setRecordViewLocation(view: UIView, views: [UIView], superview: UIView) {
-//        view.frame.origin = setRandomLocation(in: superview)
-//        
-//        while isOverlaped(view, in: views) {
-//            view.frame.origin = setRandomLocation(in: superview)
-//        }
-//    }
-    
-//    private func isOverlaped(_ view: UIView, in views: [UIView]) -> Bool {
-//        for v in views {
-//            if view.frame.intersects(v.frame) {
-//                return true
-//            }
-//        }
-//        return false
-//    }
-//    
-//    private func setRandomLocation(in view: UIView) -> CGPoint {
-//        let maxX = view.bounds.width
-//        let maxY = view.bounds.height
-//        let minX: CGFloat = 0
-//        let minY: CGFloat = 0
-//        let point = CGPoint(x: CGFloat.random(in: minX...maxX),
-//                            y: CGFloat.random(in: minY...maxY))
-//        
-//        return point
-//    }
-//    
-//    private func clearRecordViews(views: [UIView]) {
-//        for view in views {
-//            view.removeFromSuperview()
-//        }
-//    }
 }
 
 // MARK: - set Buttons Target
@@ -137,7 +70,6 @@ extension MainViewController {
 
 // MARK: - Set UI
 extension MainViewController {
-    
     private func setMainViewUI() {
         view.backgroundColor = UIColor(r: 240, g: 240, b: 243)
         view.addSubview(goToListIcon)
@@ -151,7 +83,7 @@ extension MainViewController {
     }
     
     private func setCanvasViewUI() {
-        canvasView.backgroundColor = .white
+        canvasView.backgroundColor = .clear
         canvasView.image = UIImage(named: "CanvasView")
         canvasView.contentMode = .scaleAspectFill
     }
@@ -160,6 +92,8 @@ extension MainViewController {
         // canvas ui의 frame, layout이 정해진 후 레코드뷰들을 생성해야 함
         canvasRecordsView = MainRecordsView(in: canvasView)
         canvasView.addSubview(canvasRecordsView!)
+        // 메인 뷰에서 출력되는 숫자는 차후 유저디폴트로 세팅가능하게, 초기값은 10
+        canvasRecordsView?.setRecordViewsCount(to: 10)
     }
     
     private func setInfoViewUI() {
@@ -194,7 +128,6 @@ extension MainViewController {
 
 // MARK: - set Layout / autoLayout refactoring 필요
 extension MainViewController {
-    
     private func setMainViewConstraints() {
         setCanvasViewConstraints()
         // CanvasView를 중심으로 layout 구성 (반드시 canvasView가 먼저 setting 되어야 한다.)
@@ -269,20 +202,5 @@ extension MainViewController {
         addRecordIcon.frame.size = CGSize(width: addRecordButton.frame.width * 0.35,
                                           height: addRecordButton.frame.width * 0.35)
         addRecordIcon.center = CGPoint(x: view.frame.width / 2, y: addRecordButton.center.y)
-    }
-}
-
-extension UIViewController {
-    func transitionVc(vc: UIViewController, duration: CFTimeInterval, type: CATransitionSubtype) {
-        let customVcTransition = vc
-        let transition = CATransition()
-        
-        transition.duration = duration
-        transition.type = CATransitionType.push
-        transition.subtype = type
-        transition.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
-        customVcTransition.modalPresentationStyle = .fullScreen
-        view.window!.layer.add(transition, forKey: kCATransition)
-        present(customVcTransition, animated: false, completion: nil)
     }
 }

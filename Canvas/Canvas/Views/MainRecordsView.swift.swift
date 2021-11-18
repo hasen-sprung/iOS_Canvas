@@ -1,15 +1,9 @@
 import UIKit
 
-protocol MainRecordsViewDelegate {
-    
-}
-
-// MARK: - 특정 프레임 안에서 n개의 뷰들을 출력해준다
 class MainRecordsView: UIView {
-    var delegate: MainRecordsViewDelegate?
-    
     private var recordViews: [UIView] = [UIView]()
-    private var recordsViewCount: Int = 10 // 아이패드에서는 더 커질 수 있음 or 커스텀 todo:getset
+    private var recordViewsCount: Int = 10
+    private var recordViewSize: CGFloat = UIScreen.main.bounds.width / 10
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -26,7 +20,7 @@ class MainRecordsView: UIView {
         
         self.frame.size = newSize
         self.center = newCenter
-        self.backgroundColor = .black
+        self.backgroundColor = .clear
     }
     
     required init?(coder: NSCoder) {
@@ -38,19 +32,24 @@ class MainRecordsView: UIView {
             view.removeFromSuperview()
         }
     }
-    // 사용전 레코드 업데이트
+    
     func setRecordViews(records: [Record], theme: Theme) {
         var views = [UIView]()
         
-        for i in 0 ..< recordsViewCount {
+        for i in 0 ..< recordViewsCount {
             if i < records.count {
-                let view = setRecordView(views: views, color: theme.getColorByGaugeLevel(gaugeLevel: Int(records[i].gaugeLevel)))
+                let level: Int = Int(records[i].gaugeLevel)
+                let view = setRecordView(views: views)
                 
+                setShapeImageView(in: view,
+                                  image: theme.getImageByGaugeLevel(gaugeLevel: level),
+                                  color: theme.getColorByGaugeLevel(gaugeLevel: level))
                 self.addSubview(view)
                 views.append(view)
             } else {
                 let view = setRecordView(views: views)
                 
+                setDefaultShapeImageView(in: view)
                 self.addSubview(view)
                 views.append(view)
             }
@@ -58,12 +57,18 @@ class MainRecordsView: UIView {
         recordViews = views
     }
     
-    private func setRecordView(views: [UIView], color: UIColor = .systemGray) -> UIView {
+    func setRecordViewsCount(to count: Int) {
+        self.recordViewsCount = count
+    }
+}
+
+// MARK: - Set Record View
+extension MainRecordsView {
+    private func setRecordView(views: [UIView]) -> UIView {
         let view = UIView()
-        let viewSize = UIScreen.main.bounds.width / 10
         
-        view.frame.size = CGSize(width: viewSize, height: viewSize)
-        view.backgroundColor = color
+        view.frame.size = CGSize(width: recordViewSize, height: recordViewSize)
+        view.backgroundColor = .clear
         setRecordViewLocation(view: view, views: views)
         return view
     }
@@ -84,13 +89,35 @@ class MainRecordsView: UIView {
     }
     
     private func setRandomLocation(in view: UIView) -> CGPoint {
-        let maxX = view.bounds.width
-        let maxY = view.bounds.height
+        let maxX = view.bounds.width - recordViewSize
+        let maxY = view.bounds.height - recordViewSize
         let minX: CGFloat = 0
         let minY: CGFloat = 0
         let point = CGPoint(x: CGFloat.random(in: minX...maxX),
                             y: CGFloat.random(in: minY...maxY))
         
         return point
+    }
+    
+    private func setShapeImageView(in view: UIView, image: UIImage?, color: UIColor) {
+        let shapeImage: UIImageView = UIImageView()
+        let size = view.frame.width
+        
+        shapeImage.frame = CGRect(origin: .zero, size: CGSize(width: size, height: size))
+        shapeImage.image = image
+        shapeImage.tintColor = color
+        view.addSubview(shapeImage)
+    }
+    
+    private func setDefaultShapeImageView(in view: UIView) {
+        let shapeImage: UIImageView = UIImageView()
+        let size = view.frame.width
+        let index = Int.random(in: 1...10)
+        let name = "default_\(index)"
+        
+        shapeImage.frame = CGRect(origin: .zero, size: CGSize(width: size, height: size))
+        shapeImage.image = UIImage(named: name)?.withRenderingMode(.alwaysTemplate)
+        shapeImage.tintColor = .systemGray
+        view.addSubview(shapeImage)
     }
 }
