@@ -16,9 +16,9 @@ class ListTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        timeLabel.backgroundColor = .cyan
-        shapeImage.backgroundColor = .brown
-        userMemo.backgroundColor = .gray
+        timeLabel.backgroundColor = .clear
+        shapeImage.backgroundColor = .clear
+        userMemo.backgroundColor = .clear
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

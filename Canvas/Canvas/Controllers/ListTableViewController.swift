@@ -13,9 +13,11 @@ class ListTableViewController: UIViewController, UITableViewDelegate, UITableVie
     @IBOutlet weak var backButton: UIButton!
     private let backButtonIcon = UIImageView()
     
-    private var recordsByDate: [Record]?
+    private var records: [Record]?
     private var dateSections = [String]()
     private var sectionsCount = [Int]()
+    
+    private let theme = ThemeManager.shared.getThemeInstance()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,13 +44,14 @@ class ListTableViewController: UIViewController, UITableViewDelegate, UITableVie
             do { rawRecords = try context.fetch(request) } catch { print("context Error") }
             rawRecords?.sort(by: {$0.createdDate?.timeIntervalSinceNow ?? Date().timeIntervalSinceNow > $1.createdDate?.timeIntervalSinceNow ?? Date().timeIntervalSinceNow})
             setDateSections(sortedRecords: rawRecords ?? [Record]())
+            records = rawRecords
         }
     }
     
     private func setDateSections(sortedRecords: [Record]) {
         for r in sortedRecords {
             let date = r.createdDate ?? Date()
-            let dateString = getDateString(date: date)
+            let dateString = getSectionDateStr(date: date)
             
             if let _ = dateSections.firstIndex(of: dateString) {
                 sectionsCount[sectionsCount.count - 1] += 1
@@ -59,7 +62,7 @@ class ListTableViewController: UIViewController, UITableViewDelegate, UITableVie
         }
     }
     
-    private func getDateString(date: Date) -> String {
+    private func getSectionDateStr(date: Date) -> String {
         let df = DateFormatter()
         
         df.dateFormat = "M/d"
@@ -68,7 +71,7 @@ class ListTableViewController: UIViewController, UITableViewDelegate, UITableVie
         return dateString + " " + date.dayOfWeek
     }
 }
-
+// MARK: - TableView delegate and datasource delegate
 extension ListTableViewController {
     func numberOfSections(in tableView: UITableView) -> Int {
         return dateSections.count
@@ -85,7 +88,22 @@ extension ListTableViewController {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "listTableViewCell", for: indexPath) as? ListTableViewCell else { return UITableViewCell() }
+        cell.timeLabel.text = getCellDateStr(date: records?[indexPath.row].createdDate ?? Date())
+        cell.shapeImage.image = theme.getImageByGaugeLevel(gaugeLevel: Int(records?[indexPath.row].gaugeLevel ?? 0))
+        cell.shapeImage.tintColor = theme.getColorByGaugeLevel(gaugeLevel: Int(records?[indexPath.row].gaugeLevel ?? 0))
+        if let memo = records?[indexPath.row].memo {
+            cell.userMemo.text = memo
+        }
         return cell
+    }
+    
+    private func getCellDateStr(date: Date) -> String {
+        let df = DateFormatter()
+        
+        df.dateFormat = "a h:mm"
+        df.locale = Locale(identifier:"ko_KR")
+        let dateString = df.string(from: date)
+        return dateString
     }
 }
 
