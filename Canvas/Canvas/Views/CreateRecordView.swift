@@ -111,7 +111,6 @@ extension CreateRecordView {
     }
     
     private func getDateString() -> String {
-        
         let df = DateFormatter()
         var dateString: String?
         
