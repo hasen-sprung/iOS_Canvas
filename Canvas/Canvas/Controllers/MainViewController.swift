@@ -14,7 +14,6 @@ class MainViewController: UIViewController {
     private let addRecordIcon = UIImageView()
     private var canvasRecordsView: MainRecordsView?
     
-    private let recordManager = RecordManager.shared
     private let themeManager = ThemeManager.shared
     private var records = [Record]()
     
@@ -48,7 +47,6 @@ class MainViewController: UIViewController {
 
 // MARK: - set Buttons Target
 extension MainViewController {
-    
     private func setButtonsTarget() {
         addRecordButton.addTarget(self, action: #selector(addRecordButtonPressed), for: .touchUpInside)
         goToListButton.addTarget(self, action: #selector(goToListButtonPressed), for: .touchUpInside)

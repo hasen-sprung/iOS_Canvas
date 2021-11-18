@@ -2,8 +2,6 @@ import UIKit
 import CoreData
 
 class DataHelper {
-
-    
     private let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
     func loadSeeder() {
@@ -18,9 +16,7 @@ class DataHelper {
     }
 
     private func seedRecords() {
-        
         for _ in 1 ... 100 {
-
             let userCalendar = Calendar.current
             var date = DateComponents()
             
@@ -67,7 +63,6 @@ class DataHelper {
             newRecord.gaugeLevel = Int16.random(in: 0...100)
             newRecord.memo = texts[Int.random(in: 0 ..< texts.count)]
         }
-        
         (UIApplication.shared.delegate as! AppDelegate).saveContext()
     }
 }

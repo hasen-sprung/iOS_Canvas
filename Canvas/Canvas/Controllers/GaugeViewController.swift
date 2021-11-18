@@ -3,8 +3,6 @@ import SnapKit
 import CoreData
 
 class GaugeViewController: UIViewController {
-    private let recordManager = RecordManager.shared
-    private let theme = ThemeManager.shared.getThemeInstance()
     private var gaugeWaveView: GaugeWaveAnimationView = {
         let view = GaugeWaveAnimationView(frame: UIScreen.main.bounds)
         return view
@@ -12,6 +10,7 @@ class GaugeViewController: UIViewController {
     private var createRecordView: CreateRecordView?
     private var cancelButton: UIView = UIView()
     private var shapeImage: UIImageView = UIImageView()
+    private let theme = ThemeManager.shared.getThemeInstance()
     
     override func viewDidLoad() {
         super.viewDidLoad()

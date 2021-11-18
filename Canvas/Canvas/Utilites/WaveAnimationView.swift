@@ -1,7 +1,6 @@
 import UIKit
 
 public class WaveAnimationView: UIView {
-
     private let frontWaveLine: UIBezierPath = UIBezierPath()
     private let backWaveLine: UIBezierPath = UIBezierPath()
     

@@ -71,7 +71,6 @@ class CreateRecordView: UIView {
 
 // MARK: - set components
 extension CreateRecordView {
-    
     private func setCRBackgroundViewComponents() {
         setSeperateLine()
         setDateLabel()
@@ -162,7 +161,6 @@ extension CreateRecordView {
 
 // MARK: - set CRBackroundView UI and Constraints
 extension CreateRecordView {
-    
     private func setCRBackgroundViewContraints() {
         CRBackgroundView.translatesAutoresizingMaskIntoConstraints = false
         CRBackgroundView.widthAnchor.constraint(equalToConstant: self.frame.width * 0.8).isActive = true

@@ -108,13 +108,10 @@ class RecordManager {
         let recordCount = records?.count ?? 0
         
         if recordCount > userCount {
-        
             for idx in recordCount - userCount ..< recordCount {
-                
                 newRecord.append(records?[idx] ?? Record())
             }
         }
-        
         return newRecord
     }
 }
