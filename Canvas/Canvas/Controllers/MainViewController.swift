@@ -12,15 +12,37 @@ class MainViewController: UIViewController {
     private let goToListIcon = UIImageView()
     private let goToSettingIcon = UIImageView()
     private let addRecordIcon = UIImageView()
+    private var canvasRecordsView: MainRecordsView?
     
-    let recordManager = RecordManager.shared
-    let themeManager = ThemeManager.shared
+    private let recordManager = RecordManager.shared
+    private let themeManager = ThemeManager.shared
+    private var records = [Record]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setMainViewConstraints()
         setMainViewUI()
         setButtonsTarget()
+        setRecordsViewInCanvas()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        updateContext()
+        canvasRecordsView?.setRecordViews(records: records, theme: themeManager.getThemeInstance())
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        canvasRecordsView?.clearRecordViews()
+    }
+    
+    private func updateContext() {
+        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+        
+        do {
+            records = try context.fetch(Record.fetchRequest())
+        } catch {
+            print("Fetch Error \(error)")
+        }
     }
 }
 
@@ -48,7 +70,6 @@ extension MainViewController {
 
 // MARK: - Set UI
 extension MainViewController {
-    
     private func setMainViewUI() {
         view.backgroundColor = UIColor(r: 240, g: 240, b: 243)
         view.addSubview(goToListIcon)
@@ -65,6 +86,16 @@ extension MainViewController {
         canvasView.backgroundColor = .clear
         canvasView.image = UIImage(named: "CanvasView")
         canvasView.contentMode = .scaleAspectFill
+        canvasView.isUserInteractionEnabled = true
+    }
+    
+    private func setRecordsViewInCanvas() {
+        // canvas ui의 frame, layout이 정해진 후 레코드뷰들을 생성해야 함
+        canvasRecordsView = MainRecordsView(in: canvasView)
+        canvasView.addSubview(canvasRecordsView!)
+        // 메인 뷰에서 출력되는 숫자는 차후 유저디폴트로 세팅가능하게, 초기값은 10
+        canvasRecordsView?.setRecordViewsCount(to: 10)
+        canvasRecordsView?.delegate = self
     }
     
     private func setInfoViewUI() {
@@ -97,10 +128,8 @@ extension MainViewController {
     }
 }
 
-
 // MARK: - set Layout / autoLayout refactoring 필요
 extension MainViewController {
-    
     private func setMainViewConstraints() {
         setCanvasViewConstraints()
         // CanvasView를 중심으로 layout 구성 (반드시 canvasView가 먼저 setting 되어야 한다.)
@@ -178,16 +207,15 @@ extension MainViewController {
     }
 }
 
-extension UIViewController {
-    func transitionVc(vc: UIViewController, duration: CFTimeInterval, type: CATransitionSubtype) {
-        let customVcTransition = vc
-        let transition = CATransition()
-        
-        transition.duration = duration
-        transition.type = CATransitionType.push
-        transition.subtype = type
-        transition.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
-        customVcTransition.modalPresentationStyle = .fullScreen
-        view.window!.layer.add(transition, forKey: kCATransition)
-        present(customVcTransition, animated: false, completion: nil)
-    }}
+extension MainViewController: MainRecordsViewDelegate {
+    func openRecordTextView(index: Int) {
+        print("record touch and index: \(index)")
+        // TODO: 더미 데이터 회색의 인덱스로 접근하면 터짐! 당연히 존재하지 않는 레코드니까...
+        // 회색 10개에는 뭔가 도움말 같은 것을 추가하면 될 듯, 인사말 + 버튼눌러봐 등등
+    }
+    
+    func tapActionRecordView() {
+        // 레코드 뷰 내부를 터치했을 경우 취소시키는 기능인데 필요없을 듯?
+        print("recordsview touched")
+    }
+}
