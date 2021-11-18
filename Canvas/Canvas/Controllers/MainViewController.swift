@@ -12,27 +12,31 @@ class MainViewController: UIViewController {
     private let goToListIcon = UIImageView()
     private let goToSettingIcon = UIImageView()
     private let addRecordIcon = UIImageView()
+    private var canvasRecordsView: MainRecordsView?
     
-    let recordManager = RecordManager.shared
-    let themeManager = ThemeManager.shared
+    private let recordManager = RecordManager.shared
+    private let themeManager = ThemeManager.shared
+    private var records = [Record]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setMainViewConstraints()
         setMainViewUI()
         setButtonsTarget()
+        setRecordsViewInCanvas()
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        setRecordViews()
-    }
-    override func viewDidDisappear(_ animated: Bool) {
-        clearRecordViews(views: recordViews)
+        updateContext()
+        canvasRecordsView?.setRecordViews(records: records, theme: themeManager.getThemeInstance())
     }
     
-    private var records = [Record]()
-    private var recordViews: [UIView] = [UIView]()
-    private let recordsViewCount: Int = 10 // 아이패드에서는 더 커질 수 있음 or 커스텀
+    override func viewDidDisappear(_ animated: Bool) {
+        canvasRecordsView?.clearRecordViews()
+    }
+    
+//    private var recordViews: [UIView] = [UIView]()
+//    private let recordsViewCount: Int = 10 // 아이패드에서는 더 커질 수 있음 or 커스텀
     
     private func updateContext() {
         let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
@@ -44,69 +48,69 @@ class MainViewController: UIViewController {
         }
     }
     
-    private func setRecordViews() {
-        var views = [UIView]()
-        
-        updateContext()
-        for i in 0..<recordsViewCount {
-            if i < records.count {
-                let view = setRecordView(views: views, color: themeManager.getThemeInstance().getColorByGaugeLevel(gaugeLevel: Int(records[i].gaugeLevel)))
-                
-                canvasView.addSubview(view)
-                views.append(view)
-            } else {
-                let view = setRecordView(views: views)
-                
-                canvasView.addSubview(view)
-                views.append(view)
-            }
-        }
-        recordViews = views
-    }
+//    private func setRecordViews() {
+//        var views = [UIView]()
+//
+//        updateContext()
+//        for i in 0..<recordsViewCount {
+//            if i < records.count {
+//                let view = setRecordView(views: views, color: themeManager.getThemeInstance().getColorByGaugeLevel(gaugeLevel: Int(records[i].gaugeLevel)))
+//
+//                canvasView.addSubview(view)
+//                views.append(view)
+//            } else {
+//                let view = setRecordView(views: views)
+//
+//                canvasView.addSubview(view)
+//                views.append(view)
+//            }
+//        }
+//        recordViews = views
+//    }
     
-    private func setRecordView(views: [UIView], color: UIColor = .systemGray) -> UIView {
-        let view = UIView()
-        let viewSize = UIScreen.main.bounds.width / 8
-        
-        view.frame.size = CGSize(width: viewSize, height: viewSize)
-        view.backgroundColor = color
-        setRecordViewLocation(view: view, views: views, superview: canvasView)
-        return view
-    }
+//    private func setRecordView(views: [UIView], color: UIColor = .systemGray) -> UIView {
+//        let view = UIView()
+//        let viewSize = UIScreen.main.bounds.width / 8
+//        
+//        view.frame.size = CGSize(width: viewSize, height: viewSize)
+//        view.backgroundColor = color
+//        setRecordViewLocation(view: view, views: views, superview: canvasView)
+//        return view
+//    }
     
-    private func setRecordViewLocation(view: UIView, views: [UIView], superview: UIView) {
-        view.frame.origin = setRandomLocation(in: superview)
-        
-        while isOverlaped(view, in: views) {
-            view.frame.origin = setRandomLocation(in: superview)
-        }
-    }
+//    private func setRecordViewLocation(view: UIView, views: [UIView], superview: UIView) {
+//        view.frame.origin = setRandomLocation(in: superview)
+//        
+//        while isOverlaped(view, in: views) {
+//            view.frame.origin = setRandomLocation(in: superview)
+//        }
+//    }
     
-    private func isOverlaped(_ view: UIView, in views: [UIView]) -> Bool {
-        for v in views {
-            if view.frame.intersects(v.frame) {
-                return true
-            }
-        }
-        return false
-    }
-    
-    private func setRandomLocation(in view: UIView) -> CGPoint {
-        let maxX = view.bounds.width
-        let maxY = view.bounds.height
-        let minX: CGFloat = 0
-        let minY: CGFloat = 0
-        let point = CGPoint(x: CGFloat.random(in: minX...maxX),
-                            y: CGFloat.random(in: minY...maxY))
-        
-        return point
-    }
-    
-    private func clearRecordViews(views: [UIView]) {
-        for view in views {
-            view.removeFromSuperview()
-        }
-    }
+//    private func isOverlaped(_ view: UIView, in views: [UIView]) -> Bool {
+//        for v in views {
+//            if view.frame.intersects(v.frame) {
+//                return true
+//            }
+//        }
+//        return false
+//    }
+//    
+//    private func setRandomLocation(in view: UIView) -> CGPoint {
+//        let maxX = view.bounds.width
+//        let maxY = view.bounds.height
+//        let minX: CGFloat = 0
+//        let minY: CGFloat = 0
+//        let point = CGPoint(x: CGFloat.random(in: minX...maxX),
+//                            y: CGFloat.random(in: minY...maxY))
+//        
+//        return point
+//    }
+//    
+//    private func clearRecordViews(views: [UIView]) {
+//        for view in views {
+//            view.removeFromSuperview()
+//        }
+//    }
 }
 
 // MARK: - set Buttons Target
@@ -152,6 +156,12 @@ extension MainViewController {
         canvasView.contentMode = .scaleAspectFill
     }
     
+    private func setRecordsViewInCanvas() {
+        // canvas ui의 frame, layout이 정해진 후 레코드뷰들을 생성해야 함
+        canvasRecordsView = MainRecordsView(in: canvasView)
+        canvasView.addSubview(canvasRecordsView!)
+    }
+    
     private func setInfoViewUI() {
         infoView.backgroundColor = .clear
         infoView.image = UIImage(named: "InfoView")
@@ -181,7 +191,6 @@ extension MainViewController {
         addRecordIcon.isUserInteractionEnabled = false
     }
 }
-
 
 // MARK: - set Layout / autoLayout refactoring 필요
 extension MainViewController {
@@ -275,4 +284,5 @@ extension UIViewController {
         customVcTransition.modalPresentationStyle = .fullScreen
         view.window!.layer.add(transition, forKey: kCATransition)
         present(customVcTransition, animated: false, completion: nil)
-    }}
+    }
+}
