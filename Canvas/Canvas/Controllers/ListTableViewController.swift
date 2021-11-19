@@ -10,11 +10,29 @@ import UIKit
 class ListTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet weak var listTableView: UITableView!
+    @IBOutlet weak var calendarView: UICollectionView!
+    private var calendarDateLabel = UILabel()
+    private var dateFWButton = UIButton()
+    private var dateBWButton = UIButton()
+    @IBOutlet weak var searchDateButton: UIButton!
+    private var searchDateButtonIcon = UIImageView()
+    private var searchDateButtonTag = false
     @IBOutlet weak var backButton: UIButton!
     private let backButtonIcon = UIImageView()
     
+    // MARK: - record parsing properties
     private var recordsByDate = [[Record]]()
     private var dateSections = [String]()
+
+    // MARK: - Calendar Creation properties
+    let now = Date()
+    var cal = Calendar.current
+    let dateFormatter = DateFormatter()
+    var components = DateComponents()
+    var weeks: [String] = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"]
+    var days: [String] = []
+    var daysCountInMonth = 0
+    var weekdayAdding = 0
     
     private let theme = ThemeManager.shared.getThemeInstance()
     
@@ -27,11 +45,59 @@ class ListTableViewController: UIViewController, UITableViewDelegate, UITableVie
         setListTableView()
         setSectionAndRecords()
         setBackButton()
+        setSearchButton()
+        initCalendar()
+        view.bringSubviewToFront(listTableView)
     }
     
     @objc func backButtonPressed() {
         guard let nextVC = self.storyboard?.instantiateViewController(identifier: "mainViewController") as? MainViewController else { return }
         transitionVc(vc: nextVC, duration: 0.5, type: .fromRight)
+    }
+    
+    @objc func searchDateButtonPressed() {
+        if searchDateButtonTag == false {
+            searchDateButtonTag = true
+            searchDateButton.isEnabled = false
+            searchDateButtonIcon.image = UIImage(named: "SearchButtonClicked")
+            UIView.animate(withDuration: 0.5, delay: 0.0, options: [.curveEaseOut], animations: { [self] in
+                listTableView.frame.origin.y = listTableView.frame.origin.y + view.frame.width / 5 + calendarView.collectionViewLayout.collectionViewContentSize.height
+            }) { (completed) in
+                self.searchDateButton.isEnabled = true
+            }
+        } else {
+            searchDateButtonTag = false
+            searchDateButton.isEnabled = false
+            searchDateButtonIcon.image = UIImage(named: "SearchButton")
+            UIView.animate(withDuration: 0.5, delay: 0.0, options: [.curveEaseOut], animations: { [self] in
+                listTableView.frame.origin.y = listTableView.frame.origin.y - view.frame.width / 5 - calendarView.collectionViewLayout.collectionViewContentSize.height
+            }) { (completed) in
+                self.searchDateButton.isEnabled = true
+            }
+        }
+    }
+    
+    @objc func dateFWButtonPressed() {
+        components.month = (components.month ?? 0) + 1
+        reloadCalendar()
+    }
+    
+    @objc func dateBWButtonPressed() {
+        components.month = (components.month ?? 0) - 1
+        reloadCalendar()
+    }
+    
+    private func reloadCalendar() {
+        calendarCalculation()
+        calendarView.reloadData()
+        dateFWButton.isEnabled = false
+        dateBWButton.isEnabled = false
+        UIView.animate(withDuration: 0.1, delay: 0.0, options: [.curveEaseOut], animations: { [self] in
+            listTableView.frame.origin.y = view.frame.height / 6 + 2 + view.frame.width / 5 + calendarView.collectionViewLayout.collectionViewContentSize.height
+        }) { (completed) in
+            self.dateFWButton.isEnabled = true
+            self.dateBWButton.isEnabled = true
+        }
     }
     
     private func setSectionAndRecords() {
@@ -46,6 +112,140 @@ class ListTableViewController: UIViewController, UITableViewDelegate, UITableVie
         }
     }
     
+    private func initCalendar() {
+        setCalendarViewConstraints()
+        setCalendarDateLabel()
+        setCalendarDateCtrButtons()
+        registerCalendarView()
+        dateFormatter.dateFormat = "yyyy . M"
+        components.year = cal.component(.year, from: now)
+        components.month = cal.component(.month, from: now)
+        components.day = 1
+        calendarCalculation()
+    }
+}
+
+// MARK: - calculate calendar
+extension ListTableViewController {
+    
+    private func calendarCalculation() {
+        let firstDayOfMonth = cal.date(from: components)
+        let firstWeekday = cal.component(.weekday, from: firstDayOfMonth ?? Date())
+        
+        daysCountInMonth = cal.range(of: .day, in: .month, for: firstDayOfMonth ?? Date())?.count ?? 0
+        weekdayAdding = 2 - firstWeekday
+        calendarDateLabel.text  = dateFormatter.string(from: firstDayOfMonth ?? Date())
+        self.days.removeAll()
+        for day in weekdayAdding...daysCountInMonth {
+            if day < 1 {
+                self.days.append("")
+            } else {
+                self.days.append(String(day))
+            }
+        }
+    }
+}
+
+
+// MARK: - set Calendar collection View
+extension ListTableViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDelegate, UICollectionViewDataSource {
+    
+    private func setCalendarViewConstraints() {
+        calendarView.backgroundColor = UIColor(r: 240, g: 240, b: 243)
+        calendarView.frame.size = CGSize(width: view.frame.width,
+                                         height: view.frame.width)
+        calendarView.frame.origin = CGPoint(x: .zero,
+                                            y: view.frame.height / 6 + view.frame.width / 5 + 2)
+    }
+    
+    private func registerCalendarView() {
+        self.calendarView.delegate = self
+        self.calendarView.dataSource = self
+        self.calendarView.register(UINib(nibName: "CalendarCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "calendarCell")
+    }
+    
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 2
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        switch section {
+        case 0:
+            return 7
+        default:
+            return days.count
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "calendarCell", for: indexPath) as? CalendarCollectionViewCell
+        
+        switch indexPath.section {
+        case 0:
+            cell?.dateLabel.text = weeks[indexPath.row]
+        default:
+            cell?.dateLabel.text = days[indexPath.row]
+        }
+        if indexPath.row % 7 == 0 {
+            cell?.dateLabel.textColor = .black
+        } else if indexPath.row % 7 == 6 {
+            cell?.dateLabel.textColor = .black
+        } else {
+            cell?.dateLabel.textColor = .black
+        }
+        return cell ?? UICollectionViewCell()
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let boundSize: CGFloat = view.bounds.size.width
+        let cellSize: CGFloat = boundSize / 9
+        return CGSize(width: cellSize, height: cellSize)
+    }
+    
+    private func setCalendarDateLabel() {
+        calendarDateLabel.frame.size = CGSize(width: view.frame.width,
+                                              height: view.frame.width / 5)
+        calendarDateLabel.frame.origin = CGPoint(x: .zero,
+                                                 y: view.frame.height / 6 + 2)
+        calendarDateLabel.textAlignment = .center
+        calendarDateLabel.textColor = .black
+        calendarDateLabel.backgroundColor = .clear
+        view.addSubview(calendarDateLabel)
+        
+    }
+    
+    private func setCalendarDateCtrButtons() {
+        setDateFWButton()
+        setDateBWButton()
+        dateFWButton.addTarget(self, action: #selector(dateFWButtonPressed), for: .touchUpInside)
+        dateBWButton.addTarget(self, action: #selector(dateBWButtonPressed), for: .touchUpInside)
+    }
+    
+    private func setDateFWButton() {
+        dateFWButton.frame.size = CGSize(width: view.frame.width / 10 * 0.9,
+                                         height: view.frame.width / 10 * 0.9)
+        dateFWButton.center = CGPoint(x: view.frame.width * 0.75,
+                                      y: view.frame.height / 6 + 2 + (view.frame.width / 5 / 2))
+        dateFWButton.setImage(UIImage(systemName: "chevron.forward")?.withRenderingMode(.alwaysTemplate), for: .normal)
+        dateFWButton.tintColor = .black//UIColor(r: 229, g: 151, b: 139)
+        dateFWButton.backgroundColor = .clear
+        view.addSubview(dateFWButton)
+    }
+    
+    private func setDateBWButton() {
+        dateBWButton.frame.size = CGSize(width: view.frame.width / 10 * 0.9,
+                                         height: view.frame.width / 10 * 0.9)
+        dateBWButton.center = CGPoint(x: view.frame.width * 0.25,
+                                      y: view.frame.height / 6 + 2 + (view.frame.width / 5 / 2))
+        dateBWButton.setImage(UIImage(systemName: "chevron.backward")?.withRenderingMode(.alwaysTemplate), for: .normal)
+        dateBWButton.tintColor = .black//UIColor(r: 229, g: 151, b: 139)
+        dateBWButton.backgroundColor = .clear
+        view.addSubview(dateBWButton)
+    }
+}
+
+// MARK: - TableView delegate and datasource delegate
+extension ListTableViewController {
     private func setDateSections(sortedRecords: [Record]) {
         var tempRecords = [Record]()
         for r in sortedRecords {
@@ -70,14 +270,12 @@ class ListTableViewController: UIViewController, UITableViewDelegate, UITableVie
     private func getSectionDateStr(date: Date) -> String {
         let df = DateFormatter()
         
-        df.dateFormat = "M/d"
+        df.dateFormat = "M / d"
         df.locale = Locale(identifier:"ko_KR")
         let dateString = df.string(from: date)
-        return dateString + " " + date.dayOfWeek
+        return dateString + "   " + date.dayOfWeek
     }
-}
-// MARK: - TableView delegate and datasource delegate
-extension ListTableViewController {
+    
     func numberOfSections(in tableView: UITableView) -> Int {
         return dateSections.count
     }
@@ -105,7 +303,7 @@ extension ListTableViewController {
     private func getCellDateStr(date: Date) -> String {
         let df = DateFormatter()
         
-        df.dateFormat = "a h:mm"
+        df.dateFormat = "HH:mm"
         df.locale = Locale(identifier:"ko_KR")
         let dateString = df.string(from: date)
         return dateString
@@ -113,8 +311,8 @@ extension ListTableViewController {
     
     func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         view.tintColor = .clear
-        let header = view as! UITableViewHeaderFooterView
-        header.textLabel?.textColor = UIColor.black
+        let header = view as? UITableViewHeaderFooterView
+        header?.textLabel?.textColor = UIColor.black
     }
 }
 
@@ -133,14 +331,40 @@ extension ListTableViewController {
     
     private func setListTableViwConstraints() {
         listTableView.frame.size = CGSize(width: view.frame.width,
-                                          height: view.frame.height * 0.7)
+                                          height: view.frame.height * 5 / 6)
         listTableView.frame.origin = CGPoint(x: .zero,
-                                             y: view.frame.height / 6 + 3)
+                                             y: view.frame.height / 6 + 2)
     }
 }
 
 // MARK: - set back button constraint and UI / set seperate line
 extension ListTableViewController {
+    
+    private func setSearchButton() {
+        setSearchButtonUI()
+        setSearchButtonConstraints()
+        searchDateButton.addTarget(self, action: #selector(searchDateButtonPressed), for: .touchUpInside)
+    }
+    
+    private func setSearchButtonUI() {
+        searchDateButton.setTitle("Search Date", for: .normal)
+        searchDateButton.setTitleColor(.black, for: .normal)
+        searchDateButton.backgroundColor = .clear
+        searchDateButtonIcon.backgroundColor = .clear
+        searchDateButtonIcon.image = UIImage(named: "SearchButton")
+    }
+    
+    private func setSearchButtonConstraints() {
+        searchDateButton.frame.size = CGSize(width: searchDateButton.intrinsicContentSize.width + view.frame.width / 10,
+                                         height: view.frame.width / 10)
+        searchDateButton.center = CGPoint(x: view.frame.width / 2,
+                                      y: view.frame.height * 0.11)
+        searchDateButtonIcon.frame.size = CGSize(width: view.frame.width / 10 * 0.5,
+                                             height: view.frame.width / 10 * 0.5)
+        searchDateButtonIcon.center = CGPoint(x: searchDateButton.center.x + (searchDateButton.frame.width / 2) - (searchDateButtonIcon.frame.size.width),
+                                          y: searchDateButton.center.y)
+        view.addSubview(searchDateButtonIcon)
+    }
     
     private func setBackButton() {
         setBackButtonConstraints()
