@@ -60,7 +60,8 @@ class ListTableViewController: UIViewController, UITableViewDelegate, UITableVie
         if searchDateButtonTag == false {
             searchDateButtonTag = true
             searchDateButton.isEnabled = false
-            searchDateButtonIcon.image = UIImage(named: "SearchButtonClicked")
+            searchDateButton.setTitle("hide Calendar", for: .normal)
+            searchDateButtonIcon.image = UIImage(named: "SearchButtonClicked")?.withRenderingMode(.alwaysTemplate)
             UIView.animate(withDuration: 0.5, delay: 0.0, options: [.curveEaseOut], animations: { [self] in
                 listTableView.frame.origin.y = listTableView.frame.origin.y + view.frame.width / 5 + calendarView.collectionViewLayout.collectionViewContentSize.height
             }) { (completed) in
@@ -69,7 +70,8 @@ class ListTableViewController: UIViewController, UITableViewDelegate, UITableVie
         } else {
             searchDateButtonTag = false
             searchDateButton.isEnabled = false
-            searchDateButtonIcon.image = UIImage(named: "SearchButton")
+            searchDateButton.setTitle("show Calendar", for: .normal)
+            searchDateButtonIcon.image = UIImage(named: "SearchButton")?.withRenderingMode(.alwaysTemplate)
             UIView.animate(withDuration: 0.5, delay: 0.0, options: [.curveEaseOut], animations: { [self] in
                 listTableView.frame.origin.y = listTableView.frame.origin.y - view.frame.width / 5 - calendarView.collectionViewLayout.collectionViewContentSize.height
             }) { (completed) in
@@ -325,6 +327,7 @@ extension ListTableViewController {
         if let memo = recordsByDate[indexPath.section][indexPath.row].memo {
             cell.userMemo.text = memo
         }
+        cell.selectionStyle = .none
         return cell
     }
     
@@ -341,6 +344,7 @@ extension ListTableViewController {
         view.tintColor = .clear
         let header = view as? UITableViewHeaderFooterView
         header?.textLabel?.textColor = UIColor.black
+        header?.contentView.backgroundColor = UIColor(r: 240, g: 240, b: 243)
     }
 }
 
@@ -375,11 +379,12 @@ extension ListTableViewController {
     }
     
     private func setSearchButtonUI() {
-        searchDateButton.setTitle("Search Date", for: .normal)
+        searchDateButton.setTitle("show Calendar", for: .normal)
         searchDateButton.setTitleColor(.black, for: .normal)
         searchDateButton.backgroundColor = .clear
         searchDateButtonIcon.backgroundColor = .clear
-        searchDateButtonIcon.image = UIImage(named: "SearchButton")
+        searchDateButtonIcon.image = UIImage(named: "SearchButton")?.withRenderingMode(.alwaysTemplate)
+        searchDateButtonIcon.tintColor = .darkGray//UIColor(r: 229, g: 151, b: 139)
     }
     
     private func setSearchButtonConstraints() {
