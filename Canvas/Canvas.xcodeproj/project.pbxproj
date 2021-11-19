@@ -16,6 +16,8 @@
 		4F0590AE2745193000C4DF41 /* ListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0590AD2745193000C4DF41 /* ListTableViewController.swift */; };
 		4F0590B227461E7300C4DF41 /* ListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0590B127461E7300C4DF41 /* ListTableViewCell.swift */; };
 		4F0590B427462FD800C4DF41 /* ListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4F0590B327462FD800C4DF41 /* ListTableViewCell.xib */; };
+		4F0590B82747726F00C4DF41 /* CalendarCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4F0590B72747726F00C4DF41 /* CalendarCollectionViewCell.xib */; };
+		4F0590BA274772FF00C4DF41 /* CalendarCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0590B9274772FF00C4DF41 /* CalendarCollectionViewCell.swift */; };
 		4F0A39D5273BC852009E3AAF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0A39D4273BC852009E3AAF /* AppDelegate.swift */; };
 		4F0A39D7273BC852009E3AAF /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0A39D6273BC852009E3AAF /* SceneDelegate.swift */; };
 		4F0A39DC273BC852009E3AAF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4F0A39DA273BC852009E3AAF /* Main.storyboard */; };
@@ -42,6 +44,8 @@
 		4F0590AD2745193000C4DF41 /* ListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTableViewController.swift; sourceTree = "<group>"; };
 		4F0590B127461E7300C4DF41 /* ListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTableViewCell.swift; sourceTree = "<group>"; };
 		4F0590B327462FD800C4DF41 /* ListTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ListTableViewCell.xib; sourceTree = "<group>"; };
+		4F0590B72747726F00C4DF41 /* CalendarCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CalendarCollectionViewCell.xib; sourceTree = "<group>"; };
+		4F0590B9274772FF00C4DF41 /* CalendarCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCollectionViewCell.swift; sourceTree = "<group>"; };
 		4F0A39D1273BC852009E3AAF /* Canvas.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Canvas.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F0A39D4273BC852009E3AAF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4F0A39D6273BC852009E3AAF /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -123,6 +127,8 @@
 				4F0590B127461E7300C4DF41 /* ListTableViewCell.swift */,
 				4F0590B327462FD800C4DF41 /* ListTableViewCell.xib */,
 				355B49CA27462DA000A764B2 /* MainRecordsView.swift */,
+				4F0590B9274772FF00C4DF41 /* CalendarCollectionViewCell.swift */,
+				4F0590B72747726F00C4DF41 /* CalendarCollectionViewCell.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -219,6 +225,7 @@
 				4F0A39E4273BC853009E3AAF /* LaunchScreen.storyboard in Resources */,
 				4F0590B427462FD800C4DF41 /* ListTableViewCell.xib in Resources */,
 				4F0A39E1273BC853009E3AAF /* Assets.xcassets in Resources */,
+				4F0590B82747726F00C4DF41 /* CalendarCollectionViewCell.xib in Resources */,
 				4F0A39DC273BC852009E3AAF /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -244,6 +251,7 @@
 				4F0A39FA273C0660009E3AAF /* MainViewController.swift in Sources */,
 				355B49CB27462DA000A764B2 /* MainRecordsView.swift in Sources */,
 				4F0A39FE27425C39009E3AAF /* CreateRecordView.swift in Sources */,
+				4F0590BA274772FF00C4DF41 /* CalendarCollectionViewCell.swift in Sources */,
 				4F0A39FC27424C75009E3AAF /* Color.swift in Sources */,
 				3549F2632740D6A800C1589A /* GaugeViewController.swift in Sources */,
 				4F0A39DF273BC852009E3AAF /* Canvas.xcdatamodeld in Sources */,
