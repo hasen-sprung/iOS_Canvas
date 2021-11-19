@@ -35,12 +35,13 @@ class MainViewController: UIViewController {
     }
     
     private func updateContext() {
-        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-        
-        do {
-            records = try context.fetch(Record.fetchRequest()).reversed()
-        } catch {
-            print("Fetch Error \(error)")
+        if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
+            let context = appDelegate.persistentContainer.viewContext
+            let request = Record.fetchRequest()
+            do {
+                records = try context.fetch(request)
+            } catch { print("context Error") }
+            records.sort(by: {$0.createdDate?.timeIntervalSinceNow ?? Date().timeIntervalSinceNow > $1.createdDate?.timeIntervalSinceNow ?? Date().timeIntervalSinceNow})
         }
     }
 }
