@@ -381,6 +381,8 @@ extension ListTableViewController {
     private func setSearchButtonUI() {
         searchDateButton.setTitle("show Calendar", for: .normal)
         searchDateButton.setTitleColor(.black, for: .normal)
+        searchDateButton.setTitleColor(.darkGray, for: .highlighted)
+        searchDateButton.setTitleColor(.black, for: .disabled)
         searchDateButton.backgroundColor = .clear
         searchDateButtonIcon.backgroundColor = .clear
         searchDateButtonIcon.image = UIImage(named: "SearchButton")?.withRenderingMode(.alwaysTemplate)
