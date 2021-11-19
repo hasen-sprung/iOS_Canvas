@@ -33,7 +33,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MgZ-3F-8mL">
-                        <rect key="frame" x="308" y="24" width="100" height="30"/>
+                        <rect key="frame" x="320" y="24" width="100" height="30"/>
                         <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="100" id="1sa-0O-Zf6"/>
@@ -46,13 +46,13 @@
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="bottom" secondItem="pPf-C2-7hh" secondAttribute="bottom" constant="10" id="DUP-rf-wty"/>
-                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="a57-cp-SrH" secondAttribute="bottom" constant="10" id="Ngr-PI-T75"/>
+                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="a57-cp-SrH" secondAttribute="bottom" constant="5" id="Ngr-PI-T75"/>
                     <constraint firstItem="a57-cp-SrH" firstAttribute="leading" secondItem="vDv-Vd-ohT" secondAttribute="leading" constant="24" id="Ray-Vw-t0E"/>
+                    <constraint firstAttribute="trailing" secondItem="MgZ-3F-8mL" secondAttribute="trailing" constant="15" id="Ubu-Pb-4B1"/>
                     <constraint firstItem="pPf-C2-7hh" firstAttribute="top" secondItem="vDv-Vd-ohT" secondAttribute="top" constant="24" id="WBc-8U-aDc"/>
                     <constraint firstItem="a57-cp-SrH" firstAttribute="top" secondItem="vDv-Vd-ohT" secondAttribute="top" constant="24" id="YkK-Hf-muO"/>
                     <constraint firstItem="MgZ-3F-8mL" firstAttribute="top" secondItem="vDv-Vd-ohT" secondAttribute="top" constant="24" id="bPo-8T-nSp"/>
                     <constraint firstItem="pPf-C2-7hh" firstAttribute="leading" secondItem="a57-cp-SrH" secondAttribute="trailing" constant="24" id="kaW-fO-eZY"/>
-                    <constraint firstItem="MgZ-3F-8mL" firstAttribute="leading" secondItem="pPf-C2-7hh" secondAttribute="trailing" constant="30" id="pWr-1c-Jhp"/>
                     <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="MgZ-3F-8mL" secondAttribute="bottom" constant="5" id="vuv-Te-gAW"/>
                 </constraints>
             </tableViewCellContentView>
