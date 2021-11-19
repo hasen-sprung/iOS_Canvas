@@ -23,6 +23,7 @@ class ListTableViewController: UIViewController, UITableViewDelegate, UITableVie
     // MARK: - record parsing properties
     private var recordsByDate = [[Record]]()
     private var dateSections = [String]()
+    private var onlyDateStr = [String]()
 
     // MARK: - Calendar Creation properties
     let now = Date()
@@ -78,12 +79,12 @@ class ListTableViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     
     @objc func dateFWButtonPressed() {
-        components.month = (components.month ?? 0) + 1
+        components.month = (components.month ?? 1) + 1
         reloadCalendar()
     }
     
     @objc func dateBWButtonPressed() {
-        components.month = (components.month ?? 0) - 1
+        components.month = (components.month ?? 1) - 1
         reloadCalendar()
     }
     
@@ -92,7 +93,7 @@ class ListTableViewController: UIViewController, UITableViewDelegate, UITableVie
         calendarView.reloadData()
         dateFWButton.isEnabled = false
         dateBWButton.isEnabled = false
-        UIView.animate(withDuration: 0.1, delay: 0.0, options: [.curveEaseOut], animations: { [self] in
+        UIView.animate(withDuration: 0.2, delay: 0.0, options: [.curveEaseOut], animations: { [self] in
             listTableView.frame.origin.y = view.frame.height / 6 + 2 + view.frame.width / 5 + calendarView.collectionViewLayout.collectionViewContentSize.height
         }) { (completed) in
             self.dateFWButton.isEnabled = true
@@ -126,12 +127,19 @@ class ListTableViewController: UIViewController, UITableViewDelegate, UITableVie
 }
 
 // MARK: - calculate calendar
-extension ListTableViewController {
+extension ListTableViewController: CalendarCollectionViewCellDelegate {
+    func isCellPressed(sectionStr: String) {
+        searchDateButtonPressed()
+        DispatchQueue.main.async {
+            let indexPath = IndexPath(row: 0, section: self.dateSections.firstIndex(of: sectionStr) ?? 0)
+           self.listTableView.scrollToRow(at: indexPath, at: .top, animated: true)
+        }
+    }
     
     private func calendarCalculation() {
         let firstDayOfMonth = cal.date(from: components)
         let firstWeekday = cal.component(.weekday, from: firstDayOfMonth ?? Date())
-        
+    
         daysCountInMonth = cal.range(of: .day, in: .month, for: firstDayOfMonth ?? Date())?.count ?? 0
         weekdayAdding = 2 - firstWeekday
         calendarDateLabel.text  = dateFormatter.string(from: firstDayOfMonth ?? Date())
@@ -180,11 +188,21 @@ extension ListTableViewController: UICollectionViewDelegateFlowLayout, UICollect
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "calendarCell", for: indexPath) as? CalendarCollectionViewCell
         
+        cell?.dateDot.alpha = 0.0
+        cell?.cellDateStr = nil
+        cell?.isUserInteractionEnabled = false
+        cell?.delegate = self
         switch indexPath.section {
         case 0:
             cell?.dateLabel.text = weeks[indexPath.row]
         default:
             cell?.dateLabel.text = days[indexPath.row]
+            let cellDate = String(components.month ?? 1) + " / " + days[indexPath.row]
+            if let idx = onlyDateStr.firstIndex(of: cellDate) {
+                cell?.dateDot.alpha = 1.0
+                cell?.isUserInteractionEnabled = true
+                cell?.cellDateStr = dateSections[idx]
+            }
         }
         if indexPath.row % 7 == 0 {
             cell?.dateLabel.textColor = .black
@@ -256,6 +274,7 @@ extension ListTableViewController {
                 tempRecords.append(r)
             } else {
                 dateSections.append(dateString)
+                onlyDateStr.append(getOnlyDate(date: date))
                 if tempRecords.count > 0 {
                     recordsByDate.append(tempRecords)
                     tempRecords = [Record]()
@@ -274,6 +293,15 @@ extension ListTableViewController {
         df.locale = Locale(identifier:"ko_KR")
         let dateString = df.string(from: date)
         return dateString + "   " + date.dayOfWeek
+    }
+    
+    private func getOnlyDate(date: Date) -> String {
+        let df = DateFormatter()
+        
+        df.dateFormat = "M / d"
+        df.locale = Locale(identifier:"ko_KR")
+        let dateString = df.string(from: date)
+        return dateString
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
