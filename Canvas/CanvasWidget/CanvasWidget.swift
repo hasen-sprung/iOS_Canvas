@@ -56,7 +56,7 @@ struct CanvasWidgetEntryView : View {
     
     var body: some View {
         VStack {
-            Text("Item count: \(itemsCount)")
+            Text("Item count: \(itemsCounts)")
             ShapeView(level: 20)
         }
     }

@@ -1,4 +1,5 @@
 import UIKit
+import WidgetKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
@@ -21,5 +22,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     func sceneDidEnterBackground(_ scene: UIScene) {
         CoreDataStack.shared.saveContext()
+        WidgetCenter.shared.reloadAllTimelines()
     }
 }
