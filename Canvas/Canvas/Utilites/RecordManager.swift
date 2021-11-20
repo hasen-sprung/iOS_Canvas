@@ -1,16 +1,15 @@
 import UIKit
 import CoreData
 
+// MARK: - TODO: Delete Manager
+
 class RecordManager {
     private var context: NSManagedObjectContext?
     private let dateFormat = DateFormatter()
     static let shared = RecordManager()
     
     private init() {
-        print("record init")
-        if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
-            context = appDelegate.persistentContainer.viewContext
-        }
+        context = CoreDataStack.shared.managedObjectContext
     }
     
     func getMatchingRecords(currentDate: Date = DateManager.shared.getCurrentDate(),
