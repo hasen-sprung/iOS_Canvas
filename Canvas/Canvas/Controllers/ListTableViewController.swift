@@ -108,14 +108,12 @@ class ListTableViewController: UIViewController, UITableViewDelegate, UITableVie
     
     private func setSectionAndRecords() {
         var rawRecords: [Record]?
+        let context = CoreDataStack.shared.managedObjectContext
+        let request = Record.fetchRequest()
         
-        if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
-            let context = appDelegate.persistentContainer.viewContext
-            let request = Record.fetchRequest()
-            do { rawRecords = try context.fetch(request) } catch { print("context Error") }
-            rawRecords?.sort(by: {$0.createdDate?.timeIntervalSinceNow ?? Date().timeIntervalSinceNow > $1.createdDate?.timeIntervalSinceNow ?? Date().timeIntervalSinceNow})
-            setDateSections(sortedRecords: rawRecords ?? [Record]())
-        }
+        do { rawRecords = try context.fetch(request) } catch { print("context Error") }
+        rawRecords?.sort(by: {$0.createdDate?.timeIntervalSinceNow ?? Date().timeIntervalSinceNow > $1.createdDate?.timeIntervalSinceNow ?? Date().timeIntervalSinceNow})
+        setDateSections(sortedRecords: rawRecords ?? [Record]())
     }
     
     private func initCalendar() {

@@ -28,3 +28,8 @@ extension UIViewController {
         present(customVcTransition, animated: false, completion: nil)
     }
 }
+
+extension FileManager {
+    static let appGroupContainerURL = FileManager.default
+        .containerURL(forSecurityApplicationGroupIdentifier: "group.com.hasensprung.Canvas")!
+}

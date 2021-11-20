@@ -2,11 +2,10 @@ import UIKit
 import CoreData
 
 class DataHelper {
-    private let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    private let context = CoreDataStack.shared.managedObjectContext
     
     func loadSeeder() {
-    
-        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+        let context = CoreDataStack.shared.managedObjectContext
         let recordsRequest = Record.fetchRequest()
         let recordCount = try! context.fetch(recordsRequest)
         
@@ -63,6 +62,6 @@ class DataHelper {
             newRecord.gaugeLevel = Int16.random(in: 0...100)
             newRecord.memo = texts[Int.random(in: 0 ..< texts.count)]
         }
-        (UIApplication.shared.delegate as! AppDelegate).saveContext()
+        CoreDataStack.shared.saveContext()
     }
 }

@@ -13,6 +13,18 @@
 		3549F2672740EE7F00C1589A /* GaugeWaveAnimationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3549F2662740EE7F00C1589A /* GaugeWaveAnimationView.swift */; };
 		355B49CB27462DA000A764B2 /* MainRecordsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355B49CA27462DA000A764B2 /* MainRecordsView.swift */; };
 		358BD48B274194C100ACE0E7 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 358BD48A274194C100ACE0E7 /* Constants.swift */; };
+		35CC3F2E2747CE4D0059707A /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 35CC3F2D2747CE4D0059707A /* WidgetKit.framework */; };
+		35CC3F302747CE4D0059707A /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 35CC3F2F2747CE4D0059707A /* SwiftUI.framework */; };
+		35CC3F332747CE4D0059707A /* CanvasWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35CC3F322747CE4D0059707A /* CanvasWidget.swift */; };
+		35CC3F352747CE4E0059707A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 35CC3F342747CE4E0059707A /* Assets.xcassets */; };
+		35CC3F392747CE4E0059707A /* CanvasWidgetExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 35CC3F2B2747CE4D0059707A /* CanvasWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		35CC3F3E2747CE740059707A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4F0A39E0273BC853009E3AAF /* Assets.xcassets */; };
+		35CC3F3F2747CE880059707A /* ThemeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0A39F5273BCFC5009E3AAF /* ThemeManager.swift */; };
+		35CC3F402747CE8B0059707A /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0A39FB27424C74009E3AAF /* Color.swift */; };
+		35CC3F412747D2830059707A /* Canvas.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4F0A39DD273BC852009E3AAF /* Canvas.xcdatamodeld */; };
+		35E81B492748EEAB0025E506 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0A39FF27425E90009E3AAF /* Extension.swift */; };
+		35E81B4A2748EEF70025E506 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 358CF23A2748E13600D7EEDD /* CoreDataStack.swift */; };
+		35E81B4B2748F3B70025E506 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 358CF23A2748E13600D7EEDD /* CoreDataStack.swift */; };
 		4F0590AE2745193000C4DF41 /* ListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0590AD2745193000C4DF41 /* ListTableViewController.swift */; };
 		4F0590B227461E7300C4DF41 /* ListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0590B127461E7300C4DF41 /* ListTableViewCell.swift */; };
 		4F0590B427462FD800C4DF41 /* ListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4F0590B327462FD800C4DF41 /* ListTableViewCell.xib */; };
@@ -35,12 +47,45 @@
 		4F0A3A0027425E90009E3AAF /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0A39FF27425E90009E3AAF /* Extension.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		35CC3F372747CE4E0059707A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4F0A39C9273BC852009E3AAF /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 35CC3F2A2747CE4D0059707A;
+			remoteInfo = CanvasWidgetExtension;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		35CC3F3A2747CE4E0059707A /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				35CC3F392747CE4E0059707A /* CanvasWidgetExtension.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		3549F2602740D53600C1589A /* WaveAnimationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaveAnimationView.swift; sourceTree = "<group>"; };
 		3549F2622740D6A800C1589A /* GaugeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GaugeViewController.swift; sourceTree = "<group>"; };
 		3549F2662740EE7F00C1589A /* GaugeWaveAnimationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GaugeWaveAnimationView.swift; sourceTree = "<group>"; };
 		355B49CA27462DA000A764B2 /* MainRecordsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainRecordsView.swift; sourceTree = "<group>"; };
 		358BD48A274194C100ACE0E7 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		358CF23A2748E13600D7EEDD /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
+		35CC3F2B2747CE4D0059707A /* CanvasWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = CanvasWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		35CC3F2D2747CE4D0059707A /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		35CC3F2F2747CE4D0059707A /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		35CC3F322747CE4D0059707A /* CanvasWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasWidget.swift; sourceTree = "<group>"; };
+		35CC3F342747CE4E0059707A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		35CC3F362747CE4E0059707A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		35CC3F432748C64F0059707A /* Canvas.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Canvas.entitlements; sourceTree = "<group>"; };
+		35CC3F442748CB980059707A /* CanvasWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CanvasWidgetExtension.entitlements; sourceTree = "<group>"; };
 		4F0590AD2745193000C4DF41 /* ListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTableViewController.swift; sourceTree = "<group>"; };
 		4F0590B127461E7300C4DF41 /* ListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTableViewCell.swift; sourceTree = "<group>"; };
 		4F0590B327462FD800C4DF41 /* ListTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ListTableViewCell.xib; sourceTree = "<group>"; };
@@ -66,6 +111,15 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		35CC3F282747CE4D0059707A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				35CC3F302747CE4D0059707A /* SwiftUI.framework in Frameworks */,
+				35CC3F2E2747CE4D0059707A /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		4F0A39CE273BC852009E3AAF /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -77,10 +131,32 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		35CC3F2C2747CE4D0059707A /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				35CC3F2D2747CE4D0059707A /* WidgetKit.framework */,
+				35CC3F2F2747CE4D0059707A /* SwiftUI.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		35CC3F312747CE4D0059707A /* CanvasWidget */ = {
+			isa = PBXGroup;
+			children = (
+				35CC3F322747CE4D0059707A /* CanvasWidget.swift */,
+				35CC3F342747CE4E0059707A /* Assets.xcassets */,
+				35CC3F362747CE4E0059707A /* Info.plist */,
+			);
+			path = CanvasWidget;
+			sourceTree = "<group>";
+		};
 		4F0A39C8273BC852009E3AAF = {
 			isa = PBXGroup;
 			children = (
+				35CC3F442748CB980059707A /* CanvasWidgetExtension.entitlements */,
 				4F0A39D3273BC852009E3AAF /* Canvas */,
+				35CC3F312747CE4D0059707A /* CanvasWidget */,
+				35CC3F2C2747CE4D0059707A /* Frameworks */,
 				4F0A39D2273BC852009E3AAF /* Products */,
 			);
 			sourceTree = "<group>";
@@ -89,6 +165,7 @@
 			isa = PBXGroup;
 			children = (
 				4F0A39D1273BC852009E3AAF /* Canvas.app */,
+				35CC3F2B2747CE4D0059707A /* CanvasWidgetExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -96,6 +173,7 @@
 		4F0A39D3273BC852009E3AAF /* Canvas */ = {
 			isa = PBXGroup;
 			children = (
+				35CC3F432748C64F0059707A /* Canvas.entitlements */,
 				4F0A39D6273BC852009E3AAF /* SceneDelegate.swift */,
 				4F0A39D4273BC852009E3AAF /* AppDelegate.swift */,
 				4F0A39EE273BCA31009E3AAF /* Utilites */,
@@ -112,6 +190,7 @@
 		4F0A39EB273BC892009E3AAF /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				358CF23A2748E13600D7EEDD /* CoreDataStack.swift */,
 				4F0A39DD273BC852009E3AAF /* Canvas.xcdatamodeld */,
 				4F0A39F7273BDECB009E3AAF /* DataHelper.swift */,
 			);
@@ -161,6 +240,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		35CC3F2A2747CE4D0059707A /* CanvasWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 35CC3F3D2747CE4E0059707A /* Build configuration list for PBXNativeTarget "CanvasWidgetExtension" */;
+			buildPhases = (
+				35CC3F272747CE4D0059707A /* Sources */,
+				35CC3F282747CE4D0059707A /* Frameworks */,
+				35CC3F292747CE4D0059707A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CanvasWidgetExtension;
+			productName = CanvasWidgetExtension;
+			productReference = 35CC3F2B2747CE4D0059707A /* CanvasWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		4F0A39D0273BC852009E3AAF /* Canvas */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4F0A39E8273BC853009E3AAF /* Build configuration list for PBXNativeTarget "Canvas" */;
@@ -168,10 +264,12 @@
 				4F0A39CD273BC852009E3AAF /* Sources */,
 				4F0A39CE273BC852009E3AAF /* Frameworks */,
 				4F0A39CF273BC852009E3AAF /* Resources */,
+				35CC3F3A2747CE4E0059707A /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				35CC3F382747CE4E0059707A /* PBXTargetDependency */,
 			);
 			name = Canvas;
 			packageProductDependencies = (
@@ -191,6 +289,9 @@
 				LastSwiftUpdateCheck = 1310;
 				LastUpgradeCheck = 1310;
 				TargetAttributes = {
+					35CC3F2A2747CE4D0059707A = {
+						CreatedOnToolsVersion = 13.1;
+					};
 					4F0A39D0273BC852009E3AAF = {
 						CreatedOnToolsVersion = 13.1;
 					};
@@ -213,11 +314,21 @@
 			projectRoot = "";
 			targets = (
 				4F0A39D0273BC852009E3AAF /* Canvas */,
+				35CC3F2A2747CE4D0059707A /* CanvasWidgetExtension */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		35CC3F292747CE4D0059707A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				35CC3F3E2747CE740059707A /* Assets.xcassets in Resources */,
+				35CC3F352747CE4E0059707A /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		4F0A39CF273BC852009E3AAF /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -233,6 +344,19 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		35CC3F272747CE4D0059707A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				35CC3F332747CE4D0059707A /* CanvasWidget.swift in Sources */,
+				35E81B492748EEAB0025E506 /* Extension.swift in Sources */,
+				35CC3F3F2747CE880059707A /* ThemeManager.swift in Sources */,
+				35E81B4B2748F3B70025E506 /* CoreDataStack.swift in Sources */,
+				35CC3F402747CE8B0059707A /* Color.swift in Sources */,
+				35CC3F412747D2830059707A /* Canvas.xcdatamodeld in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		4F0A39CD273BC852009E3AAF /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -253,6 +377,7 @@
 				4F0A39FE27425C39009E3AAF /* CreateRecordView.swift in Sources */,
 				4F0590BA274772FF00C4DF41 /* CalendarCollectionViewCell.swift in Sources */,
 				4F0A39FC27424C75009E3AAF /* Color.swift in Sources */,
+				35E81B4A2748EEF70025E506 /* CoreDataStack.swift in Sources */,
 				3549F2632740D6A800C1589A /* GaugeViewController.swift in Sources */,
 				4F0A39DF273BC852009E3AAF /* Canvas.xcdatamodeld in Sources */,
 				3549F2672740EE7F00C1589A /* GaugeWaveAnimationView.swift in Sources */,
@@ -261,6 +386,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		35CC3F382747CE4E0059707A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 35CC3F2A2747CE4D0059707A /* CanvasWidgetExtension */;
+			targetProxy = 35CC3F372747CE4E0059707A /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		4F0A39DA273BC852009E3AAF /* Main.storyboard */ = {
@@ -282,6 +415,62 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		35CC3F3B2747CE4E0059707A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = CanvasWidgetExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 8QSTXVD8H9;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = CanvasWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = CanvasWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.hasensprung.Canvas.CanvasWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		35CC3F3C2747CE4E0059707A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = CanvasWidgetExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 8QSTXVD8H9;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = CanvasWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = CanvasWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.hasensprung.Canvas.CanvasWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		4F0A39E6273BC853009E3AAF /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -401,8 +590,10 @@
 		4F0A39E9273BC853009E3AAF /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Canvas/Canvas.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 8QSTXVD8H9;
@@ -430,8 +621,10 @@
 		4F0A39EA273BC853009E3AAF /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Canvas/Canvas.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 8QSTXVD8H9;
@@ -459,6 +652,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		35CC3F3D2747CE4E0059707A /* Build configuration list for PBXNativeTarget "CanvasWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				35CC3F3B2747CE4E0059707A /* Debug */,
+				35CC3F3C2747CE4E0059707A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
 		4F0A39CC273BC852009E3AAF /* Build configuration list for PBXProject "Canvas" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -466,7 +668,7 @@
 				4F0A39E7273BC853009E3AAF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		4F0A39E8273BC853009E3AAF /* Build configuration list for PBXNativeTarget "Canvas" */ = {
 			isa = XCConfigurationList;
@@ -475,7 +677,7 @@
 				4F0A39EA273BC853009E3AAF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
 
