@@ -3,7 +3,6 @@ import SwiftUI
 import CoreData
 
 struct Provider: TimelineProvider {
-    
     func placeholder(in context: Context) -> SimpleEntry {
         SimpleEntry(date: Date())
     }
@@ -45,7 +44,9 @@ struct ShapeView: View {
     var body: some View {
         if let image = image {
             Image(uiImage: image)
+                .resizable()
                 .renderingMode(.template)
+                .frame(width: .infinity, height: .infinity, alignment: .center)
                 .foregroundColor(color)
         }
     }
@@ -55,23 +56,25 @@ struct CanvasWidgetEntryView : View {
     var entry: Provider.Entry
     
     var body: some View {
-        VStack {
-            Text("Item count: \(itemsCounts)")
-            ShapeView(level: 20)
+        ZStack{
+            Color(uiColor: canvasColor).edgesIgnoringSafeArea(.all)
+                .cornerRadius(15)
+            GeometryReader { geometry in
+                ForEach(0 ..< getIndex(recordNum: records.count)) { index in
+                    let record = records[index]
+                    
+                    // MARK: - TODO: offset x: record.x y: record.y
+                    ShapeView(level: Int(record.gaugeLevel))
+                        .offset(x: CGFloat.random(in: geometry.size.width * 0.1...geometry.size.width * 0.9), y: CGFloat.random(in: geometry.size.height*0.1...geometry.size.height*0.9))
+                        .frame(width: geometry.size.width / 7, height: geometry.size.height / 7, alignment: .center)
+                }
+            }
         }
+        .padding(10)
+        .background(Color(uiColor: bgColor))
     }
     
-    var itemsCount: Int {
-        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Record")
-        do {
-            return try CoreDataStack.shared.managedObjectContext.count(for: request)
-        } catch {
-            print(error.localizedDescription)
-            return 0
-        }
-    }
-    
-    var itemsCounts: Int {
+    var records: [Record] {
         let context = CoreDataStack.shared.managedObjectContext
         let request = Record.fetchRequest()
         var records: [Record] = [Record]()
@@ -79,7 +82,15 @@ struct CanvasWidgetEntryView : View {
         do {
             records = try context.fetch(request)
         } catch { print("context Error") }
-        return records.count
+        return records
+    }
+    
+    private func getIndex(recordNum: Int) -> Int {
+        if recordNum < 10 {
+            return recordNum
+        } else {
+            return 10
+        }
     }
 }
 
@@ -93,6 +104,7 @@ struct CanvasWidget: Widget {
         }
         .configurationDisplayName("Canvas")
         .description("Create your own Canvas!")
+        .supportedFamilies([.systemSmall, .systemLarge])
     }
 }
 

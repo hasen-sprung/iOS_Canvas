@@ -25,7 +25,7 @@ extension CoreDataStack {
     var managedObjectContext: NSManagedObjectContext {
         persistentContainer.viewContext
     }
-
+    
     func saveContext() {
         managedObjectContext.performAndWait {
             if managedObjectContext.hasChanges {
