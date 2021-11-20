@@ -370,11 +370,11 @@ extension ListTableViewController {
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
-                let context = appDelegate.persistentContainer.viewContext
-                context.delete(recordsByDate[indexPath.section][indexPath.row])
-                appDelegate.saveContext()
-            }
+            
+            let context = CoreDataStack.shared.managedObjectContext
+            context.delete(recordsByDate[indexPath.section][indexPath.row])
+            CoreDataStack.shared.saveContext()
+            
             recordsByDate[indexPath.section].remove(at: indexPath.row)
             listTableView.deleteRows(at: [indexPath], with: .fade)
             if recordsByDate[indexPath.section].count == 0 {
