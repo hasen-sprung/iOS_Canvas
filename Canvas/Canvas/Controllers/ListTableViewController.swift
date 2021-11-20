@@ -19,12 +19,13 @@ class ListTableViewController: UIViewController, UITableViewDelegate, UITableVie
     private var searchDateButtonTag = false
     @IBOutlet weak var backButton: UIButton!
     private let backButtonIcon = UIImageView()
+    private let emptyMessage = UILabel()
     
     // MARK: - record parsing properties
     private var recordsByDate = [[Record]]()
     private var dateSections = [String]()
     private var onlyDateStr = [String]()
-
+    
     // MARK: - Calendar Creation properties
     let now = Date()
     var cal = Calendar.current
@@ -49,6 +50,8 @@ class ListTableViewController: UIViewController, UITableViewDelegate, UITableVie
         setSearchButton()
         initCalendar()
         view.bringSubviewToFront(listTableView)
+        setEmptyMessage()
+        showEmptyMessage()
     }
     
     @objc func backButtonPressed() {
@@ -126,6 +129,23 @@ class ListTableViewController: UIViewController, UITableViewDelegate, UITableVie
         components.day = 1
         calendarCalculation()
     }
+    
+    private func setEmptyMessage() {
+        emptyMessage.alpha = 0.0
+        emptyMessage.text = "당신의 순간을 기록해보세요 :)"
+        emptyMessage.textColor = UIColor(r: 202, g: 202, b: 202)
+        emptyMessage.frame.size = CGSize(width: emptyMessage.intrinsicContentSize.width,
+                                         height: emptyMessage.intrinsicContentSize.height)
+        emptyMessage.center = CGPoint(x: listTableView.frame.width / 2,
+                                      y: listTableView.frame.height * 0.1)
+        listTableView.addSubview(emptyMessage)
+    }
+    
+    private func showEmptyMessage() {
+        if recordsByDate.count == 0 {
+            emptyMessage.fadeIn()
+        }
+    }
 }
 
 // MARK: - calculate calendar
@@ -134,14 +154,14 @@ extension ListTableViewController: CalendarCollectionViewCellDelegate {
         searchDateButtonPressed()
         DispatchQueue.main.async {
             let indexPath = IndexPath(row: 0, section: self.dateSections.firstIndex(of: sectionStr) ?? 0)
-           self.listTableView.scrollToRow(at: indexPath, at: .top, animated: true)
+            self.listTableView.scrollToRow(at: indexPath, at: .top, animated: true)
         }
     }
     
     private func calendarCalculation() {
         let firstDayOfMonth = cal.date(from: components)
         let firstWeekday = cal.component(.weekday, from: firstDayOfMonth ?? Date())
-    
+        
         daysCountInMonth = cal.range(of: .day, in: .month, for: firstDayOfMonth ?? Date())?.count ?? 0
         weekdayAdding = 2 - firstWeekday
         calendarDateLabel.text  = dateFormatter.string(from: firstDayOfMonth ?? Date())
@@ -199,7 +219,7 @@ extension ListTableViewController: UICollectionViewDelegateFlowLayout, UICollect
             cell?.dateLabel.text = weeks[indexPath.row]
         default:
             cell?.dateLabel.text = days[indexPath.row]
-            let cellDate = String(components.month ?? 1) + " / " + days[indexPath.row]
+            let cellDate = String(components.year ?? 2000) + ". " + String(components.month ?? 1) + ". " + days[indexPath.row]
             if let idx = onlyDateStr.firstIndex(of: cellDate) {
                 cell?.dateDot.alpha = 1.0
                 cell?.isUserInteractionEnabled = true
@@ -284,14 +304,16 @@ extension ListTableViewController {
                 tempRecords.append(r)
             }
         }
-        recordsByDate.append(tempRecords)
+        if sortedRecords.count > 0 {
+            recordsByDate.append(tempRecords)
+        }
         tempRecords.removeAll()
     }
     
     private func getSectionDateStr(date: Date) -> String {
         let df = DateFormatter()
         
-        df.dateFormat = "M / d"
+        df.dateFormat = "yyyy. M. d"
         df.locale = Locale(identifier:"ko_KR")
         let dateString = df.string(from: date)
         return dateString + "   " + date.dayOfWeek
@@ -300,15 +322,16 @@ extension ListTableViewController {
     private func getOnlyDate(date: Date) -> String {
         let df = DateFormatter()
         
-        df.dateFormat = "M / d"
+        df.dateFormat = "yyyy. M. d"
         df.locale = Locale(identifier:"ko_KR")
         let dateString = df.string(from: date)
         return dateString
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return dateSections.count
+        return recordsByDate.count
     }
+    
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return dateSections[section]
@@ -346,6 +369,29 @@ extension ListTableViewController {
         header?.textLabel?.textColor = UIColor.black
         header?.contentView.backgroundColor = UIColor(r: 240, g: 240, b: 243)
     }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
+                let context = appDelegate.persistentContainer.viewContext
+                context.delete(recordsByDate[indexPath.section][indexPath.row])
+                appDelegate.saveContext()
+            }
+            recordsByDate[indexPath.section].remove(at: indexPath.row)
+            listTableView.deleteRows(at: [indexPath], with: .fade)
+            if recordsByDate[indexPath.section].count == 0 {
+                recordsByDate.remove(at: indexPath.section)
+                dateSections.remove(at: indexPath.section)
+                onlyDateStr.remove(at: indexPath.section)
+                listTableView.deleteSections([indexPath.section], with: .fade)
+                showEmptyMessage()
+                calendarCalculation()
+                calendarView.reloadData()
+            }
+        }
+    }
+    
+    
 }
 
 // MARK: - Set List Table View
@@ -391,13 +437,13 @@ extension ListTableViewController {
     
     private func setSearchButtonConstraints() {
         searchDateButton.frame.size = CGSize(width: searchDateButton.intrinsicContentSize.width + view.frame.width / 10,
-                                         height: view.frame.width / 10)
+                                             height: view.frame.width / 10)
         searchDateButton.center = CGPoint(x: view.frame.width / 2,
-                                      y: view.frame.height * 0.11)
+                                          y: view.frame.height * 0.11)
         searchDateButtonIcon.frame.size = CGSize(width: view.frame.width / 10 * 0.5,
-                                             height: view.frame.width / 10 * 0.5)
+                                                 height: view.frame.width / 10 * 0.5)
         searchDateButtonIcon.center = CGPoint(x: searchDateButton.center.x + (searchDateButton.frame.width / 2) - (searchDateButtonIcon.frame.size.width),
-                                          y: searchDateButton.center.y)
+                                              y: searchDateButton.center.y)
         view.addSubview(searchDateButtonIcon)
     }
     

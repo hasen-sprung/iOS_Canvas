@@ -128,7 +128,7 @@ extension MainRecordsView {
         
         shapeImage.frame = CGRect(origin: .zero, size: CGSize(width: size, height: size))
         shapeImage.image = UIImage(named: name)?.withRenderingMode(.alwaysTemplate)
-        shapeImage.tintColor = .systemGray
+        shapeImage.tintColor = .white
         view.addSubview(shapeImage)
     }
 }
