@@ -1,8 +1,8 @@
 import WidgetKit
 import SwiftUI
+import CoreData
 
 struct Provider: TimelineProvider {
-    private var records = [Record]()
     
     func placeholder(in context: Context) -> SimpleEntry {
         SimpleEntry(date: Date())
@@ -56,11 +56,30 @@ struct CanvasWidgetEntryView : View {
     
     var body: some View {
         VStack {
+            Text("Item count: \(itemsCount)")
             ShapeView(level: 20)
-            ShapeView(level: 30)
-            ShapeView(level: 40)
-            ShapeView(level: 50)
         }
+    }
+    
+    var itemsCount: Int {
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Record")
+        do {
+            return try CoreDataStack.shared.managedObjectContext.count(for: request)
+        } catch {
+            print(error.localizedDescription)
+            return 0
+        }
+    }
+    
+    var itemsCounts: Int {
+        let context = CoreDataStack.shared.managedObjectContext
+        let request = Record.fetchRequest()
+        var records: [Record] = [Record]()
+        
+        do {
+            records = try context.fetch(request)
+        } catch { print("context Error") }
+        return records.count
     }
 }
 

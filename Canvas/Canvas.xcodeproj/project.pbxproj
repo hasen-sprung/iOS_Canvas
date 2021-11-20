@@ -13,8 +13,6 @@
 		3549F2672740EE7F00C1589A /* GaugeWaveAnimationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3549F2662740EE7F00C1589A /* GaugeWaveAnimationView.swift */; };
 		355B49CB27462DA000A764B2 /* MainRecordsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355B49CA27462DA000A764B2 /* MainRecordsView.swift */; };
 		358BD48B274194C100ACE0E7 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 358BD48A274194C100ACE0E7 /* Constants.swift */; };
-		358CF2382748D81F00D7EEDD /* AppGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 358CF2372748D81F00D7EEDD /* AppGroup.swift */; };
-		358CF2392748DBE500D7EEDD /* AppGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 358CF2372748D81F00D7EEDD /* AppGroup.swift */; };
 		35CC3F2E2747CE4D0059707A /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 35CC3F2D2747CE4D0059707A /* WidgetKit.framework */; };
 		35CC3F302747CE4D0059707A /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 35CC3F2F2747CE4D0059707A /* SwiftUI.framework */; };
 		35CC3F332747CE4D0059707A /* CanvasWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35CC3F322747CE4D0059707A /* CanvasWidget.swift */; };
@@ -24,6 +22,9 @@
 		35CC3F3F2747CE880059707A /* ThemeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0A39F5273BCFC5009E3AAF /* ThemeManager.swift */; };
 		35CC3F402747CE8B0059707A /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0A39FB27424C74009E3AAF /* Color.swift */; };
 		35CC3F412747D2830059707A /* Canvas.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4F0A39DD273BC852009E3AAF /* Canvas.xcdatamodeld */; };
+		35E81B492748EEAB0025E506 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0A39FF27425E90009E3AAF /* Extension.swift */; };
+		35E81B4A2748EEF70025E506 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 358CF23A2748E13600D7EEDD /* CoreDataStack.swift */; };
+		35E81B4B2748F3B70025E506 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 358CF23A2748E13600D7EEDD /* CoreDataStack.swift */; };
 		4F0590AE2745193000C4DF41 /* ListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0590AD2745193000C4DF41 /* ListTableViewController.swift */; };
 		4F0590B227461E7300C4DF41 /* ListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0590B127461E7300C4DF41 /* ListTableViewCell.swift */; };
 		4F0590B427462FD800C4DF41 /* ListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4F0590B327462FD800C4DF41 /* ListTableViewCell.xib */; };
@@ -74,7 +75,7 @@
 		3549F2662740EE7F00C1589A /* GaugeWaveAnimationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GaugeWaveAnimationView.swift; sourceTree = "<group>"; };
 		355B49CA27462DA000A764B2 /* MainRecordsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainRecordsView.swift; sourceTree = "<group>"; };
 		358BD48A274194C100ACE0E7 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
-		358CF2372748D81F00D7EEDD /* AppGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppGroup.swift; sourceTree = "<group>"; };
+		358CF23A2748E13600D7EEDD /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
 		35CC3F2B2747CE4D0059707A /* CanvasWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = CanvasWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		35CC3F2D2747CE4D0059707A /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		35CC3F2F2747CE4D0059707A /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
@@ -171,7 +172,6 @@
 				35CC3F432748C64F0059707A /* Canvas.entitlements */,
 				4F0A39D6273BC852009E3AAF /* SceneDelegate.swift */,
 				4F0A39D4273BC852009E3AAF /* AppDelegate.swift */,
-				358CF2372748D81F00D7EEDD /* AppGroup.swift */,
 				4F0A39EE273BCA31009E3AAF /* Utilites */,
 				4F0A39EB273BC892009E3AAF /* Model */,
 				4F0A39EC273BC89C009E3AAF /* Views */,
@@ -186,6 +186,7 @@
 		4F0A39EB273BC892009E3AAF /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				358CF23A2748E13600D7EEDD /* CoreDataStack.swift */,
 				4F0A39DD273BC852009E3AAF /* Canvas.xcdatamodeld */,
 				4F0A39F7273BDECB009E3AAF /* DataHelper.swift */,
 			);
@@ -340,9 +341,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				358CF2392748DBE500D7EEDD /* AppGroup.swift in Sources */,
 				35CC3F332747CE4D0059707A /* CanvasWidget.swift in Sources */,
+				35E81B492748EEAB0025E506 /* Extension.swift in Sources */,
 				35CC3F3F2747CE880059707A /* ThemeManager.swift in Sources */,
+				35E81B4B2748F3B70025E506 /* CoreDataStack.swift in Sources */,
 				35CC3F402747CE8B0059707A /* Color.swift in Sources */,
 				35CC3F412747D2830059707A /* Canvas.xcdatamodeld in Sources */,
 			);
@@ -367,7 +369,7 @@
 				355B49CB27462DA000A764B2 /* MainRecordsView.swift in Sources */,
 				4F0A39FE27425C39009E3AAF /* CreateRecordView.swift in Sources */,
 				4F0A39FC27424C75009E3AAF /* Color.swift in Sources */,
-				358CF2382748D81F00D7EEDD /* AppGroup.swift in Sources */,
+				35E81B4A2748EEF70025E506 /* CoreDataStack.swift in Sources */,
 				3549F2632740D6A800C1589A /* GaugeViewController.swift in Sources */,
 				4F0A39DF273BC852009E3AAF /* Canvas.xcdatamodeld in Sources */,
 				3549F2672740EE7F00C1589A /* GaugeWaveAnimationView.swift in Sources */,
