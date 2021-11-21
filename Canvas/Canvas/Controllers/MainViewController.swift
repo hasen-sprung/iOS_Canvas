@@ -39,7 +39,6 @@ class MainViewController: UIViewController {
                 position.xRatio = Ratio.DefaultRatio[i].x
                 position.yRatio = Ratio.DefaultRatio[i].y
                 CoreDataStack.shared.saveContext()
-                print("set location \(i)")
             }
         }
     }
