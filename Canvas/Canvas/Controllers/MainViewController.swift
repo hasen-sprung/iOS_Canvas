@@ -345,7 +345,7 @@ extension MainViewController: MainRecordsViewDelegate {
         } else {
             detailView.frame = view.frame
             view.addSubview(detailView)
-//            detailView.memo.text
+            detailView.memo.text = "이곳에 랜덤한 설명이 들어갑니다."
         }
     }
     
