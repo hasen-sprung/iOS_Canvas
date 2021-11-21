@@ -65,12 +65,14 @@ extension GaugeViewController: GaugeWaveAnimationViewDelegate {
     }
     
     func cancelGaugeView() {
-        UIView.animate(withDuration: 1.0, delay: 0.0, options: [.curveEaseOut], animations: { [self] in
+        UIView.animate(withDuration: 0.75, delay: 0.0, options: [.curveEaseOut], animations: { [self] in
             cancelButton.alpha = 0.0
             gaugeWaveView.bounds.origin.y = gaugeWaveView.bounds.origin.y - view.frame.height
         }) { (completed) in
             self.dismiss(animated: false, completion: nil)
         }
+//        guard let nextVC = self.storyboard?.instantiateViewController(identifier: "MainViewController") as? MainViewController else { return }
+//        transitionVc(vc: nextVC, duration: 0.5, type: .fromBottom)
     }
     
     func createRecord() {
@@ -83,7 +85,7 @@ extension GaugeViewController: GaugeWaveAnimationViewDelegate {
             CRView.fadeIn()
             view.addSubview(CRView)
         }
-        UIView.animate(withDuration: 1.0, delay: 0.0, options: [.curveEaseOut], animations: { [self] in
+        UIView.animate(withDuration: 0.75, delay: 0.0, options: [.curveEaseOut], animations: { [self] in
             gaugeWaveView.bounds.origin.y = gaugeWaveView.bounds.origin.y - view.frame.height
         }) { (completed) in
             self.createRecordView?.setCRTextView()
@@ -129,7 +131,7 @@ extension GaugeViewController: CreateRecordViewDelegate {
     
     func dismissCreateRecordView() {
         createRecordView?.fadeOut()
-        UIView.animate(withDuration: 1.0, delay: 0.0, options: [.curveEaseOut], animations: { [self] in
+        UIView.animate(withDuration: 0.75, delay: 0.0, options: [.curveEaseOut], animations: { [self] in
             gaugeWaveView.bounds.origin.y = gaugeWaveView.bounds.origin.y + view.frame.height
         }) { (completed) in
             self.createRecordView?.removeFromSuperview()

@@ -63,6 +63,7 @@ class RecordDetailView: UIView {
                                    y: detailView.frame.height * 0.3)
         dateLabel.textAlignment = .center
         dateLabel.textColor = UIColor(r: 14, g: 15, b: 15)
+        dateLabel.font = UIFont(name: "Helvetica", size: 15)
         detailView.addSubview(dateLabel)
 
         memo.frame.size = CGSize(width: detailView.frame.width * 0.8,
@@ -71,6 +72,7 @@ class RecordDetailView: UIView {
                                    y: detailView.frame.height * 0.4)
         memo.textAlignment = .left
         memo.textColor = UIColor(r: 41, g: 46, b: 48)
+        memo.font = UIFont(name: "Helvetica", size: 15)
         detailView.addSubview(memo)
     }
     

@@ -426,7 +426,7 @@ extension ListTableViewController {
     }
     
     private func setSearchButtonUI() {
-        searchDateButton.setTitle("show Calendar", for: .normal)
+        searchDateButton.setTitle("Show Calendar", for: .normal)
         searchDateButton.setTitleColor(UIColor(r: 72, g: 80, b: 84), for: .normal)
         searchDateButton.setTitleColor(UIColor(r: 72, g: 80, b: 84), for: .highlighted)
         searchDateButton.setTitleColor(UIColor(r: 72, g: 80, b: 84), for: .disabled)
