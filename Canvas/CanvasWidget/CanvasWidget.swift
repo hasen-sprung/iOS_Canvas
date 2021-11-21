@@ -118,8 +118,8 @@ struct CanvasWidget: Widget {
         StaticConfiguration(kind: kind, provider: Provider()) { entry in
             CanvasWidgetEntryView(entry: entry)
         }
-        .configurationDisplayName("Canvas")
-        .description("Create your own Canvas!")
+        .configurationDisplayName(widgetDisplayName)
+        .description(widgetDescription)
         .supportedFamilies([.systemSmall, .systemLarge])
     }
 }
