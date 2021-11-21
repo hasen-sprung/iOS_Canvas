@@ -32,13 +32,13 @@ class MainInfoView: UIView {
     }
     
     private func setTitleLabelUI() {
-        canvasTitleLabel.text = UserDefaults.standard.string(forKey: "canvasTitle")
+        canvasTitleLabel.text = UserDefaults.standard.string(forKey: "canvasTitle") ?? "Canvas"
         canvasTitleLabel.font = UIFont(name: "Helvetica", size: 16)
         canvasTitleLabel.textColor = UIColor(r: 72, g: 80, b: 84)
     }
     
     private func setUserLabelUI() {
-        canvasUserLabel.text = UserDefaults.standard.string(forKey: "userID") ?? "User(1)"
+        canvasUserLabel.text = UserDefaults.standard.string(forKey: "userID") ?? "User"
         canvasUserLabel.font = UIFont(name: "Helvetica", size: 14)
         canvasUserLabel.textColor = UIColor(r: 103, g: 114, b: 120)
     }
@@ -56,7 +56,7 @@ class MainInfoView: UIView {
         }
         canvasDateLabel.text = "2021. 11. 01 ~ 2021. 11. 04"
         canvasDateLabel.font = UIFont(name: "Helvetica", size: 12)
-        canvasUserLabel.textColor = UIColor(r: 103, g: 114, b: 120)
+        canvasDateLabel.textColor = UIColor(r: 103, g: 114, b: 120)
     }
     
     func setInfoViewContentSize() {

@@ -30,17 +30,18 @@ class MainViewController: UIViewController {
             // TODO: - 처음 런치 했을 때, userID 입력하는 단계 필요
             UserDefaults.standard.set("User", forKey: "userID")
             UserDefaults.standard.set("Canvas", forKey: "canvasTitle")
+            UserDefaults.standard.synchronize()
         }
         setMainViewConstraints()
         setMainViewUI()
         setButtonsTarget()
         setRecordsViewInCanvas()
-        setInfoContentViewConstraints()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         updateContext()
         canvasRecordsView?.setRecordViews(records: records, theme: themeManager.getThemeInstance())
+        setInfoContentView()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -225,7 +226,7 @@ extension MainViewController: MainInfoViewDelegate {
         return ""
     }
     
-    func setInfoContentViewConstraints() {
+    func setInfoContentView() {
         
         infoContentView.frame.size = CGSize(width: infoView.frame.width * 0.8,
                                             height: infoView.frame.height * 0.7)
