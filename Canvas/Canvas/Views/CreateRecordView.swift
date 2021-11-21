@@ -35,6 +35,7 @@ class CreateRecordView: UIView {
     }
     
     func setCRTextView() {
+        CRTextView.textContainer.maximumNumberOfLines = 15
         CRTextView.frame.size = CGSize(width: CRBackgroundView.frame.width * 0.8,
                                        height: CRBackgroundView.frame.height * 0.6)
         CRTextView.center = CGPoint(x: CRBackgroundView.frame.width / 2,
@@ -42,9 +43,8 @@ class CreateRecordView: UIView {
         CRTextView.font = .systemFont(ofSize: 17)
         CRTextView.backgroundColor = .clear
         CRTextView.textColor = .black
-        CRTextView.textContainer.maximumNumberOfLines = 10
-        CRTextView.textContainer.lineBreakMode = .byTruncatingTail
         CRTextView.becomeFirstResponder()
+        CRTextView.isScrollEnabled = true
         CRBackgroundView.addSubview(CRTextView)
     }
     
@@ -78,11 +78,20 @@ class CreateRecordView: UIView {
 // MARK: - set textview setting
 extension CreateRecordView: UITextViewDelegate {
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        let existingLines = textView.text.components(separatedBy: CharacterSet.newlines)
+        let newLines = text.components(separatedBy: CharacterSet.newlines)
+        let linesAfterChange = existingLines.count + newLines.count - 1
+        if(text == "\n") {
+            return linesAfterChange <= textView.textContainer.maximumNumberOfLines
+        }
         let newText = (textView.text as NSString).replacingCharacters(in: range, with: text)
         let numberOfChars = newText.count
-        return numberOfChars < 180
+        return numberOfChars <= 180
     }
 }
+
+
+
 
 // MARK: - set components
 extension CreateRecordView {

@@ -14,7 +14,7 @@ class RecordDetailView: UIView {
     private let shapeBackground = UIImageView()
     let shapeImage = UIImageView()
     let dateLabel = UILabel()
-    let memo = UILabel()
+    let memo = UITextView()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -69,10 +69,11 @@ class RecordDetailView: UIView {
         memo.frame.size = CGSize(width: detailView.frame.width * 0.8,
                                       height: detailView.frame.height * 0.5)
         memo.center = CGPoint(x: detailView.frame.width * 0.5,
-                                   y: detailView.frame.height * 0.4)
+                                   y: detailView.frame.height * 0.65)
         memo.textAlignment = .left
         memo.textColor = UIColor(r: 41, g: 46, b: 48)
         memo.font = UIFont(name: "Helvetica", size: 15)
+        memo.backgroundColor = UIColor(r: 240, g: 240, b: 243)
         detailView.addSubview(memo)
     }
     
