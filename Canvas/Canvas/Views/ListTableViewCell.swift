@@ -9,7 +9,9 @@ class ListTableViewCell: UITableViewCell {
         super.awakeFromNib()
         self.backgroundColor = UIColor(r: 240, g: 240, b: 243)
         timeLabel.textColor = .darkGray
+        timeLabel.font = UIFont(name: "Cardo-Regular", size: 12)
         userMemo.textColor = .darkGray
+        userMemo.font = UIFont(name: "Pretendard-Regular", size: 15)
         timeLabel.backgroundColor = .clear
         shapeImage.backgroundColor = .clear
         userMemo.backgroundColor = .clear

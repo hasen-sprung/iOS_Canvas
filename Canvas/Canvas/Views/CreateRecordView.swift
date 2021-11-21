@@ -40,7 +40,7 @@ class CreateRecordView: UIView {
                                        height: CRBackgroundView.frame.height * 0.6)
         CRTextView.center = CGPoint(x: CRBackgroundView.frame.width / 2,
                                     y: CRBackgroundView.frame.height / 2)
-        CRTextView.font = .systemFont(ofSize: 17)
+        CRTextView.font = UIFont(name: "Pretendard-Regular", size: 17)
         CRTextView.backgroundColor = .clear
         CRTextView.textColor = .black
         CRTextView.becomeFirstResponder()
@@ -124,6 +124,7 @@ extension CreateRecordView {
         let dateLabel = UILabel()
         
         dateLabel.text = getDateString()
+        dateLabel.font = UIFont(name: "Cardo-Regular", size: 17)
         dateLabel.textColor = .black
         dateLabel.textAlignment = .center
         dateLabel.frame.size = CGSize(width: CRBackgroundView.frame.width,
@@ -137,7 +138,7 @@ extension CreateRecordView {
         let df = DateFormatter()
         var dateString: String?
         
-        df.dateFormat = "yyyy년 M월 d일 HH:mm"
+        df.dateFormat = "yyyy. M. d. HH:mm"
         df.locale = Locale(identifier:"ko_KR")
         dateString = df.string(from: date)
         
@@ -178,7 +179,9 @@ extension CreateRecordView {
             CRBtnBackgroundView.addSubview(button.key)
         }
         cancelButton.setTitle("취소", for: .normal)
+        cancelButton.titleLabel?.font = UIFont(name: "Pretendard-Regular", size: 15)
         completeButton.setTitle("완료", for: .normal)
+        completeButton.titleLabel?.font = UIFont(name: "Pretendard-Regular", size: 15)
         completeButton.setTitleColor(.black, for: .normal)
     }
 }

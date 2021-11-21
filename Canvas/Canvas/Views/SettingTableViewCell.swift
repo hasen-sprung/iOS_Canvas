@@ -46,10 +46,10 @@ class SettingTableViewCell: UITableViewCell {
     private func setCellUI() {
         settingText.textColor = UIColor(r: 72, g: 80, b: 84)
         settingText.textAlignment = .left
-        settingText.font = UIFont(name: "Helvetica", size: 14)
+        settingText.font = UIFont(name: "Pretendard-Regular", size: 14)
         settingDetail.textColor = UIColor(r: 72, g: 80, b: 84)
         settingDetail.textAlignment = .right
-        settingDetail.font = UIFont(name: "Helvetica", size: 12)
+        settingDetail.font = UIFont(name: "Cardo-Regular", size: 12)
         toggleButton.backgroundColor = .clear
         toggleButton.tintColor = UIColor(r: 72, g: 80, b: 84)
         if UserDefaults.standard.bool(forKey: "shakeAvail") == true {

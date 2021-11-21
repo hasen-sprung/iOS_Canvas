@@ -135,6 +135,7 @@ class ListTableViewController: UIViewController, UITableViewDelegate, UITableVie
     private func setEmptyMessage() {
         emptyMessage.alpha = 0.0
         emptyMessage.text = "당신의 순간을 기록해보세요 :)"
+        emptyMessage.font = UIFont(name: "Pretendard-Regular", size: 15)
         emptyMessage.textColor = UIColor(r: 202, g: 202, b: 202)
         emptyMessage.frame.size = CGSize(width: emptyMessage.intrinsicContentSize.width,
                                          height: emptyMessage.intrinsicContentSize.height)
@@ -167,6 +168,7 @@ extension ListTableViewController: CalendarCollectionViewCellDelegate {
         daysCountInMonth = cal.range(of: .day, in: .month, for: firstDayOfMonth ?? Date())?.count ?? 0
         weekdayAdding = 2 - firstWeekday
         calendarDateLabel.text  = dateFormatter.string(from: firstDayOfMonth ?? Date())
+        calendarDateLabel.font = UIFont(name: "Cardo-Bold", size: 17)
         self.days.removeAll()
         for day in weekdayAdding...daysCountInMonth {
             if day < 1 {
@@ -216,7 +218,7 @@ extension ListTableViewController: UICollectionViewDelegateFlowLayout, UICollect
         cell?.cellDateStr = nil
         cell?.isUserInteractionEnabled = false
         cell?.delegate = self
-        
+        cell?.dateLabel.font = UIFont(name: "Cardo-Regular", size: 12)
         if indexPath.row % 7 == 0 {
             cell?.dateLabel.textColor = UIColor(r: 72, g: 80, b: 84)
         } else if indexPath.row % 7 == 6 {
@@ -235,6 +237,9 @@ extension ListTableViewController: UICollectionViewDelegateFlowLayout, UICollect
                 cell?.dateDot.alpha = 1.0
                 cell?.isUserInteractionEnabled = true
                 cell?.cellDateStr = dateSections[idx]
+            }
+            if cellDate == getOnlyDate(date: Date()) {
+                cell?.dateLabel.font = UIFont(name: "Cardo-Bold", size: 13)
             }
         }
 
@@ -372,6 +377,7 @@ extension ListTableViewController {
         view.tintColor = .clear
         let header = view as? UITableViewHeaderFooterView
         header?.textLabel?.textColor = UIColor.black
+        header?.textLabel?.font = UIFont(name: "Cardo-Bold", size: 14)
         header?.contentView.backgroundColor = UIColor(r: 240, g: 240, b: 243)
     }
     
@@ -431,6 +437,7 @@ extension ListTableViewController {
     
     private func setSearchButtonUI() {
         searchDateButton.setTitle("Show Calendar", for: .normal)
+        searchDateButton.titleLabel?.font = UIFont(name: "Cardo-Bold", size: 17)
         searchDateButton.setTitleColor(UIColor(r: 72, g: 80, b: 84), for: .normal)
         searchDateButton.setTitleColor(UIColor(r: 72, g: 80, b: 84), for: .highlighted)
         searchDateButton.setTitleColor(UIColor(r: 72, g: 80, b: 84), for: .disabled)

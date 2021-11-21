@@ -44,6 +44,7 @@ class SettingUserIDViewController: UIViewController, UITextFieldDelegate {
         placeHolder.image = UIImage(named: "inputPlaceholder")
         view.addSubview(placeHolder)
         
+        textField.font = UIFont(name: "Pretendard-Regular", size: 14)
         textField.frame.size = CGSize(width: placeHolder.frame.width * 0.8,
                                       height: placeHolder.frame.height * 0.8)
         textField.center = placeHolder.center
@@ -65,6 +66,7 @@ class SettingUserIDViewController: UIViewController, UITextFieldDelegate {
         completeButtonLabel.frame.size = CGSize(width: completeButton.frame.width * 0.6, height: completeButton.frame.height * 0.6)
         completeButtonLabel.center = completeButton.center
         completeButtonLabel.text = "변경"
+        completeButtonLabel.font = UIFont(name: "Pretendard-Regular", size: 15)
         completeButtonLabel.textAlignment = .center
         completeButtonLabel.textColor = .black
         completeButtonLabel.isUserInteractionEnabled = false
@@ -88,6 +90,7 @@ class SettingUserIDViewController: UIViewController, UITextFieldDelegate {
 extension SettingUserIDViewController {
     private func setSettingTitle() {
         settingTitle.text = "작가명 변경"
+        settingTitle.font = UIFont(name: "Pretendard-Bold", size: 17)
         settingTitle.textColor = UIColor(r: 72, g: 80, b: 84)
         settingTitle.frame.size = CGSize(width: settingTitle.intrinsicContentSize.width,
                                          height: view.frame.width / 10)

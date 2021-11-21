@@ -337,7 +337,7 @@ extension MainViewController: MainInfoViewDelegate {
             greetingView.lineBreakMode = .byWordWrapping
             greetingView.numberOfLines = 0
             greetingView.text = "안녕하세요 \(UserDefaults.standard.string(forKey: "userID") ?? "User")님!\n언제든 감정 기록을 추가하여\n나만의 그림을 완성해보세요!"
-            greetingView.font = UIFont(name: "Helvetica", size: 14)
+            greetingView.font = UIFont(name: "Pretendard-Regular", size: 14)
             greetingView.textColor = UIColor(r: 72, g: 80, b: 84)
             let attrString = NSMutableAttributedString(string: greetingView.text ?? "")
             let paragraphStyle = NSMutableParagraphStyle()

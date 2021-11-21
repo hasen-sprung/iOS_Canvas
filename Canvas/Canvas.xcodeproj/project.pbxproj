@@ -54,6 +54,18 @@
 		4F29B8EA274A2B5200747DDD /* SettingManualViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F29B8E9274A2B5200747DDD /* SettingManualViewController.swift */; };
 		4F29B8EC274A692700747DDD /* UserIdInputViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F29B8EB274A692700747DDD /* UserIdInputViewController.swift */; };
 		4F29B8EE274A7C7A00747DDD /* RecordDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F29B8ED274A7C7A00747DDD /* RecordDetailView.swift */; };
+		4F29B918274AC74D00747DDD /* Cardo-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4F29B915274AC74D00747DDD /* Cardo-Italic.ttf */; };
+		4F29B919274AC74D00747DDD /* Cardo-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4F29B916274AC74D00747DDD /* Cardo-Bold.ttf */; };
+		4F29B91A274AC74D00747DDD /* Cardo-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4F29B917274AC74D00747DDD /* Cardo-Regular.ttf */; };
+		4F29B924274AC76200747DDD /* Pretendard-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4F29B91B274AC76100747DDD /* Pretendard-Black.otf */; };
+		4F29B925274AC76200747DDD /* Pretendard-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4F29B91C274AC76100747DDD /* Pretendard-Medium.otf */; };
+		4F29B926274AC76200747DDD /* Pretendard-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4F29B91D274AC76100747DDD /* Pretendard-Thin.otf */; };
+		4F29B927274AC76200747DDD /* Pretendard-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4F29B91E274AC76100747DDD /* Pretendard-Light.otf */; };
+		4F29B928274AC76200747DDD /* Pretendard-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4F29B91F274AC76100747DDD /* Pretendard-SemiBold.otf */; };
+		4F29B929274AC76200747DDD /* Pretendard-ExtraLight.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4F29B920274AC76100747DDD /* Pretendard-ExtraLight.otf */; };
+		4F29B92A274AC76200747DDD /* Pretendard-ExtraBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4F29B921274AC76100747DDD /* Pretendard-ExtraBold.otf */; };
+		4F29B92B274AC76200747DDD /* Pretendard-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4F29B922274AC76200747DDD /* Pretendard-Regular.otf */; };
+		4F29B92C274AC76200747DDD /* Pretendard-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4F29B923274AC76200747DDD /* Pretendard-Bold.otf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -125,6 +137,18 @@
 		4F29B8E9274A2B5200747DDD /* SettingManualViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingManualViewController.swift; sourceTree = "<group>"; };
 		4F29B8EB274A692700747DDD /* UserIdInputViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserIdInputViewController.swift; sourceTree = "<group>"; };
 		4F29B8ED274A7C7A00747DDD /* RecordDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordDetailView.swift; sourceTree = "<group>"; };
+		4F29B915274AC74D00747DDD /* Cardo-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Cardo-Italic.ttf"; sourceTree = "<group>"; };
+		4F29B916274AC74D00747DDD /* Cardo-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Cardo-Bold.ttf"; sourceTree = "<group>"; };
+		4F29B917274AC74D00747DDD /* Cardo-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Cardo-Regular.ttf"; sourceTree = "<group>"; };
+		4F29B91B274AC76100747DDD /* Pretendard-Black.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Black.otf"; sourceTree = "<group>"; };
+		4F29B91C274AC76100747DDD /* Pretendard-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Medium.otf"; sourceTree = "<group>"; };
+		4F29B91D274AC76100747DDD /* Pretendard-Thin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Thin.otf"; sourceTree = "<group>"; };
+		4F29B91E274AC76100747DDD /* Pretendard-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Light.otf"; sourceTree = "<group>"; };
+		4F29B91F274AC76100747DDD /* Pretendard-SemiBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-SemiBold.otf"; sourceTree = "<group>"; };
+		4F29B920274AC76100747DDD /* Pretendard-ExtraLight.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-ExtraLight.otf"; sourceTree = "<group>"; };
+		4F29B921274AC76100747DDD /* Pretendard-ExtraBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-ExtraBold.otf"; sourceTree = "<group>"; };
+		4F29B922274AC76200747DDD /* Pretendard-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Regular.otf"; sourceTree = "<group>"; };
+		4F29B923274AC76200747DDD /* Pretendard-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Bold.otf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -218,6 +242,7 @@
 		4F0A39EC273BC89C009E3AAF /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				4F29B914274AC73B00747DDD /* Font */,
 				4F0A39DA273BC852009E3AAF /* Main.storyboard */,
 				3549F2662740EE7F00C1589A /* GaugeWaveAnimationView.swift */,
 				4F0A39FD27425C39009E3AAF /* CreateRecordView.swift */,
@@ -268,6 +293,25 @@
 				4F29B8E9274A2B5200747DDD /* SettingManualViewController.swift */,
 			);
 			path = SettingGroup;
+			sourceTree = "<group>";
+		};
+		4F29B914274AC73B00747DDD /* Font */ = {
+			isa = PBXGroup;
+			children = (
+				4F29B916274AC74D00747DDD /* Cardo-Bold.ttf */,
+				4F29B915274AC74D00747DDD /* Cardo-Italic.ttf */,
+				4F29B917274AC74D00747DDD /* Cardo-Regular.ttf */,
+				4F29B91B274AC76100747DDD /* Pretendard-Black.otf */,
+				4F29B923274AC76200747DDD /* Pretendard-Bold.otf */,
+				4F29B921274AC76100747DDD /* Pretendard-ExtraBold.otf */,
+				4F29B920274AC76100747DDD /* Pretendard-ExtraLight.otf */,
+				4F29B91E274AC76100747DDD /* Pretendard-Light.otf */,
+				4F29B91C274AC76100747DDD /* Pretendard-Medium.otf */,
+				4F29B922274AC76200747DDD /* Pretendard-Regular.otf */,
+				4F29B91F274AC76100747DDD /* Pretendard-SemiBold.otf */,
+				4F29B91D274AC76100747DDD /* Pretendard-Thin.otf */,
+			);
+			path = Font;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -366,10 +410,22 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4F29B929274AC76200747DDD /* Pretendard-ExtraLight.otf in Resources */,
 				4F0A39E4273BC853009E3AAF /* LaunchScreen.storyboard in Resources */,
+				4F29B92A274AC76200747DDD /* Pretendard-ExtraBold.otf in Resources */,
+				4F29B925274AC76200747DDD /* Pretendard-Medium.otf in Resources */,
 				4F0590B427462FD800C4DF41 /* ListTableViewCell.xib in Resources */,
+				4F29B92B274AC76200747DDD /* Pretendard-Regular.otf in Resources */,
+				4F29B928274AC76200747DDD /* Pretendard-SemiBold.otf in Resources */,
 				4F0A39E1273BC853009E3AAF /* Assets.xcassets in Resources */,
+				4F29B92C274AC76200747DDD /* Pretendard-Bold.otf in Resources */,
 				4F0590B82747726F00C4DF41 /* CalendarCollectionViewCell.xib in Resources */,
+				4F29B927274AC76200747DDD /* Pretendard-Light.otf in Resources */,
+				4F29B924274AC76200747DDD /* Pretendard-Black.otf in Resources */,
+				4F29B918274AC74D00747DDD /* Cardo-Italic.ttf in Resources */,
+				4F29B91A274AC74D00747DDD /* Cardo-Regular.ttf in Resources */,
+				4F29B919274AC74D00747DDD /* Cardo-Bold.ttf in Resources */,
+				4F29B926274AC76200747DDD /* Pretendard-Thin.otf in Resources */,
 				4F0A39DC273BC852009E3AAF /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
