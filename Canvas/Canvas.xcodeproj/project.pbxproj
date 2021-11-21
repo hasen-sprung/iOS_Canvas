@@ -27,6 +27,8 @@
 		35E81B4B2748F3B70025E506 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 358CF23A2748E13600D7EEDD /* CoreDataStack.swift */; };
 		35EBD2B42749260B00486453 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 358BD48A274194C100ACE0E7 /* Constants.swift */; };
 		35EBD2B6274939CA00486453 /* DefaultRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35EBD2B5274939CA00486453 /* DefaultRecord.swift */; };
+		35FF810F27497D3D00AF43D4 /* RandomPosition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35FF810E27497D3D00AF43D4 /* RandomPosition.swift */; };
+		35FF8111274A189400AF43D4 /* Ratio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35FF8110274A189400AF43D4 /* Ratio.swift */; };
 		4F0590AE2745193000C4DF41 /* ListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0590AD2745193000C4DF41 /* ListTableViewController.swift */; };
 		4F0590B227461E7300C4DF41 /* ListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0590B127461E7300C4DF41 /* ListTableViewCell.swift */; };
 		4F0590B427462FD800C4DF41 /* ListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4F0590B327462FD800C4DF41 /* ListTableViewCell.xib */; };
@@ -38,11 +40,9 @@
 		4F0A39DF273BC852009E3AAF /* Canvas.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4F0A39DD273BC852009E3AAF /* Canvas.xcdatamodeld */; };
 		4F0A39E1273BC853009E3AAF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4F0A39E0273BC853009E3AAF /* Assets.xcassets */; };
 		4F0A39E4273BC853009E3AAF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4F0A39E2273BC853009E3AAF /* LaunchScreen.storyboard */; };
-		4F0A39F0273BCAD0009E3AAF /* RecordManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0A39EF273BCAD0009E3AAF /* RecordManager.swift */; };
 		4F0A39F2273BCC9F009E3AAF /* Calandar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0A39F1273BCC9F009E3AAF /* Calandar.swift */; };
 		4F0A39F4273BCE52009E3AAF /* DateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0A39F3273BCE52009E3AAF /* DateManager.swift */; };
 		4F0A39F6273BCFC5009E3AAF /* ThemeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0A39F5273BCFC5009E3AAF /* ThemeManager.swift */; };
-		4F0A39F8273BDECC009E3AAF /* DataHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0A39F7273BDECB009E3AAF /* DataHelper.swift */; };
 		4F0A39FA273C0660009E3AAF /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0A39F9273C0660009E3AAF /* MainViewController.swift */; };
 		4F0A39FC27424C75009E3AAF /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0A39FB27424C74009E3AAF /* Color.swift */; };
 		4F0A39FE27425C39009E3AAF /* CreateRecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0A39FD27425C39009E3AAF /* CreateRecordView.swift */; };
@@ -95,6 +95,8 @@
 		35CC3F432748C64F0059707A /* Canvas.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Canvas.entitlements; sourceTree = "<group>"; };
 		35CC3F442748CB980059707A /* CanvasWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CanvasWidgetExtension.entitlements; sourceTree = "<group>"; };
 		35EBD2B5274939CA00486453 /* DefaultRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultRecord.swift; sourceTree = "<group>"; };
+		35FF810E27497D3D00AF43D4 /* RandomPosition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomPosition.swift; sourceTree = "<group>"; };
+		35FF8110274A189400AF43D4 /* Ratio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ratio.swift; sourceTree = "<group>"; };
 		4F0590AD2745193000C4DF41 /* ListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTableViewController.swift; sourceTree = "<group>"; };
 		4F0590B127461E7300C4DF41 /* ListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTableViewCell.swift; sourceTree = "<group>"; };
 		4F0590B327462FD800C4DF41 /* ListTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ListTableViewCell.xib; sourceTree = "<group>"; };
@@ -108,11 +110,9 @@
 		4F0A39E0273BC853009E3AAF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4F0A39E3273BC853009E3AAF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4F0A39E5273BC853009E3AAF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		4F0A39EF273BCAD0009E3AAF /* RecordManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordManager.swift; sourceTree = "<group>"; };
 		4F0A39F1273BCC9F009E3AAF /* Calandar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Calandar.swift; sourceTree = "<group>"; };
 		4F0A39F3273BCE52009E3AAF /* DateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateManager.swift; sourceTree = "<group>"; };
 		4F0A39F5273BCFC5009E3AAF /* ThemeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeManager.swift; sourceTree = "<group>"; };
-		4F0A39F7273BDECB009E3AAF /* DataHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataHelper.swift; sourceTree = "<group>"; };
 		4F0A39F9273C0660009E3AAF /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		4F0A39FB27424C74009E3AAF /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		4F0A39FD27425C39009E3AAF /* CreateRecordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateRecordView.swift; sourceTree = "<group>"; };
@@ -207,8 +207,8 @@
 			children = (
 				358CF23A2748E13600D7EEDD /* CoreDataStack.swift */,
 				4F0A39DD273BC852009E3AAF /* Canvas.xcdatamodeld */,
-				4F0A39F7273BDECB009E3AAF /* DataHelper.swift */,
 				35EBD2B5274939CA00486453 /* DefaultRecord.swift */,
+				35FF8110274A189400AF43D4 /* Ratio.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -246,13 +246,13 @@
 			isa = PBXGroup;
 			children = (
 				4F0A39F3273BCE52009E3AAF /* DateManager.swift */,
-				4F0A39EF273BCAD0009E3AAF /* RecordManager.swift */,
 				4F0A39F1273BCC9F009E3AAF /* Calandar.swift */,
 				4F0A39F5273BCFC5009E3AAF /* ThemeManager.swift */,
 				3549F2602740D53600C1589A /* WaveAnimationView.swift */,
 				358BD48A274194C100ACE0E7 /* Constants.swift */,
 				4F0A39FB27424C74009E3AAF /* Color.swift */,
 				4F0A39FF27425E90009E3AAF /* Extension.swift */,
+				35FF810E27497D3D00AF43D4 /* RandomPosition.swift */,
 			);
 			path = Utilites;
 			sourceTree = "<group>";
@@ -392,9 +392,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+
 				4F0A39F0273BCAD0009E3AAF /* RecordManager.swift in Sources */,
 				4F29B8EA274A2B5200747DDD /* SettingManualViewController.swift in Sources */,
 				4F29B8E3274A106300747DDD /* SettingTableViewCell.swift in Sources */,
+				35FF810F27497D3D00AF43D4 /* RandomPosition.swift in Sources */,
 				4F0A39F4273BCE52009E3AAF /* DateManager.swift in Sources */,
 				4F0A39F2273BCC9F009E3AAF /* Calandar.swift in Sources */,
 				4F0A39D5273BC852009E3AAF /* AppDelegate.swift in Sources */,
@@ -402,8 +404,8 @@
 				4F0590B227461E7300C4DF41 /* ListTableViewCell.swift in Sources */,
 				4F29B8E7274A2B0300747DDD /* SettingTitleViewController.swift in Sources */,
 				4F29B8E5274A2AF300747DDD /* SettingUserIDViewController.swift in Sources */,
+				35FF8111274A189400AF43D4 /* Ratio.swift in Sources */,
 				4F0A39D7273BC852009E3AAF /* SceneDelegate.swift in Sources */,
-				4F0A39F8273BDECC009E3AAF /* DataHelper.swift in Sources */,
 				35EBD2B6274939CA00486453 /* DefaultRecord.swift in Sources */,
 				3549F2612740D53600C1589A /* WaveAnimationView.swift in Sources */,
 				4F0A3A0027425E90009E3AAF /* Extension.swift in Sources */,

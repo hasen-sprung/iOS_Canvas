@@ -51,6 +51,7 @@ class GaugeViewController: UIViewController {
 }
 
 // MARK: - GaugeWaveAnimationView Delegate
+
 extension GaugeViewController: GaugeWaveAnimationViewDelegate {
     func touchInCancelArea() {
         shapeImage.image = UIImage(named: "GaugeCancelIcon")
@@ -91,6 +92,7 @@ extension GaugeViewController: GaugeWaveAnimationViewDelegate {
 }
 
 // MARK: - Create Record View Delegate
+
 extension GaugeViewController: CreateRecordViewDelegate {
     func getGaugeLevel() -> Int {
         return gaugeWaveView.getCurrentGaugeLevel()
@@ -107,17 +109,7 @@ extension GaugeViewController: CreateRecordViewDelegate {
         }
         CoreDataStack.shared.saveContext()
         
-//        if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
-//            let context = appDelegate.persistentContainer.viewContext
-//            let newRecord = Record(context: context)
-//
-//            newRecord.createdDate = newDate
-//            newRecord.gaugeLevel = Int16(newGagueLevel)
-//            if let newMemo = newMemo {
-//                newRecord.memo = newMemo
-//            }
-//            appDelegate.saveContext()
-//        }
+        //TODO: Delete Path
         let paths = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.userDomainMask, true)
         print(paths[0])
     }
@@ -146,6 +138,7 @@ extension GaugeViewController: CreateRecordViewDelegate {
 }
 
 // MARK: - Set CancelButton and Shadows
+
 extension GaugeViewController {
     private func setCancelButton(in superview: UIView) {
         let buttonSize = superview.frame.width / 7
