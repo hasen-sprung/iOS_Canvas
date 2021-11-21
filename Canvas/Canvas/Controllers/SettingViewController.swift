@@ -14,6 +14,15 @@ class SettingViewController: UIViewController {
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var settingTableView: UITableView!
     private let backButtonIcon = UIImageView()
+    private var version: String? {
+        guard let dictionary = Bundle.main.infoDictionary,
+              let version = dictionary["CFBundleShortVersionString"] as? String,
+              let build = dictionary["CFBundleVersion"] as? String
+        else { return nil }
+        
+        let versionAndBuild: String = "V \(version).\(build)"
+        return versionAndBuild
+    }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         .black
@@ -39,6 +48,7 @@ class SettingViewController: UIViewController {
 }
 
 // MARK: - cell press event
+
 extension SettingViewController: MFMailComposeViewControllerDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
@@ -91,7 +101,6 @@ extension SettingViewController: MFMailComposeViewControllerDelegate {
         let sendMailErrorAlert = UIAlertController(title: "메일을 전송 실패", message: "이메일앱을 확인하고 다시 시도해주세요.", preferredStyle: .alert)
         let confirmAction = UIAlertAction(title: "확인", style: .default) {
             (action) in
-            print("확인")
         }
         sendMailErrorAlert.addAction(confirmAction)
         self.present(sendMailErrorAlert, animated: true, completion: nil)
@@ -142,7 +151,7 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
             cell?.settingToggleAvailable()
         }
         if indexPath.row == 5 {
-            cell?.settingDetail.text = "V 1.1.0"
+            cell?.settingDetail.text = version
             cell?.settingDetailAvailable()
         }
         
@@ -159,8 +168,8 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
-
 // MARK: - set setting title and back button
+
 extension SettingViewController {
     
     private func setSettingTitle() {

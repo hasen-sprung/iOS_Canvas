@@ -115,10 +115,6 @@ extension GaugeViewController: CreateRecordViewDelegate {
             newRecord.memo = newMemo
         }
         CoreDataStack.shared.saveContext()
-        
-        //TODO: Delete Path
-        let paths = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.userDomainMask, true)
-        print(paths[0])
     }
     
     func completeCreateRecordView() {
