@@ -197,7 +197,7 @@ extension MainViewController {
     private func setMainViewLabel() {
         mainViewLabel.backgroundColor = .clear
         mainViewLabel.text = "CANVAS"
-        mainViewLabel.font = UIFont(name: "Helvetica", size: goToListButton.frame.size.height * 0.6 )
+        mainViewLabel.font = UIFont(name: "JosefinSans-Regular", size: goToListButton.frame.size.height * 0.6 )
         mainViewLabel.textColor = UIColor(.black)
         mainViewLabel.textAlignment = .center
         mainViewLabel.frame.size = CGSize(width: mainViewLabel.intrinsicContentSize.width,

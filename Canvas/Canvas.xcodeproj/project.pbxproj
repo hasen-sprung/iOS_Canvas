@@ -226,7 +226,6 @@
 				4F0A39E0273BC853009E3AAF /* Assets.xcassets */,
 				4F0A39E2273BC853009E3AAF /* LaunchScreen.storyboard */,
 				4F0A39E5273BC853009E3AAF /* Info.plist */,
-				350E6D0D274AD5E000BB5647 /* JosefinSans-Regular.ttf */,
 			);
 			path = Canvas;
 			sourceTree = "<group>";
@@ -313,6 +312,7 @@
 				4F29B922274AC76200747DDD /* Pretendard-Regular.otf */,
 				4F29B91F274AC76100747DDD /* Pretendard-SemiBold.otf */,
 				4F29B91D274AC76100747DDD /* Pretendard-Thin.otf */,
+				350E6D0D274AD5E000BB5647 /* JosefinSans-Regular.ttf */,
 			);
 			path = Font;
 			sourceTree = "<group>";
