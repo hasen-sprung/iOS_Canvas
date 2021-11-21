@@ -27,7 +27,6 @@
 		35E81B4B2748F3B70025E506 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 358CF23A2748E13600D7EEDD /* CoreDataStack.swift */; };
 		35EBD2B42749260B00486453 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 358BD48A274194C100ACE0E7 /* Constants.swift */; };
 		35EBD2B6274939CA00486453 /* DefaultRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35EBD2B5274939CA00486453 /* DefaultRecord.swift */; };
-		35FF810F27497D3D00AF43D4 /* RandomPosition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35FF810E27497D3D00AF43D4 /* RandomPosition.swift */; };
 		35FF8111274A189400AF43D4 /* Ratio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35FF8110274A189400AF43D4 /* Ratio.swift */; };
 		4F0590AE2745193000C4DF41 /* ListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0590AD2745193000C4DF41 /* ListTableViewController.swift */; };
 		4F0590B227461E7300C4DF41 /* ListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0590B127461E7300C4DF41 /* ListTableViewCell.swift */; };
@@ -97,7 +96,6 @@
 		35CC3F432748C64F0059707A /* Canvas.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Canvas.entitlements; sourceTree = "<group>"; };
 		35CC3F442748CB980059707A /* CanvasWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CanvasWidgetExtension.entitlements; sourceTree = "<group>"; };
 		35EBD2B5274939CA00486453 /* DefaultRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultRecord.swift; sourceTree = "<group>"; };
-		35FF810E27497D3D00AF43D4 /* RandomPosition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomPosition.swift; sourceTree = "<group>"; };
 		35FF8110274A189400AF43D4 /* Ratio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ratio.swift; sourceTree = "<group>"; };
 		4F0590AD2745193000C4DF41 /* ListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTableViewController.swift; sourceTree = "<group>"; };
 		4F0590B127461E7300C4DF41 /* ListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTableViewCell.swift; sourceTree = "<group>"; };
@@ -258,7 +256,6 @@
 				358BD48A274194C100ACE0E7 /* Constants.swift */,
 				4F0A39FB27424C74009E3AAF /* Color.swift */,
 				4F0A39FF27425E90009E3AAF /* Extension.swift */,
-				35FF810E27497D3D00AF43D4 /* RandomPosition.swift */,
 			);
 			path = Utilites;
 			sourceTree = "<group>";
@@ -400,7 +397,6 @@
 			files = (
 				4F29B8EA274A2B5200747DDD /* SettingManualViewController.swift in Sources */,
 				4F29B8E3274A106300747DDD /* SettingTableViewCell.swift in Sources */,
-				35FF810F27497D3D00AF43D4 /* RandomPosition.swift in Sources */,
 				4F0A39F4273BCE52009E3AAF /* DateManager.swift in Sources */,
 				4F0A39F2273BCC9F009E3AAF /* Calandar.swift in Sources */,
 				4F0A39D5273BC852009E3AAF /* AppDelegate.swift in Sources */,

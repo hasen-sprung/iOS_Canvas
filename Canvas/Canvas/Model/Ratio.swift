@@ -13,15 +13,28 @@ struct Ratio {
 
 extension Ratio {
     static let DefaultRatio: [Ratio] = [
-        Ratio(0.1610412478099088, 0.5489531398566748),
-        Ratio(0.1817451634935841, 0.3103159285427403),
-        Ratio(0.2692569806261621, 0.5802212263409386),
-        Ratio(0.3551546492741594, 0.7564903281251867),
-        Ratio(0.3874925181580043, 0.3726821784602306),
-        Ratio(0.4439456864263518, 0.8853616463001212),
-        Ratio(0.4878148956191107, 0.5848260706483198),
-        Ratio(0.5501639451822118, 0.2083279323738540),
-        Ratio(0.6409469897144274, 0.7271673762785221),
-        Ratio(0.7269202051014201, 0.2770862387093931)
+        Ratio(0.49264434, 0.70139617),
+        Ratio(0.21994233, 0.81064165),
+        Ratio(0.8282387, 0.19171816),
+        Ratio(0.8136161, 0.34084213),
+        Ratio(0.86889786, 0.52342755),
+        Ratio(0.7128942, 0.8583792),
+        Ratio(0.40130216, 0.48571178),
+        Ratio(0.2254144, 0.5503703),
+        Ratio(0.27573407, 0.35549185),
+        Ratio(0.46675786, 0.8389069)
     ]
+    
+    static func printRatio() {
+        let context = CoreDataStack.shared.managedObjectContext
+        let request = Position.fetchRequest()
+        var positions: [Position] = [Position]()
+        
+        do {
+            positions = try context.fetch(request)
+        } catch { print("context Error") }
+        for p in positions {
+            print("Ratio(\(p.xRatio), \(p.yRatio)),")
+        }
+    }
 }

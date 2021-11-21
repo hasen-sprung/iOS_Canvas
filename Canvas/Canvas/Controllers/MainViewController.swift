@@ -56,6 +56,7 @@ class MainViewController: UIViewController {
         updateContext()
         canvasRecordsView?.setRecordViews(records: records, theme: themeManager.getThemeInstance())
         setInfoContentView()
+        Ratio.printRatio()
     }
     
     override func viewDidAppear(_ animated: Bool) {

@@ -199,7 +199,7 @@ extension GaugeViewController {
         
         shapeImage.frame = CGRect(origin: .zero, size: CGSize(width: size, height: size))
         shapeImage.center = cancelButton.center
-        shapeImage.image = UIImage(named: "default_6")
+        shapeImage.image = UIImage(named: "default_7")
         cancelButton.addSubview(shapeImage)
     }
 }
