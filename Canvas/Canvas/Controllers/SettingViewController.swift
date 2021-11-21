@@ -15,6 +15,10 @@ class SettingViewController: UIViewController {
     @IBOutlet weak var settingTableView: UITableView!
     private let backButtonIcon = UIImageView()
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        .black
+    }
+    
     private let settingList = ["작가명", "작품명", "흔들어서 그림 섞기", "Canvas 사용법", "개발자에게 의견 남기기", "Canvas 정보"]
     
     override func viewDidLoad() {

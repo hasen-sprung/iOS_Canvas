@@ -12,6 +12,10 @@ class GaugeViewController: UIViewController {
     private var shapeImage: UIImageView = UIImageView()
     private let theme = ThemeManager.shared.getThemeInstance()
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        .black
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = bgColor

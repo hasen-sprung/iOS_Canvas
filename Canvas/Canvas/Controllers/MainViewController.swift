@@ -23,6 +23,10 @@ class MainViewController: UIViewController {
     private var records = [Record]()
     private var countOfRecordInCanvas: Int = defaultCountOfRecordInCanvas
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        .black
+    }
+    
     override func loadView() {
         super.loadView()
         // 처음 앱을 실행되었을 때 = 코어데이터에 아무것도 없는 상태이기 때문에, 레코드들의 위치정보를 제공해줘야 한다.
@@ -377,5 +381,14 @@ extension MainViewController: MainRecordsViewDelegate {
     func tapActionRecordView() {
         // 레코드 뷰 내부를 터치했을 경우 취소시키는 기능인데 필요없을 듯?
         print("recordsview touched")
+    }
+}
+
+extension UIStatusBarStyle {
+    static var black: UIStatusBarStyle {
+        if #available(iOS 13.0, *) {
+            return .darkContent
+        }
+        return .default
     }
 }

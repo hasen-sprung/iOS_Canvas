@@ -15,6 +15,10 @@ class UserIdInputViewController: UIViewController, UITextFieldDelegate {
     private let completeButton = UIButton()
     private let completeButtonLabel = UILabel()
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        .black
+    }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()

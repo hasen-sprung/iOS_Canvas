@@ -36,6 +36,10 @@ class ListTableViewController: UIViewController, UITableViewDelegate, UITableVie
     var daysCountInMonth = 0
     var weekdayAdding = 0
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        .black
+    }
+    
     private let theme = ThemeManager.shared.getThemeInstance()
     
     override func viewDidLoad() {
