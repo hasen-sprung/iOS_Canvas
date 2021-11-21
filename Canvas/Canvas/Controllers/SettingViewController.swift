@@ -170,7 +170,7 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
 extension SettingViewController {
     
     private func setSettingTitle() {
-        settingTitle.text = "Canvas Setting"
+        settingTitle.text = "Setting"
         settingTitle.font = UIFont(name: "Cardo-Bold", size: 17)
         settingTitle.textColor = UIColor(r: 72, g: 80, b: 84)
         settingTitle.frame.size = CGSize(width: settingTitle.intrinsicContentSize.width,

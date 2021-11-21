@@ -160,7 +160,7 @@ extension MainRecordsView {
         
         shapeImage.frame = CGRect(origin: .zero, size: CGSize(width: size, height: size))
         shapeImage.image = UIImage(named: name)?.withRenderingMode(.alwaysTemplate)
-        shapeImage.tintColor = UIColor(r: 240, g: 240, b: 243)
+        shapeImage.tintColor = UIColor(r: 141, g: 146, b: 149)
         view.center = CGPoint(x: CGFloat(positions[pos].xRatio) * superview.width,
                               y: CGFloat(positions[pos].yRatio) * superview.height)
         view.pos = pos

@@ -67,7 +67,6 @@ class ListTableViewController: UIViewController, UITableViewDelegate, UITableVie
         if searchDateButtonTag == false {
             searchDateButtonTag = true
             searchDateButton.isEnabled = false
-            searchDateButton.setTitle("Hide Calendar", for: .normal)
             searchDateButtonIcon.image = UIImage(named: "SearchButtonClicked")?.withRenderingMode(.alwaysTemplate)
             UIView.animate(withDuration: 0.5, delay: 0.0, options: [.curveEaseOut], animations: { [self] in
                 listTableView.frame.origin.y = listTableView.frame.origin.y + view.frame.width / 5 + calendarView.collectionViewLayout.collectionViewContentSize.height
@@ -77,7 +76,6 @@ class ListTableViewController: UIViewController, UITableViewDelegate, UITableVie
         } else {
             searchDateButtonTag = false
             searchDateButton.isEnabled = false
-            searchDateButton.setTitle("Show Calendar", for: .normal)
             searchDateButtonIcon.image = UIImage(named: "SearchButton")?.withRenderingMode(.alwaysTemplate)
             UIView.animate(withDuration: 0.5, delay: 0.0, options: [.curveEaseOut], animations: { [self] in
                 listTableView.frame.origin.y = listTableView.frame.origin.y - view.frame.width / 5 - calendarView.collectionViewLayout.collectionViewContentSize.height
@@ -436,7 +434,7 @@ extension ListTableViewController {
     }
     
     private func setSearchButtonUI() {
-        searchDateButton.setTitle("Show Calendar", for: .normal)
+        searchDateButton.setTitle("Calendar", for: .normal)
         searchDateButton.titleLabel?.font = UIFont(name: "Cardo-Bold", size: 17)
         searchDateButton.setTitleColor(UIColor(r: 72, g: 80, b: 84), for: .normal)
         searchDateButton.setTitleColor(UIColor(r: 72, g: 80, b: 84), for: .highlighted)
