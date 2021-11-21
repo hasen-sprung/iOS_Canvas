@@ -12,7 +12,7 @@ class MainViewController: UIViewController {
     @IBOutlet weak var addRecordButton: UIButton!
     private let infoContentView = MainInfoView()
     private let greetingView = UILabel()
-    private let detailView = RecordDetailView()
+    private var detailView = RecordDetailView()
     
     private let goToListIcon = UIImageView()
     private let goToSettingIcon = UIImageView()
@@ -336,6 +336,7 @@ extension MainViewController: MainRecordsViewDelegate {
         df.dateFormat = "M / d EEEE HH:mm"
         print("record touch and index: \(index)")
         if index <= records.count - 1 {
+            detailView = RecordDetailView()
             detailView.frame = view.frame
             view.addSubview(detailView)
             detailView.setDetailView()
@@ -344,6 +345,7 @@ extension MainViewController: MainRecordsViewDelegate {
             detailView.dateLabel.text = df.string(from: records[index].createdDate ?? Date())
             detailView.memo.text = records[index].memo
         } else {
+            detailView = RecordDetailView()
             detailView.frame = view.frame
             view.addSubview(detailView)
             detailView.setDetailView()

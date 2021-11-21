@@ -74,6 +74,7 @@ class RecordDetailView: UIView {
         memo.textColor = UIColor(r: 41, g: 46, b: 48)
         memo.font = UIFont(name: "Helvetica", size: 15)
         memo.backgroundColor = UIColor(r: 240, g: 240, b: 243)
+        memo.isUserInteractionEnabled = false
         detailView.addSubview(memo)
     }
     
