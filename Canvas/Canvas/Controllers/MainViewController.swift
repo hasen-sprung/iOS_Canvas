@@ -84,6 +84,21 @@ class MainViewController: UIViewController {
     }
 }
 
+// MARK: - Set Motion and Gesture
+
+extension MainViewController {
+    override func motionBegan(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
+        let isShake = UserDefaults.standard.bool(forKey: "shakeAvail")
+        
+        if isShake && motion == .motionShake {
+            canvasRecordsView?.setRandomPosition()
+            canvasRecordsView?.clearRecordViews()
+            canvasRecordsView?.setRecordViews(records: records, theme: themeManager.getThemeInstance())
+            motionEnded(motion, with: event)
+        }
+    }
+}
+
 // MARK: - Set Buttons Target
 
 extension MainViewController {
