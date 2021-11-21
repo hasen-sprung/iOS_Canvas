@@ -145,6 +145,11 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
             cell?.settingDetail.text = "V 1.1.0"
             cell?.settingDetailAvailable()
         }
+        
+        let bgColorView = UIView()
+        bgColorView.backgroundColor = UIColor(r: 240, g: 240, b: 243)
+        cell?.selectedBackgroundView = bgColorView
+        
         return cell ?? UITableViewCell()
     }
     
