@@ -19,6 +19,7 @@ class CreateRecordView: UIView {
     private var date = Date()
     
     func setCreateRecordView() {
+        CRTextView.delegate = self
         let viewSize = self.frame.width * 0.8
         
         self.backgroundColor = .clear
@@ -41,6 +42,8 @@ class CreateRecordView: UIView {
         CRTextView.font = .systemFont(ofSize: 17)
         CRTextView.backgroundColor = .clear
         CRTextView.textColor = .black
+        CRTextView.textContainer.maximumNumberOfLines = 10
+        CRTextView.textContainer.lineBreakMode = .byTruncatingTail
         CRTextView.becomeFirstResponder()
         CRBackgroundView.addSubview(CRTextView)
     }
@@ -69,6 +72,15 @@ class CreateRecordView: UIView {
                          newGagueLevel: d.getGaugeLevel(),
                          newMemo: CRTextView.text)
         }
+    }
+}
+
+// MARK: - set textview setting
+extension CreateRecordView: UITextViewDelegate {
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        let newText = (textView.text as NSString).replacingCharacters(in: range, with: text)
+        let numberOfChars = newText.count
+        return numberOfChars < 180
     }
 }
 
