@@ -1,4 +1,9 @@
 import UIKit
+import SwiftUI
+
+class RecordView: UIView {
+    var index: Int? // 각각의 인덱스를 확인하기 위해서
+}
 
 protocol MainRecordsViewDelegate {
     func openRecordTextView(index: Int)
@@ -8,8 +13,9 @@ protocol MainRecordsViewDelegate {
 class MainRecordsView: UIView {
     var delegate: MainRecordsViewDelegate?
     private var recordViews: [UIView] = [UIView]()
-    private var recordViewsCount: Int = 10
+    private var recordViewsCount: Int = defaultCountOfRecordInCanvas
     private var recordViewSize: CGFloat = UIScreen.main.bounds.width / 10
+    private var positions: [Position] = [Position]()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -25,10 +31,12 @@ class MainRecordsView: UIView {
                                 y: superview.center.y - superview.frame.origin.y)
         let gesture = UITapGestureRecognizer(target: self, action: #selector(tapRecordViewAction))
         
+        self.positions = getPositionRatios()
         self.frame.size = newSize
         self.center = newCenter
         self.backgroundColor = .clear
         self.addGestureRecognizer(gesture)
+        // TODO: set recordViewsCount by UserDefault
     }
     
     required init?(coder: NSCoder) {
@@ -41,26 +49,33 @@ class MainRecordsView: UIView {
         }
     }
     
+    // TODO: 이전 데이터를 불러올 때, 위치 중복 -> Create, Delete + 10개 이상일 때, setPosition초기화;
+    
     func setRecordViews(records: [Record], theme: Theme) {
         var views = [UIView]()
         
         for i in 0 ..< recordViewsCount {
+            let view = RecordView()
+            
+            view.frame.size = CGSize(width: recordViewSize, height: recordViewSize)
+            view.backgroundColor = .clear
+            view.index = i
+            
             if i < records.count {
                 let level: Int = Int(records[i].gaugeLevel)
-                let view = setRecordView(views: views, index: i)
                 
+                setRecordPosition(view: view, records: records, index: i, bound: self.bounds)
                 setShapeImageView(in: view,
                                   image: theme.getImageByGaugeLevel(gaugeLevel: level),
                                   color: theme.getColorByGaugeLevel(gaugeLevel: level))
-                self.addSubview(view)
-                views.append(view)
             } else {
-                let view = setRecordView(views: views, index: i)
-                
-                setDefaultShapeImageView(in: view)
-                self.addSubview(view)
-                views.append(view)
+                setDefaultShapeImageView(in: view, index: i, bound: self.bounds)
             }
+//            // Rotate Option
+//            view.transform = CGAffineTransform(rotationAngle: CGFloat.random(in: 0.0...360.0))
+            setTapGesture(view: view)
+            self.addSubview(view)
+            views.append(view)
         }
         recordViews = views
     }
@@ -68,46 +83,51 @@ class MainRecordsView: UIView {
     func setRecordViewsCount(to count: Int) {
         self.recordViewsCount = count
     }
+    
+    private func getPositionRatios() -> [Position] {
+        let context = CoreDataStack.shared.managedObjectContext
+        let request = Position.fetchRequest()
+        var positions: [Position] = [Position]()
+        
+        do {
+            positions = try context.fetch(request)
+        } catch { print("context Error") }
+        return positions
+    }
 }
 
 // MARK: - Set Record View
 extension MainRecordsView {
-    private func setRecordView(views: [UIView], index: Int) -> RecordView {
-        let view = RecordView()
+    // 저장된 포지션의 비율로 뷰의 위치를 놓아준다.
+    private func setRecordPosition(view: UIView, records: [Record], index: Int, bound superview: CGRect) {
+        var idx: Int
         
-        view.frame.size = CGSize(width: recordViewSize, height: recordViewSize)
-        view.backgroundColor = .clear
-        view.index = index
-        setRecordViewLocation(view: view, views: views)
-        setTapGesture(view: view)
-        view.transform = CGAffineTransform(rotationAngle: CGFloat.random(in: 0.0...360.0))
-        return view
+        // record의 포지션이 nil이 아니면 가지고 있는 포지션의 인덱스의 비율과 함께 위치를 정한다.
+        if let pos = records[index].setPosition {
+            idx = Int(truncating: pos)
+        } else { // nil: 새로 생겼거나(index:0) or 기존 레코드가 삭제 후 이전 데이터들 (index:n...9)
+            idx = getEmptyPosition(records: records)
+            records[index].setPosition = NSNumber(value: idx)
+            CoreDataStack.shared.saveContext()
+        }
+        view.center = CGPoint(x: CGFloat(positions[idx].xRatio) * superview.width,
+                              y: CGFloat(positions[idx].yRatio) * superview.height)
     }
-    
-    private func setRecordViewLocation(view: UIView, views: [UIView]) {
-        repeat {
-            view.frame.origin = setRandomLocation(in: self)
-        } while isOverlaped(view, in: views)
-    }
-    
-    private func isOverlaped(_ view: UIView, in views: [UIView]) -> Bool {
-        for v in views {
-            if view.frame.intersects(v.frame) {
-                return true
+    // records.setPosition의 값 중에서 중복되지 않는 친구를 찾아야한다.
+    private func getEmptyPosition(records: [Record]) -> Int {
+        var index = 0
+        let max: Int = records.count < 10 ? records.count : 10
+        var i = 0
+        
+        while (i < max) {
+            if records[i].setPosition as! Int? == index {
+                index += 1
+                i = 0
+            } else {
+                i+=1
             }
         }
-        return false
-    }
-    
-    private func setRandomLocation(in view: UIView) -> CGPoint {
-        let maxX = view.bounds.width - recordViewSize - (recordViewSize / 2)
-        let maxY = view.bounds.height - recordViewSize - (recordViewSize / 2)
-        let minX: CGFloat = recordViewSize / 2
-        let minY: CGFloat = recordViewSize / 2
-        let point = CGPoint(x: CGFloat.random(in: minX...maxX),
-                            y: CGFloat.random(in: minY...maxY))
-        
-        return point
+        return index
     }
     
     private func setShapeImageView(in view: UIView, image: UIImage?, color: UIColor) {
@@ -120,20 +140,22 @@ extension MainRecordsView {
         view.addSubview(shapeImage)
     }
     
-    private func setDefaultShapeImageView(in view: UIView) {
+    private func setDefaultShapeImageView(in view: UIView, index: Int, bound superview: CGRect) {
         let shapeImage: UIImageView = UIImageView()
         let size = view.bounds.width
-        let index = Int.random(in: 1...10)
-        let name = "default_\(index)"
+        let name = "default_\(index + 1)"
         
         shapeImage.frame = CGRect(origin: .zero, size: CGSize(width: size, height: size))
         shapeImage.image = UIImage(named: name)?.withRenderingMode(.alwaysTemplate)
         shapeImage.tintColor = .white
+        view.center = CGPoint(x: CGFloat(positions[index].xRatio) * superview.width,
+                              y: CGFloat(positions[index].yRatio) * superview.height)
         view.addSubview(shapeImage)
     }
 }
 
 // MARK: - Set Tap Gesture
+
 extension MainRecordsView {
     private func setTapGesture(view: UIView) {
         let gesture = UITapGestureRecognizer(target: self, action: #selector(tapAction))
@@ -155,10 +177,4 @@ extension MainRecordsView {
             d.tapActionRecordView()
         }
     }
-}
-
-// MARK: - Record View
-// 각각의 인덱스를 확인하기 위해서
-class RecordView: UIView {
-    var index: Int?
 }

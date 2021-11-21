@@ -2,6 +2,7 @@ import UIKit
 import SnapKit
 
 class MainViewController: UIViewController {
+    private let launchedBefore = UserDefaults.standard.bool(forKey: "launchedBefore")
     
     @IBOutlet weak var canvasView: UIImageView!
     @IBOutlet weak var infoView: UIImageView!
@@ -16,6 +17,27 @@ class MainViewController: UIViewController {
     
     private let themeManager = ThemeManager.shared
     private var records = [Record]()
+    private var countOfRecordInCanvas: Int = defaultCountOfRecordInCanvas
+    
+    override func loadView() {
+        super.loadView()
+        // 처음 앱을 실행되었을 때 = 코어데이터에 아무것도 없는 상태이기 때문에, 레코드들의 위치정보를 제공해줘야 한다.
+        if launchedBefore == false {
+            UserDefaults.standard.set(true, forKey: "launchedBefore")
+            
+            // MARK: - init position by Default Ratio
+            // 레코드들의 포지션 정보(비율)를 초기화
+            for i in 0..<countOfRecordInCanvas {
+                let context = CoreDataStack.shared.managedObjectContext
+                let position = Position(context: context)
+                
+                position.xRatio = Ratio.DefaultRatio[i].x
+                position.yRatio = Ratio.DefaultRatio[i].y
+                CoreDataStack.shared.saveContext()
+                print("set location \(i)")
+            }
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,7 +67,8 @@ class MainViewController: UIViewController {
     }
 }
 
-// MARK: - set Buttons Target
+// MARK: - Set Buttons Target
+
 extension MainViewController {
     private func setButtonsTarget() {
         addRecordButton.addTarget(self, action: #selector(addRecordButtonPressed), for: .touchUpInside)
@@ -67,6 +90,7 @@ extension MainViewController {
 }
 
 // MARK: - Set UI
+
 extension MainViewController {
     private func setMainViewUI() {
         view.backgroundColor = UIColor(r: 240, g: 240, b: 243)
@@ -92,7 +116,7 @@ extension MainViewController {
         canvasRecordsView = MainRecordsView(in: canvasView)
         canvasView.addSubview(canvasRecordsView!)
         // 메인 뷰에서 출력되는 숫자는 차후 유저디폴트로 세팅가능하게, 초기값은 10
-        canvasRecordsView?.setRecordViewsCount(to: 10)
+        canvasRecordsView?.setRecordViewsCount(to: countOfRecordInCanvas)
         canvasRecordsView?.delegate = self
     }
     
@@ -126,7 +150,8 @@ extension MainViewController {
     }
 }
 
-// MARK: - set Layout / autoLayout refactoring 필요
+// MARK: - Set Layout / AutoLayout Refactoring 필요
+
 extension MainViewController {
     private func setMainViewConstraints() {
         setCanvasViewConstraints()
@@ -204,6 +229,8 @@ extension MainViewController {
         addRecordIcon.center = CGPoint(x: view.frame.width / 2, y: addRecordButton.center.y)
     }
 }
+
+// MARK: - MainRecordsViewDelegate
 
 extension MainViewController: MainRecordsViewDelegate {
     func openRecordTextView(index: Int) {

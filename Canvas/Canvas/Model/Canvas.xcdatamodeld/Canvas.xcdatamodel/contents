@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="19461" systemVersion="21A559" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Position" representedClassName="Position" syncable="YES" codeGenerationType="class">
+        <attribute name="xRatio" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="yRatio" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
+    </entity>
     <entity name="Record" representedClassName="Record" syncable="YES" codeGenerationType="class">
         <attribute name="createdDate" attributeType="Date" usesScalarValueType="NO"/>
-        <attribute name="gaugeLevel" attributeType="Integer 16" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="gaugeLevel" attributeType="Integer 16" defaultValueString="50" usesScalarValueType="YES"/>
         <attribute name="memo" optional="YES" attributeType="String"/>
+        <attribute name="setPosition" optional="YES" attributeType="Integer 16" usesScalarValueType="NO"/>
     </entity>
     <elements>
-        <element name="Record" positionX="-63" positionY="-18" width="128" height="74"/>
+        <element name="Record" positionX="-63" positionY="-18" width="128" height="89"/>
+        <element name="Position" positionX="-63" positionY="9" width="128" height="59"/>
     </elements>
 </model>

@@ -44,6 +44,7 @@ class GaugeWaveAnimationView: UIView {
 }
 
 // MARK: - Set Gradient Layer
+
 extension GaugeWaveAnimationView {
     private func setGradientLayer(gradientColors: [CGColor]) {
         gradientLayer.frame = CGRect(origin: CGPoint(x: .zero,
@@ -69,6 +70,7 @@ extension GaugeWaveAnimationView {
 }
 
 // MARK: - Wave Animation View
+
 extension GaugeWaveAnimationView {
     private func setWaveView() {
         waveView = WaveAnimationView(frame: self.frame, color: bgColor)
@@ -91,6 +93,7 @@ extension GaugeWaveAnimationView {
 }
 
 // MARK: - PanGesture
+
 extension GaugeWaveAnimationView {
     private func setPanGesture() {
         panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(gaugeViewPanGesture))
