@@ -64,11 +64,12 @@ struct CanvasWidgetEntryView : View {
                     let record = records[index]
                     
                     if let pos: Int = record.setPosition as? Int {
-                        // MARK: - TODO: offset x: record.x y: record.y
                         ShapeView(level: Int(record.gaugeLevel))
                             .offset(x: CGFloat(positions[pos].xRatio) * geometry.size.width,
                                     y: CGFloat(positions[pos].yRatio) * geometry.size.height)
-                            .frame(width: geometry.size.width / 7, height: geometry.size.height / 7, alignment: .center)
+                            .frame(width: geometry.size.width / 8,
+                                   height: geometry.size.width / 8,
+                                   alignment: .center)
                     }
                 }
             }

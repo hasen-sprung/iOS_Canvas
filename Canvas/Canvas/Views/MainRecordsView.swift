@@ -182,6 +182,54 @@ extension MainRecordsView {
     }
 }
 
+// MARK: - Set Random Position
+
+extension MainRecordsView {
+    func setRandomPosition() {
+        var views = [UIView]()
+        
+        for i in 0..<recordViewsCount {
+            let view = UIView()
+            
+            view.frame.size = CGSize(width: recordViewSize, height: recordViewSize)
+            repeatSetRandom(view: view, views: views, superview: self, index: i)
+            views.append(view)
+        }
+    }
+    
+    private func repeatSetRandom(view: UIView, views: [UIView], superview: UIView, index: Int) {
+        repeat {
+            view.center = setRandomLocation(in: superview, index: index)
+        } while isOverlaped(view, in: views)
+    }
+    
+    private func isOverlaped(_ view: UIView, in views: [UIView]) -> Bool {
+        for v in views {
+            if view.frame.intersects(v.frame) {
+                return true
+            }
+        }
+        return false
+    }
+    
+    private func setRandomLocation(in view: UIView, index: Int) -> CGPoint {
+        let width = view.bounds.width// - recordViewSize - (recordViewSize / 2)
+        let height = view.bounds.height// - recordViewSize - (recordViewSize / 2)
+        
+        let xRatio = CGFloat.random(in: 0.1...0.9)
+        let yRatio = CGFloat.random(in: 0.1...0.9)
+        
+        let point = CGPoint(x: xRatio * width,
+                            y: yRatio * height)
+        
+        // Save Ratio in Position
+        positions[index].xRatio = Float(xRatio)
+        positions[index].yRatio = Float(yRatio)
+        CoreDataStack.shared.saveContext()
+        return point
+    }
+}
+
 // MARK: - Set Tap Gesture
 
 extension MainRecordsView {
