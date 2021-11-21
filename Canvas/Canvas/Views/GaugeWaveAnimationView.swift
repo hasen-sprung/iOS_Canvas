@@ -103,14 +103,19 @@ extension GaugeWaveAnimationView {
     @objc func gaugeViewPanGesture(sender: UIPanGestureRecognizer) {
         let state = sender.state
         let location = sender.location(in: self)
-        var touchPoint: CGFloat = (location.y - self.frame.height * 0.1) / (self.frame.height * 0.9)
+        var touchPoint: CGFloat = (location.y - self.frame.height * 0.15) / (self.frame.height * 0.85)
         
-        if touchPoint < 0.0  {
+        if touchPoint < -0.06 {
             if let d = delegate {
                 d.touchInCancelArea()
             }
             if state == .ended {
                 if let d = delegate { d.cancelGaugeView() }
+            }
+        } else if touchPoint < 0.0 {
+            touchPoint = 0.0
+            if state == .ended {
+                if let d = delegate { d.createRecord() }
             }
         } else if touchPoint > 1.0 {
             touchPoint = 1.0

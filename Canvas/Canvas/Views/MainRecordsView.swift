@@ -27,7 +27,8 @@ class MainRecordsView: UIView {
         
         let ratio: CGFloat = 6/7
         let newSize = CGSize(width: superview.frame.width * ratio,
-                             height: superview.frame.height * ratio)
+                             height: superview.frame.width * ratio)
+//                             height: superview.frame.height * ratio)
         let newCenter = CGPoint(x: superview.center.x - superview.frame.origin.x,
                                 y: superview.center.y - superview.frame.origin.y)
         let gesture = UITapGestureRecognizer(target: self, action: #selector(tapRecordViewAction))
