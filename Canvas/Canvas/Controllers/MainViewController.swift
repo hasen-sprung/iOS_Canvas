@@ -56,6 +56,7 @@ class MainViewController: UIViewController {
         setRecordsViewInCanvas()
     }
     
+    
     override func viewWillAppear(_ animated: Bool) {
         updateContext()
         canvasRecordsView?.setRecordViews(records: records, theme: themeManager.getThemeInstance())
@@ -358,7 +359,6 @@ extension MainViewController: MainRecordsViewDelegate {
         let df = DateFormatter()
         
         df.dateFormat = "M / d EEEE HH:mm"
-        print("record touch and index: \(index)")
         if index <= records.count - 1 {
             detailView = RecordDetailView()
             detailView.frame = view.frame
@@ -378,8 +378,6 @@ extension MainViewController: MainRecordsViewDelegate {
     }
     
     func tapActionRecordView() {
-        // 레코드 뷰 내부를 터치했을 경우 취소시키는 기능인데 필요없을 듯?
-        print("recordsview touched")
     }
 }
 
