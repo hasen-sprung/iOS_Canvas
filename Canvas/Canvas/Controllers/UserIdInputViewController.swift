@@ -35,7 +35,7 @@ class UserIdInputViewController: UIViewController, UITextFieldDelegate {
         if finalText.count > 0 {
             UserDefaults.standard.set(finalText, forKey: "userID")
         } else {
-            UserDefaults.standard.set("User", forKey: "userID")
+            UserDefaults.standard.set("무명작가", forKey: "userID")
         }
         UserDefaults.standard.set(true, forKey: "userIDsetting")
         guard let nextVC = self.storyboard?.instantiateViewController(identifier: "mainViewController") as? MainViewController else { return }
