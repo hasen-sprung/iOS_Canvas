@@ -63,10 +63,13 @@ struct CanvasWidgetEntryView : View {
                 ForEach(0 ..< getIndex(recordNum: records.count)) { index in
                     let record = records[index]
                     
-                    // MARK: - TODO: offset x: record.x y: record.y
-                    ShapeView(level: Int(record.gaugeLevel))
-                        .offset(x: CGFloat.random(in: geometry.size.width * 0.1...geometry.size.width * 0.9), y: CGFloat.random(in: geometry.size.height*0.1...geometry.size.height*0.9))
-                        .frame(width: geometry.size.width / 7, height: geometry.size.height / 7, alignment: .center)
+                    if let pos: Int = record.setPosition as? Int {
+                        // MARK: - TODO: offset x: record.x y: record.y
+                        ShapeView(level: Int(record.gaugeLevel))
+                            .offset(x: CGFloat(positions[pos].xRatio) * geometry.size.width,
+                                    y: CGFloat(positions[pos].yRatio) * geometry.size.height)
+                            .frame(width: geometry.size.width / 7, height: geometry.size.height / 7, alignment: .center)
+                    }
                 }
             }
         }
@@ -83,6 +86,17 @@ struct CanvasWidgetEntryView : View {
             records = try context.fetch(request)
         } catch { print("context Error") }
         return records
+    }
+    
+    var positions: [Position] {
+        let context = CoreDataStack.shared.managedObjectContext
+        let request = Position.fetchRequest()
+        var positions: [Position] = [Position]()
+        
+        do {
+            positions = try context.fetch(request)
+        } catch { print("context Error") }
+        return positions
     }
     
     private func getIndex(recordNum: Int) -> Int {
