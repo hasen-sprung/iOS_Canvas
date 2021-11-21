@@ -13,6 +13,7 @@ class MainViewController: UIViewController {
     private let infoContentView = MainInfoView()
     private let greetingView = UILabel()
     private var detailView = RecordDetailView()
+    private let mainViewLabel = UILabel()
     
     private let goToListIcon = UIImageView()
     private let goToSettingIcon = UIImageView()
@@ -146,6 +147,7 @@ extension MainViewController {
         setListButtonsUI()
         setSettingButtonUI()
         setAddRecordingButtonUI()
+        setMainViewLabel()
     }
     
     private func setCanvasViewUI() {
@@ -190,6 +192,22 @@ extension MainViewController {
         addRecordIcon.image = UIImage(named: "AddRecordBtnIcon")?.withRenderingMode(.alwaysTemplate)
         addRecordIcon.tintColor = UIColor(r: 163, g: 173, b: 178)
         addRecordIcon.isUserInteractionEnabled = false
+    }
+    
+    private func setMainViewLabel() {
+        mainViewLabel.backgroundColor = .clear
+        mainViewLabel.text = "CANVAS"
+        mainViewLabel.font = UIFont(name: "Helvetica", size: goToListButton.frame.size.height * 0.6 )
+        mainViewLabel.textColor = UIColor(.black)
+        mainViewLabel.textAlignment = .center
+        mainViewLabel.frame.size = CGSize(width: mainViewLabel.intrinsicContentSize.width,
+                                          height: mainViewLabel.intrinsicContentSize.height)
+        view.addSubview(mainViewLabel)
+        
+        mainViewLabel.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.bottom.equalTo(canvasView.snp.top).offset(-10)
+        }
     }
 }
 

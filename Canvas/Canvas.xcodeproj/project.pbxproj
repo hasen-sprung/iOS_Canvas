@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		350E6D0E274AD5E000BB5647 /* JosefinSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 350E6D0D274AD5E000BB5647 /* JosefinSans-Regular.ttf */; };
 		3549F25F273E4E7500C1589A /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 3549F25E273E4E7500C1589A /* SnapKit */; };
 		3549F2612740D53600C1589A /* WaveAnimationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3549F2602740D53600C1589A /* WaveAnimationView.swift */; };
 		3549F2632740D6A800C1589A /* GaugeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3549F2622740D6A800C1589A /* GaugeViewController.swift */; };
@@ -93,6 +94,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		350E6D0D274AD5E000BB5647 /* JosefinSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "JosefinSans-Regular.ttf"; sourceTree = "<group>"; };
 		3549F2602740D53600C1589A /* WaveAnimationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaveAnimationView.swift; sourceTree = "<group>"; };
 		3549F2622740D6A800C1589A /* GaugeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GaugeViewController.swift; sourceTree = "<group>"; };
 		3549F2662740EE7F00C1589A /* GaugeWaveAnimationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GaugeWaveAnimationView.swift; sourceTree = "<group>"; };
@@ -224,6 +226,7 @@
 				4F0A39E0273BC853009E3AAF /* Assets.xcassets */,
 				4F0A39E2273BC853009E3AAF /* LaunchScreen.storyboard */,
 				4F0A39E5273BC853009E3AAF /* Info.plist */,
+				350E6D0D274AD5E000BB5647 /* JosefinSans-Regular.ttf */,
 			);
 			path = Canvas;
 			sourceTree = "<group>";
@@ -414,6 +417,7 @@
 				4F0A39E4273BC853009E3AAF /* LaunchScreen.storyboard in Resources */,
 				4F29B92A274AC76200747DDD /* Pretendard-ExtraBold.otf in Resources */,
 				4F29B925274AC76200747DDD /* Pretendard-Medium.otf in Resources */,
+				350E6D0E274AD5E000BB5647 /* JosefinSans-Regular.ttf in Resources */,
 				4F0590B427462FD800C4DF41 /* ListTableViewCell.xib in Resources */,
 				4F29B92B274AC76200747DDD /* Pretendard-Regular.otf in Resources */,
 				4F29B928274AC76200747DDD /* Pretendard-SemiBold.otf in Resources */,
