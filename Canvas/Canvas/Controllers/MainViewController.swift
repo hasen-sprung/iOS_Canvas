@@ -3,6 +3,7 @@ import SnapKit
 
 class MainViewController: UIViewController {
     private let launchedBefore = UserDefaults.standard.bool(forKey: "launchedBefore")
+    private let userIDsetting = UserDefaults.standard.bool(forKey: "userIDsetting")
     
     @IBOutlet weak var canvasView: UIImageView!
     @IBOutlet weak var infoView: UIImageView!
@@ -25,8 +26,6 @@ class MainViewController: UIViewController {
         // 처음 앱을 실행되었을 때 = 코어데이터에 아무것도 없는 상태이기 때문에, 레코드들의 위치정보를 제공해줘야 한다.
         if launchedBefore == false {
             UserDefaults.standard.set(true, forKey: "launchedBefore")
-            // TODO: - 처음 런치 했을 때, userID 입력하는 단계 필요
-            UserDefaults.standard.set("User", forKey: "userID")
             UserDefaults.standard.set("Canvas", forKey: "canvasTitle")
             UserDefaults.standard.set(true, forKey: "shakeAvail")
             UserDefaults.standard.synchronize()
@@ -58,6 +57,13 @@ class MainViewController: UIViewController {
         setInfoContentView()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        if userIDsetting == false {
+            loadUserIdInputMode()
+            UserDefaults.standard.synchronize()
+        }
+    }
+    
     override func viewDidDisappear(_ animated: Bool) {
         canvasRecordsView?.clearRecordViews()
     }
@@ -70,6 +76,11 @@ class MainViewController: UIViewController {
             records = try context.fetch(request)
         } catch { print("context Error") }
         records.sort(by: {$0.createdDate?.timeIntervalSinceNow ?? Date().timeIntervalSinceNow > $1.createdDate?.timeIntervalSinceNow ?? Date().timeIntervalSinceNow})
+    }
+    
+    private func loadUserIdInputMode() {
+        guard let nextVC = self.storyboard?.instantiateViewController(identifier: "userIdInputViewController") as? UserIdInputViewController else { return }
+        transitionVc(vc: nextVC, duration: 0.5, type: .fromBottom)
     }
 }
 
