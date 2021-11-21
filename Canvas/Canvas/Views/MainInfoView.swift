@@ -32,7 +32,7 @@ class MainInfoView: UIView {
     }
     
     private func setTitleLabelUI() {
-        canvasTitleLabel.text = "Canvas"
+        canvasTitleLabel.text = UserDefaults.standard.string(forKey: "canvasTitle")
         canvasTitleLabel.font = UIFont(name: "Helvetica", size: 16)
         canvasTitleLabel.textColor = UIColor(r: 72, g: 80, b: 84)
     }

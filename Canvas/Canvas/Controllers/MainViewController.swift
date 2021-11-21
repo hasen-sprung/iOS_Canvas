@@ -29,6 +29,7 @@ class MainViewController: UIViewController {
             UserDefaults.standard.set(true, forKey: "launchedBefore")
             // TODO: - 처음 런치 했을 때, userID 입력하는 단계 필요
             UserDefaults.standard.set("User", forKey: "userID")
+            UserDefaults.standard.set("Canvas", forKey: "canvasTitle")
         }
         setMainViewConstraints()
         setMainViewUI()
@@ -231,6 +232,7 @@ extension MainViewController: MainInfoViewDelegate {
         infoContentView.center = CGPoint(x: infoView.frame.width / 2,
                                          y: infoView.frame.height * 0.4)
         infoContentView.backgroundColor = .clear
+        // TODO: - 개수가 있을 때만, 작동하도록 해야 함. 아닐 때는 추가해보라는 설명이 들어가야 함.
         infoContentView.setDateLabel()
         infoContentView.setInfoViewContentSize()
         infoContentView.setInfoViewContentLayout()
