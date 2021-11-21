@@ -86,6 +86,7 @@ struct CanvasWidgetEntryView : View {
         do {
             records = try context.fetch(request)
         } catch { print("context Error") }
+        records.sort(by: {$0.createdDate?.timeIntervalSinceNow ?? Date().timeIntervalSinceNow > $1.createdDate?.timeIntervalSinceNow ?? Date().timeIntervalSinceNow})
         return records
     }
     
