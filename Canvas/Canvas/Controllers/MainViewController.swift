@@ -46,6 +46,7 @@ class MainViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        print(UIScreen.main.bounds.height)
         setMainViewConstraints()
         setMainViewUI()
         setButtonsTarget()
@@ -202,7 +203,7 @@ extension MainViewController {
     
     private func setCanvasViewConstraints() {
         var viewWidth = view.frame.width * 0.925
-        if UIScreen.main.bounds.height < 670 {
+        if UIScreen.main.bounds.height < 740 {
             viewWidth = view.frame.width * 0.825
             canvasView.frame.size = CGSize(width: viewWidth,
                                            height: viewWidth * 1.36)
@@ -221,7 +222,7 @@ extension MainViewController {
         
         infoView.frame.size = CGSize(width: viewWidth,
                                      height: viewWidth * 0.3)
-        if UIScreen.main.bounds.height < 670 {
+        if UIScreen.main.bounds.height < 740 {
             infoView.frame.size = CGSize(width: viewWidth,
                                          height: viewWidth * 0.35)
         }
@@ -232,7 +233,7 @@ extension MainViewController {
     private func setListButtonConstraints() {
         var margin = view.frame.width * 0.175 / 2
         var buttonSize = view.frame.height * 40 / 900
-        if UIScreen.main.bounds.height < 670 {
+        if UIScreen.main.bounds.height < 740 {
             margin = view.frame.width * 0.3 / 2
             buttonSize = view.frame.width / 12
         }
@@ -253,7 +254,7 @@ extension MainViewController {
         
         var margin = view.frame.width * 0.175 / 2
         var buttonSize = view.frame.height * 40 / 900
-        if UIScreen.main.bounds.height < 670 {
+        if UIScreen.main.bounds.height < 740 {
             margin = view.frame.width * 0.3 / 2
             buttonSize = view.frame.width / 12
         }
@@ -277,7 +278,7 @@ extension MainViewController {
         //Button
         addRecordButton.frame.size = CGSize(width: view.frame.height * 80 / 900,
                                             height: view.frame.height * 80 / 900)
-        if UIScreen.main.bounds.height < 670 {
+        if UIScreen.main.bounds.height < 740 {
             addRecordButton.frame.size = CGSize(width: view.frame.height * 45 / 900,
                                                 height: view.frame.height * 45 / 900)
         }
