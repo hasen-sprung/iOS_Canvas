@@ -186,11 +186,14 @@ extension CreateRecordView {
 // MARK: - set CRBackroundView UI and Constraints
 extension CreateRecordView {
     private func setCRBackgroundViewContraints() {
-        CRBackgroundView.translatesAutoresizingMaskIntoConstraints = false
-        CRBackgroundView.widthAnchor.constraint(equalToConstant: self.frame.width * 0.8).isActive = true
-        CRBackgroundView.heightAnchor.constraint(equalToConstant: self.frame.width * 0.8 * 1.22).isActive = true
-        CRBackgroundView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 50).isActive = true
-        CRBackgroundView.topAnchor.constraint(equalTo: self.topAnchor, constant: 164).isActive = true
+        CRBackgroundView.frame.size = CGSize(width: self.frame.width * 0.8,
+                                             height: self.frame.width * 0.8 * 1.15)
+        CRBackgroundView.center = CGPoint(x: self.frame.width * 0.5, y: self.frame.height * 0.38)
+        if UIScreen.main.bounds.height < 820 {
+            CRBackgroundView.frame.size = CGSize(width: self.frame.width * 0.8,
+                                                 height: self.frame.width * 0.8)
+            CRBackgroundView.center = CGPoint(x: self.frame.width * 0.5, y: self.frame.height * 0.35)
+        }
     }
     
     private func setCRBackgroundViewShape() {

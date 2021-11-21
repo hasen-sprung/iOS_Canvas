@@ -71,11 +71,12 @@ extension GaugeViewController: GaugeWaveAnimationViewDelegate {
         }) { (completed) in
             self.dismiss(animated: false, completion: nil)
         }
-//        guard let nextVC = self.storyboard?.instantiateViewController(identifier: "MainViewController") as? MainViewController else { return }
-//        transitionVc(vc: nextVC, duration: 0.5, type: .fromBottom)
     }
     
     func createRecord() {
+        if UIScreen.main.bounds.height < 670 {
+            cancelButton.alpha = 0.0
+        }
         createRecordView = CreateRecordView()
         createRecordView?.frame = view.frame
         createRecordView?.setCreateRecordView()
@@ -130,8 +131,11 @@ extension GaugeViewController: CreateRecordViewDelegate {
     }
     
     func dismissCreateRecordView() {
-        createRecordView?.fadeOut()
+        createRecordView?.fadeOut(duration: 0.3)
         UIView.animate(withDuration: 0.75, delay: 0.0, options: [.curveEaseOut], animations: { [self] in
+            if UIScreen.main.bounds.height < 670 {
+                cancelButton.alpha = 1.0
+            }
             gaugeWaveView.bounds.origin.y = gaugeWaveView.bounds.origin.y + view.frame.height
         }) { (completed) in
             self.createRecordView?.removeFromSuperview()

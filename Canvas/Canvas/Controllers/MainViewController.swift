@@ -43,7 +43,7 @@ class MainViewController: UIViewController {
             }
         }
     }
-        
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setMainViewConstraints()
@@ -182,7 +182,6 @@ extension MainViewController {
     private func setAddRecordingButtonUI() {
         addRecordButton.backgroundColor = .clear
         addRecordButton.setImage(UIImage(named: "BigBtnBackground"), for: .normal)
-        addRecordButton.contentMode = .scaleToFill
         addRecordIcon.image = UIImage(named: "AddRecordBtnIcon")?.withRenderingMode(.alwaysTemplate)
         addRecordIcon.tintColor = UIColor(r: 163, g: 173, b: 178)
         addRecordIcon.isUserInteractionEnabled = false
@@ -202,11 +201,17 @@ extension MainViewController {
     }
     
     private func setCanvasViewConstraints() {
-        let viewWidth = view.frame.width * 0.925
-        
+        var viewWidth = view.frame.width * 0.925
+        if UIScreen.main.bounds.height < 670 {
+            viewWidth = view.frame.width * 0.825
+            canvasView.frame.size = CGSize(width: viewWidth,
+                                           height: viewWidth * 1.36)
+            canvasView.center = CGPoint(x: view.frame.width / 2, y: view.frame.height * 0.425)
+        } else {
         canvasView.frame.size = CGSize(width: viewWidth,
                                        height: viewWidth * 1.36)
         canvasView.center = CGPoint(x: view.frame.width / 2, y: view.frame.height * 0.425)
+        }
         
     }
     
@@ -216,13 +221,21 @@ extension MainViewController {
         
         infoView.frame.size = CGSize(width: viewWidth,
                                      height: viewWidth * 0.3)
+        if UIScreen.main.bounds.height < 670 {
+            infoView.frame.size = CGSize(width: viewWidth,
+                                         height: viewWidth * 0.35)
+        }
         infoView.frame.origin = CGPoint(x: canvasView.frame.origin.x,
                                         y: endOfCanvasView - (900 * 20 / view.frame.height))
     }
     
     private func setListButtonConstraints() {
-        let margin = view.frame.width * 0.175 / 2
-        let buttonSize = view.frame.width / 10
+        var margin = view.frame.width * 0.175 / 2
+        var buttonSize = view.frame.height * 40 / 900
+        if UIScreen.main.bounds.height < 670 {
+            margin = view.frame.width * 0.3 / 2
+            buttonSize = view.frame.width / 12
+        }
         let buttonY = canvasView.frame.origin.y - buttonSize
         
         // Button
@@ -238,8 +251,12 @@ extension MainViewController {
     
     private func setSettingButtonConstraints() {
         
-        let margin = view.frame.width * 0.175 / 2
-        let buttonSize = view.frame.width / 10
+        var margin = view.frame.width * 0.175 / 2
+        var buttonSize = view.frame.height * 40 / 900
+        if UIScreen.main.bounds.height < 670 {
+            margin = view.frame.width * 0.3 / 2
+            buttonSize = view.frame.width / 12
+        }
         let buttonY = canvasView.frame.origin.y - buttonSize
         
         // Button
@@ -258,8 +275,12 @@ extension MainViewController {
         let endOfInfoView = infoView.frame.origin.y + infoView.frame.height
         
         //Button
-        addRecordButton.frame.size = CGSize(width: view.frame.width / 5,
-                                            height: view.frame.width / 5)
+        addRecordButton.frame.size = CGSize(width: view.frame.height * 80 / 900,
+                                            height: view.frame.height * 80 / 900)
+        if UIScreen.main.bounds.height < 670 {
+            addRecordButton.frame.size = CGSize(width: view.frame.height * 45 / 900,
+                                                height: view.frame.height * 45 / 900)
+        }
         addRecordButton.center = CGPoint(x: view.frame.width / 1.95, y: 0)
         addRecordButton.frame.origin.y = endOfInfoView + (view.frame.height * 0.03)
         // Icon
@@ -277,7 +298,7 @@ extension MainViewController: MainInfoViewDelegate {
         
         df.dateFormat = "yyyy. M. d"
         df.locale = Locale(identifier:"ko_KR")
-        if recordCount > 1 {
+        if recordCount >= 1 {
             let firstDate = df.string(from: records[recordCount - 1].createdDate ?? Date())
             let lastDate = df.string(from: records[0].createdDate ?? Date())
             if firstDate == lastDate {
