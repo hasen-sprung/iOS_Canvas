@@ -54,6 +54,7 @@
 		4F29B8E7274A2B0300747DDD /* SettingTitleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F29B8E6274A2B0300747DDD /* SettingTitleViewController.swift */; };
 		4F29B8EA274A2B5200747DDD /* SettingManualViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F29B8E9274A2B5200747DDD /* SettingManualViewController.swift */; };
 		4F29B8EC274A692700747DDD /* UserIdInputViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F29B8EB274A692700747DDD /* UserIdInputViewController.swift */; };
+		4F29B8EE274A7C7A00747DDD /* RecordDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F29B8ED274A7C7A00747DDD /* RecordDetailView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -125,6 +126,7 @@
 		4F29B8E6274A2B0300747DDD /* SettingTitleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingTitleViewController.swift; sourceTree = "<group>"; };
 		4F29B8E9274A2B5200747DDD /* SettingManualViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingManualViewController.swift; sourceTree = "<group>"; };
 		4F29B8EB274A692700747DDD /* UserIdInputViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserIdInputViewController.swift; sourceTree = "<group>"; };
+		4F29B8ED274A7C7A00747DDD /* RecordDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordDetailView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -228,6 +230,7 @@
 				4F0590B72747726F00C4DF41 /* CalendarCollectionViewCell.xib */,
 				4F29B8DE274960BD00747DDD /* MainInfoView.swift */,
 				4F29B8E2274A106300747DDD /* SettingTableViewCell.swift */,
+				4F29B8ED274A7C7A00747DDD /* RecordDetailView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -409,6 +412,7 @@
 				4F0A39D7273BC852009E3AAF /* SceneDelegate.swift in Sources */,
 				35EBD2B6274939CA00486453 /* DefaultRecord.swift in Sources */,
 				3549F2612740D53600C1589A /* WaveAnimationView.swift in Sources */,
+				4F29B8EE274A7C7A00747DDD /* RecordDetailView.swift in Sources */,
 				4F0A3A0027425E90009E3AAF /* Extension.swift in Sources */,
 				4F29B8E12749FC1C00747DDD /* SettingViewController.swift in Sources */,
 				358BD48B274194C100ACE0E7 /* Constants.swift in Sources */,

@@ -12,6 +12,7 @@ class MainViewController: UIViewController {
     @IBOutlet weak var addRecordButton: UIButton!
     private let infoContentView = MainInfoView()
     private let greetingView = UILabel()
+    private let detailView = RecordDetailView()
     
     private let goToListIcon = UIImageView()
     private let goToSettingIcon = UIImageView()
@@ -330,9 +331,23 @@ extension MainViewController: MainInfoViewDelegate {
 // MARK: - MainRecordsViewDelegate
 extension MainViewController: MainRecordsViewDelegate {
     func openRecordTextView(index: Int) {
+        let df = DateFormatter()
+        
+        df.dateFormat = "M / d EEEE HH:mm"
         print("record touch and index: \(index)")
-        // TODO: 더미 데이터 회색의 인덱스로 접근하면 터짐! 당연히 존재하지 않는 레코드니까...
-        // 회색 10개에는 뭔가 도움말 같은 것을 추가하면 될 듯, 인사말 + 버튼눌러봐 등등
+        if index <= records.count - 1 {
+            detailView.frame = view.frame
+            view.addSubview(detailView)
+            detailView.setDetailView()
+            detailView.shapeImage.image = DefaultTheme.shared.getImageByGaugeLevel(gaugeLevel: Int(records[index].gaugeLevel))
+            detailView.shapeImage.tintColor = DefaultTheme.shared.getColorByGaugeLevel(gaugeLevel: Int(records[index].gaugeLevel))
+            detailView.dateLabel.text = df.string(from: records[index].createdDate ?? Date())
+            detailView.memo.text = records[index].memo
+        } else {
+            detailView.frame = view.frame
+            view.addSubview(detailView)
+//            detailView.memo.text
+        }
     }
     
     func tapActionRecordView() {
