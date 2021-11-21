@@ -11,6 +11,7 @@ class MainViewController: UIViewController {
     @IBOutlet weak var goToSettingButton: UIButton!
     @IBOutlet weak var addRecordButton: UIButton!
     private let infoContentView = MainInfoView()
+    private let greetingView = UILabel()
     
     private let goToListIcon = UIImageView()
     private let goToSettingIcon = UIImageView()
@@ -283,10 +284,29 @@ extension MainViewController: MainInfoViewDelegate {
                                          y: infoView.frame.height * 0.4)
         infoContentView.backgroundColor = .clear
         // TODO: - 개수가 있을 때만, 작동하도록 해야 함. 아닐 때는 추가해보라는 설명이 들어가야 함.
-        infoContentView.setDateLabel()
-        infoContentView.setInfoViewContentSize()
-        infoContentView.setInfoViewContentLayout()
-        infoView.addSubview(infoContentView)
+        if records.count > 0 {
+            greetingView.removeFromSuperview()
+            infoContentView.setDateLabel()
+            infoContentView.setInfoViewContentSize()
+            infoContentView.setInfoViewContentLayout()
+            infoView.addSubview(infoContentView)
+        } else {
+            greetingView.lineBreakMode = .byWordWrapping
+            greetingView.numberOfLines = 0
+            greetingView.text = "안녕하세요 \(UserDefaults.standard.string(forKey: "userID") ?? "User")님!\n언제든 감정 기록을 추가하여\n나만의 그림을 완성해보세요!"
+            greetingView.font = UIFont(name: "Helvetica", size: 14)
+            greetingView.textColor = UIColor(r: 72, g: 80, b: 84)
+            let attrString = NSMutableAttributedString(string: greetingView.text ?? "")
+            let paragraphStyle = NSMutableParagraphStyle()
+            paragraphStyle.lineSpacing = 5
+            attrString.addAttribute(NSAttributedString.Key.paragraphStyle, value: paragraphStyle, range: NSMakeRange(0, attrString.length))
+            greetingView.attributedText = attrString
+            greetingView.textAlignment = .center
+            greetingView.frame.size = CGSize(width: greetingView.intrinsicContentSize.width,
+                                             height: greetingView.intrinsicContentSize.height)
+            greetingView.center = infoView.center
+            view.addSubview(greetingView)
+        }
     }
 }
 
