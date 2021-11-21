@@ -15,7 +15,7 @@ class MainRecordsView: UIView {
     var delegate: MainRecordsViewDelegate?
     private var recordViews: [RecordView] = [RecordView]()
     private var recordViewsCount: Int = defaultCountOfRecordInCanvas
-    private var recordViewSize: CGFloat = UIScreen.main.bounds.width / 10
+    private var recordViewSize: CGFloat = UIScreen.main.bounds.width * 0.125
     private var positions: [Position] = [Position]()
     
     override init(frame: CGRect) {
