@@ -8,6 +8,7 @@ class MainViewController: UIViewController {
     @IBOutlet weak var goToListButton: UIButton!
     @IBOutlet weak var goToSettingButton: UIButton!
     @IBOutlet weak var addRecordButton: UIButton!
+    private let infoContentView = MainInfoView()
     
     private let goToListIcon = UIImageView()
     private let goToSettingIcon = UIImageView()
@@ -17,12 +18,23 @@ class MainViewController: UIViewController {
     private let themeManager = ThemeManager.shared
     private var records = [Record]()
     
+    private let launchedBefore = UserDefaults.standard.bool(forKey: "launchedBefore")
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // 첫 실행시, user ID 정해주는 부분.
+        if launchedBefore == false {
+            print("firstLoad")
+            UserDefaults.standard.set(true, forKey: "launchedBefore")
+            // TODO: - 처음 런치 했을 때, userID 입력하는 단계 필요
+            UserDefaults.standard.set("User", forKey: "userID")
+        }
         setMainViewConstraints()
         setMainViewUI()
         setButtonsTarget()
         setRecordsViewInCanvas()
+        setInfoContentViewConstraints()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -202,6 +214,27 @@ extension MainViewController {
         addRecordIcon.frame.size = CGSize(width: addRecordButton.frame.width * 0.35,
                                           height: addRecordButton.frame.width * 0.35)
         addRecordIcon.center = CGPoint(x: view.frame.width / 2, y: addRecordButton.center.y)
+    }
+}
+
+// MARK: - set info Content view in info view
+extension MainViewController: MainInfoViewDelegate {
+    func getInfoDateString() -> String {
+        // TODO: - 10개를 가져와서 첫 date, 나중 date 뽑아서 string 만들어야 함.
+        return ""
+    }
+    
+    func setInfoContentViewConstraints() {
+        
+        infoContentView.frame.size = CGSize(width: infoView.frame.width * 0.8,
+                                            height: infoView.frame.height * 0.7)
+        infoContentView.center = CGPoint(x: infoView.frame.width / 2,
+                                         y: infoView.frame.height * 0.4)
+        infoContentView.backgroundColor = .clear
+        infoContentView.setDateLabel()
+        infoContentView.setInfoViewContentSize()
+        infoContentView.setInfoViewContentLayout()
+        infoView.addSubview(infoContentView)
     }
 }
 

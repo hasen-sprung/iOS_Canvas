@@ -47,6 +47,7 @@
 		4F0A39FC27424C75009E3AAF /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0A39FB27424C74009E3AAF /* Color.swift */; };
 		4F0A39FE27425C39009E3AAF /* CreateRecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0A39FD27425C39009E3AAF /* CreateRecordView.swift */; };
 		4F0A3A0027425E90009E3AAF /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0A39FF27425E90009E3AAF /* Extension.swift */; };
+		4F29B8DF274960BD00747DDD /* MainInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F29B8DE274960BD00747DDD /* MainInfoView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -111,6 +112,7 @@
 		4F0A39FB27424C74009E3AAF /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		4F0A39FD27425C39009E3AAF /* CreateRecordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateRecordView.swift; sourceTree = "<group>"; };
 		4F0A39FF27425E90009E3AAF /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
+		4F29B8DE274960BD00747DDD /* MainInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainInfoView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -212,6 +214,7 @@
 				355B49CA27462DA000A764B2 /* MainRecordsView.swift */,
 				4F0590B9274772FF00C4DF41 /* CalendarCollectionViewCell.swift */,
 				4F0590B72747726F00C4DF41 /* CalendarCollectionViewCell.xib */,
+				4F29B8DE274960BD00747DDD /* MainInfoView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -388,6 +391,7 @@
 				4F0A39DF273BC852009E3AAF /* Canvas.xcdatamodeld in Sources */,
 				3549F2672740EE7F00C1589A /* GaugeWaveAnimationView.swift in Sources */,
 				4F0A39F6273BCFC5009E3AAF /* ThemeManager.swift in Sources */,
+				4F29B8DF274960BD00747DDD /* MainInfoView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
