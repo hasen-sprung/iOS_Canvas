@@ -114,6 +114,7 @@ extension GaugeWaveAnimationView {
             }
         } else if touchPoint < 0.0 {
             touchPoint = 0.0
+            currentGaugeLevel = calculateLevel(point: touchPoint)
             if state == .ended {
                 if let d = delegate { d.createRecord() }
             }
