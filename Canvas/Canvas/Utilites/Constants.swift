@@ -10,3 +10,7 @@ let canvasColor = #colorLiteral(red: 0.9782244563, green: 0.9682950377, blue: 0.
 
 // MARK: - Default Value
 let defaultCountOfRecordInCanvas: Int = 10
+
+// MARK: - Widget Description
+let widgetDisplayName: String = "꾸미기"
+let widgetDescription: String = "순간 순간의 감정을 기록해서 다양한 도형으로 캔버스를 채우세요"
