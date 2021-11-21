@@ -147,7 +147,7 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
         if indexPath.row == 2 {
             cell?.settingToggleAvailable()
         }
-        if indexPath.row == 5 {
+        if indexPath.row == 4 {
             cell?.settingDetail.text = version
             cell?.settingDetailAvailable()
         }
