@@ -348,7 +348,7 @@ extension MainViewController: MainRecordsViewDelegate {
             detailView.frame = view.frame
             view.addSubview(detailView)
             detailView.setDetailView()
-            detailView.memo.text = "이곳에 랜덤한 설명이 들어갑니다."
+            detailView.memo.text = DefaultRecord.records[index].memo//"이곳에 랜덤한 설명이 들어갑니다."
         }
     }
     
