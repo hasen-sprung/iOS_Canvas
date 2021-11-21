@@ -30,6 +30,7 @@ class MainViewController: UIViewController {
             // TODO: - 처음 런치 했을 때, userID 입력하는 단계 필요
             UserDefaults.standard.set("User", forKey: "userID")
             UserDefaults.standard.set("Canvas", forKey: "canvasTitle")
+            UserDefaults.standard.set(true, forKey: "shakeAvail")
             UserDefaults.standard.synchronize()
         }
         setMainViewConstraints()

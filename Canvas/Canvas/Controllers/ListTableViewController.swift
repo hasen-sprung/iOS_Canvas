@@ -212,6 +212,15 @@ extension ListTableViewController: UICollectionViewDelegateFlowLayout, UICollect
         cell?.cellDateStr = nil
         cell?.isUserInteractionEnabled = false
         cell?.delegate = self
+        
+        if indexPath.row % 7 == 0 {
+            cell?.dateLabel.textColor = UIColor(r: 72, g: 80, b: 84)
+        } else if indexPath.row % 7 == 6 {
+            cell?.dateLabel.textColor = UIColor(r: 72, g: 80, b: 84)
+        } else {
+            cell?.dateLabel.textColor = UIColor(r: 72, g: 80, b: 84)
+        }
+        
         switch indexPath.section {
         case 0:
             cell?.dateLabel.text = weeks[indexPath.row]
@@ -224,13 +233,7 @@ extension ListTableViewController: UICollectionViewDelegateFlowLayout, UICollect
                 cell?.cellDateStr = dateSections[idx]
             }
         }
-        if indexPath.row % 7 == 0 {
-            cell?.dateLabel.textColor = .black
-        } else if indexPath.row % 7 == 6 {
-            cell?.dateLabel.textColor = .black
-        } else {
-            cell?.dateLabel.textColor = .black
-        }
+
         return cell ?? UICollectionViewCell()
     }
     
@@ -246,7 +249,7 @@ extension ListTableViewController: UICollectionViewDelegateFlowLayout, UICollect
         calendarDateLabel.frame.origin = CGPoint(x: .zero,
                                                  y: view.frame.height / 6 + 2)
         calendarDateLabel.textAlignment = .center
-        calendarDateLabel.textColor = .black
+        calendarDateLabel.textColor = UIColor(r: 72, g: 80, b: 84)
         calendarDateLabel.backgroundColor = .clear
         view.addSubview(calendarDateLabel)
         
@@ -265,7 +268,7 @@ extension ListTableViewController: UICollectionViewDelegateFlowLayout, UICollect
         dateFWButton.center = CGPoint(x: view.frame.width * 0.75,
                                       y: view.frame.height / 6 + 2 + (view.frame.width / 5 / 2))
         dateFWButton.setImage(UIImage(systemName: "chevron.forward")?.withRenderingMode(.alwaysTemplate), for: .normal)
-        dateFWButton.tintColor = .black//UIColor(r: 229, g: 151, b: 139)
+        dateFWButton.tintColor = UIColor(r: 72, g: 80, b: 84)
         dateFWButton.backgroundColor = .clear
         view.addSubview(dateFWButton)
     }
@@ -276,7 +279,7 @@ extension ListTableViewController: UICollectionViewDelegateFlowLayout, UICollect
         dateBWButton.center = CGPoint(x: view.frame.width * 0.25,
                                       y: view.frame.height / 6 + 2 + (view.frame.width / 5 / 2))
         dateBWButton.setImage(UIImage(systemName: "chevron.backward")?.withRenderingMode(.alwaysTemplate), for: .normal)
-        dateBWButton.tintColor = .black//UIColor(r: 229, g: 151, b: 139)
+        dateBWButton.tintColor = UIColor(r: 72, g: 80, b: 84)
         dateBWButton.backgroundColor = .clear
         view.addSubview(dateBWButton)
     }
@@ -424,9 +427,9 @@ extension ListTableViewController {
     
     private func setSearchButtonUI() {
         searchDateButton.setTitle("show Calendar", for: .normal)
-        searchDateButton.setTitleColor(.black, for: .normal)
-        searchDateButton.setTitleColor(.darkGray, for: .highlighted)
-        searchDateButton.setTitleColor(.black, for: .disabled)
+        searchDateButton.setTitleColor(UIColor(r: 72, g: 80, b: 84), for: .normal)
+        searchDateButton.setTitleColor(UIColor(r: 72, g: 80, b: 84), for: .highlighted)
+        searchDateButton.setTitleColor(UIColor(r: 72, g: 80, b: 84), for: .disabled)
         searchDateButton.backgroundColor = .clear
         searchDateButtonIcon.backgroundColor = .clear
         searchDateButtonIcon.image = UIImage(named: "SearchButton")?.withRenderingMode(.alwaysTemplate)
