@@ -48,6 +48,7 @@
 		4F0A39FE27425C39009E3AAF /* CreateRecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0A39FD27425C39009E3AAF /* CreateRecordView.swift */; };
 		4F0A3A0027425E90009E3AAF /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0A39FF27425E90009E3AAF /* Extension.swift */; };
 		4F29B8DF274960BD00747DDD /* MainInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F29B8DE274960BD00747DDD /* MainInfoView.swift */; };
+		4F29B8E12749FC1C00747DDD /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F29B8E02749FC1C00747DDD /* SettingViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -113,6 +114,7 @@
 		4F0A39FD27425C39009E3AAF /* CreateRecordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateRecordView.swift; sourceTree = "<group>"; };
 		4F0A39FF27425E90009E3AAF /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
 		4F29B8DE274960BD00747DDD /* MainInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainInfoView.swift; sourceTree = "<group>"; };
+		4F29B8E02749FC1C00747DDD /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -225,6 +227,7 @@
 				4F0A39F9273C0660009E3AAF /* MainViewController.swift */,
 				3549F2622740D6A800C1589A /* GaugeViewController.swift */,
 				4F0590AD2745193000C4DF41 /* ListTableViewController.swift */,
+				4F29B8E02749FC1C00747DDD /* SettingViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -380,6 +383,7 @@
 				35EBD2B6274939CA00486453 /* DefaultRecord.swift in Sources */,
 				3549F2612740D53600C1589A /* WaveAnimationView.swift in Sources */,
 				4F0A3A0027425E90009E3AAF /* Extension.swift in Sources */,
+				4F29B8E12749FC1C00747DDD /* SettingViewController.swift in Sources */,
 				358BD48B274194C100ACE0E7 /* Constants.swift in Sources */,
 				4F0A39FA273C0660009E3AAF /* MainViewController.swift in Sources */,
 				355B49CB27462DA000A764B2 /* MainRecordsView.swift in Sources */,

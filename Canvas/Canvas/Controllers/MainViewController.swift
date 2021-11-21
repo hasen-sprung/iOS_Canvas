@@ -64,6 +64,7 @@ extension MainViewController {
     private func setButtonsTarget() {
         addRecordButton.addTarget(self, action: #selector(addRecordButtonPressed), for: .touchUpInside)
         goToListButton.addTarget(self, action: #selector(goToListButtonPressed), for: .touchUpInside)
+        goToSettingButton.addTarget(self, action: #selector(goToSettingPressed), for: .touchUpInside)
     }
     
     @objc func addRecordButtonPressed(_ sender: UIButton) {
@@ -77,6 +78,11 @@ extension MainViewController {
     @objc func goToListButtonPressed(_ sender: UIButton) {
         guard let nextVC = self.storyboard?.instantiateViewController(identifier: "listTableViewController") as? ListTableViewController else { return }
         transitionVc(vc: nextVC, duration: 0.5, type: .fromLeft)
+    }
+    
+    @objc func goToSettingPressed(_ sender: UIButton) {
+        guard let nextVC = self.storyboard?.instantiateViewController(identifier: "settingViewController") as? SettingViewController else { return }
+        transitionVc(vc: nextVC, duration: 0.5, type: .fromRight)
     }
 }
 
