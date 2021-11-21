@@ -63,7 +63,7 @@ class ListTableViewController: UIViewController, UITableViewDelegate, UITableVie
         if searchDateButtonTag == false {
             searchDateButtonTag = true
             searchDateButton.isEnabled = false
-            searchDateButton.setTitle("hide Calendar", for: .normal)
+            searchDateButton.setTitle("Hide Calendar", for: .normal)
             searchDateButtonIcon.image = UIImage(named: "SearchButtonClicked")?.withRenderingMode(.alwaysTemplate)
             UIView.animate(withDuration: 0.5, delay: 0.0, options: [.curveEaseOut], animations: { [self] in
                 listTableView.frame.origin.y = listTableView.frame.origin.y + view.frame.width / 5 + calendarView.collectionViewLayout.collectionViewContentSize.height
@@ -73,7 +73,7 @@ class ListTableViewController: UIViewController, UITableViewDelegate, UITableVie
         } else {
             searchDateButtonTag = false
             searchDateButton.isEnabled = false
-            searchDateButton.setTitle("show Calendar", for: .normal)
+            searchDateButton.setTitle("Show Calendar", for: .normal)
             searchDateButtonIcon.image = UIImage(named: "SearchButton")?.withRenderingMode(.alwaysTemplate)
             UIView.animate(withDuration: 0.5, delay: 0.0, options: [.curveEaseOut], animations: { [self] in
                 listTableView.frame.origin.y = listTableView.frame.origin.y - view.frame.width / 5 - calendarView.collectionViewLayout.collectionViewContentSize.height

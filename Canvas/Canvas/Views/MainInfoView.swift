@@ -44,7 +44,7 @@ class MainInfoView: UIView {
     }
     
     private func setHowMadeLabel() {
-        howMadeLabel.text = "emotions on canvas"
+        howMadeLabel.text = "Emotions on Canvas"
         howMadeLabel.font = UIFont(name: "Helvetica", size: 12)
         howMadeLabel.textColor = UIColor(r: 141, g: 146, b: 149)
     }
@@ -54,7 +54,6 @@ class MainInfoView: UIView {
         if let d = delegate {
             canvasDateLabel.text = d.getInfoDateString()
         }
-        canvasDateLabel.text = "2021. 11. 01 ~ 2021. 11. 04"
         canvasDateLabel.font = UIFont(name: "Helvetica", size: 12)
         canvasDateLabel.textColor = UIColor(r: 103, g: 114, b: 120)
     }

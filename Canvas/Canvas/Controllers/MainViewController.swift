@@ -272,12 +272,29 @@ extension MainViewController {
 // MARK: - set info Content view in info view
 extension MainViewController: MainInfoViewDelegate {
     func getInfoDateString() -> String {
-        // TODO: - 10개를 가져와서 첫 date, 나중 date 뽑아서 string 만들어야 함.
-        return ""
+        let recordCount = records.count
+        let df = DateFormatter()
+        
+        df.dateFormat = "yyyy. M. d"
+        df.locale = Locale(identifier:"ko_KR")
+        if recordCount > 1 {
+            let firstDate = df.string(from: records[recordCount - 1].createdDate ?? Date())
+            let lastDate = df.string(from: records[0].createdDate ?? Date())
+            if firstDate == lastDate {
+                return firstDate
+            } else {
+                return firstDate + " ~ " + lastDate
+            }
+        } else if recordCount == 0 {
+            let date = df.string(from: records[0].createdDate ?? Date())
+            return date
+        } else {
+            return ""
+        }
     }
     
     func setInfoContentView() {
-        
+        infoContentView.delegate = self
         infoContentView.frame.size = CGSize(width: infoView.frame.width * 0.8,
                                             height: infoView.frame.height * 0.7)
         infoContentView.center = CGPoint(x: infoView.frame.width / 2,
