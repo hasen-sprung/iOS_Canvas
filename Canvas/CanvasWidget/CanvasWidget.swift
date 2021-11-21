@@ -46,7 +46,7 @@ struct ShapeView: View {
             Image(uiImage: image)
                 .resizable()
                 .renderingMode(.template)
-                .frame(width: .infinity, height: .infinity, alignment: .center)
+                .frame(width: nil, height: nil, alignment: .center)
                 .foregroundColor(color)
         }
     }
@@ -67,8 +67,8 @@ struct CanvasWidgetEntryView : View {
                         ShapeView(level: Int(record.gaugeLevel))
                             .offset(x: CGFloat(positions[pos].xRatio) * geometry.size.width,
                                     y: CGFloat(positions[pos].yRatio) * geometry.size.height)
-                            .frame(width: geometry.size.width / 8,
-                                   height: geometry.size.width / 8,
+                            .frame(width: geometry.size.width / 7,
+                                   height: geometry.size.width / 7,
                                    alignment: .center)
                     }
                 }
