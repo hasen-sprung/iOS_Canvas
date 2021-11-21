@@ -103,7 +103,8 @@ extension MainRecordsView {
         var idx: Int
         
         // record의 포지션이 nil이 아니면 가지고 있는 포지션의 인덱스의 비율과 함께 위치를 정한다.
-        if let pos = records[index].setPosition {
+        // and if 마지막에 들어온 친구가 동일한 좌표를 가진 경우 새로운 좌표 생성
+        if let pos = records[index].setPosition, !isDuplicate(records, pos: pos, index) {
             idx = Int(truncating: pos)
         } else { // nil: 새로 생겼거나(index:0) or 기존 레코드가 삭제 후 이전 데이터들 (index:n...9)
             idx = getEmptyPosition(records: records)
@@ -112,6 +113,14 @@ extension MainRecordsView {
         }
         view.center = CGPoint(x: CGFloat(positions[idx].xRatio) * superview.width,
                               y: CGFloat(positions[idx].yRatio) * superview.height)
+    }
+    private func isDuplicate(_ records: [Record], pos: NSNumber, _ index: Int) -> Bool {
+        for i in 0..<index {
+            if records[i].setPosition == pos {
+                return true
+            }
+        }
+        return false
     }
     // records.setPosition의 값 중에서 중복되지 않는 친구를 찾아야한다.
     private func getEmptyPosition(records: [Record]) -> Int {
