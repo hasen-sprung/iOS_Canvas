@@ -47,6 +47,12 @@
 		4F0A39FC27424C75009E3AAF /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0A39FB27424C74009E3AAF /* Color.swift */; };
 		4F0A39FE27425C39009E3AAF /* CreateRecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0A39FD27425C39009E3AAF /* CreateRecordView.swift */; };
 		4F0A3A0027425E90009E3AAF /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0A39FF27425E90009E3AAF /* Extension.swift */; };
+		4F29B8DF274960BD00747DDD /* MainInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F29B8DE274960BD00747DDD /* MainInfoView.swift */; };
+		4F29B8E12749FC1C00747DDD /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F29B8E02749FC1C00747DDD /* SettingViewController.swift */; };
+		4F29B8E3274A106300747DDD /* SettingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F29B8E2274A106300747DDD /* SettingTableViewCell.swift */; };
+		4F29B8E5274A2AF300747DDD /* SettingUserIDViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F29B8E4274A2AF300747DDD /* SettingUserIDViewController.swift */; };
+		4F29B8E7274A2B0300747DDD /* SettingTitleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F29B8E6274A2B0300747DDD /* SettingTitleViewController.swift */; };
+		4F29B8EA274A2B5200747DDD /* SettingManualViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F29B8E9274A2B5200747DDD /* SettingManualViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -111,6 +117,12 @@
 		4F0A39FB27424C74009E3AAF /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		4F0A39FD27425C39009E3AAF /* CreateRecordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateRecordView.swift; sourceTree = "<group>"; };
 		4F0A39FF27425E90009E3AAF /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
+		4F29B8DE274960BD00747DDD /* MainInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainInfoView.swift; sourceTree = "<group>"; };
+		4F29B8E02749FC1C00747DDD /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
+		4F29B8E2274A106300747DDD /* SettingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingTableViewCell.swift; sourceTree = "<group>"; };
+		4F29B8E4274A2AF300747DDD /* SettingUserIDViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingUserIDViewController.swift; sourceTree = "<group>"; };
+		4F29B8E6274A2B0300747DDD /* SettingTitleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingTitleViewController.swift; sourceTree = "<group>"; };
+		4F29B8E9274A2B5200747DDD /* SettingManualViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingManualViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -183,8 +195,8 @@
 				4F0A39EB273BC892009E3AAF /* Model */,
 				4F0A39EC273BC89C009E3AAF /* Views */,
 				4F0A39ED273BC8A8009E3AAF /* Controllers */,
-				4F0A39E2273BC853009E3AAF /* LaunchScreen.storyboard */,
 				4F0A39E0273BC853009E3AAF /* Assets.xcassets */,
+				4F0A39E2273BC853009E3AAF /* LaunchScreen.storyboard */,
 				4F0A39E5273BC853009E3AAF /* Info.plist */,
 			);
 			path = Canvas;
@@ -212,6 +224,8 @@
 				355B49CA27462DA000A764B2 /* MainRecordsView.swift */,
 				4F0590B9274772FF00C4DF41 /* CalendarCollectionViewCell.swift */,
 				4F0590B72747726F00C4DF41 /* CalendarCollectionViewCell.xib */,
+				4F29B8DE274960BD00747DDD /* MainInfoView.swift */,
+				4F29B8E2274A106300747DDD /* SettingTableViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -222,6 +236,8 @@
 				4F0A39F9273C0660009E3AAF /* MainViewController.swift */,
 				3549F2622740D6A800C1589A /* GaugeViewController.swift */,
 				4F0590AD2745193000C4DF41 /* ListTableViewController.swift */,
+				4F29B8E02749FC1C00747DDD /* SettingViewController.swift */,
+				4F29B8E8274A2B0A00747DDD /* SettingGroup */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -239,6 +255,16 @@
 				35FF810E27497D3D00AF43D4 /* RandomPosition.swift */,
 			);
 			path = Utilites;
+			sourceTree = "<group>";
+		};
+		4F29B8E8274A2B0A00747DDD /* SettingGroup */ = {
+			isa = PBXGroup;
+			children = (
+				4F29B8E4274A2AF300747DDD /* SettingUserIDViewController.swift */,
+				4F29B8E6274A2B0300747DDD /* SettingTitleViewController.swift */,
+				4F29B8E9274A2B5200747DDD /* SettingManualViewController.swift */,
+			);
+			path = SettingGroup;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -366,17 +392,24 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+
+				4F0A39F0273BCAD0009E3AAF /* RecordManager.swift in Sources */,
+				4F29B8EA274A2B5200747DDD /* SettingManualViewController.swift in Sources */,
+				4F29B8E3274A106300747DDD /* SettingTableViewCell.swift in Sources */,
 				35FF810F27497D3D00AF43D4 /* RandomPosition.swift in Sources */,
 				4F0A39F4273BCE52009E3AAF /* DateManager.swift in Sources */,
 				4F0A39F2273BCC9F009E3AAF /* Calandar.swift in Sources */,
 				4F0A39D5273BC852009E3AAF /* AppDelegate.swift in Sources */,
 				4F0590AE2745193000C4DF41 /* ListTableViewController.swift in Sources */,
 				4F0590B227461E7300C4DF41 /* ListTableViewCell.swift in Sources */,
+				4F29B8E7274A2B0300747DDD /* SettingTitleViewController.swift in Sources */,
+				4F29B8E5274A2AF300747DDD /* SettingUserIDViewController.swift in Sources */,
 				35FF8111274A189400AF43D4 /* Ratio.swift in Sources */,
 				4F0A39D7273BC852009E3AAF /* SceneDelegate.swift in Sources */,
 				35EBD2B6274939CA00486453 /* DefaultRecord.swift in Sources */,
 				3549F2612740D53600C1589A /* WaveAnimationView.swift in Sources */,
 				4F0A3A0027425E90009E3AAF /* Extension.swift in Sources */,
+				4F29B8E12749FC1C00747DDD /* SettingViewController.swift in Sources */,
 				358BD48B274194C100ACE0E7 /* Constants.swift in Sources */,
 				4F0A39FA273C0660009E3AAF /* MainViewController.swift in Sources */,
 				355B49CB27462DA000A764B2 /* MainRecordsView.swift in Sources */,
@@ -388,6 +421,7 @@
 				4F0A39DF273BC852009E3AAF /* Canvas.xcdatamodeld in Sources */,
 				3549F2672740EE7F00C1589A /* GaugeWaveAnimationView.swift in Sources */,
 				4F0A39F6273BCFC5009E3AAF /* ThemeManager.swift in Sources */,
+				4F29B8DF274960BD00747DDD /* MainInfoView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

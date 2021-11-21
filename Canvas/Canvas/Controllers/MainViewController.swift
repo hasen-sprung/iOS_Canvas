@@ -9,6 +9,7 @@ class MainViewController: UIViewController {
     @IBOutlet weak var goToListButton: UIButton!
     @IBOutlet weak var goToSettingButton: UIButton!
     @IBOutlet weak var addRecordButton: UIButton!
+    private let infoContentView = MainInfoView()
     
     private let goToListIcon = UIImageView()
     private let goToSettingIcon = UIImageView()
@@ -39,8 +40,21 @@ class MainViewController: UIViewController {
         }
     }
     
+    private let launchedBefore = UserDefaults.standard.bool(forKey: "launchedBefore")
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // 첫 실행시, user ID 정해주는 부분.
+        if launchedBefore == false {
+            print("firstLoad")
+            UserDefaults.standard.set(true, forKey: "launchedBefore")
+            // TODO: - 처음 런치 했을 때, userID 입력하는 단계 필요
+            UserDefaults.standard.set("User", forKey: "userID")
+            UserDefaults.standard.set("Canvas", forKey: "canvasTitle")
+            UserDefaults.standard.set(true, forKey: "shakeAvail")
+            UserDefaults.standard.synchronize()
+        }
         setMainViewConstraints()
         setMainViewUI()
         setButtonsTarget()
@@ -50,6 +64,7 @@ class MainViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         updateContext()
         canvasRecordsView?.setRecordViews(records: records, theme: themeManager.getThemeInstance())
+        setInfoContentView()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -73,6 +88,7 @@ extension MainViewController {
     private func setButtonsTarget() {
         addRecordButton.addTarget(self, action: #selector(addRecordButtonPressed), for: .touchUpInside)
         goToListButton.addTarget(self, action: #selector(goToListButtonPressed), for: .touchUpInside)
+        goToSettingButton.addTarget(self, action: #selector(goToSettingPressed), for: .touchUpInside)
     }
     
     @objc func addRecordButtonPressed(_ sender: UIButton) {
@@ -86,6 +102,11 @@ extension MainViewController {
     @objc func goToListButtonPressed(_ sender: UIButton) {
         guard let nextVC = self.storyboard?.instantiateViewController(identifier: "listTableViewController") as? ListTableViewController else { return }
         transitionVc(vc: nextVC, duration: 0.5, type: .fromLeft)
+    }
+    
+    @objc func goToSettingPressed(_ sender: UIButton) {
+        guard let nextVC = self.storyboard?.instantiateViewController(identifier: "settingViewController") as? SettingViewController else { return }
+        transitionVc(vc: nextVC, duration: 0.5, type: .fromRight)
     }
 }
 
@@ -230,8 +251,29 @@ extension MainViewController {
     }
 }
 
-// MARK: - MainRecordsViewDelegate
+// MARK: - set info Content view in info view
+extension MainViewController: MainInfoViewDelegate {
+    func getInfoDateString() -> String {
+        // TODO: - 10개를 가져와서 첫 date, 나중 date 뽑아서 string 만들어야 함.
+        return ""
+    }
+    
+    func setInfoContentView() {
+        
+        infoContentView.frame.size = CGSize(width: infoView.frame.width * 0.8,
+                                            height: infoView.frame.height * 0.7)
+        infoContentView.center = CGPoint(x: infoView.frame.width / 2,
+                                         y: infoView.frame.height * 0.4)
+        infoContentView.backgroundColor = .clear
+        // TODO: - 개수가 있을 때만, 작동하도록 해야 함. 아닐 때는 추가해보라는 설명이 들어가야 함.
+        infoContentView.setDateLabel()
+        infoContentView.setInfoViewContentSize()
+        infoContentView.setInfoViewContentLayout()
+        infoView.addSubview(infoContentView)
+    }
+}
 
+// MARK: - MainRecordsViewDelegate
 extension MainViewController: MainRecordsViewDelegate {
     func openRecordTextView(index: Int) {
         print("record touch and index: \(index)")
