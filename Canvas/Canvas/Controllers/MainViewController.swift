@@ -50,7 +50,6 @@ class MainViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print(UIScreen.main.bounds.height)
         setMainViewConstraints()
         setMainViewUI()
         setButtonsTarget()

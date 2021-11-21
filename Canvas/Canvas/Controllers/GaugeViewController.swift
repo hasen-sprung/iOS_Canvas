@@ -3,6 +3,7 @@ import SnapKit
 import CoreData
 
 class GaugeViewController: UIViewController {
+    private let launchedBefore = UserDefaults.standard.bool(forKey: "launchedGauge")
     private var gaugeWaveView: GaugeWaveAnimationView = {
         let view = GaugeWaveAnimationView(frame: UIScreen.main.bounds)
         return view
@@ -25,6 +26,21 @@ class GaugeViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         gaugeWaveView.startWaveAnimation()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        if launchedBefore == false {
+            UserDefaults.standard.set(true, forKey: "launchedGauge")
+            let greetingLabel = UILabel()
+            greetingLabel.text = "게이지를 끝까지 올리면 종료됩니다. :)"
+            greetingLabel.font = UIFont(name: "Helvetica", size: 15)
+            greetingLabel.textColor = UIColor(r: 72, g: 80, b: 84)
+            greetingLabel.frame.size = CGSize(width: view.frame.width,
+                                              height: 100)
+            greetingLabel.textAlignment = .center
+            greetingLabel.center = CGPoint(x: view.frame.width / 2, y: view.frame.height * 0.2)
+            view.addSubview(greetingLabel)
+        }
     }
     
     override func viewDidDisappear(_ animated: Bool) {
