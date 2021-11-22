@@ -70,9 +70,6 @@ class RecordDetailView: UIView {
                                       height: detailView.frame.height * 0.5)
         memo.center = CGPoint(x: detailView.frame.width * 0.5,
                                    y: detailView.frame.height * 0.65)
-        memo.textAlignment = .left
-        memo.textColor = UIColor(r: 41, g: 46, b: 48)
-        memo.font = UIFont(name: "Pretendard-Regular", size: 15)
         memo.backgroundColor = UIColor(r: 240, g: 240, b: 243)
         memo.isUserInteractionEnabled = false
         detailView.addSubview(memo)

@@ -67,6 +67,7 @@
 		4F29B92A274AC76200747DDD /* Pretendard-ExtraBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4F29B921274AC76100747DDD /* Pretendard-ExtraBold.otf */; };
 		4F29B92B274AC76200747DDD /* Pretendard-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4F29B922274AC76200747DDD /* Pretendard-Regular.otf */; };
 		4F29B92C274AC76200747DDD /* Pretendard-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4F29B923274AC76200747DDD /* Pretendard-Bold.otf */; };
+		4F29B92E274BE33E00747DDD /* DataHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F29B92D274BE33E00747DDD /* DataHelper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -151,6 +152,7 @@
 		4F29B921274AC76100747DDD /* Pretendard-ExtraBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-ExtraBold.otf"; sourceTree = "<group>"; };
 		4F29B922274AC76200747DDD /* Pretendard-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Regular.otf"; sourceTree = "<group>"; };
 		4F29B923274AC76200747DDD /* Pretendard-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Bold.otf"; sourceTree = "<group>"; };
+		4F29B92D274BE33E00747DDD /* DataHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataHelper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -237,6 +239,7 @@
 				4F0A39DD273BC852009E3AAF /* Canvas.xcdatamodeld */,
 				35EBD2B5274939CA00486453 /* DefaultRecord.swift */,
 				35FF8110274A189400AF43D4 /* Ratio.swift */,
+				4F29B92D274BE33E00747DDD /* DataHelper.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -464,6 +467,7 @@
 				4F0590B227461E7300C4DF41 /* ListTableViewCell.swift in Sources */,
 				4F29B8E7274A2B0300747DDD /* SettingTitleViewController.swift in Sources */,
 				4F29B8E5274A2AF300747DDD /* SettingUserIDViewController.swift in Sources */,
+				4F29B92E274BE33E00747DDD /* DataHelper.swift in Sources */,
 				35FF8111274A189400AF43D4 /* Ratio.swift in Sources */,
 				4F0A39D7273BC852009E3AAF /* SceneDelegate.swift in Sources */,
 				35EBD2B6274939CA00486453 /* DefaultRecord.swift in Sources */,

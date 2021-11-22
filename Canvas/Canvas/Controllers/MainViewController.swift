@@ -30,6 +30,7 @@ class MainViewController: UIViewController {
     
     override func loadView() {
         super.loadView()
+        // MARK: - DEVELOP - init seedData : DataHelper.shared.loadSeeder()
         // 처음 앱을 실행되었을 때 = 코어데이터에 아무것도 없는 상태이기 때문에, 레코드들의 위치정보를 제공해줘야 한다.
         if launchedBefore == false {
             UserDefaults.standard.set(true, forKey: "launchedBefore")
@@ -316,9 +317,11 @@ extension MainViewController {
 // MARK: - set info Content view in info view
 extension MainViewController: MainInfoViewDelegate {
     func getInfoDateString() -> String {
-        let recordCount = records.count
+        var recordCount = records.count
         let df = DateFormatter()
-        
+        if recordCount > 10 {
+            recordCount = 10
+        }
         df.dateFormat = "yyyy. M. d"
         df.locale = Locale(identifier:"ko_KR")
         if recordCount >= 1 {
@@ -329,9 +332,6 @@ extension MainViewController: MainInfoViewDelegate {
             } else {
                 return firstDate + " ~ " + lastDate
             }
-        } else if recordCount == 0 {
-            let date = df.string(from: records[0].createdDate ?? Date())
-            return date
         } else {
             return ""
         }
@@ -354,7 +354,7 @@ extension MainViewController: MainInfoViewDelegate {
         } else {
             greetingView.lineBreakMode = .byWordWrapping
             greetingView.numberOfLines = 0
-            greetingView.text = "안녕하세요 \(UserDefaults.standard.string(forKey: "userID") ?? "User")님!\n언제든 감정 기록을 추가하여\n나만의 그림을 완성해보세요!"
+            greetingView.text = "안녕하세요 \(UserDefaults.standard.string(forKey: "userID") ?? "무명작가")님!\n언제든 감정 기록을 추가하여\n나만의 그림을 완성해보세요!"
             greetingView.font = UIFont(name: "Pretendard-Regular", size: 14)
             greetingView.textColor = UIColor(r: 72, g: 80, b: 84)
             let attrString = NSMutableAttributedString(string: greetingView.text ?? "")
@@ -393,6 +393,14 @@ extension MainViewController: MainRecordsViewDelegate {
             detailView.setDetailView()
             detailView.memo.text = DefaultRecord.records[index].memo//"이곳에 랜덤한 설명이 들어갑니다."
         }
+        let attrString = NSMutableAttributedString(string: detailView.memo.text ?? "")
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineSpacing = 5
+        attrString.addAttribute(NSAttributedString.Key.paragraphStyle, value: paragraphStyle, range: NSMakeRange(0, attrString.length))
+        detailView.memo.attributedText = attrString
+        detailView.memo.textAlignment = .left
+        detailView.memo.textColor = UIColor(r: 41, g: 46, b: 48)
+        detailView.memo.font = UIFont(name: "Pretendard-Regular", size: 15)
     }
     
     func tapActionRecordView() {

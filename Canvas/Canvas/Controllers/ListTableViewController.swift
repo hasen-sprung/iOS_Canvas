@@ -132,7 +132,15 @@ class ListTableViewController: UIViewController, UITableViewDelegate, UITableVie
     
     private func setEmptyMessage() {
         emptyMessage.alpha = 0.0
-        emptyMessage.text = "당신의 순간을 기록해보세요 :)"
+        emptyMessage.text = "당신의 순간을 기록해보세요 :)\n모인 기록들은 달력을 통해 손쉽게 찾아갈 수 있답니다!"
+        let attrString = NSMutableAttributedString(string: emptyMessage.text ?? "")
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineSpacing = 5
+        attrString.addAttribute(NSAttributedString.Key.paragraphStyle, value: paragraphStyle, range: NSMakeRange(0, attrString.length))
+        emptyMessage.attributedText = attrString
+        emptyMessage.lineBreakMode = .byWordWrapping
+        emptyMessage.numberOfLines = 0
+        emptyMessage.textAlignment = .center
         emptyMessage.font = UIFont(name: "Pretendard-Regular", size: 15)
         emptyMessage.textColor = UIColor(r: 202, g: 202, b: 202)
         emptyMessage.frame.size = CGSize(width: emptyMessage.intrinsicContentSize.width,
