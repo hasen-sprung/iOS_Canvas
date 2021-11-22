@@ -188,6 +188,7 @@
 		35CC3F312747CE4D0059707A /* CanvasWidget */ = {
 			isa = PBXGroup;
 			children = (
+				35CC3F442748CB980059707A /* CanvasWidgetExtension.entitlements */,
 				35CC3F322747CE4D0059707A /* CanvasWidget.swift */,
 				35CC3F342747CE4E0059707A /* Assets.xcassets */,
 				35CC3F362747CE4E0059707A /* Info.plist */,
@@ -198,7 +199,6 @@
 		4F0A39C8273BC852009E3AAF = {
 			isa = PBXGroup;
 			children = (
-				35CC3F442748CB980059707A /* CanvasWidgetExtension.entitlements */,
 				4F0A39D3273BC852009E3AAF /* Canvas */,
 				35CC3F312747CE4D0059707A /* CanvasWidget */,
 				35CC3F2C2747CE4D0059707A /* Frameworks */,
