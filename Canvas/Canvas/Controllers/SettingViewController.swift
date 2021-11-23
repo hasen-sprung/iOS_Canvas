@@ -12,7 +12,7 @@ class SettingViewController: UIViewController {
               let build = dictionary["CFBundleVersion"] as? String
         else { return nil }
         
-        let versionAndBuild: String = "V \(version).\(build)"
+        let versionAndBuild: String = "\(textSettingVersion) \(version).\(build)"
         return versionAndBuild
     }
     
