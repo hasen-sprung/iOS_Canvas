@@ -2,26 +2,33 @@ import UIKit
 import SnapKit
 
 class MainViewController: UIViewController {
+    // Data
     private let launchedBefore = UserDefaults.standard.bool(forKey: "launchedBefore")
     private let userIDsetting = UserDefaults.standard.bool(forKey: "userIDsetting")
+    private let themeManager = ThemeManager.shared
+    private var records = [Record]()
     
+    // Main views
+    private var mainCanvasView: UIView = UIView()
+    private var mainInfoView: UIView = UIView()
+    private var mainAddRecordButton: UIButton = UIButton()
     @IBOutlet weak var goToListButton: UIButton!
     @IBOutlet weak var goToSettingButton: UIButton!
     
+    // Sub views
+    private var canvasRecordsView: MainRecordsView?
     private let infoContentView = MainInfoView()
     private let greetingView = UILabel()
     private var detailView = RecordDetailView()
     private let mainViewLabel = UILabel()
     
+    // Images
     private let goToListIcon = UIImageView()
     private let goToSettingIcon = UIImageView()
     private let addRecordIcon = UIImageView()
-    private var canvasRecordsView: MainRecordsView?
     
-    private let themeManager = ThemeManager.shared
-    private var records = [Record]()
+    private var isShadow: Bool = false
     private var countOfRecordInCanvas: Int = defaultCountOfRecordInCanvas
-    
     override var preferredStatusBarStyle: UIStatusBarStyle {
         .black
     }
@@ -51,6 +58,10 @@ class MainViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.view.backgroundColor = .black//UIColor(r: 240, g: 240, b: 243)
+        setAutoLayout()
+        
         setMainViewUI()
         setButtonsTarget()
 //        setRecordsViewInCanvas()
@@ -62,11 +73,22 @@ class MainViewController: UIViewController {
 //        setInfoContentView()
     }
     
+    override func viewDidLayoutSubviews() {
+        if !isShadow {
+            print("Set shadow in main")
+            setShadows(mainInfoView)
+            setShadows(mainCanvasView)
+            setShadows(mainAddRecordButton, firstRadius: 36, secondRadius: 13, thirdRadius: 7)
+            isShadow = true
+        }
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         if userIDsetting == false {
             loadUserIdInputMode()
             UserDefaults.standard.synchronize()
         }
+        print(mainCanvasView.frame)
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -92,14 +114,52 @@ class MainViewController: UIViewController {
 // MARK: - Auto Layout
 
 extension MainViewController {
+    private func setAutoLayout() {
+        let buttonSize = 40
+        let addButtonSize = 70
+        let paddingInSafeArea = 18
+        let infoHeight = 110
+        
+        goToListButton.snp.makeConstraints { make in
+            make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top).offset(paddingInSafeArea)
+            make.leading.equalTo(self.view.safeAreaLayoutGuide.snp.leading).offset(paddingInSafeArea)
+            make.size.equalTo(buttonSize)
+        }
+        goToSettingButton.snp.makeConstraints { make in
+            make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top).offset(paddingInSafeArea)
+            make.trailing.equalTo(self.view.safeAreaLayoutGuide.snp.trailing).offset(-paddingInSafeArea)
+            make.size.equalTo(buttonSize)
+        }
+        mainAddRecordButton.snp.makeConstraints { make in
+            mainAddRecordButton.backgroundColor = .clear
+            make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).offset(-paddingInSafeArea)
+            make.centerX.equalTo(view)
+            make.size.equalTo(addButtonSize)
+            view.addSubview(mainAddRecordButton)
+        }
+        mainInfoView.snp.makeConstraints { make in
+            mainInfoView.backgroundColor = .white
+            make.leading.equalTo(self.view.safeAreaLayoutGuide.snp.leading).offset(paddingInSafeArea)
+            make.trailing.equalTo(self.view.safeAreaLayoutGuide.snp.trailing).offset(-paddingInSafeArea)
+            make.bottom.equalTo(mainAddRecordButton.snp.top).offset(-paddingInSafeArea)
+            make.height.equalTo(infoHeight)
+            view.addSubview(mainInfoView)
+        }
+        mainCanvasView.snp.makeConstraints { make in
+            mainCanvasView.backgroundColor = .white
+            make.top.equalTo(goToListButton.snp.bottom).offset(paddingInSafeArea)
+            make.leading.equalTo(self.view.safeAreaLayoutGuide.snp.leading).offset(paddingInSafeArea)
+            make.trailing.equalTo(self.view.safeAreaLayoutGuide.snp.trailing).offset(-paddingInSafeArea)
+            make.bottom.equalTo(mainInfoView.snp.top).offset(-paddingInSafeArea)
+            view.addSubview(mainCanvasView)
+        }
+    }
 }
-
 
 // MARK: - Set UI
 
 extension MainViewController {
     private func setMainViewUI() {
-        view.backgroundColor = UIColor(r: 240, g: 240, b: 243)
         view.addSubview(goToListIcon)
         view.addSubview(goToSettingIcon)
         view.addSubview(addRecordIcon)

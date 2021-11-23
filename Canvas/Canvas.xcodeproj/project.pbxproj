@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		350E6D0E274AD5E000BB5647 /* JosefinSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 350E6D0D274AD5E000BB5647 /* JosefinSans-Regular.ttf */; };
+		35103745274D46590013C5F7 /* Shadows.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35103744274D46590013C5F7 /* Shadows.swift */; };
 		3549F25F273E4E7500C1589A /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 3549F25E273E4E7500C1589A /* SnapKit */; };
 		3549F2612740D53600C1589A /* WaveAnimationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3549F2602740D53600C1589A /* WaveAnimationView.swift */; };
 		3549F2632740D6A800C1589A /* GaugeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3549F2622740D6A800C1589A /* GaugeViewController.swift */; };
@@ -96,6 +97,7 @@
 
 /* Begin PBXFileReference section */
 		350E6D0D274AD5E000BB5647 /* JosefinSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "JosefinSans-Regular.ttf"; sourceTree = "<group>"; };
+		35103744274D46590013C5F7 /* Shadows.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shadows.swift; sourceTree = "<group>"; };
 		3549F2602740D53600C1589A /* WaveAnimationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaveAnimationView.swift; sourceTree = "<group>"; };
 		3549F2622740D6A800C1589A /* GaugeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GaugeViewController.swift; sourceTree = "<group>"; };
 		3549F2662740EE7F00C1589A /* GaugeWaveAnimationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GaugeWaveAnimationView.swift; sourceTree = "<group>"; };
@@ -286,6 +288,7 @@
 				358BD48A274194C100ACE0E7 /* Constants.swift */,
 				4F0A39FB27424C74009E3AAF /* Color.swift */,
 				4F0A39FF27425E90009E3AAF /* Extension.swift */,
+				35103744274D46590013C5F7 /* Shadows.swift */,
 			);
 			path = Utilites;
 			sourceTree = "<group>";
@@ -461,6 +464,7 @@
 				4F29B8EA274A2B5200747DDD /* SettingManualViewController.swift in Sources */,
 				4F29B8E3274A106300747DDD /* SettingTableViewCell.swift in Sources */,
 				4F0A39F4273BCE52009E3AAF /* DateManager.swift in Sources */,
+				35103745274D46590013C5F7 /* Shadows.swift in Sources */,
 				4F0A39F2273BCC9F009E3AAF /* Calandar.swift in Sources */,
 				4F0A39D5273BC852009E3AAF /* AppDelegate.swift in Sources */,
 				4F0590AE2745193000C4DF41 /* ListTableViewController.swift in Sources */,
