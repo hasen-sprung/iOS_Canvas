@@ -118,22 +118,17 @@ class MainViewController: UIViewController {
 
 extension MainViewController {
     private func setAutoLayout() {
-        let buttonSize = 40
-        let addButtonSize = 70
-        let paddingInSafeArea = 18
-        let infoHeight = 110
-        
         // MARK: - Main Views Layout
         mainViewLabel.snp.makeConstraints { make in
             mainViewLabel.backgroundColor = .clear
             mainViewLabel.text = "CANVAS"
-            mainViewLabel.font = UIFont(name: "JosefinSans-Regular", size: goToListButton.frame.size.height * 0.6 )
-            mainViewLabel.textColor = UIColor(.black)
+            mainViewLabel.font = UIFont(name: "JosefinSans-Regular", size: CGFloat(fontSize))
+            mainViewLabel.textColor = textColor
             mainViewLabel.textAlignment = .center
             mainViewLabel.frame.size = CGSize(width: mainViewLabel.intrinsicContentSize.width,
                                               height: mainViewLabel.intrinsicContentSize.height)
             make.centerX.equalTo(self.view)
-            make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top).offset(paddingInSafeArea)
+            make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top).offset(paddingInSafeArea + 10)
             view.addSubview(mainViewLabel)
         }
         goToListButton.snp.makeConstraints { make in
@@ -183,14 +178,14 @@ extension MainViewController {
         goToListIcon.snp.makeConstraints { make in
             goToListIcon.image = UIImage(named: "ListBtnIcon")
             goToListIcon.isUserInteractionEnabled = false
-            make.size.equalTo(goToListButton).multipliedBy(0.7)
+            make.size.equalTo(goToListButton).multipliedBy(iconSizeRatio)
             make.center.equalTo(goToListButton)
             view.addSubview(goToListIcon)
         }
         goToSettingIcon.snp.makeConstraints { make in
             goToSettingIcon.image = UIImage(named: "SettingBtnIcon")
             goToSettingIcon.isUserInteractionEnabled = false
-            make.size.equalTo(goToSettingButton).multipliedBy(0.7)
+            make.size.equalTo(goToSettingButton).multipliedBy(iconSizeRatio)
             make.center.equalTo(goToSettingButton)
             view.addSubview(goToSettingIcon)
         }

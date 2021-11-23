@@ -1,15 +1,7 @@
-//
-//  SettingViewController.swift
-//  Canvas
-//
-//  Created by Junhong Park on 2021/11/21.
-//
-
 import UIKit
 import MessageUI
 
 class SettingViewController: UIViewController {
-    
     private let settingTitle = UILabel()
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var settingTableView: UITableView!
@@ -60,7 +52,6 @@ extension SettingViewController: MFMailComposeViewControllerDelegate {
             guard let nextVC = self.storyboard?.instantiateViewController(identifier: "settingTitleViewController") as? SettingTitleViewController else { return }
             transitionVc(vc: nextVC, duration: 0.5, type: .fromRight)
         case 2:
-            
             if UserDefaults.standard.bool(forKey: "shakeAvail") == true {
                 if let cell = settingTableView.cellForRow(at: indexPath) as? SettingTableViewCell {
                     cell.toggleButton.setImage(UIImage(systemName: "xmark"), for: .normal)
@@ -99,14 +90,15 @@ extension SettingViewController: MFMailComposeViewControllerDelegate {
         let confirmAction = UIAlertAction(title: "확인", style: .default) {
             (action) in
         }
+        
         sendMailErrorAlert.addAction(confirmAction)
         self.present(sendMailErrorAlert, animated: true, completion: nil)
     }
 }
 
 // MARK: - set Table View
+
 extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
-    
     private func setTableView() {
         setTableViewConstraints()
         setTableViewUI()
@@ -130,7 +122,6 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
         let cell = settingTableView.dequeueReusableCell(withIdentifier: "settingCell") as? SettingTableViewCell
         
         cell?.setCellConstraints(viewWidth: view.frame.width)
@@ -168,16 +159,19 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
 // MARK: - set setting title and back button
 
 extension SettingViewController {
-    
     private func setSettingTitle() {
-        settingTitle.text = "Setting"
-        settingTitle.font = UIFont(name: "Cardo-Bold", size: 17)
-        settingTitle.textColor = UIColor(r: 72, g: 80, b: 84)
-        settingTitle.frame.size = CGSize(width: settingTitle.intrinsicContentSize.width,
-                                         height: view.frame.width / 10)
-        settingTitle.center = CGPoint(x: view.frame.width / 2,
-                                      y: view.frame.height * 0.11)
-        view.addSubview(settingTitle)
+        settingTitle.snp.makeConstraints { make in
+            settingTitle.backgroundColor = .clear
+            settingTitle.text = "Setting"
+            settingTitle.font = UIFont(name: "Cardo-Bold", size: CGFloat(fontSize))
+            settingTitle.textColor = textColor
+            settingTitle.textAlignment = .center
+            settingTitle.frame.size = CGSize(width: settingTitle.intrinsicContentSize.width,
+                                              height: settingTitle.intrinsicContentSize.height)
+            make.centerX.equalTo(self.view)
+            make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top).offset(paddingInSafeArea + 10)
+            view.addSubview(settingTitle)
+        }
     }
     
     private func setBackButton() {
@@ -187,13 +181,16 @@ extension SettingViewController {
     }
     
     private func setBackButtonConstraints() {
-        backButton.frame.size = CGSize(width: view.frame.width / 10,
-                                       height: view.frame.width / 10)
-        backButton.center = CGPoint(x: view.frame.width * 1 / 8,
-                                    y: view.frame.height * 0.11)
-        backButtonIcon.frame.size = CGSize(width: backButton.frame.width * 3 / 6,
-                                           height: backButton.frame.width * 3 / 6)
-        backButtonIcon.center = backButton.center
+        backButton.snp.makeConstraints { make in
+            make.leading.equalTo(self.view.safeAreaLayoutGuide.snp.leading).offset(paddingInSafeArea)
+            make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top).offset(paddingInSafeArea)
+            make.size.equalTo(buttonSize)
+        }
+        backButtonIcon.snp.makeConstraints { make in
+            make.size.equalTo(backButton).multipliedBy(iconSizeRatio)
+            make.center.equalTo(backButton)
+            view.addSubview(backButtonIcon)
+        }
     }
     
     private func setBackButtonUI() {
@@ -202,6 +199,5 @@ extension SettingViewController {
         backButtonIcon.image = UIImage(systemName: "arrow.backward")
         backButtonIcon.tintColor = UIColor(r: 163, g: 173, b: 178)
         backButtonIcon.isUserInteractionEnabled = false
-        view.addSubview(backButtonIcon)
     }
 }
