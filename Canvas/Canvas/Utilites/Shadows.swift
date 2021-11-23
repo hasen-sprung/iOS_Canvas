@@ -7,6 +7,7 @@ func setShadows(_ view: UIView, firstRadius: CGFloat = 2, secondRadius: CGFloat 
     shadows.frame = view.frame
     shadows.frame.origin = .zero
     shadows.clipsToBounds = false
+    shadows.isUserInteractionEnabled = false
     view.addSubview(shadows)
     
     setLayer(shadows: shadows,
@@ -34,6 +35,7 @@ func setShadows(_ view: UIView, firstRadius: CGFloat = 2, secondRadius: CGFloat 
     shapes.frame = view.frame
     shapes.frame.origin = .zero
     shapes.clipsToBounds = true
+    shapes.isUserInteractionEnabled = false
     view.addSubview(shapes)
     
     let layer = CALayer()

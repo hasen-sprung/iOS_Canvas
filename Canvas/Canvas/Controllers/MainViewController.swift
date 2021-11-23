@@ -14,20 +14,21 @@ class MainViewController: UIViewController {
     private var mainAddRecordButton: UIButton = UIButton()
     @IBOutlet weak var goToListButton: UIButton!
     @IBOutlet weak var goToSettingButton: UIButton!
+    private let mainViewLabel = UILabel()
+    
+    // Main views images
+    private let addRecordIcon = UIImageView()
+    private let goToListIcon = UIImageView()
+    private let goToSettingIcon = UIImageView()
     
     // Sub views
     private var canvasRecordsView: MainRecordsView?
     private let infoContentView = MainInfoView()
     private let greetingView = UILabel()
     private var detailView = RecordDetailView()
-    private let mainViewLabel = UILabel()
     
-    // Images
-    private let goToListIcon = UIImageView()
-    private let goToSettingIcon = UIImageView()
-    private let addRecordIcon = UIImageView()
     
-    private var isShadow: Bool = false
+    private var isFirstInitInMainView: Bool = false
     private var countOfRecordInCanvas: Int = defaultCountOfRecordInCanvas
     override var preferredStatusBarStyle: UIStatusBarStyle {
         .black
@@ -58,11 +59,9 @@ class MainViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.view.backgroundColor = .black//UIColor(r: 240, g: 240, b: 243)
+        self.view.backgroundColor = UIColor(r: 240, g: 240, b: 243)
         setAutoLayout()
         
-        setMainViewUI()
         setButtonsTarget()
 //        setRecordsViewInCanvas()
     }
@@ -74,12 +73,12 @@ class MainViewController: UIViewController {
     }
     
     override func viewDidLayoutSubviews() {
-        if !isShadow {
+        if !isFirstInitInMainView {
             print("Set shadow in main")
             setShadows(mainInfoView)
             setShadows(mainCanvasView)
             setShadows(mainAddRecordButton, firstRadius: 36, secondRadius: 13, thirdRadius: 7)
-            isShadow = true
+            isFirstInitInMainView = true
         }
     }
     
@@ -111,7 +110,7 @@ class MainViewController: UIViewController {
     }
 }
 
-// MARK: - Auto Layout
+// MARK: - Auto Layout & Set Subviews
 
 extension MainViewController {
     private func setAutoLayout() {
@@ -120,12 +119,29 @@ extension MainViewController {
         let paddingInSafeArea = 18
         let infoHeight = 110
         
+        // MARK: - Main Views Layout
+        mainViewLabel.snp.makeConstraints { make in
+            mainViewLabel.backgroundColor = .clear
+            mainViewLabel.text = "CANVAS"
+            mainViewLabel.font = UIFont(name: "JosefinSans-Regular", size: goToListButton.frame.size.height * 0.6 )
+            mainViewLabel.textColor = UIColor(.black)
+            mainViewLabel.textAlignment = .center
+            mainViewLabel.frame.size = CGSize(width: mainViewLabel.intrinsicContentSize.width,
+                                              height: mainViewLabel.intrinsicContentSize.height)
+            make.centerX.equalTo(self.view)
+            make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top).offset(paddingInSafeArea)
+            view.addSubview(mainViewLabel)
+        }
         goToListButton.snp.makeConstraints { make in
+            goToListButton.backgroundColor = .clear
+            goToListButton.setImage(UIImage(named: "SmallBtnBackground"), for: .normal)
             make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top).offset(paddingInSafeArea)
             make.leading.equalTo(self.view.safeAreaLayoutGuide.snp.leading).offset(paddingInSafeArea)
             make.size.equalTo(buttonSize)
         }
         goToSettingButton.snp.makeConstraints { make in
+            goToSettingButton.backgroundColor = .clear
+            goToSettingButton.setImage(UIImage(named: "SmallBtnBackground"), for: .normal)
             make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top).offset(paddingInSafeArea)
             make.trailing.equalTo(self.view.safeAreaLayoutGuide.snp.trailing).offset(-paddingInSafeArea)
             make.size.equalTo(buttonSize)
@@ -133,7 +149,7 @@ extension MainViewController {
         mainAddRecordButton.snp.makeConstraints { make in
             mainAddRecordButton.backgroundColor = .clear
             make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).offset(-paddingInSafeArea)
-            make.centerX.equalTo(view)
+            make.centerX.equalTo(self.view)
             make.size.equalTo(addButtonSize)
             view.addSubview(mainAddRecordButton)
         }
@@ -153,20 +169,30 @@ extension MainViewController {
             make.bottom.equalTo(mainInfoView.snp.top).offset(-paddingInSafeArea)
             view.addSubview(mainCanvasView)
         }
-    }
-}
-
-// MARK: - Set UI
-
-extension MainViewController {
-    private func setMainViewUI() {
-        view.addSubview(goToListIcon)
-        view.addSubview(goToSettingIcon)
-        view.addSubview(addRecordIcon)
-        setListButtonsUI()
-        setSettingButtonUI()
-        setAddRecordingButtonUI()
-        setMainViewLabel()
+        
+        // MARK: - Icons Layout
+        goToListIcon.snp.makeConstraints { make in
+            goToListIcon.image = UIImage(named: "ListBtnIcon")
+            goToListIcon.isUserInteractionEnabled = false
+            make.size.equalTo(goToListButton).multipliedBy(0.7)
+            make.center.equalTo(goToListButton)
+            view.addSubview(goToListIcon)
+        }
+        goToSettingIcon.snp.makeConstraints { make in
+            goToSettingIcon.image = UIImage(named: "SettingBtnIcon")
+            goToSettingIcon.isUserInteractionEnabled = false
+            make.size.equalTo(goToSettingButton).multipliedBy(0.7)
+            make.center.equalTo(goToSettingButton)
+            view.addSubview(goToSettingIcon)
+        }
+        addRecordIcon.snp.makeConstraints { make in
+            addRecordIcon.image = UIImage(named: "AddRecordBtnIcon")?.withRenderingMode(.alwaysTemplate)
+            addRecordIcon.tintColor = UIColor(r: 163, g: 173, b: 178)
+            addRecordIcon.isUserInteractionEnabled = false
+            make.size.equalTo(mainAddRecordButton).multipliedBy(0.35)
+            make.center.equalTo(mainAddRecordButton)
+            view.addSubview(addRecordIcon)
+        }
     }
     
 //    private func setRecordsViewInCanvas() {
@@ -177,44 +203,6 @@ extension MainViewController {
 //        canvasRecordsView?.setRecordViewsCount(to: countOfRecordInCanvas)
 //        canvasRecordsView?.delegate = self
 //    }
-    
-    private func setListButtonsUI() {
-        goToListButton.backgroundColor = .clear
-        goToListButton.setImage(UIImage(named: "SmallBtnBackground"), for: .normal)
-        goToListIcon.image = UIImage(named: "ListBtnIcon")
-        goToListIcon.isUserInteractionEnabled = false
-    }
-    
-    private func setSettingButtonUI() {
-        goToSettingButton.backgroundColor = .clear
-        goToSettingButton.setImage(UIImage(named: "SmallBtnBackground"), for: .normal)
-        goToSettingIcon.image = UIImage(named: "SettingBtnIcon")
-        goToSettingIcon.isUserInteractionEnabled = false
-    }
-    
-    private func setAddRecordingButtonUI() {
-//        addRecordButton.backgroundColor = .clear
-//        addRecordButton.setImage(UIImage(named: "BigBtnBackground"), for: .normal)
-        addRecordIcon.image = UIImage(named: "AddRecordBtnIcon")?.withRenderingMode(.alwaysTemplate)
-        addRecordIcon.tintColor = UIColor(r: 163, g: 173, b: 178)
-        addRecordIcon.isUserInteractionEnabled = false
-    }
-    
-    private func setMainViewLabel() {
-        mainViewLabel.backgroundColor = .clear
-        mainViewLabel.text = "CANVAS"
-        mainViewLabel.font = UIFont(name: "JosefinSans-Regular", size: goToListButton.frame.size.height * 0.6 )
-        mainViewLabel.textColor = UIColor(.black)
-        mainViewLabel.textAlignment = .center
-        mainViewLabel.frame.size = CGSize(width: mainViewLabel.intrinsicContentSize.width,
-                                          height: mainViewLabel.intrinsicContentSize.height)
-        view.addSubview(mainViewLabel)
-        
-        mainViewLabel.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top).offset(40)
-        }
-    }
 }
 
 // MARK: - Set Motion and Gesture
@@ -236,12 +224,16 @@ extension MainViewController {
 
 extension MainViewController {
     private func setButtonsTarget() {
-//        addRecordButton.addTarget(self, action: #selector(addRecordButtonPressed), for: .touchUpInside)
+        mainAddRecordButton.addTarget(self, action: #selector(addRecordButtonPressed), for: .touchUpInside)
         goToListButton.addTarget(self, action: #selector(goToListButtonPressed), for: .touchUpInside)
         goToSettingButton.addTarget(self, action: #selector(goToSettingPressed), for: .touchUpInside)
     }
+    @objc func press(_ sender: UIButton) {
+        print("test")
+    }
     
     @objc func addRecordButtonPressed(_ sender: UIButton) {
+        print("pressed")
         guard let nextVC = self.storyboard?.instantiateViewController(identifier: "gaugeViewController") as? GaugeViewController else { return }
         
         nextVC.modalTransitionStyle = .coverVertical
