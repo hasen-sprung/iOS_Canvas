@@ -22,6 +22,7 @@ class MainViewController: UIViewController {
     private let goToSettingIcon = UIImageView()
     
     // Sub views
+    private var mainCanvasSubview: UIView = UIView()
     private var canvasRecordsView: MainRecordsView?
     private let infoContentView = MainInfoView()
     private let greetingView = UILabel()
@@ -61,24 +62,27 @@ class MainViewController: UIViewController {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor(r: 240, g: 240, b: 243)
         setAutoLayout()
-        
         setButtonsTarget()
-//        setRecordsViewInCanvas()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         updateContext()
         canvasRecordsView?.setRecordViews(records: records, theme: themeManager.getThemeInstance())
-//        setInfoContentView()
+        setInfoContentView()
     }
     
     override func viewDidLayoutSubviews() {
+        // MARK: - 초기값에 프레임이 없기 때문에 여기에서 한번 무조건 초기화를 해줘야함
         if !isFirstInitInMainView {
+            isFirstInitInMainView = true
             print("Set shadow in main")
             setShadows(mainInfoView)
             setShadows(mainCanvasView)
             setShadows(mainAddRecordButton, firstRadius: 36, secondRadius: 13, thirdRadius: 7)
-            isFirstInitInMainView = true
+            
+            setInfoContentView()
+            setRecordsViewInCanvas()
+            canvasRecordsView?.setRecordViews(records: records, theme: themeManager.getThemeInstance())
         }
     }
     
@@ -169,6 +173,11 @@ extension MainViewController {
             make.bottom.equalTo(mainInfoView.snp.top).offset(-paddingInSafeArea)
             view.addSubview(mainCanvasView)
         }
+        mainCanvasSubview.snp.makeConstraints { make in
+            mainCanvasSubview.backgroundColor = canvasColor
+            make.edges.equalTo(mainCanvasView).inset(8)
+            view.addSubview(mainCanvasSubview)
+        }
         
         // MARK: - Icons Layout
         goToListIcon.snp.makeConstraints { make in
@@ -195,14 +204,16 @@ extension MainViewController {
         }
     }
     
-//    private func setRecordsViewInCanvas() {
-//        // canvas ui의 frame, layout이 정해진 후 레코드뷰들을 생성해야 함
-//        canvasRecordsView = MainRecordsView(in: canvasView)
-//        canvasView.addSubview(canvasRecordsView!)
-//        // 메인 뷰에서 출력되는 숫자는 차후 유저디폴트로 세팅가능하게, 초기값은 10
-//        canvasRecordsView?.setRecordViewsCount(to: countOfRecordInCanvas)
-//        canvasRecordsView?.delegate = self
-//    }
+    private func setRecordsViewInCanvas() {
+        // canvas ui의 frame, layout이 정해진 후 레코드뷰들을 생성해야 함
+        canvasRecordsView = MainRecordsView(in: mainCanvasSubview)
+        if let recordsView = canvasRecordsView {
+            mainCanvasSubview.addSubview(recordsView)
+            // 메인 뷰에서 출력되는 숫자는 차후 유저디폴트로 세팅가능하게, 초기값은 10
+            recordsView.setRecordViewsCount(to: countOfRecordInCanvas)
+            recordsView.delegate = self
+        }
+    }
 }
 
 // MARK: - Set Motion and Gesture
@@ -228,12 +239,8 @@ extension MainViewController {
         goToListButton.addTarget(self, action: #selector(goToListButtonPressed), for: .touchUpInside)
         goToSettingButton.addTarget(self, action: #selector(goToSettingPressed), for: .touchUpInside)
     }
-    @objc func press(_ sender: UIButton) {
-        print("test")
-    }
     
     @objc func addRecordButtonPressed(_ sender: UIButton) {
-        print("pressed")
         guard let nextVC = self.storyboard?.instantiateViewController(identifier: "gaugeViewController") as? GaugeViewController else { return }
         
         nextVC.modalTransitionStyle = .coverVertical
@@ -275,38 +282,42 @@ extension MainViewController: MainInfoViewDelegate {
         }
     }
     
-//    func setInfoContentView() {
-//        infoContentView.delegate = self
-//        infoContentView.frame.size = CGSize(width: infoView.frame.width * 0.8,
-//                                            height: infoView.frame.height * 0.7)
-//        infoContentView.center = CGPoint(x: infoView.frame.width / 2,
-//                                         y: infoView.frame.height * 0.4)
-//        infoContentView.backgroundColor = .clear
-//        // TODO: - 개수가 있을 때만, 작동하도록 해야 함. 아닐 때는 추가해보라는 설명이 들어가야 함.
-//        if records.count > 0 {
-//            greetingView.removeFromSuperview()
-//            infoContentView.setDateLabel()
-//            infoContentView.setInfoViewContentSize()
-//            infoContentView.setInfoViewContentLayout()
-//            infoView.addSubview(infoContentView)
-//        } else {
-//            greetingView.lineBreakMode = .byWordWrapping
-//            greetingView.numberOfLines = 0
-//            greetingView.text = "안녕하세요 \(UserDefaults.standard.string(forKey: "userID") ?? "무명작가")님!\n언제든 감정 기록을 추가하여\n나만의 그림을 완성해보세요!"
-//            greetingView.font = UIFont(name: "Pretendard-Regular", size: 14)
-//            greetingView.textColor = UIColor(r: 72, g: 80, b: 84)
-//            let attrString = NSMutableAttributedString(string: greetingView.text ?? "")
-//            let paragraphStyle = NSMutableParagraphStyle()
-//            paragraphStyle.lineSpacing = 5
-//            attrString.addAttribute(NSAttributedString.Key.paragraphStyle, value: paragraphStyle, range: NSMakeRange(0, attrString.length))
-//            greetingView.attributedText = attrString
-//            greetingView.textAlignment = .center
-//            greetingView.frame.size = CGSize(width: greetingView.intrinsicContentSize.width,
-//                                             height: greetingView.intrinsicContentSize.height)
-//            greetingView.center = infoView.center
-//            view.addSubview(greetingView)
-//        }
-//    }
+    // MARK: - infoContentView가 계속 쌓이는 거 아닌가???
+    
+    func setInfoContentView() {
+        infoContentView.delegate = self
+        infoContentView.backgroundColor = .clear
+        
+        // TODO: - 개수가 있을 때만, 작동하도록 해야 함. 아닐 때는 추가해보라는 설명이 들어가야 함.
+        if records.count > 0 {
+            infoContentView.snp.makeConstraints { make in
+                make.edges.equalTo(mainInfoView).inset(10)
+                view.addSubview(infoContentView)
+            }
+            greetingView.removeFromSuperview()
+            infoContentView.setDateLabel()
+            infoContentView.setInfoViewContentSize()
+            infoContentView.setInfoViewContentLayout()
+        } else {
+            greetingView.lineBreakMode = .byWordWrapping
+            greetingView.numberOfLines = 0
+            greetingView.text = "안녕하세요 \(UserDefaults.standard.string(forKey: "userID") ?? "무명작가")님!\n언제든 감정 기록을 추가하여\n나만의 그림을 완성해보세요!"
+            greetingView.font = UIFont(name: "Pretendard-Regular", size: 14)
+            greetingView.textColor = UIColor(r: 72, g: 80, b: 84)
+            
+            let attrString = NSMutableAttributedString(string: greetingView.text ?? "")
+            let paragraphStyle = NSMutableParagraphStyle()
+            
+            paragraphStyle.lineSpacing = 5
+            attrString.addAttribute(NSAttributedString.Key.paragraphStyle, value: paragraphStyle, range: NSMakeRange(0, attrString.length))
+            greetingView.attributedText = attrString
+            greetingView.textAlignment = .center
+            greetingView.frame.size = CGSize(width: greetingView.intrinsicContentSize.width,
+                                             height: greetingView.intrinsicContentSize.height)
+            greetingView.center = mainInfoView.center
+            view.addSubview(greetingView)
+        }
+    }
 }
 
 // MARK: - MainRecordsViewDelegate
@@ -332,8 +343,10 @@ extension MainViewController: MainRecordsViewDelegate {
             detailView.setDetailView()
             detailView.memo.text = DefaultRecord.records[index].memo//"이곳에 랜덤한 설명이 들어갑니다."
         }
+        
         let attrString = NSMutableAttributedString(string: detailView.memo.text ?? "")
         let paragraphStyle = NSMutableParagraphStyle()
+        
         paragraphStyle.lineSpacing = 5
         attrString.addAttribute(NSAttributedString.Key.paragraphStyle, value: paragraphStyle, range: NSMakeRange(0, attrString.length))
         detailView.memo.attributedText = attrString
