@@ -80,9 +80,9 @@ class MainViewController: UIViewController {
             setShadows(mainCanvasView)
             setShadows(mainAddRecordButton, firstRadius: 36, secondRadius: 13, thirdRadius: 7)
             
-            setInfoContentView()
             setRecordsViewInCanvas()
             canvasRecordsView?.setRecordViews(records: records, theme: themeManager.getThemeInstance())
+            setInfoContentView()
         }
     }
     
