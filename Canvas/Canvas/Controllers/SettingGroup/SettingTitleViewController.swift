@@ -80,7 +80,7 @@ class SettingTitleViewController: UIViewController, UITextFieldDelegate {
     }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        let MAX_LENGTH = 10
+        let MAX_LENGTH = 15
         let updatedString = ((textField.text ?? "") as NSString).replacingCharacters(in: range, with: string)
         return updatedString.count <= MAX_LENGTH
         

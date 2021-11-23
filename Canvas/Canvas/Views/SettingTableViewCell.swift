@@ -30,10 +30,10 @@ class SettingTableViewCell: UITableViewCell {
     }
     
     func setCellConstraints(viewWidth: CGFloat) {
-        settingText.frame.size = CGSize(width: viewWidth * 0.5, height: self.frame.height)
+        settingText.frame.size = CGSize(width: viewWidth * 0.4, height: self.frame.height)
         settingText.frame.origin = CGPoint(x: viewWidth * 0.1, y: .zero)
-        settingDetail.frame.size = CGSize(width: viewWidth * 0.3, height: self.frame.height)
-        settingDetail.frame.origin = CGPoint(x: viewWidth * 0.6, y: .zero)
+        settingDetail.frame.size = CGSize(width: viewWidth * 0.4, height: self.frame.height)
+        settingDetail.frame.origin = CGPoint(x: viewWidth * 0.5, y: .zero)
         settingToggle.frame.size = CGSize(width: self.frame.height, height: self.frame.height)
         settingToggle.frame.origin = CGPoint(x: viewWidth * 0.9 - self.frame.height, y: .zero)
         toggleButton.frame.size = CGSize(width: self.frame.height * 0.7, height: self.frame.height * 0.7)
