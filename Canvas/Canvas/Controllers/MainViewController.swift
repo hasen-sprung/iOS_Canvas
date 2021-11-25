@@ -112,6 +112,14 @@ class MainViewController: UIViewController {
         guard let nextVC = self.storyboard?.instantiateViewController(identifier: "userIdInputViewController") as? UserIdInputViewController else { return }
         transitionVc(vc: nextVC, duration: 0.5, type: .fromBottom)
     }
+    
+    private func getDateString(date: Date) -> String {
+        let df = DateFormatter()
+        
+        df.dateFormat = "yyyy. M. d"
+        df.locale = Locale(identifier:"ko_KR")
+        return df.string(from: date)
+    }
 }
 
 // MARK: - Auto Layout & Set Subviews
@@ -121,7 +129,7 @@ extension MainViewController {
         // MARK: - Main Views Layout
         mainViewLabel.snp.makeConstraints { make in
             mainViewLabel.backgroundColor = .clear
-            mainViewLabel.text = "CANVAS"
+            mainViewLabel.text = getDateString(date: Date())
             mainViewLabel.font = UIFont(name: "JosefinSans-Regular", size: CGFloat(fontSize))
             mainViewLabel.textColor = textColor
             mainViewLabel.textAlignment = .center
