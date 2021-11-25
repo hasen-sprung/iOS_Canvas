@@ -147,15 +147,16 @@ extension GaugeViewController: CreateRecordViewDelegate {
     }
     
     func dismissCreateRecordView() {
-        createRecordView?.fadeOut(duration: 0.3)
-        UIView.animate(withDuration: 0.75, delay: 0.0, options: [.curveEaseOut], animations: { [self] in
-            if UIScreen.main.bounds.height < 740 {
-                cancelButton.alpha = 1.0
-            }
-            gaugeWaveView.bounds.origin.y = gaugeWaveView.bounds.origin.y + view.frame.height
-        }) { (completed) in
-            self.createRecordView?.removeFromSuperview()
-        }
+        completeCreateRecordView()
+//        createRecordView?.fadeOut(duration: 0.3)
+//        UIView.animate(withDuration: 0.75, delay: 0.0, options: [.curveEaseOut], animations: { [self] in
+//            if UIScreen.main.bounds.height < 740 {
+//                cancelButton.alpha = 1.0
+//            }
+//            gaugeWaveView.bounds.origin.y = gaugeWaveView.bounds.origin.y + view.frame.height
+//        }) { (completed) in
+//            self.createRecordView?.removeFromSuperview()
+//        }
     }
 }
 

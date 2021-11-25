@@ -64,7 +64,6 @@ class CreateRecordView: UIView {
     }
     
     @objc func completeButtonPressed() {
-        
         if let d = self.delegate {
             CRTextView.endEditing(true)
             d.completeCreateRecordView()
@@ -76,6 +75,7 @@ class CreateRecordView: UIView {
 }
 
 // MARK: - set textview setting
+
 extension CreateRecordView: UITextViewDelegate {
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         let existingLines = textView.text.components(separatedBy: CharacterSet.newlines)
@@ -86,14 +86,13 @@ extension CreateRecordView: UITextViewDelegate {
         }
         let newText = (textView.text as NSString).replacingCharacters(in: range, with: text)
         let numberOfChars = newText.count
+        
         return numberOfChars <= 180
     }
 }
 
-
-
-
 // MARK: - set components
+
 extension CreateRecordView {
     private func setCRBackgroundViewComponents() {
         setSeperateLine()

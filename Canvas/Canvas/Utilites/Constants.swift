@@ -14,3 +14,23 @@ let defaultCountOfRecordInCanvas: Int = 10
 // MARK: - Widget Description
 let widgetDisplayName: String = "꾸미기"
 let widgetDescription: String = "순간 순간의 감정을 기록해서 다양한 도형으로 캔버스를 채우세요"
+
+// MARK: - Auto-Layout
+let buttonSize = 40
+let addButtonSize = 70
+let paddingInSafeArea = 18
+let infoHeight = 110
+let iconSizeRatio = 0.7
+
+let fontSize = 20
+let textColor = UIColor(r: 72, g: 80, b: 84)
+
+// MARK: - TEXT
+// - MAIN VIEW
+
+// - GAUGE VIEW
+
+// - LIST VIEW
+
+// - SETTING
+let textSettingVersion = "버전"

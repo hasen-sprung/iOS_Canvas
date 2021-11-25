@@ -33,3 +33,12 @@ extension FileManager {
     static let appGroupContainerURL = FileManager.default
         .containerURL(forSecurityApplicationGroupIdentifier: "group.com.hasensprung.Canvas")!
 }
+
+extension UIStatusBarStyle {
+    static var black: UIStatusBarStyle {
+        if #available(iOS 13.0, *) {
+            return .darkContent
+        }
+        return .default
+    }
+}

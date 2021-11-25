@@ -2,28 +2,35 @@ import UIKit
 import SnapKit
 
 class MainViewController: UIViewController {
+    // Data
     private let launchedBefore = UserDefaults.standard.bool(forKey: "launchedBefore")
     private let userIDsetting = UserDefaults.standard.bool(forKey: "userIDsetting")
+    private let themeManager = ThemeManager.shared
+    private var records = [Record]()
     
-    @IBOutlet weak var canvasView: UIImageView!
-    @IBOutlet weak var infoView: UIImageView!
+    // Main views
+    private var mainCanvasView: UIView = UIView()
+    private var mainInfoView: UIView = UIView()
+    private var mainAddRecordButton: UIButton = UIButton()
     @IBOutlet weak var goToListButton: UIButton!
     @IBOutlet weak var goToSettingButton: UIButton!
-    @IBOutlet weak var addRecordButton: UIButton!
+    private let mainViewLabel = UILabel()
+    
+    // Main views images
+    private let addRecordIcon = UIImageView()
+    private let goToListIcon = UIImageView()
+    private let goToSettingIcon = UIImageView()
+    
+    // Sub views
+    private var mainCanvasSubview: UIView = UIView()
+    private var canvasRecordsView: MainRecordsView?
     private let infoContentView = MainInfoView()
     private let greetingView = UILabel()
     private var detailView = RecordDetailView()
-    private let mainViewLabel = UILabel()
     
-    private let goToListIcon = UIImageView()
-    private let goToSettingIcon = UIImageView()
-    private let addRecordIcon = UIImageView()
-    private var canvasRecordsView: MainRecordsView?
     
-    private let themeManager = ThemeManager.shared
-    private var records = [Record]()
+    private var isFirstInitInMainView: Bool = false
     private var countOfRecordInCanvas: Int = defaultCountOfRecordInCanvas
-    
     override var preferredStatusBarStyle: UIStatusBarStyle {
         .black
     }
@@ -53,12 +60,10 @@ class MainViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setMainViewConstraints()
-        setMainViewUI()
+        self.view.backgroundColor = UIColor(r: 240, g: 240, b: 243)
+        setAutoLayout()
         setButtonsTarget()
-        setRecordsViewInCanvas()
     }
-    
     
     override func viewWillAppear(_ animated: Bool) {
         updateContext()
@@ -66,11 +71,27 @@ class MainViewController: UIViewController {
         setInfoContentView()
     }
     
+    override func viewDidLayoutSubviews() {
+        // MARK: - 초기값에 프레임이 없기 때문에 여기에서 한번 무조건 초기화를 해줘야함
+        if !isFirstInitInMainView {
+            isFirstInitInMainView = true
+            print("Set shadow in main")
+            setShadows(mainInfoView)
+            setShadows(mainCanvasView)
+            setShadows(mainAddRecordButton, firstRadius: 36, secondRadius: 13, thirdRadius: 7)
+            
+            setRecordsViewInCanvas()
+            canvasRecordsView?.setRecordViews(records: records, theme: themeManager.getThemeInstance())
+            setInfoContentView()
+        }
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         if userIDsetting == false {
             loadUserIdInputMode()
             UserDefaults.standard.synchronize()
         }
+        print(mainCanvasView.frame)
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -93,6 +114,103 @@ class MainViewController: UIViewController {
     }
 }
 
+// MARK: - Auto Layout & Set Subviews
+
+extension MainViewController {
+    private func setAutoLayout() {
+        // MARK: - Main Views Layout
+        mainViewLabel.snp.makeConstraints { make in
+            mainViewLabel.backgroundColor = .clear
+            mainViewLabel.text = "CANVAS"
+            mainViewLabel.font = UIFont(name: "JosefinSans-Regular", size: CGFloat(fontSize))
+            mainViewLabel.textColor = textColor
+            mainViewLabel.textAlignment = .center
+            mainViewLabel.frame.size = CGSize(width: mainViewLabel.intrinsicContentSize.width,
+                                              height: mainViewLabel.intrinsicContentSize.height)
+            make.centerX.equalTo(self.view)
+            make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top).offset(paddingInSafeArea + 10)
+            view.addSubview(mainViewLabel)
+        }
+        goToListButton.snp.makeConstraints { make in
+            goToListButton.backgroundColor = .clear
+            goToListButton.setImage(UIImage(named: "SmallBtnBackground"), for: .normal)
+            make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top).offset(paddingInSafeArea)
+            make.leading.equalTo(self.view.safeAreaLayoutGuide.snp.leading).offset(paddingInSafeArea)
+            make.size.equalTo(buttonSize)
+        }
+        goToSettingButton.snp.makeConstraints { make in
+            goToSettingButton.backgroundColor = .clear
+            goToSettingButton.setImage(UIImage(named: "SmallBtnBackground"), for: .normal)
+            make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top).offset(paddingInSafeArea)
+            make.trailing.equalTo(self.view.safeAreaLayoutGuide.snp.trailing).offset(-paddingInSafeArea)
+            make.size.equalTo(buttonSize)
+        }
+        mainAddRecordButton.snp.makeConstraints { make in
+            mainAddRecordButton.backgroundColor = .clear
+            make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).offset(-paddingInSafeArea)
+            make.centerX.equalTo(self.view)
+            make.size.equalTo(addButtonSize)
+            view.addSubview(mainAddRecordButton)
+        }
+        mainInfoView.snp.makeConstraints { make in
+            mainInfoView.backgroundColor = .white
+            make.leading.equalTo(self.view.safeAreaLayoutGuide.snp.leading).offset(paddingInSafeArea)
+            make.trailing.equalTo(self.view.safeAreaLayoutGuide.snp.trailing).offset(-paddingInSafeArea)
+            make.bottom.equalTo(mainAddRecordButton.snp.top).offset(-paddingInSafeArea)
+            make.height.equalTo(infoHeight)
+            view.addSubview(mainInfoView)
+        }
+        mainCanvasView.snp.makeConstraints { make in
+            mainCanvasView.backgroundColor = .white
+            make.top.equalTo(goToListButton.snp.bottom).offset(paddingInSafeArea)
+            make.leading.equalTo(self.view.safeAreaLayoutGuide.snp.leading).offset(paddingInSafeArea)
+            make.trailing.equalTo(self.view.safeAreaLayoutGuide.snp.trailing).offset(-paddingInSafeArea)
+            make.bottom.equalTo(mainInfoView.snp.top).offset(-paddingInSafeArea)
+            view.addSubview(mainCanvasView)
+        }
+        mainCanvasSubview.snp.makeConstraints { make in
+            mainCanvasSubview.backgroundColor = canvasColor
+            make.edges.equalTo(mainCanvasView).inset(8)
+            view.addSubview(mainCanvasSubview)
+        }
+        
+        // MARK: - Icons Layout
+        goToListIcon.snp.makeConstraints { make in
+            goToListIcon.image = UIImage(named: "ListBtnIcon")
+            goToListIcon.isUserInteractionEnabled = false
+            make.size.equalTo(goToListButton).multipliedBy(iconSizeRatio)
+            make.center.equalTo(goToListButton)
+            view.addSubview(goToListIcon)
+        }
+        goToSettingIcon.snp.makeConstraints { make in
+            goToSettingIcon.image = UIImage(named: "SettingBtnIcon")
+            goToSettingIcon.isUserInteractionEnabled = false
+            make.size.equalTo(goToSettingButton).multipliedBy(iconSizeRatio)
+            make.center.equalTo(goToSettingButton)
+            view.addSubview(goToSettingIcon)
+        }
+        addRecordIcon.snp.makeConstraints { make in
+            addRecordIcon.image = UIImage(named: "AddRecordBtnIcon")?.withRenderingMode(.alwaysTemplate)
+            addRecordIcon.tintColor = UIColor(r: 163, g: 173, b: 178)
+            addRecordIcon.isUserInteractionEnabled = false
+            make.size.equalTo(mainAddRecordButton).multipliedBy(0.35)
+            make.center.equalTo(mainAddRecordButton)
+            view.addSubview(addRecordIcon)
+        }
+    }
+    
+    private func setRecordsViewInCanvas() {
+        // canvas ui의 frame, layout이 정해진 후 레코드뷰들을 생성해야 함
+        canvasRecordsView = MainRecordsView(in: mainCanvasSubview)
+        if let recordsView = canvasRecordsView {
+            mainCanvasSubview.addSubview(recordsView)
+            // 메인 뷰에서 출력되는 숫자는 차후 유저디폴트로 세팅가능하게, 초기값은 10
+            recordsView.setRecordViewsCount(to: countOfRecordInCanvas)
+            recordsView.delegate = self
+        }
+    }
+}
+
 // MARK: - Set Motion and Gesture
 
 extension MainViewController {
@@ -112,7 +230,7 @@ extension MainViewController {
 
 extension MainViewController {
     private func setButtonsTarget() {
-        addRecordButton.addTarget(self, action: #selector(addRecordButtonPressed), for: .touchUpInside)
+        mainAddRecordButton.addTarget(self, action: #selector(addRecordButtonPressed), for: .touchUpInside)
         goToListButton.addTarget(self, action: #selector(goToListButtonPressed), for: .touchUpInside)
         goToSettingButton.addTarget(self, action: #selector(goToSettingPressed), for: .touchUpInside)
     }
@@ -133,185 +251,6 @@ extension MainViewController {
     @objc func goToSettingPressed(_ sender: UIButton) {
         guard let nextVC = self.storyboard?.instantiateViewController(identifier: "settingViewController") as? SettingViewController else { return }
         transitionVc(vc: nextVC, duration: 0.5, type: .fromRight)
-    }
-}
-
-// MARK: - Set UI
-
-extension MainViewController {
-    private func setMainViewUI() {
-        view.backgroundColor = UIColor(r: 240, g: 240, b: 243)
-        view.addSubview(goToListIcon)
-        view.addSubview(goToSettingIcon)
-        view.addSubview(addRecordIcon)
-        setCanvasViewUI()
-        setInfoViewUI()
-        setListButtonsUI()
-        setSettingButtonUI()
-        setAddRecordingButtonUI()
-        setMainViewLabel()
-    }
-    
-    private func setCanvasViewUI() {
-        canvasView.backgroundColor = .clear
-        canvasView.image = UIImage(named: "CanvasView")
-        canvasView.contentMode = .scaleAspectFill
-        canvasView.isUserInteractionEnabled = true
-    }
-    
-    private func setRecordsViewInCanvas() {
-        // canvas ui의 frame, layout이 정해진 후 레코드뷰들을 생성해야 함
-        canvasRecordsView = MainRecordsView(in: canvasView)
-        canvasView.addSubview(canvasRecordsView!)
-        // 메인 뷰에서 출력되는 숫자는 차후 유저디폴트로 세팅가능하게, 초기값은 10
-        canvasRecordsView?.setRecordViewsCount(to: countOfRecordInCanvas)
-        canvasRecordsView?.delegate = self
-    }
-    
-    private func setInfoViewUI() {
-        infoView.backgroundColor = .clear
-        infoView.image = UIImage(named: "InfoView")
-        infoView.contentMode = .scaleAspectFill
-    }
-    
-    private func setListButtonsUI() {
-        goToListButton.backgroundColor = .clear
-        goToListButton.setImage(UIImage(named: "SmallBtnBackground"), for: .normal)
-        goToListIcon.image = UIImage(named: "ListBtnIcon")
-        goToListIcon.isUserInteractionEnabled = false
-    }
-    
-    private func setSettingButtonUI() {
-        goToSettingButton.backgroundColor = .clear
-        goToSettingButton.setImage(UIImage(named: "SmallBtnBackground"), for: .normal)
-        goToSettingIcon.image = UIImage(named: "SettingBtnIcon")
-        goToSettingIcon.isUserInteractionEnabled = false
-    }
-    
-    private func setAddRecordingButtonUI() {
-        addRecordButton.backgroundColor = .clear
-        addRecordButton.setImage(UIImage(named: "BigBtnBackground"), for: .normal)
-        addRecordIcon.image = UIImage(named: "AddRecordBtnIcon")?.withRenderingMode(.alwaysTemplate)
-        addRecordIcon.tintColor = UIColor(r: 163, g: 173, b: 178)
-        addRecordIcon.isUserInteractionEnabled = false
-    }
-    
-    private func setMainViewLabel() {
-        mainViewLabel.backgroundColor = .clear
-        mainViewLabel.text = "CANVAS"
-        mainViewLabel.font = UIFont(name: "JosefinSans-Regular", size: goToListButton.frame.size.height * 0.6 )
-        mainViewLabel.textColor = UIColor(.black)
-        mainViewLabel.textAlignment = .center
-        mainViewLabel.frame.size = CGSize(width: mainViewLabel.intrinsicContentSize.width,
-                                          height: mainViewLabel.intrinsicContentSize.height)
-        view.addSubview(mainViewLabel)
-        
-        mainViewLabel.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.bottom.equalTo(canvasView.snp.top).offset(-10)
-        }
-    }
-}
-
-// MARK: - Set Layout / AutoLayout Refactoring 필요
-
-extension MainViewController {
-    private func setMainViewConstraints() {
-        setCanvasViewConstraints()
-        // CanvasView를 중심으로 layout 구성 (반드시 canvasView가 먼저 setting 되어야 한다.)
-        setInfoViewConstraints()
-        setListButtonConstraints()
-        setSettingButtonConstraints()
-        setAddRecordButtonConstraints()
-    }
-    
-    private func setCanvasViewConstraints() {
-        var viewWidth = view.frame.width * 0.925
-        if UIScreen.main.bounds.height < 740 {
-            viewWidth = view.frame.width * 0.825
-            canvasView.frame.size = CGSize(width: viewWidth,
-                                           height: viewWidth * 1.36)
-            canvasView.center = CGPoint(x: view.frame.width / 2, y: view.frame.height * 0.425)
-        } else {
-        canvasView.frame.size = CGSize(width: viewWidth,
-                                       height: viewWidth * 1.36)
-        canvasView.center = CGPoint(x: view.frame.width / 2, y: view.frame.height * 0.425)
-        }
-        
-    }
-    
-    private func setInfoViewConstraints() {
-        let viewWidth = canvasView.frame.width
-        let endOfCanvasView = canvasView.frame.origin.y + canvasView.frame.height
-        
-        infoView.frame.size = CGSize(width: viewWidth,
-                                     height: viewWidth * 0.3)
-        if UIScreen.main.bounds.height < 740 {
-            infoView.frame.size = CGSize(width: viewWidth,
-                                         height: viewWidth * 0.35)
-        }
-        infoView.frame.origin = CGPoint(x: canvasView.frame.origin.x,
-                                        y: endOfCanvasView - (900 * 20 / view.frame.height))
-    }
-    
-    private func setListButtonConstraints() {
-        var margin = view.frame.width * 0.175 / 2
-        var buttonSize = view.frame.height * 40 / 900
-        if UIScreen.main.bounds.height < 740 {
-            margin = view.frame.width * 0.3 / 2
-            buttonSize = view.frame.width / 12
-        }
-        let buttonY = canvasView.frame.origin.y - buttonSize
-        
-        // Button
-        goToListButton.frame.size = CGSize(width: buttonSize,
-                                           height: buttonSize)
-        goToListButton.frame.origin = CGPoint(x: margin,
-                                              y: buttonY)
-        // Icon
-        goToListIcon.frame.size = CGSize(width: goToListButton.frame.width * 4 / 6,
-                                         height: goToListButton.frame.width * 4 / 6)
-        goToListIcon.center = goToListButton.center
-    }
-    
-    private func setSettingButtonConstraints() {
-        
-        var margin = view.frame.width * 0.175 / 2
-        var buttonSize = view.frame.height * 40 / 900
-        if UIScreen.main.bounds.height < 740 {
-            margin = view.frame.width * 0.3 / 2
-            buttonSize = view.frame.width / 12
-        }
-        let buttonY = canvasView.frame.origin.y - buttonSize
-        
-        // Button
-        goToSettingButton.frame.size = CGSize(width: buttonSize,
-                                              height: buttonSize)
-        goToSettingButton.frame.origin = CGPoint(x: view.frame.width - margin - buttonSize,
-                                                 y: buttonY)
-        // Icon
-        goToSettingIcon.frame.size = CGSize(width: goToSettingButton.frame.width * 4 / 6,
-                                            height: goToSettingButton.frame.width * 4 / 6)
-        goToSettingIcon.center = goToSettingButton.center
-    }
-    
-    private func setAddRecordButtonConstraints() {
-        
-        let endOfInfoView = infoView.frame.origin.y + infoView.frame.height
-        
-        //Button
-        addRecordButton.frame.size = CGSize(width: view.frame.height * 80 / 900,
-                                            height: view.frame.height * 80 / 900)
-        if UIScreen.main.bounds.height < 740 {
-            addRecordButton.frame.size = CGSize(width: view.frame.height * 45 / 900,
-                                                height: view.frame.height * 45 / 900)
-        }
-        addRecordButton.center = CGPoint(x: view.frame.width / 1.95, y: 0)
-        addRecordButton.frame.origin.y = endOfInfoView + (view.frame.height * 0.03)
-        // Icon
-        addRecordIcon.frame.size = CGSize(width: addRecordButton.frame.width * 0.35,
-                                          height: addRecordButton.frame.width * 0.35)
-        addRecordIcon.center = CGPoint(x: view.frame.width / 2, y: addRecordButton.center.y)
     }
 }
 
@@ -338,41 +277,46 @@ extension MainViewController: MainInfoViewDelegate {
         }
     }
     
+    // MARK: - infoContentView가 계속 쌓이는 거 아닌가???
+    
     func setInfoContentView() {
         infoContentView.delegate = self
-        infoContentView.frame.size = CGSize(width: infoView.frame.width * 0.8,
-                                            height: infoView.frame.height * 0.7)
-        infoContentView.center = CGPoint(x: infoView.frame.width / 2,
-                                         y: infoView.frame.height * 0.4)
         infoContentView.backgroundColor = .clear
+        
         // TODO: - 개수가 있을 때만, 작동하도록 해야 함. 아닐 때는 추가해보라는 설명이 들어가야 함.
         if records.count > 0 {
+            infoContentView.snp.makeConstraints { make in
+                make.edges.equalTo(mainInfoView).inset(10)
+                view.addSubview(infoContentView)
+            }
             greetingView.removeFromSuperview()
             infoContentView.setDateLabel()
             infoContentView.setInfoViewContentSize()
             infoContentView.setInfoViewContentLayout()
-            infoView.addSubview(infoContentView)
         } else {
             greetingView.lineBreakMode = .byWordWrapping
             greetingView.numberOfLines = 0
             greetingView.text = "안녕하세요 \(UserDefaults.standard.string(forKey: "userID") ?? "무명작가")님!\n언제든 감정 기록을 추가하여\n나만의 그림을 완성해보세요!"
             greetingView.font = UIFont(name: "Pretendard-Regular", size: 14)
             greetingView.textColor = UIColor(r: 72, g: 80, b: 84)
+            
             let attrString = NSMutableAttributedString(string: greetingView.text ?? "")
             let paragraphStyle = NSMutableParagraphStyle()
+            
             paragraphStyle.lineSpacing = 5
             attrString.addAttribute(NSAttributedString.Key.paragraphStyle, value: paragraphStyle, range: NSMakeRange(0, attrString.length))
             greetingView.attributedText = attrString
             greetingView.textAlignment = .center
             greetingView.frame.size = CGSize(width: greetingView.intrinsicContentSize.width,
                                              height: greetingView.intrinsicContentSize.height)
-            greetingView.center = infoView.center
+            greetingView.center = mainInfoView.center
             view.addSubview(greetingView)
         }
     }
 }
 
 // MARK: - MainRecordsViewDelegate
+
 extension MainViewController: MainRecordsViewDelegate {
     func openRecordTextView(index: Int) {
         let df = DateFormatter()
@@ -394,8 +338,10 @@ extension MainViewController: MainRecordsViewDelegate {
             detailView.setDetailView()
             detailView.memo.text = DefaultRecord.records[index].memo//"이곳에 랜덤한 설명이 들어갑니다."
         }
+        
         let attrString = NSMutableAttributedString(string: detailView.memo.text ?? "")
         let paragraphStyle = NSMutableParagraphStyle()
+        
         paragraphStyle.lineSpacing = 5
         attrString.addAttribute(NSAttributedString.Key.paragraphStyle, value: paragraphStyle, range: NSMakeRange(0, attrString.length))
         detailView.memo.attributedText = attrString
@@ -405,14 +351,5 @@ extension MainViewController: MainRecordsViewDelegate {
     }
     
     func tapActionRecordView() {
-    }
-}
-
-extension UIStatusBarStyle {
-    static var black: UIStatusBarStyle {
-        if #available(iOS 13.0, *) {
-            return .darkContent
-        }
-        return .default
     }
 }

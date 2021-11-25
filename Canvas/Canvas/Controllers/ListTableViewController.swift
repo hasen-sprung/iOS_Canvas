@@ -1,14 +1,6 @@
-//
-//  ListTableViewController.swift
-//  Canvas
-//
-//  Created by Junhong Park on 2021/11/17.
-//
-
 import UIKit
 
 class ListTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-    
     @IBOutlet weak var listTableView: UITableView!
     @IBOutlet weak var calendarView: UICollectionView!
     private var calendarDateLabel = UILabel()
@@ -133,8 +125,10 @@ class ListTableViewController: UIViewController, UITableViewDelegate, UITableVie
     private func setEmptyMessage() {
         emptyMessage.alpha = 0.0
         emptyMessage.text = "당신의 순간을 기록해보세요 :)\n모인 기록들은 달력을 통해 손쉽게 찾아갈 수 있답니다!"
+        
         let attrString = NSMutableAttributedString(string: emptyMessage.text ?? "")
         let paragraphStyle = NSMutableParagraphStyle()
+        
         paragraphStyle.lineSpacing = 5
         attrString.addAttribute(NSAttributedString.Key.paragraphStyle, value: paragraphStyle, range: NSMakeRange(0, attrString.length))
         emptyMessage.attributedText = attrString
@@ -255,19 +249,23 @@ extension ListTableViewController: UICollectionViewDelegateFlowLayout, UICollect
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let boundSize: CGFloat = view.bounds.size.width
         let cellSize: CGFloat = boundSize / 9
+        
         return CGSize(width: cellSize, height: cellSize)
     }
     
     private func setCalendarDateLabel() {
-        calendarDateLabel.frame.size = CGSize(width: view.frame.width,
-                                              height: view.frame.width / 5)
-        calendarDateLabel.frame.origin = CGPoint(x: .zero,
-                                                 y: view.frame.height / 6 + 2)
-        calendarDateLabel.textAlignment = .center
-        calendarDateLabel.textColor = UIColor(r: 72, g: 80, b: 84)
-        calendarDateLabel.backgroundColor = .clear
-        view.addSubview(calendarDateLabel)
-        
+        calendarDateLabel.snp.makeConstraints { make in
+            calendarDateLabel.backgroundColor = .clear
+            calendarDateLabel.text = "CANVAS"
+            calendarDateLabel.font = UIFont(name: "JosefinSans-Regular", size: CGFloat(fontSize))
+            calendarDateLabel.textColor = textColor
+            calendarDateLabel.textAlignment = .center
+            calendarDateLabel.frame.size = CGSize(width: calendarDateLabel.intrinsicContentSize.width,
+                                              height: calendarDateLabel.intrinsicContentSize.height)
+            make.centerX.equalTo(self.view)
+            make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top).offset(paddingInSafeArea)
+            view.addSubview(calendarDateLabel)
+        }
     }
     
     private func setCalendarDateCtrButtons() {
@@ -301,6 +299,7 @@ extension ListTableViewController: UICollectionViewDelegateFlowLayout, UICollect
 }
 
 // MARK: - TableView delegate and datasource delegate
+
 extension ListTableViewController {
     private func setDateSections(sortedRecords: [Record]) {
         var tempRecords = [Record]()
@@ -348,18 +347,17 @@ extension ListTableViewController {
         return recordsByDate.count
     }
     
-    
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return dateSections[section]
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
         return recordsByDate[section].count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "listTableViewCell", for: indexPath) as? ListTableViewCell else { return UITableViewCell() }
+        
         cell.timeLabel.text = getCellDateStr(date: recordsByDate[indexPath.section][indexPath.row].createdDate ?? Date())
         cell.shapeImage.image = theme.getImageByGaugeLevel(gaugeLevel: Int(recordsByDate[indexPath.section][indexPath.row].gaugeLevel))
         cell.shapeImage.tintColor = theme.getColorByGaugeLevel(gaugeLevel: Int(recordsByDate[indexPath.section][indexPath.row].gaugeLevel))
@@ -382,6 +380,7 @@ extension ListTableViewController {
     func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         view.tintColor = .clear
         let header = view as? UITableViewHeaderFooterView
+        
         header?.textLabel?.textColor = UIColor.black
         header?.textLabel?.font = UIFont(name: "Cardo-Bold", size: 14)
         header?.contentView.backgroundColor = UIColor(r: 240, g: 240, b: 243)
@@ -389,11 +388,10 @@ extension ListTableViewController {
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            
             let context = CoreDataStack.shared.managedObjectContext
+            
             context.delete(recordsByDate[indexPath.section][indexPath.row])
             CoreDataStack.shared.saveContext()
-            
             recordsByDate[indexPath.section].remove(at: indexPath.row)
             listTableView.deleteRows(at: [indexPath], with: .fade)
             if recordsByDate[indexPath.section].count == 0 {
@@ -407,14 +405,14 @@ extension ListTableViewController {
             }
         }
     }
-    
-    
 }
 
 // MARK: - Set List Table View
+
 extension ListTableViewController {
     private func setListTableView() {
         let nibName = UINib(nibName: "ListTableViewCell", bundle: nil)
+        
         listTableView.register(nibName, forCellReuseIdentifier: "listTableViewCell")
         listTableView.rowHeight  = UITableView.automaticDimension
         listTableView.estimatedRowHeight = 80
@@ -433,8 +431,8 @@ extension ListTableViewController {
 }
 
 // MARK: - set back button constraint and UI / set seperate line
+
 extension ListTableViewController {
-    
     private func setSearchButton() {
         setSearchButtonUI()
         setSearchButtonConstraints()
@@ -473,13 +471,16 @@ extension ListTableViewController {
     }
     
     private func setBackButtonConstraints() {
-        backButton.frame.size = CGSize(width: view.frame.width / 10,
-                                       height: view.frame.width / 10)
-        backButton.center = CGPoint(x: view.frame.width * 7 / 8,
-                                    y: view.frame.height * 0.11)
-        backButtonIcon.frame.size = CGSize(width: backButton.frame.width * 3 / 6,
-                                           height: backButton.frame.width * 3 / 6)
-        backButtonIcon.center = backButton.center
+        backButton.snp.makeConstraints { make in
+            make.trailing.equalTo(self.view.safeAreaLayoutGuide.snp.trailing).offset(-paddingInSafeArea)
+            make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top).offset(paddingInSafeArea)
+            make.size.equalTo(buttonSize)
+        }
+        backButtonIcon.snp.makeConstraints { make in
+            make.size.equalTo(backButton).multipliedBy(iconSizeRatio)
+            make.center.equalTo(backButton)
+            view.addSubview(backButtonIcon)
+        }
     }
     
     private func setBackButtonUI() {
@@ -488,7 +489,6 @@ extension ListTableViewController {
         backButtonIcon.image = UIImage(systemName: "arrow.forward")
         backButtonIcon.tintColor = UIColor(r: 163, g: 173, b: 178)
         backButtonIcon.isUserInteractionEnabled = false
-        view.addSubview(backButtonIcon)
     }
     
     private func setSeperateLine() {
@@ -512,6 +512,7 @@ extension ListTableViewController {
 extension Date {
     var dayOfWeek: String {
         let formatter = DateFormatter()
+        
         formatter.setLocalizedDateFormatFromTemplate("EEEE")
         return formatter.string(from: self)
     }
