@@ -71,7 +71,7 @@ class RecordDetailView: UIView {
         memo.center = CGPoint(x: detailView.frame.width * 0.5,
                                    y: detailView.frame.height * 0.65)
         memo.backgroundColor = UIColor(r: 240, g: 240, b: 243)
-        memo.isUserInteractionEnabled = false
+        memo.isEditable = false
         detailView.addSubview(memo)
     }
     
