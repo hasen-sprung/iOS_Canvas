@@ -13,7 +13,7 @@ class SettingTableViewCell: UITableViewCell {
     let settingText = UILabel()
     let settingDetail = UILabel()
     let settingToggle = UIView()
-    let toggleButton = UIButton()
+    let toggleLabel = UILabel()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -36,10 +36,10 @@ class SettingTableViewCell: UITableViewCell {
         settingDetail.frame.origin = CGPoint(x: viewWidth * 0.5, y: .zero)
         settingToggle.frame.size = CGSize(width: self.frame.height, height: self.frame.height)
         settingToggle.frame.origin = CGPoint(x: viewWidth * 0.9 - self.frame.height, y: .zero)
-        toggleButton.frame.size = CGSize(width: self.frame.height * 0.7, height: self.frame.height * 0.7)
-        toggleButton.center = CGPoint(x: settingToggle.frame.width / 2, y: settingToggle.frame.height / 2)
-        toggleButton.layer.cornerRadius = toggleButton.frame.width / 2
-        settingToggle.addSubview(toggleButton)
+        toggleLabel.frame.size = CGSize(width: self.frame.height * 0.7, height: self.frame.height * 0.7)
+        toggleLabel.center = CGPoint(x: settingToggle.frame.width / 2, y: settingToggle.frame.height / 2)
+        toggleLabel.layer.cornerRadius = toggleLabel.frame.width / 2
+        settingToggle.addSubview(toggleLabel)
         
     }
     
@@ -50,14 +50,16 @@ class SettingTableViewCell: UITableViewCell {
         settingDetail.textColor = UIColor(r: 72, g: 80, b: 84)
         settingDetail.textAlignment = .right
         settingDetail.font = UIFont(name: "Cardo-Regular", size: 12)
-        toggleButton.backgroundColor = .clear
-        toggleButton.tintColor = UIColor(r: 72, g: 80, b: 84)
+        toggleLabel.backgroundColor = .clear
         if UserDefaults.standard.bool(forKey: "shakeAvail") == true {
-            toggleButton.setImage(UIImage(systemName: "circle"), for: .normal)
+            toggleLabel.text = "On"
         } else {
-            toggleButton.setImage(UIImage(systemName: "xmark"), for: .normal)
+            toggleLabel.text = "Off"
         }
-        toggleButton.isUserInteractionEnabled = false
+        toggleLabel.font = UIFont(name: "Cardo-Regular", size: 12)
+        toggleLabel.textColor = UIColor(r: 72, g: 80, b: 84)
+        toggleLabel.textAlignment = .right
+        toggleLabel.isUserInteractionEnabled = false
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

@@ -54,12 +54,12 @@ extension SettingViewController: MFMailComposeViewControllerDelegate {
         case 2:
             if UserDefaults.standard.bool(forKey: "shakeAvail") == true {
                 if let cell = settingTableView.cellForRow(at: indexPath) as? SettingTableViewCell {
-                    cell.toggleButton.setImage(UIImage(systemName: "xmark"), for: .normal)
+                    cell.toggleLabel.text = "Off"
                 }
                 UserDefaults.standard.set(false, forKey: "shakeAvail")
             } else {
                 if let cell = settingTableView.cellForRow(at: indexPath) as? SettingTableViewCell {
-                    cell.toggleButton.setImage(UIImage(systemName: "circle"), for: .normal)
+                    cell.toggleLabel.text = "On"
                 }
                 UserDefaults.standard.set(true, forKey: "shakeAvail")
             }
@@ -141,6 +141,7 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
         if indexPath.row == 4 {
             cell?.settingDetail.text = version
             cell?.settingDetailAvailable()
+            cell?.settingDetail.font = UIFont(name: "Pretendard-Regular", size: 12)
         }
         
         let bgColorView = UIView()
