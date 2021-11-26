@@ -73,7 +73,6 @@ class MainViewController: UIViewController {
         mainViewLabel.text = dateStrings[dateIdx]
         canvasRecordsView?.setRecordViews(records: recordsByDate[dateIdx], theme: themeManager.getThemeInstance())
         setInfoContentView()
-        setScrollCanvasView()
     }
     
     override func viewDidLayoutSubviews() {
@@ -87,6 +86,7 @@ class MainViewController: UIViewController {
             setRecordsViewInCanvas()
             canvasRecordsView?.setRecordViews(records: recordsByDate[dateIdx], theme: themeManager.getThemeInstance())
             setInfoContentView()
+//            setScrollCanvasView()
         }
     }
     
@@ -130,14 +130,15 @@ extension MainViewController {
         scrollView.backgroundColor = .clear
         view.addSubview(scrollView)
         
-        for idx in 1 ..< recordsByDate.count {
-            print(idx)
+        for idx in 0 ..< recordsByDate.count {
             let canvasView = UIView()
-            canvasView.backgroundColor = .gray
-            canvasView.frame.size = CGSize(width: 100, height: 100)//mainCanvasView.frame
-            canvasView.center = CGPoint(x: view.center.x + view.frame.width * CGFloat(idx),
-                                        y: view.center.y)
-            scrollView.contentSize.width = view.frame.width * CGFloat(idx + 1)
+            canvasView.backgroundColor = .white
+            
+            canvasView.frame.size = mainCanvasView.frame.size
+            canvasView.center = CGPoint(x: mainCanvasView.center.x + ((mainCanvasView.frame.width + 10) * CGFloat(idx)),
+                                        y: mainCanvasView.center.y)
+            scrollView.contentSize.width = mainCanvasView.frame.width * CGFloat(idx + 1)
+            setShadows(canvasView)
             scrollView.addSubview(canvasView)
         }
     }
