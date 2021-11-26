@@ -7,24 +7,41 @@
 
 import UIKit
 
+protocol MainCanavasCollectionViewCellDelegate {
+    func setCanvasSubView(subView: MainRecordsView, idx: Int)
+}
+
 class MainCanavasCollectionViewCell: UICollectionViewCell {
     
-    @IBOutlet weak var canvasView: UIView!
-    var index: Int? {
-        didSet {
-            self.updateUI()
-        }
-    }
+    var delegate: MainCanavasCollectionViewCellDelegate?
+    private let canvasView = UIView()
+    var canvasSubView = UIView()
+    var canvasRecordView: MainRecordsView?
+    
+    var index = 0
     
     override func layoutSubviews() {
         super.layoutSubviews()
+        updateUI()
     }
     
     private func updateUI() {
-        print("??")
-        canvasView.frame.size = CGSize(width: 200, height: 200)
-        canvasView.center = CGPoint(x: 100, y: 100)
+        canvasView.frame = self.contentView.frame
         canvasView.backgroundColor = .white
         setShadows(canvasView)
+        canvasSubView.frame.size = CGSize(width: canvasView.frame.width - 16,
+                                          height: canvasView.frame.height - 16)
+        self.contentView.addSubview(canvasView)
+        canvasSubView.center = CGPoint(x: canvasView.frame.width / 2,
+                                       y: canvasView.frame.height / 2)
+        canvasSubView.backgroundColor = canvasColor
+        canvasView.addSubview(canvasSubView)
+        canvasRecordView?.clearRecordViews()
+        canvasRecordView = MainRecordsView(in: canvasSubView)
+        canvasSubView.addSubview(canvasRecordView ?? UIView())
+        
+        if let delegate = delegate {
+            delegate.setCanvasSubView(subView: canvasRecordView ?? MainRecordsView(), idx: index)
+        }
     }
 }

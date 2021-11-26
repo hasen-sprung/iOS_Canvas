@@ -46,18 +46,8 @@
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="ZTs-ax-HKS">
                                             <rect key="frame" x="0.0" y="0.0" width="330" height="367"/>
                                             <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JU4-hU-UKH">
-                                                    <rect key="frame" x="45" y="119" width="240" height="128"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                                </view>
-                                            </subviews>
                                         </collectionViewCellContentView>
                                         <size key="customSize" width="330" height="367"/>
-                                        <connections>
-                                            <outlet property="canvasView" destination="JU4-hU-UKH" id="Upy-0U-4h9"/>
-                                        </connections>
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>

@@ -14,7 +14,7 @@ class MainViewController: UIViewController {
     var isOneStepPaging = true
     
     // Main views
-    private var mainCanvasView: UIView = UIView()
+    private var mainCanvasLayout: UIView = UIView()
     private var mainInfoView: UIView = UIView()
     private var mainAddRecordButton: UIButton = UIButton()
     @IBOutlet weak var goToListButton: UIButton!
@@ -27,13 +27,13 @@ class MainViewController: UIViewController {
     private let goToSettingIcon = UIImageView()
     
     // Sub views
-    private var mainCanvasSubview: UIView = UIView()
     private var canvasRecordsView: MainRecordsView?
     private let infoContentView = MainInfoView()
     private let greetingView = UILabel()
     private var detailView = RecordDetailView()
     
     @IBOutlet weak var canvasCollectionView: UICollectionView!
+    private var shouldInvalidateLayout = true
     
     
     private var isFirstInitInMainView: Bool = false
@@ -76,11 +76,14 @@ class MainViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         updateContext()
-        mainViewLabel.text = dateStrings[dateIdx]
-        canvasRecordsView?.setRecordViews(records: recordsByDate[dateIdx], theme: themeManager.getThemeInstance())
         setInfoContentView()
-        canvasCollectionView.reloadData()
-
+    }
+    
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        if shouldInvalidateLayout {
+            canvasCollectionView.collectionViewLayout.invalidateLayout()
+        }
     }
     
     override func viewDidLayoutSubviews() {
@@ -88,18 +91,15 @@ class MainViewController: UIViewController {
         if !isFirstInitInMainView {
             isFirstInitInMainView = true
             setShadows(mainInfoView)
-            setShadows(mainCanvasView)
+            setShadows(mainCanvasLayout)
             setShadows(mainAddRecordButton, firstRadius: 36, secondRadius: 13, thirdRadius: 7)
-            
-            setRecordsViewInCanvas()
-            canvasRecordsView?.setRecordViews(records: recordsByDate[dateIdx], theme: themeManager.getThemeInstance())
             setInfoContentView()
             setCanvasCollectionView()
-            canvasCollectionView.reloadData()
         }
     }
     
     override func viewDidAppear(_ animated: Bool) {
+        shouldInvalidateLayout = false
         if userIDsetting == false {
             loadUserIdInputMode()
             UserDefaults.standard.synchronize()
@@ -128,17 +128,23 @@ class MainViewController: UIViewController {
 }
 
 
-extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, MainCanavasCollectionViewCellDelegate {
+    
+    func setCanvasSubView(subView: MainRecordsView, idx: Int) {
+        subView.setRecordViewsCount(to: countOfRecordInCanvas)
+        subView.delegate = self
+        subView.setRecordViews(records: recordsByDate[idx], theme: themeManager.getThemeInstance())
+    }
+    
     
     private func setCanvasCollectionView() {
         
-        canvasCollectionView.frame.size = CGSize(width: view.frame.width, height: mainCanvasView.frame.height)
-        canvasCollectionView.center = mainCanvasView.center
+        canvasCollectionView.frame.size = CGSize(width: view.frame.width, height: mainCanvasLayout.frame.height)
+        canvasCollectionView.center = mainCanvasLayout.center
         canvasCollectionView.backgroundColor = .clear
-        // width, height 설정
-        let cellWidth = mainCanvasView.frame.width
-        let cellHeight = mainCanvasView.frame.height
-        // 상하, 좌우 inset value 설정
+        
+        let cellWidth = mainCanvasLayout.frame.width
+        let cellHeight = mainCanvasLayout.frame.height
         let insetX = (view.bounds.width - cellWidth) / 2.0
         let insetY: CGFloat = 0
         
@@ -149,7 +155,6 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
         
         canvasCollectionView.contentInset = UIEdgeInsets(top: insetY, left: insetX, bottom: insetY, right: insetX)
         
-        // 스크롤 시 빠르게 감속 되도록 설정
         canvasCollectionView.decelerationRate = UIScrollView.DecelerationRate.fast
         view.addSubview(canvasCollectionView)
     }
@@ -164,9 +169,10 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "mainCanavasCollectionViewCell", for: indexPath) as? MainCanavasCollectionViewCell
-        
+        cell?.delegate = self
         cell?.index = indexPath.row
-        
+        collectionView.transform = CGAffineTransform(scaleX:-1,y: 1);
+        cell?.transform = CGAffineTransform(scaleX:-1,y: 1);
         return cell ?? UICollectionViewCell()
     }
     
@@ -229,10 +235,14 @@ extension MainViewController: UIScrollViewDelegate {
             if currentIndex > roundedIndex {
                 currentIndex -= 1
                 roundedIndex = currentIndex
+                mainViewLabel.text = dateStrings[Int(currentIndex)]
+                
             } else if currentIndex < roundedIndex {
                 currentIndex += 1
                 roundedIndex = currentIndex
+                mainViewLabel.text = dateStrings[Int(currentIndex)]
             }
+            print("current index: ", Int(currentIndex))
         }
         
         offset = CGPoint(x: roundedIndex * cellWidthIncludingSpacing - scrollView.contentInset.left, y: -scrollView.contentInset.top)
@@ -249,7 +259,7 @@ extension MainViewController {
         mainViewLabel.snp.makeConstraints { make in
             mainViewLabel.backgroundColor = .clear
             mainViewLabel.text = getDateString(date: Date())
-            mainViewLabel.font = UIFont(name: "JosefinSans-Regular", size: CGFloat(fontSize))
+            mainViewLabel.font = UIFont(name: "Cardo-Bold", size: CGFloat(fontSize))
             mainViewLabel.textColor = textColor
             mainViewLabel.textAlignment = .center
             mainViewLabel.frame.size = CGSize(width: mainViewLabel.intrinsicContentSize.width,
@@ -287,18 +297,14 @@ extension MainViewController {
             make.height.equalTo(infoHeight)
             view.addSubview(mainInfoView)
         }
-        mainCanvasView.snp.makeConstraints { make in
-            mainCanvasView.backgroundColor = .white
+        mainCanvasLayout.snp.makeConstraints { make in
+            mainCanvasLayout.backgroundColor = .white
             make.top.equalTo(goToListButton.snp.bottom).offset(paddingInSafeArea)
             make.leading.equalTo(self.view.safeAreaLayoutGuide.snp.leading).offset(paddingInSafeArea)
             make.trailing.equalTo(self.view.safeAreaLayoutGuide.snp.trailing).offset(-paddingInSafeArea)
             make.bottom.equalTo(mainInfoView.snp.top).offset(-paddingInSafeArea)
-            view.addSubview(mainCanvasView)
-        }
-        mainCanvasSubview.snp.makeConstraints { make in
-            mainCanvasSubview.backgroundColor = canvasColor
-            make.edges.equalTo(mainCanvasView).inset(8)
-            view.addSubview(mainCanvasSubview)
+            mainCanvasLayout.backgroundColor = .white
+            view.addSubview(mainCanvasLayout)
         }
         
         // MARK: - Icons Layout
@@ -326,11 +332,11 @@ extension MainViewController {
         }
     }
     
-    private func setRecordsViewInCanvas() {
+    private func setRecordsViewInCanvas(subView: UIView) {
         // canvas ui의 frame, layout이 정해진 후 레코드뷰들을 생성해야 함
-        canvasRecordsView = MainRecordsView(in: mainCanvasSubview)
+        canvasRecordsView = MainRecordsView(in: subView)
         if let recordsView = canvasRecordsView {
-            mainCanvasSubview.addSubview(recordsView)
+            subView.addSubview(recordsView)
             // 메인 뷰에서 출력되는 숫자는 차후 유저디폴트로 세팅가능하게, 초기값은 10
             recordsView.setRecordViewsCount(to: countOfRecordInCanvas)
             recordsView.delegate = self
