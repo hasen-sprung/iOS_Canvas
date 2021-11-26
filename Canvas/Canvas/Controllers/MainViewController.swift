@@ -9,10 +9,11 @@ class MainViewController: UIViewController {
     
     private var recordsByDate = [[Record]]()
     private var dateStrings = [String]()
-    private var dateIdx = 0
+    var currentIndex: CGFloat = 0
+    var isOneStepPaging = true
     
     // Main views
-    private var mainCanvasView: UIView = UIView()
+    private var mainCanvasLayout: UIView = UIView()
     private var mainInfoView: UIView = UIView()
     private var mainAddRecordButton: UIButton = UIButton()
     @IBOutlet weak var goToListButton: UIButton!
@@ -25,11 +26,13 @@ class MainViewController: UIViewController {
     private let goToSettingIcon = UIImageView()
     
     // Sub views
-    private var mainCanvasSubview: UIView = UIView()
     private var canvasRecordsView: MainRecordsView?
     private let infoContentView = MainInfoView()
     private let greetingView = UILabel()
     private var detailView = RecordDetailView()
+    
+    @IBOutlet weak var canvasCollectionView: UICollectionView!
+    private var shouldInvalidateLayout = true
     
     
     private var isFirstInitInMainView: Bool = false
@@ -41,7 +44,7 @@ class MainViewController: UIViewController {
     override func loadView() {
         super.loadView()
         // MARK: - DEVELOP - init seedData :
-//        DataHelper.shared.loadSeeder()
+        //        DataHelper.shared.loadSeeder()
         // 처음 앱을 실행되었을 때 = 코어데이터에 아무것도 없는 상태이기 때문에, 레코드들의 위치정보를 제공해줘야 한다.
         if launchedBefore == false {
             UserDefaults.standard.set(true, forKey: "launchedBefore")
@@ -64,15 +67,23 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor(r: 240, g: 240, b: 243)
+        canvasCollectionView.delegate = self
+        canvasCollectionView.dataSource = self
         setAutoLayout()
         setButtonsTarget()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         updateContext()
-        mainViewLabel.text = dateStrings[dateIdx]
-        canvasRecordsView?.setRecordViews(records: recordsByDate[dateIdx], theme: themeManager.getThemeInstance())
         setInfoContentView()
+        mainViewLabel.text = dateStrings[Int(currentIndex)]
+    }
+    
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        if shouldInvalidateLayout {
+            canvasCollectionView.collectionViewLayout.invalidateLayout()
+        }
     }
     
     override func viewDidLayoutSubviews() {
@@ -80,17 +91,15 @@ class MainViewController: UIViewController {
         if !isFirstInitInMainView {
             isFirstInitInMainView = true
             setShadows(mainInfoView)
-            setShadows(mainCanvasView)
+            setShadows(mainCanvasLayout)
             setShadows(mainAddRecordButton, firstRadius: 36, secondRadius: 13, thirdRadius: 7)
-            
-            setRecordsViewInCanvas()
-            canvasRecordsView?.setRecordViews(records: recordsByDate[dateIdx], theme: themeManager.getThemeInstance())
             setInfoContentView()
-//            setScrollCanvasView()
+            setCanvasCollectionView()
         }
     }
     
     override func viewDidAppear(_ animated: Bool) {
+        shouldInvalidateLayout = false
         if userIDsetting == false {
             loadUserIdInputMode()
             UserDefaults.standard.synchronize()
@@ -119,28 +128,57 @@ class MainViewController: UIViewController {
 }
 
 
-extension MainViewController {
+extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, MainCanavasCollectionViewCellDelegate {
     
-    private func setScrollCanvasView() {
+    func setCanvasSubView(subView: MainRecordsView, idx: Int) {
+        subView.setRecordViewsCount(to: countOfRecordInCanvas)
+        subView.delegate = self
+        subView.setRecordViews(records: recordsByDate[idx], theme: themeManager.getThemeInstance())
+    }
+    
+    
+    private func setCanvasCollectionView() {
         
-        let scrollView = UIScrollView()
+        canvasCollectionView.frame.size = CGSize(width: view.frame.width, height: mainCanvasLayout.frame.height)
+        canvasCollectionView.center = mainCanvasLayout.center
+        canvasCollectionView.backgroundColor = .clear
         
-        scrollView.frame = view.frame
-        scrollView.center = view.center
-        scrollView.backgroundColor = .clear
-        view.addSubview(scrollView)
+        let cellWidth = mainCanvasLayout.frame.width
+        let cellHeight = mainCanvasLayout.frame.height
+        let insetX = (view.bounds.width - cellWidth) / 2.0
+        let insetY: CGFloat = 0
         
-        for idx in 0 ..< recordsByDate.count {
-            let canvasView = UIView()
-            canvasView.backgroundColor = .white
-            
-            canvasView.frame.size = mainCanvasView.frame.size
-            canvasView.center = CGPoint(x: mainCanvasView.center.x + ((mainCanvasView.frame.width + 10) * CGFloat(idx)),
-                                        y: mainCanvasView.center.y)
-            scrollView.contentSize.width = mainCanvasView.frame.width * CGFloat(idx + 1)
-            setShadows(canvasView)
-            scrollView.addSubview(canvasView)
-        }
+
+        let layout = canvasCollectionView.collectionViewLayout as! UICollectionViewFlowLayout
+        layout.itemSize = CGSize(width: cellWidth, height: cellHeight)
+        layout.minimumLineSpacing = 20
+        layout.scrollDirection = .horizontal
+        
+        canvasCollectionView.contentInset = UIEdgeInsets(top: insetY, left: insetX, bottom: insetY, right: insetX)
+        
+        canvasCollectionView.decelerationRate = UIScrollView.DecelerationRate.fast
+        view.addSubview(canvasCollectionView)
+    }
+    
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return recordsByDate.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "mainCanavasCollectionViewCell", for: indexPath) as? MainCanavasCollectionViewCell
+        cell?.delegate = self
+        cell?.index = indexPath.row
+        collectionView.transform = CGAffineTransform(scaleX:-1,y: 1);
+        cell?.transform = CGAffineTransform(scaleX:-1,y: 1);
+        return cell ?? UICollectionViewCell()
+    }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
     }
     
     private func setRecordsByDate(sortedRecords: [Record]) {
@@ -177,6 +215,42 @@ extension MainViewController {
     }
 }
 
+extension MainViewController: UIScrollViewDelegate {
+    
+    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        let layout = self.canvasCollectionView.collectionViewLayout as! UICollectionViewFlowLayout
+        let cellWidthIncludingSpacing = layout.itemSize.width + layout.minimumLineSpacing
+        var offset = targetContentOffset.pointee
+        let index = (offset.x + scrollView.contentInset.left) / cellWidthIncludingSpacing
+        var roundedIndex = round(index)
+        
+        if scrollView.contentOffset.x > targetContentOffset.pointee.x {
+            roundedIndex = floor(index)
+        } else if scrollView.contentOffset.x < targetContentOffset.pointee.x {
+            roundedIndex = ceil(index)
+        } else {
+            roundedIndex = round(index)
+        }
+        
+        if isOneStepPaging {
+            if currentIndex > roundedIndex {
+                currentIndex -= 1
+                roundedIndex = currentIndex
+                mainViewLabel.text = dateStrings[Int(currentIndex)]
+                
+            } else if currentIndex < roundedIndex {
+                currentIndex += 1
+                roundedIndex = currentIndex
+                mainViewLabel.text = dateStrings[Int(currentIndex)]
+            }
+            print("current index: ", Int(currentIndex))
+        }
+        
+        offset = CGPoint(x: roundedIndex * cellWidthIncludingSpacing - scrollView.contentInset.left, y: -scrollView.contentInset.top)
+        targetContentOffset.pointee = offset
+    }
+}
+
 
 // MARK: - Auto Layout & Set Subviews
 
@@ -186,7 +260,7 @@ extension MainViewController {
         mainViewLabel.snp.makeConstraints { make in
             mainViewLabel.backgroundColor = .clear
             mainViewLabel.text = getDateString(date: Date())
-            mainViewLabel.font = UIFont(name: "JosefinSans-Regular", size: CGFloat(fontSize))
+            mainViewLabel.font = UIFont(name: "Cardo-Bold", size: CGFloat(fontSize))
             mainViewLabel.textColor = textColor
             mainViewLabel.textAlignment = .center
             mainViewLabel.frame.size = CGSize(width: mainViewLabel.intrinsicContentSize.width,
@@ -224,18 +298,14 @@ extension MainViewController {
             make.height.equalTo(infoHeight)
             view.addSubview(mainInfoView)
         }
-        mainCanvasView.snp.makeConstraints { make in
-            mainCanvasView.backgroundColor = .white
+        mainCanvasLayout.snp.makeConstraints { make in
+            mainCanvasLayout.backgroundColor = .white
             make.top.equalTo(goToListButton.snp.bottom).offset(paddingInSafeArea)
             make.leading.equalTo(self.view.safeAreaLayoutGuide.snp.leading).offset(paddingInSafeArea)
             make.trailing.equalTo(self.view.safeAreaLayoutGuide.snp.trailing).offset(-paddingInSafeArea)
             make.bottom.equalTo(mainInfoView.snp.top).offset(-paddingInSafeArea)
-            view.addSubview(mainCanvasView)
-        }
-        mainCanvasSubview.snp.makeConstraints { make in
-            mainCanvasSubview.backgroundColor = canvasColor
-            make.edges.equalTo(mainCanvasView).inset(8)
-            view.addSubview(mainCanvasSubview)
+            mainCanvasLayout.backgroundColor = .white
+            view.addSubview(mainCanvasLayout)
         }
         
         // MARK: - Icons Layout
@@ -263,11 +333,11 @@ extension MainViewController {
         }
     }
     
-    private func setRecordsViewInCanvas() {
+    private func setRecordsViewInCanvas(subView: UIView) {
         // canvas ui의 frame, layout이 정해진 후 레코드뷰들을 생성해야 함
-        canvasRecordsView = MainRecordsView(in: mainCanvasSubview)
+        canvasRecordsView = MainRecordsView(in: subView)
         if let recordsView = canvasRecordsView {
-            mainCanvasSubview.addSubview(recordsView)
+            subView.addSubview(recordsView)
             // 메인 뷰에서 출력되는 숫자는 차후 유저디폴트로 세팅가능하게, 초기값은 10
             recordsView.setRecordViewsCount(to: countOfRecordInCanvas)
             recordsView.delegate = self
@@ -284,7 +354,7 @@ extension MainViewController {
         if isShake && motion == .motionShake {
             canvasRecordsView?.setRandomPosition()
             canvasRecordsView?.clearRecordViews()
-            canvasRecordsView?.setRecordViews(records: recordsByDate[dateIdx], theme: themeManager.getThemeInstance())
+            canvasRecordsView?.setRecordViews(records: recordsByDate[Int(currentIndex)], theme: themeManager.getThemeInstance())
             motionEnded(motion, with: event)
         }
     }
@@ -321,7 +391,7 @@ extension MainViewController {
 // MARK: - set info Content view in info view
 extension MainViewController: MainInfoViewDelegate {
     func getInfoDateString() -> String {
-        var recordCount = recordsByDate[dateIdx].count
+        var recordCount = recordsByDate[Int(currentIndex)].count
         let df = DateFormatter()
         if recordCount > 10 {
             recordCount = 10
@@ -329,8 +399,8 @@ extension MainViewController: MainInfoViewDelegate {
         df.dateFormat = "yyyy. M. d"
         df.locale = Locale(identifier:"ko_KR")
         if recordCount >= 1 {
-            let firstDate = df.string(from: recordsByDate[dateIdx][recordCount - 1].createdDate ?? Date())
-            let lastDate = df.string(from: recordsByDate[dateIdx][0].createdDate ?? Date())
+            let firstDate = df.string(from: recordsByDate[Int(currentIndex)][recordCount - 1].createdDate ?? Date())
+            let lastDate = df.string(from: recordsByDate[Int(currentIndex)][0].createdDate ?? Date())
             if firstDate == lastDate {
                 return firstDate
             } else {
@@ -348,7 +418,7 @@ extension MainViewController: MainInfoViewDelegate {
         infoContentView.backgroundColor = .clear
         
         // TODO: - 개수가 있을 때만, 작동하도록 해야 함. 아닐 때는 추가해보라는 설명이 들어가야 함.
-        if recordsByDate[dateIdx].count > 0 {
+        if recordsByDate[Int(currentIndex)].count > 0 {
             infoContentView.snp.makeConstraints { make in
                 make.edges.equalTo(mainInfoView).inset(10)
                 view.addSubview(infoContentView)
@@ -386,15 +456,15 @@ extension MainViewController: MainRecordsViewDelegate {
         let df = DateFormatter()
         
         df.dateFormat = "M / d EEEE HH:mm"
-        if index <= recordsByDate[dateIdx].count - 1 {
+        if index <= recordsByDate[Int(currentIndex)].count - 1 {
             detailView = RecordDetailView()
             detailView.frame = view.frame
             view.addSubview(detailView)
             detailView.setDetailView()
-            detailView.shapeImage.image = DefaultTheme.shared.getImageByGaugeLevel(gaugeLevel: Int(recordsByDate[dateIdx][index].gaugeLevel))
-            detailView.shapeImage.tintColor = DefaultTheme.shared.getColorByGaugeLevel(gaugeLevel: Int(recordsByDate[dateIdx][index].gaugeLevel))
-            detailView.dateLabel.text = df.string(from: recordsByDate[dateIdx][index].createdDate ?? Date())
-            detailView.memo.text = recordsByDate[dateIdx][index].memo
+            detailView.shapeImage.image = DefaultTheme.shared.getImageByGaugeLevel(gaugeLevel: Int(recordsByDate[Int(currentIndex)][index].gaugeLevel))
+            detailView.shapeImage.tintColor = DefaultTheme.shared.getColorByGaugeLevel(gaugeLevel: Int(recordsByDate[Int(currentIndex)][index].gaugeLevel))
+            detailView.dateLabel.text = df.string(from: recordsByDate[Int(currentIndex)][index].createdDate ?? Date())
+            detailView.memo.text = recordsByDate[Int(currentIndex)][index].memo
         } else {
             detailView = RecordDetailView()
             detailView.frame = view.frame
