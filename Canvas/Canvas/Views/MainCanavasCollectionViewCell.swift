@@ -9,11 +9,22 @@ import UIKit
 
 class MainCanavasCollectionViewCell: UICollectionViewCell {
     
+    @IBOutlet weak var canvasView: UIView!
+    var index: Int? {
+        didSet {
+            self.updateUI()
+        }
+    }
+    
     override func layoutSubviews() {
         super.layoutSubviews()
-        self.layer.cornerRadius = 3.0
-        layer.shadowRadius = 10
-        layer.shadowOpacity = 0.4
-        layer.shadowOffset = CGSize(width: 5, height: 10)
+    }
+    
+    private func updateUI() {
+        print("??")
+        canvasView.frame.size = CGSize(width: 200, height: 200)
+        canvasView.center = CGPoint(x: 100, y: 100)
+        canvasView.backgroundColor = .white
+        setShadows(canvasView)
     }
 }

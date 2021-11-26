@@ -68,6 +68,8 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor(r: 240, g: 240, b: 243)
+        canvasCollectionView.delegate = self
+        canvasCollectionView.dataSource = self
         setAutoLayout()
         setButtonsTarget()
     }
@@ -147,16 +149,9 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
         
         canvasCollectionView.contentInset = UIEdgeInsets(top: insetY, left: insetX, bottom: insetY, right: insetX)
         
-        canvasCollectionView.delegate = self
-        canvasCollectionView.dataSource = self
-        
         // 스크롤 시 빠르게 감속 되도록 설정
         canvasCollectionView.decelerationRate = UIScrollView.DecelerationRate.fast
         view.addSubview(canvasCollectionView)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: mainCanvasView.frame.width, height: mainCanvasView.frame.height)
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -164,12 +159,14 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 2//recordsByDate.count
+        return recordsByDate.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "mainCanavasCollectionViewCell", for: indexPath) as? MainCanavasCollectionViewCell
-        cell?.backgroundColor = .gray
+        
+        cell?.index = indexPath.row
+        
         return cell ?? UICollectionViewCell()
     }
     
