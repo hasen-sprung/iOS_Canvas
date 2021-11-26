@@ -69,6 +69,7 @@
 		4F29B92B274AC76200747DDD /* Pretendard-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4F29B922274AC76200747DDD /* Pretendard-Regular.otf */; };
 		4F29B92C274AC76200747DDD /* Pretendard-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4F29B923274AC76200747DDD /* Pretendard-Bold.otf */; };
 		4F29B92E274BE33E00747DDD /* DataHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F29B92D274BE33E00747DDD /* DataHelper.swift */; };
+		4FF8A6822750D22B009DAC2B /* MainCanavasCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF8A6812750D22B009DAC2B /* MainCanavasCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -155,6 +156,7 @@
 		4F29B922274AC76200747DDD /* Pretendard-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Regular.otf"; sourceTree = "<group>"; };
 		4F29B923274AC76200747DDD /* Pretendard-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Bold.otf"; sourceTree = "<group>"; };
 		4F29B92D274BE33E00747DDD /* DataHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataHelper.swift; sourceTree = "<group>"; };
+		4FF8A6812750D22B009DAC2B /* MainCanavasCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCanavasCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -261,6 +263,7 @@
 				4F29B8DE274960BD00747DDD /* MainInfoView.swift */,
 				4F29B8E2274A106300747DDD /* SettingTableViewCell.swift */,
 				4F29B8ED274A7C7A00747DDD /* RecordDetailView.swift */,
+				4FF8A6812750D22B009DAC2B /* MainCanavasCollectionViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -492,6 +495,7 @@
 				3549F2672740EE7F00C1589A /* GaugeWaveAnimationView.swift in Sources */,
 				4F0A39F6273BCFC5009E3AAF /* ThemeManager.swift in Sources */,
 				4F29B8DF274960BD00747DDD /* MainInfoView.swift in Sources */,
+				4FF8A6822750D22B009DAC2B /* MainCanavasCollectionViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

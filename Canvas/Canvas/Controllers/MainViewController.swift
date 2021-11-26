@@ -10,6 +10,8 @@ class MainViewController: UIViewController {
     private var recordsByDate = [[Record]]()
     private var dateStrings = [String]()
     private var dateIdx = 0
+    var currentIndex: CGFloat = 0
+    var isOneStepPaging = true
     
     // Main views
     private var mainCanvasView: UIView = UIView()
@@ -31,6 +33,8 @@ class MainViewController: UIViewController {
     private let greetingView = UILabel()
     private var detailView = RecordDetailView()
     
+    @IBOutlet weak var canvasCollectionView: UICollectionView!
+    
     
     private var isFirstInitInMainView: Bool = false
     private var countOfRecordInCanvas: Int = defaultCountOfRecordInCanvas
@@ -41,7 +45,7 @@ class MainViewController: UIViewController {
     override func loadView() {
         super.loadView()
         // MARK: - DEVELOP - init seedData :
-//        DataHelper.shared.loadSeeder()
+        //        DataHelper.shared.loadSeeder()
         // 처음 앱을 실행되었을 때 = 코어데이터에 아무것도 없는 상태이기 때문에, 레코드들의 위치정보를 제공해줘야 한다.
         if launchedBefore == false {
             UserDefaults.standard.set(true, forKey: "launchedBefore")
@@ -73,7 +77,8 @@ class MainViewController: UIViewController {
         mainViewLabel.text = dateStrings[dateIdx]
         canvasRecordsView?.setRecordViews(records: recordsByDate[dateIdx], theme: themeManager.getThemeInstance())
         setInfoContentView()
-        setScrollCanvasView()
+        canvasCollectionView.reloadData()
+
     }
     
     override func viewDidLayoutSubviews() {
@@ -87,6 +92,8 @@ class MainViewController: UIViewController {
             setRecordsViewInCanvas()
             canvasRecordsView?.setRecordViews(records: recordsByDate[dateIdx], theme: themeManager.getThemeInstance())
             setInfoContentView()
+            setCanvasCollectionView()
+            canvasCollectionView.reloadData()
         }
     }
     
@@ -119,27 +126,55 @@ class MainViewController: UIViewController {
 }
 
 
-extension MainViewController {
+extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
-    private func setScrollCanvasView() {
+    private func setCanvasCollectionView() {
         
-        let scrollView = UIScrollView()
+        canvasCollectionView.frame.size = CGSize(width: view.frame.width, height: mainCanvasView.frame.height)
+        canvasCollectionView.center = mainCanvasView.center
+        canvasCollectionView.backgroundColor = .clear
+        // width, height 설정
+        let cellWidth = mainCanvasView.frame.width
+        let cellHeight = mainCanvasView.frame.height
+        // 상하, 좌우 inset value 설정
+        let insetX = (view.bounds.width - cellWidth) / 2.0
+        let insetY: CGFloat = 0
         
-        scrollView.frame = view.frame
-        scrollView.center = view.center
-        scrollView.backgroundColor = .clear
-        view.addSubview(scrollView)
+        let layout = canvasCollectionView.collectionViewLayout as! UICollectionViewFlowLayout
+        layout.itemSize = CGSize(width: cellWidth, height: cellHeight)
+        layout.minimumLineSpacing = 20
+        layout.scrollDirection = .horizontal
         
-        for idx in 1 ..< recordsByDate.count {
-            print(idx)
-            let canvasView = UIView()
-            canvasView.backgroundColor = .gray
-            canvasView.frame.size = CGSize(width: 100, height: 100)//mainCanvasView.frame
-            canvasView.center = CGPoint(x: view.center.x + view.frame.width * CGFloat(idx),
-                                        y: view.center.y)
-            scrollView.contentSize.width = view.frame.width * CGFloat(idx + 1)
-            scrollView.addSubview(canvasView)
-        }
+        canvasCollectionView.contentInset = UIEdgeInsets(top: insetY, left: insetX, bottom: insetY, right: insetX)
+        
+        canvasCollectionView.delegate = self
+        canvasCollectionView.dataSource = self
+        
+        // 스크롤 시 빠르게 감속 되도록 설정
+        canvasCollectionView.decelerationRate = UIScrollView.DecelerationRate.fast
+        view.addSubview(canvasCollectionView)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: mainCanvasView.frame.width, height: mainCanvasView.frame.height)
+    }
+    
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 2//recordsByDate.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "mainCanavasCollectionViewCell", for: indexPath) as? MainCanavasCollectionViewCell
+        cell?.backgroundColor = .gray
+        return cell ?? UICollectionViewCell()
+    }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
     }
     
     private func setRecordsByDate(sortedRecords: [Record]) {
@@ -173,6 +208,38 @@ extension MainViewController {
         df.dateFormat = "yyyy. M. d"
         df.locale = Locale(identifier:"ko_KR")
         return df.string(from: date)
+    }
+}
+
+extension MainViewController: UIScrollViewDelegate {
+    
+    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        let layout = self.canvasCollectionView.collectionViewLayout as! UICollectionViewFlowLayout
+        let cellWidthIncludingSpacing = layout.itemSize.width + layout.minimumLineSpacing
+        var offset = targetContentOffset.pointee
+        let index = (offset.x + scrollView.contentInset.left) / cellWidthIncludingSpacing
+        var roundedIndex = round(index)
+        
+        if scrollView.contentOffset.x > targetContentOffset.pointee.x {
+            roundedIndex = floor(index)
+        } else if scrollView.contentOffset.x < targetContentOffset.pointee.x {
+            roundedIndex = ceil(index)
+        } else {
+            roundedIndex = round(index)
+        }
+        
+        if isOneStepPaging {
+            if currentIndex > roundedIndex {
+                currentIndex -= 1
+                roundedIndex = currentIndex
+            } else if currentIndex < roundedIndex {
+                currentIndex += 1
+                roundedIndex = currentIndex
+            }
+        }
+        
+        offset = CGPoint(x: roundedIndex * cellWidthIncludingSpacing - scrollView.contentInset.left, y: -scrollView.contentInset.top)
+        targetContentOffset.pointee = offset
     }
 }
 
