@@ -9,7 +9,6 @@ class MainViewController: UIViewController {
     
     private var recordsByDate = [[Record]]()
     private var dateStrings = [String]()
-    private var dateIdx = 0
     var currentIndex: CGFloat = 0
     var isOneStepPaging = true
     
@@ -77,6 +76,7 @@ class MainViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         updateContext()
         setInfoContentView()
+        mainViewLabel.text = dateStrings[Int(currentIndex)]
     }
     
     override func viewWillLayoutSubviews() {
@@ -353,7 +353,7 @@ extension MainViewController {
         if isShake && motion == .motionShake {
             canvasRecordsView?.setRandomPosition()
             canvasRecordsView?.clearRecordViews()
-            canvasRecordsView?.setRecordViews(records: recordsByDate[dateIdx], theme: themeManager.getThemeInstance())
+            canvasRecordsView?.setRecordViews(records: recordsByDate[Int(currentIndex)], theme: themeManager.getThemeInstance())
             motionEnded(motion, with: event)
         }
     }
@@ -390,7 +390,7 @@ extension MainViewController {
 // MARK: - set info Content view in info view
 extension MainViewController: MainInfoViewDelegate {
     func getInfoDateString() -> String {
-        var recordCount = recordsByDate[dateIdx].count
+        var recordCount = recordsByDate[Int(currentIndex)].count
         let df = DateFormatter()
         if recordCount > 10 {
             recordCount = 10
@@ -398,8 +398,8 @@ extension MainViewController: MainInfoViewDelegate {
         df.dateFormat = "yyyy. M. d"
         df.locale = Locale(identifier:"ko_KR")
         if recordCount >= 1 {
-            let firstDate = df.string(from: recordsByDate[dateIdx][recordCount - 1].createdDate ?? Date())
-            let lastDate = df.string(from: recordsByDate[dateIdx][0].createdDate ?? Date())
+            let firstDate = df.string(from: recordsByDate[Int(currentIndex)][recordCount - 1].createdDate ?? Date())
+            let lastDate = df.string(from: recordsByDate[Int(currentIndex)][0].createdDate ?? Date())
             if firstDate == lastDate {
                 return firstDate
             } else {
@@ -417,7 +417,7 @@ extension MainViewController: MainInfoViewDelegate {
         infoContentView.backgroundColor = .clear
         
         // TODO: - 개수가 있을 때만, 작동하도록 해야 함. 아닐 때는 추가해보라는 설명이 들어가야 함.
-        if recordsByDate[dateIdx].count > 0 {
+        if recordsByDate[Int(currentIndex)].count > 0 {
             infoContentView.snp.makeConstraints { make in
                 make.edges.equalTo(mainInfoView).inset(10)
                 view.addSubview(infoContentView)
@@ -455,15 +455,15 @@ extension MainViewController: MainRecordsViewDelegate {
         let df = DateFormatter()
         
         df.dateFormat = "M / d EEEE HH:mm"
-        if index <= recordsByDate[dateIdx].count - 1 {
+        if index <= recordsByDate[Int(currentIndex)].count - 1 {
             detailView = RecordDetailView()
             detailView.frame = view.frame
             view.addSubview(detailView)
             detailView.setDetailView()
-            detailView.shapeImage.image = DefaultTheme.shared.getImageByGaugeLevel(gaugeLevel: Int(recordsByDate[dateIdx][index].gaugeLevel))
-            detailView.shapeImage.tintColor = DefaultTheme.shared.getColorByGaugeLevel(gaugeLevel: Int(recordsByDate[dateIdx][index].gaugeLevel))
-            detailView.dateLabel.text = df.string(from: recordsByDate[dateIdx][index].createdDate ?? Date())
-            detailView.memo.text = recordsByDate[dateIdx][index].memo
+            detailView.shapeImage.image = DefaultTheme.shared.getImageByGaugeLevel(gaugeLevel: Int(recordsByDate[Int(currentIndex)][index].gaugeLevel))
+            detailView.shapeImage.tintColor = DefaultTheme.shared.getColorByGaugeLevel(gaugeLevel: Int(recordsByDate[Int(currentIndex)][index].gaugeLevel))
+            detailView.dateLabel.text = df.string(from: recordsByDate[Int(currentIndex)][index].createdDate ?? Date())
+            detailView.memo.text = recordsByDate[Int(currentIndex)][index].memo
         } else {
             detailView = RecordDetailView()
             detailView.frame = view.frame

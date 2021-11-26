@@ -14,7 +14,7 @@ protocol MainCanavasCollectionViewCellDelegate {
 class MainCanavasCollectionViewCell: UICollectionViewCell {
     
     var delegate: MainCanavasCollectionViewCellDelegate?
-    private let canvasView = UIView()
+    let canvasView = UIView()
     var canvasSubView = UIView()
     var canvasRecordView: MainRecordsView?
     
