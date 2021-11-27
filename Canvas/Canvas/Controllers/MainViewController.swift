@@ -34,7 +34,6 @@ class MainViewController: UIViewController {
     @IBOutlet weak var canvasCollectionView: UICollectionView!
     private var shouldInvalidateLayout = true
     
-    
     private var isFirstInitInMainView: Bool = false
     private var countOfRecordInCanvas: Int = defaultCountOfRecordInCanvas
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -117,7 +116,6 @@ class MainViewController: UIViewController {
     }
 }
 
-
 extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, MainCanavasCollectionViewCellDelegate {
     
     func setCanvasSubView(subView: MainRecordsView, idx: Int) {
@@ -126,9 +124,7 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
         subView.setRecordViews(records: recordsByDate[idx], theme: themeManager.getThemeInstance())
     }
     
-    
     private func setCanvasCollectionView() {
-        
         canvasCollectionView.frame.size = CGSize(width: view.frame.width, height: mainCanvasLayout.frame.height)
         canvasCollectionView.center = mainCanvasLayout.center
         canvasCollectionView.backgroundColor = .clear
@@ -137,7 +133,6 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
         let cellHeight = mainCanvasLayout.frame.height
         let insetX = (view.bounds.width - cellWidth) / 2.0
         let insetY: CGFloat = 0
-        
 
         let layout = canvasCollectionView.collectionViewLayout as! UICollectionViewFlowLayout
         layout.itemSize = CGSize(width: cellWidth, height: cellHeight)
@@ -206,7 +201,6 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
 }
 
 extension MainViewController: UIScrollViewDelegate {
-    
     func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
         let layout = self.canvasCollectionView.collectionViewLayout as! UICollectionViewFlowLayout
         let cellWidthIncludingSpacing = layout.itemSize.width + layout.minimumLineSpacing
@@ -240,7 +234,6 @@ extension MainViewController: UIScrollViewDelegate {
         targetContentOffset.pointee = offset
     }
 }
-
 
 // MARK: - Auto Layout & Set Subviews
 
@@ -341,6 +334,7 @@ extension MainViewController {
     override func motionBegan(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
         let isShake = UserDefaults.standard.bool(forKey: "shakeAvail")
         
+        print("shake")
         if isShake && motion == .motionShake {
             canvasRecordsView?.setRandomPosition(records: recordsByDate[Int(currentIndex)])
             canvasRecordsView?.clearRecordViews()
@@ -400,8 +394,6 @@ extension MainViewController: MainInfoViewDelegate {
             return ""
         }
     }
-    
-    // MARK: - infoContentView가 계속 쌓이는 거 아닌가???
     
     func setInfoContentView() {
         infoContentView.delegate = self
