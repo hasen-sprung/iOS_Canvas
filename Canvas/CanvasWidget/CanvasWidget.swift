@@ -63,14 +63,12 @@ struct CanvasWidgetEntryView : View {
                 ForEach(0 ..< getIndex(recordNum: records.count)) { index in
                     let record = records[index]
                     
-                    if let pos: Int = record.setPosition as? Int {
-                        ShapeView(level: Int(record.gaugeLevel))
-                            .position(x: CGFloat(positions[pos].xRatio) * geometry.size.width,
-                                      y: CGFloat(positions[pos].yRatio) * geometry.size.height)
-                            .frame(width: geometry.size.width / 6,
-                                   height: geometry.size.width / 6,
-                                   alignment: .center)
-                    }
+                    ShapeView(level: Int(record.gaugeLevel))
+                        .position(x: CGFloat(record.xRatio) * geometry.size.width,
+                                  y: CGFloat(record.yRatio) * geometry.size.height)
+                        .frame(width: geometry.size.width / 6,
+                               height: geometry.size.width / 6,
+                               alignment: .center)
                 }
             }
         }
@@ -78,6 +76,7 @@ struct CanvasWidgetEntryView : View {
         .background(Color(uiColor: bgColor))
     }
     
+    // TODO: 최근날짜 것만 가져올 수 있도록 변경
     var records: [Record] {
         let context = CoreDataStack.shared.managedObjectContext
         let request = Record.fetchRequest()
@@ -88,17 +87,6 @@ struct CanvasWidgetEntryView : View {
         } catch { print("context Error") }
         records.sort(by: {$0.createdDate?.timeIntervalSinceNow ?? Date().timeIntervalSinceNow > $1.createdDate?.timeIntervalSinceNow ?? Date().timeIntervalSinceNow})
         return records
-    }
-    
-    var positions: [Position] {
-        let context = CoreDataStack.shared.managedObjectContext
-        let request = Position.fetchRequest()
-        var positions: [Position] = [Position]()
-        
-        do {
-            positions = try context.fetch(request)
-        } catch { print("context Error") }
-        return positions
     }
     
     private func getIndex(recordNum: Int) -> Int {

@@ -51,16 +51,6 @@ class MainViewController: UIViewController {
             UserDefaults.standard.set("Canvas", forKey: "canvasTitle")
             UserDefaults.standard.set(true, forKey: "shakeAvail")
             UserDefaults.standard.synchronize()
-            // MARK: - init position by Default Ratio
-            // 레코드들의 포지션 정보(비율)를 초기화
-            for i in 0..<countOfRecordInCanvas {
-                let context = CoreDataStack.shared.managedObjectContext
-                let position = Position(context: context)
-                
-                position.xRatio = Ratio.DefaultRatio[i].x
-                position.yRatio = Ratio.DefaultRatio[i].y
-                CoreDataStack.shared.saveContext()
-            }
         }
     }
     
@@ -352,7 +342,7 @@ extension MainViewController {
         let isShake = UserDefaults.standard.bool(forKey: "shakeAvail")
         
         if isShake && motion == .motionShake {
-            canvasRecordsView?.setRandomPosition()
+            canvasRecordsView?.setRandomPosition(records: recordsByDate[Int(currentIndex)])
             canvasRecordsView?.clearRecordViews()
             canvasRecordsView?.setRecordViews(records: recordsByDate[Int(currentIndex)], theme: themeManager.getThemeInstance())
             motionEnded(motion, with: event)

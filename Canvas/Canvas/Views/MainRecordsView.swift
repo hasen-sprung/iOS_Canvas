@@ -3,7 +3,6 @@ import SwiftUI
 
 class RecordView: UIView {
     var index: Int? // 각각의 인덱스를 확인하기 위해서
-    var pos: Int?
 }
 
 protocol MainRecordsViewDelegate {
@@ -16,7 +15,6 @@ class MainRecordsView: UIView {
     private var recordViews: [RecordView] = [RecordView]()
     private var recordViewsCount: Int = defaultCountOfRecordInCanvas
     private var recordViewSize: CGFloat = UIScreen.main.bounds.width * 0.125
-    private var positions: [Position] = [Position]()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -28,12 +26,10 @@ class MainRecordsView: UIView {
         let ratio: CGFloat = 6/7
         let newSize = CGSize(width: superview.frame.width * ratio,
                              height: superview.frame.width * ratio)
-//                             height: superview.frame.height * ratio)
         let newCenter = CGPoint(x: superview.center.x - superview.frame.origin.x,
                                 y: superview.center.y - superview.frame.origin.y)
         let gesture = UITapGestureRecognizer(target: self, action: #selector(tapRecordViewAction))
         
-        self.positions = getPositionRatios()
         self.frame.size = newSize
         self.center = newCenter
         self.backgroundColor = .clear
@@ -51,33 +47,27 @@ class MainRecordsView: UIView {
         }
     }
     
-    // TODO: 이전 데이터를 불러올 때, 위치 중복 -> Create, Delete + 10개 이상일 때, setPosition초기화;
-    
     func setRecordViews(records: [Record], theme: Theme) {
         var views = [RecordView]()//[UIView]()
         
         for i in 0 ..< recordViewsCount {
-            let view = RecordView()
-            
-            view.frame.size = CGSize(width: recordViewSize, height: recordViewSize)
-            view.backgroundColor = .clear
-            view.index = i
-            
             if i < records.count {
-                let level: Int = Int(records[i].gaugeLevel)
+                let view = RecordView()
                 
-                setRecordPosition(view: view, records: records, index: i, bound: self.bounds)
+                view.frame.size = CGSize(width: recordViewSize, height: recordViewSize)
+                view.backgroundColor = .clear
+                view.index = i
+                
+                setRecordViewCenter(view: view, views: views, superview: self, record: records[i])
                 setShapeImageView(in: view,
-                                  image: theme.getImageByGaugeLevel(gaugeLevel: level),
-                                  color: theme.getColorByGaugeLevel(gaugeLevel: level))
+                                  image: theme.getImageByGaugeLevel(gaugeLevel: Int(records[i].gaugeLevel)),
+                                  color: theme.getColorByGaugeLevel(gaugeLevel: Int(records[i].gaugeLevel)))
+                setTapGesture(view: view)
+                self.addSubview(view)
+                views.append(view)
             } else {
-                setDefaultShapeImageView(in: view, index: i, bound: self.bounds, views)
+                // TODO: Default Record Views
             }
-//            // Rotate Option
-//            view.transform = CGAffineTransform(rotationAngle: CGFloat.random(in: 0.0...360.0))
-            setTapGesture(view: view)
-            self.addSubview(view)
-            views.append(view)
         }
         recordViews = views
     }
@@ -86,61 +76,80 @@ class MainRecordsView: UIView {
         self.recordViewsCount = count
     }
     
-    private func getPositionRatios() -> [Position] {
-        let context = CoreDataStack.shared.managedObjectContext
-        let request = Position.fetchRequest()
-        var positions: [Position] = [Position]()
+    func setRandomPosition(records: [Record]) {
+        var views = [RecordView]()
         
-        do {
-            positions = try context.fetch(request)
-        } catch { print("context Error") }
-        return positions
+        for i in 0..<recordViewsCount {
+            if i < records.count {
+                let view = RecordView()
+                
+                view.frame.size = CGSize(width: recordViewSize, height: recordViewSize)
+                setRandomCenter(view: view, views: views, superview: self, record: records[i])
+                views.append(view)
+            }
+        }
     }
 }
 
 // MARK: - Set Record View
 extension MainRecordsView {
-    // 저장된 포지션의 비율로 뷰의 위치를 놓아준다.
-    private func setRecordPosition(view: RecordView, records: [Record], index: Int, bound superview: CGRect) {
-        var idx: Int
-        
-        // record의 포지션이 nil이 아니면 가지고 있는 포지션의 인덱스의 비율과 함께 위치를 정한다.
-        // and if 마지막에 들어온 친구가 동일한 좌표를 가진 경우 새로운 좌표 생성
-        if let pos = records[index].setPosition, !isDuplicate(records, pos: pos, index) {
-            idx = Int(truncating: pos)
-        } else { // nil: 새로 생겼거나(index:0) or 기존 레코드가 삭제 후 이전 데이터들 (index:n...9)
-            idx = getEmptyPosition(records: records)
-            records[index].setPosition = NSNumber(value: idx)
-            CoreDataStack.shared.saveContext()
+    private func setRecordViewCenter(view: RecordView, views: [RecordView], superview: UIView, record: Record) {
+        if record.xRatio == 0 || record.yRatio == 0 {
+            setRandomCenter(view: view, views: recordViews, superview: superview, record: record)
+        } else {
+            view.center = CGPoint(x: CGFloat(record.xRatio) * superview.frame.width,
+                                  y: CGFloat(record.yRatio) * superview.frame.height)
+            if isOverlapedInRecordsView(view, in: views) {
+                print("나중에 들어온 친구들이 먼저있던 애들과 중복될 경우 센터를 다시 랜덤하게 정한다.")
+                setRandomCenter(view: view, views: views, superview: superview, record: record)
+            }
         }
-        view.pos = idx
-        view.center = CGPoint(x: CGFloat(positions[idx].xRatio) * superview.width,
-                              y: CGFloat(positions[idx].yRatio) * superview.height)
     }
-    private func isDuplicate(_ records: [Record], pos: NSNumber, _ index: Int) -> Bool {
-        for i in 0..<index {
-            if records[i].setPosition == pos {
+    
+    // MARK: - Set Random Center
+    
+    private func setRandomCenter(view: RecordView, views: [RecordView], superview: UIView, record: Record) {
+        var overlapCount = 0
+        
+        repeat {
+            view.center = setRandomRatio(in: superview, record: record)
+            overlapCount += 1
+            if overlapCount > 50 {
+                print("위치 찾기가 50번을 초과")
+                return
+            }
+        } while isOverlapedInRecordsView(view, in: views)
+    }
+    
+    private func setRandomRatio(in view: UIView, record: Record) -> CGPoint {
+        let width = view.bounds.width// - recordViewSize - (recordViewSize / 2)
+        let height = view.bounds.height// - recordViewSize - (recordViewSize / 2)
+        let xRatio = CGFloat.random(in: 0.1...0.9)
+        let yRatio = CGFloat.random(in: 0.1...0.9)
+        let point = CGPoint(x: xRatio * width,
+                            y: yRatio * height)
+        
+        record.xRatio = Float(xRatio)
+        record.yRatio = Float(yRatio)
+        CoreDataStack.shared.saveContext()
+        return point
+    }
+    
+    private func isOverlapedInRecordsView(_ view: RecordView, in views: [RecordView]) -> Bool {
+        let overlapRatio: CGFloat = 0.65
+        let target = CGRect(origin: view.frame.origin,
+                            size: CGSize(width: view.frame.size.width * overlapRatio,
+                                         height: view.frame.size.height * overlapRatio))
+        
+        for v in views {
+            if target.intersects(v.frame) {
                 return true
             }
         }
         return false
     }
-    // records.setPosition의 값 중에서 중복되지 않는 친구를 찾아야한다.
-    private func getEmptyPosition(records: [Record]) -> Int {
-        var index = 0
-        let max: Int = records.count < 10 ? records.count : 10
-        var i = 0
-        
-        while (i < max) {
-            if records[i].setPosition as! Int? == index {
-                index += 1
-                i = 0
-            } else {
-                i+=1
-            }
-        }
-        return index
-    }
+    
+    // MARK: - Set Shape and Color
     
     private func setShapeImageView(in view: UIView, image: UIImage?, color: UIColor) {
         let shapeImage: UIImageView = UIImageView()
@@ -151,84 +160,17 @@ extension MainRecordsView {
         shapeImage.tintColor = color
         view.addSubview(shapeImage)
     }
-    
-    private func setDefaultShapeImageView(in view: RecordView, index: Int, bound superview: CGRect, _ views: [RecordView]) {
-        let shapeImage: UIImageView = UIImageView()
-        let size = view.bounds.width
-        let name = "default_\(index + 1)"
-        let pos = getDefaultPos(views: views)
-        
-        shapeImage.frame = CGRect(origin: .zero, size: CGSize(width: size, height: size))
-        shapeImage.image = UIImage(named: name)?.withRenderingMode(.alwaysTemplate)
-        shapeImage.tintColor = UIColor(r: 141, g: 146, b: 149)
-        view.center = CGPoint(x: CGFloat(positions[pos].xRatio) * superview.width,
-                              y: CGFloat(positions[pos].yRatio) * superview.height)
-        view.pos = pos
-        view.addSubview(shapeImage)
-    }
-    
-    private func getDefaultPos(views: [RecordView]) -> Int {
-        var index = 0
-        var i = 0
-        
-        while (i < views.count) {
-            if views[i].pos == index {
-                index += 1
-                i = 0
-            } else {
-                i+=1
-            }
-        }
-        return index
-    }
-}
-
-// MARK: - Set Random Position
-
-extension MainRecordsView {
-    func setRandomPosition() {
-        var views = [UIView]()
-        
-        for i in 0..<recordViewsCount {
-            let view = UIView()
-            
-            view.frame.size = CGSize(width: recordViewSize, height: recordViewSize)
-            repeatSetRandom(view: view, views: views, superview: self, index: i)
-            views.append(view)
-        }
-    }
-    
-    private func repeatSetRandom(view: UIView, views: [UIView], superview: UIView, index: Int) {
-        repeat {
-            view.center = setRandomLocation(in: superview, index: index)
-        } while isOverlaped(view, in: views)
-    }
-    
-    private func isOverlaped(_ view: UIView, in views: [UIView]) -> Bool {
-        for v in views {
-            if view.frame.intersects(v.frame) {
-                return true
-            }
-        }
-        return false
-    }
-    
-    private func setRandomLocation(in view: UIView, index: Int) -> CGPoint {
-        let width = view.bounds.width// - recordViewSize - (recordViewSize / 2)
-        let height = view.bounds.height// - recordViewSize - (recordViewSize / 2)
-        
-        let xRatio = CGFloat.random(in: 0.1...0.9)
-        let yRatio = CGFloat.random(in: 0.1...0.9)
-        
-        let point = CGPoint(x: xRatio * width,
-                            y: yRatio * height)
-        
-        // Save Ratio in Position
-        positions[index].xRatio = Float(xRatio)
-        positions[index].yRatio = Float(yRatio)
-        CoreDataStack.shared.saveContext()
-        return point
-    }
+    //
+    //    private func setDefaultShapeImageView(in view: RecordView, index: Int, bound superview: CGRect, _ views: [RecordView]) {
+    //        let shapeImage: UIImageView = UIImageView()
+    //        let size = view.bounds.width
+    //        let name = "default_\(index + 1)"
+    //
+    //        shapeImage.frame = CGRect(origin: .zero, size: CGSize(width: size, height: size))
+    //        shapeImage.image = UIImage(named: name)?.withRenderingMode(.alwaysTemplate)
+    //        shapeImage.tintColor = UIColor(r: 141, g: 146, b: 149)
+    //        view.addSubview(shapeImage)
+    //    }
 }
 
 // MARK: - Set Tap Gesture

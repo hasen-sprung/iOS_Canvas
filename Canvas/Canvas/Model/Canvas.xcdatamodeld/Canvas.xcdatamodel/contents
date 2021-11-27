@@ -9,9 +9,11 @@
         <attribute name="gaugeLevel" attributeType="Integer 16" defaultValueString="50" usesScalarValueType="YES"/>
         <attribute name="memo" optional="YES" attributeType="String"/>
         <attribute name="setPosition" optional="YES" attributeType="Integer 16" usesScalarValueType="NO"/>
+        <attribute name="xRatio" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="yRatio" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
     </entity>
     <elements>
-        <element name="Record" positionX="-63" positionY="-18" width="128" height="89"/>
         <element name="Position" positionX="-63" positionY="9" width="128" height="59"/>
+        <element name="Record" positionX="-63" positionY="-18" width="128" height="119"/>
     </elements>
 </model>
