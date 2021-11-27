@@ -24,17 +24,4 @@ extension Ratio {
         Ratio(0.27573407, 0.35549185),
         Ratio(0.46675786, 0.8389069)
     ]
-    
-    static func printRatio() {
-        let context = CoreDataStack.shared.managedObjectContext
-        let request = Position.fetchRequest()
-        var positions: [Position] = [Position]()
-        
-        do {
-            positions = try context.fetch(request)
-        } catch { print("context Error") }
-        for p in positions {
-            print("Ratio(\(p.xRatio), \(p.yRatio)),")
-        }
-    }
 }

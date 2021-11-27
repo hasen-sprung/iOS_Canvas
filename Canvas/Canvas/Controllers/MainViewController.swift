@@ -41,23 +41,13 @@ class MainViewController: UIViewController {
     override func loadView() {
         super.loadView()
         // MARK: - DEVELOP - init seedData :
-//        DataHelper.shared.loadSeeder()
+                DataHelper.shared.loadSeeder()
         // 처음 앱을 실행되었을 때 = 코어데이터에 아무것도 없는 상태이기 때문에, 레코드들의 위치정보를 제공해줘야 한다.
         if launchedBefore == false {
             UserDefaults.standard.set(true, forKey: "launchedBefore")
             UserDefaults.standard.set("Canvas", forKey: "canvasTitle")
             UserDefaults.standard.set(true, forKey: "shakeAvail")
             UserDefaults.standard.synchronize()
-            // MARK: - init position by Default Ratio
-            // 레코드들의 포지션 정보(비율)를 초기화
-            for i in 0..<countOfRecordInCanvas {
-                let context = CoreDataStack.shared.managedObjectContext
-                let position = Position(context: context)
-                
-                position.xRatio = Ratio.DefaultRatio[i].x
-                position.yRatio = Ratio.DefaultRatio[i].y
-                CoreDataStack.shared.saveContext()
-            }
         }
     }
     
@@ -86,7 +76,7 @@ class MainViewController: UIViewController {
             setRecordsViewInCanvas()
             canvasRecordsView?.setRecordViews(records: recordsByDate[dateIdx], theme: themeManager.getThemeInstance())
             setInfoContentView()
-//            setScrollCanvasView()
+            //            setScrollCanvasView()
         }
     }
     
@@ -117,7 +107,6 @@ class MainViewController: UIViewController {
         transitionVc(vc: nextVC, duration: 0.5, type: .fromBottom)
     }
 }
-
 
 extension MainViewController {
     
@@ -282,7 +271,7 @@ extension MainViewController {
         let isShake = UserDefaults.standard.bool(forKey: "shakeAvail")
         
         if isShake && motion == .motionShake {
-            canvasRecordsView?.setRandomPosition()
+            canvasRecordsView?.setRandomPosition(records: recordsByDate[dateIdx])
             canvasRecordsView?.clearRecordViews()
             canvasRecordsView?.setRecordViews(records: recordsByDate[dateIdx], theme: themeManager.getThemeInstance())
             motionEnded(motion, with: event)
