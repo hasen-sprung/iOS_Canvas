@@ -200,40 +200,40 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
     }
 }
 
-extension MainViewController: UIScrollViewDelegate {
-    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-        let layout = self.canvasCollectionView.collectionViewLayout as! UICollectionViewFlowLayout
-        let cellWidthIncludingSpacing = layout.itemSize.width + layout.minimumLineSpacing
-        var offset = targetContentOffset.pointee
-        let index = (offset.x + scrollView.contentInset.left) / cellWidthIncludingSpacing
-        var roundedIndex = round(index)
-        
-        if scrollView.contentOffset.x > targetContentOffset.pointee.x {
-            roundedIndex = floor(index)
-        } else if scrollView.contentOffset.x < targetContentOffset.pointee.x {
-            roundedIndex = ceil(index)
-        } else {
-            roundedIndex = round(index)
-        }
-        
-        if isOneStepPaging {
-            if currentIndex > roundedIndex {
-                currentIndex -= 1
-                roundedIndex = currentIndex
-                mainViewLabel.text = dateStrings[Int(currentIndex)]
-                
-            } else if currentIndex < roundedIndex {
-                currentIndex += 1
-                roundedIndex = currentIndex
-                mainViewLabel.text = dateStrings[Int(currentIndex)]
-            }
-            print("current index: ", Int(currentIndex))
-        }
-        
-        offset = CGPoint(x: roundedIndex * cellWidthIncludingSpacing - scrollView.contentInset.left, y: -scrollView.contentInset.top)
-        targetContentOffset.pointee = offset
-    }
-}
+//extension MainViewController: UIScrollViewDelegate {
+//    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+//        let layout = self.canvasCollectionView.collectionViewLayout as! UICollectionViewFlowLayout
+//        let cellWidthIncludingSpacing = layout.itemSize.width + layout.minimumLineSpacing
+//        var offset = targetContentOffset.pointee
+//        let index = (offset.x + scrollView.contentInset.left) / cellWidthIncludingSpacing
+//        var roundedIndex = round(index)
+//
+//        if scrollView.contentOffset.x > targetContentOffset.pointee.x {
+//            roundedIndex = floor(index)
+//        } else if scrollView.contentOffset.x < targetContentOffset.pointee.x {
+//            roundedIndex = ceil(index)
+//        } else {
+//            roundedIndex = round(index)
+//        }
+//
+//        if isOneStepPaging {
+//            if currentIndex > roundedIndex {
+//                currentIndex -= 1
+//                roundedIndex = currentIndex
+//                mainViewLabel.text = dateStrings[Int(currentIndex)]
+//
+//            } else if currentIndex < roundedIndex {
+//                currentIndex += 1
+//                roundedIndex = currentIndex
+//                mainViewLabel.text = dateStrings[Int(currentIndex)]
+//            }
+//            print("current index: ", Int(currentIndex))
+//        }
+//
+//        offset = CGPoint(x: roundedIndex * cellWidthIncludingSpacing - scrollView.contentInset.left, y: -scrollView.contentInset.top)
+//        targetContentOffset.pointee = offset
+//    }
+//}
 
 // MARK: - Auto Layout & Set Subviews
 
@@ -316,16 +316,16 @@ extension MainViewController {
         }
     }
     
-    private func setRecordsViewInCanvas(subView: UIView) {
-        // canvas ui의 frame, layout이 정해진 후 레코드뷰들을 생성해야 함
-        canvasRecordsView = MainRecordsView(in: subView)
-        if let recordsView = canvasRecordsView {
-            subView.addSubview(recordsView)
-            // 메인 뷰에서 출력되는 숫자는 차후 유저디폴트로 세팅가능하게, 초기값은 10
-            recordsView.setRecordViewsCount(to: countOfRecordInCanvas)
-            recordsView.delegate = self
-        }
-    }
+//    private func setRecordsViewInCanvas(subView: UIView) {
+//        // canvas ui의 frame, layout이 정해진 후 레코드뷰들을 생성해야 함
+//        canvasRecordsView = MainRecordsView(in: subView)
+//        if let recordsView = canvasRecordsView {
+//            subView.addSubview(recordsView)
+//            // 메인 뷰에서 출력되는 숫자는 차후 유저디폴트로 세팅가능하게, 초기값은 10
+//            recordsView.setRecordViewsCount(to: countOfRecordInCanvas)
+//            recordsView.delegate = self
+//        }
+//    }
 }
 
 // MARK: - Set Motion and Gesture
@@ -340,6 +340,43 @@ extension MainViewController {
             canvasRecordsView?.clearRecordViews()
             canvasRecordsView?.setRecordViews(records: recordsByDate[Int(currentIndex)], theme: themeManager.getThemeInstance())
             motionEnded(motion, with: event)
+        }
+    }
+    
+    private func shakeAnimation(view: UIView) {
+        let records = recordsByDate[Int(currentIndex)]
+        var index = 0
+        
+        if let recordViews = canvasRecordsView?.getRecordViews() {
+            for view in recordViews {
+                UIView.animate(withDuration: 3.0, delay: 0.0, options: []) {
+                    view.center = CGPoint(x: CGFloat(records[index].xRatio) * self.canvasRecordsView!.frame.width,
+                                          y: CGFloat(records[index].yRatio) * self.canvasRecordsView!.frame.height)
+                } completion: { finished in
+//                   self.idleAnimation(view: view, move: 15, delay: Double.random(in: 0.0...1.0))
+                }
+                index += 1
+            }
+        }
+    }
+    
+    func startRecordsAnimation() {
+        if let recordViews = canvasRecordsView?.getRecordViews() {
+            for view in recordViews {
+                idleAnimation(view: view, move: 15, delay: Double.random(in: 0.0...1.0))
+            }
+        }
+    }
+    
+    private func idleAnimation(view: UIView, move: Int, delay: Double) {
+        let centerY = view.center.y
+        
+        UIView.animate(withDuration: 2.0,
+                       delay: delay,
+                       options: [.repeat, .autoreverse, .allowUserInteraction]) {
+            view.center.y = centerY - CGFloat(move)
+        } completion: { finished in
+            view.center.y = centerY
         }
     }
 }

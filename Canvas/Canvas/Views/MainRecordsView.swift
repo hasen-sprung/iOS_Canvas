@@ -75,6 +75,10 @@ class MainRecordsView: UIView {
     func setRecordViewsCount(to count: Int) {
         self.recordViewsCount = count
     }
+  
+    func getRecordViews() -> [RecordView] {
+        return self.recordViews
+    }
     
     func setRandomPosition(records: [Record]) {
         var views = [RecordView]()
