@@ -40,7 +40,7 @@ class CreateRecordView: UIView {
                                        height: CRBackgroundView.frame.height * 0.6)
         CRTextView.center = CGPoint(x: CRBackgroundView.frame.width / 2,
                                     y: CRBackgroundView.frame.height / 2)
-        CRTextView.font = UIFont(name: "Pretendard-Regular", size: 17)
+        CRTextView.font = UIFont(name: "Pretendard-Regular", size: 16)
         CRTextView.backgroundColor = .clear
         CRTextView.textColor = .black
         CRTextView.becomeFirstResponder()
