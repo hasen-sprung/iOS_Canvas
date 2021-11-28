@@ -67,6 +67,7 @@ class MainViewController: UIViewController {
         updateContext()
         setInfoContentView()
         mainViewLabel.text = dateStrings[Int(currentIndex)]
+        canvasCollectionView.reloadData()
     }
     
     override func viewWillLayoutSubviews() {
@@ -416,7 +417,7 @@ extension MainViewController {
         animator?.addAnimations {
             let centerY = view.center.y
             view.center.y = centerY - CGFloat(move)
-        }
+        } 
         animator?.addCompletion({ _ in
             self.addIdleAnimation(!reversed, view: view, move: -move)
         })
