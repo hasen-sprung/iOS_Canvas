@@ -71,7 +71,6 @@ class DataHelper {
             newRecord.createdDate = createdDate
             newRecord.gaugeLevel = Int16.random(in: 1...100)
             newRecord.memo = texts[Int.random(in: 0 ..< texts.count)]
-            newRecord.setPosition = nil
         }
         
         CoreDataStack.shared.saveContext()
