@@ -66,8 +66,14 @@ class MainViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         updateContext()
         setInfoContentView()
-        mainViewLabel.text = dateStrings[Int(currentIndex)]
-        canvasCollectionView.reloadData()
+        self.canvasCollectionView.reloadData()
+        currentIndex = 0
+        mainViewLabel.text = dateStrings[0]
+        let goTofirstAnimation = UIViewPropertyAnimator(duration: 0.5, curve: .linear)
+        goTofirstAnimation.addAnimations {
+            self.canvasCollectionView?.contentOffset.x = 0
+        }
+        goTofirstAnimation.startAnimation()
     }
     
     override func viewWillLayoutSubviews() {
