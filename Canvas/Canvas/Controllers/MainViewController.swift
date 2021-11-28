@@ -44,7 +44,7 @@ class MainViewController: UIViewController {
     override func loadView() {
         super.loadView()
         // MARK: - DEVELOP - init seedData :
-                DataHelper.shared.loadSeeder()
+//                DataHelper.shared.loadSeeder()
         // 처음 앱을 실행되었을 때 = 코어데이터에 아무것도 없는 상태이기 때문에, 레코드들의 위치정보를 제공해줘야 한다.
         if launchedBefore == false {
             UserDefaults.standard.set(true, forKey: "launchedBefore")
@@ -64,11 +64,16 @@ class MainViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        print("willappear")
         updateContext()
         setInfoContentView()
         self.canvasCollectionView.reloadData()
         currentIndex = 0
-        mainViewLabel.text = dateStrings[0]
+        if dateStrings.count > 0 {
+            mainViewLabel.text = dateStrings[0]
+        } else {
+            mainViewLabel.text = getDateString(date: Date())
+        }
         let goTofirstAnimation = UIViewPropertyAnimator(duration: 0.5, curve: .linear)
         goTofirstAnimation.addAnimations {
             self.canvasCollectionView?.contentOffset.x = 0
@@ -367,6 +372,11 @@ extension MainViewController {
             make.center.equalTo(mainAddRecordButton)
             view.addSubview(addRecordIcon)
         }
+        
+//        infoContentView.snp.makeConstraints { make in
+//            make.edges.equalTo(mainInfoView).inset(10)
+//            view.addSubview(infoContentView)
+//        }
     }
     
 //    private func setRecordsViewInCanvas(subView: UIView) {
@@ -512,18 +522,17 @@ extension MainViewController: MainInfoViewDelegate {
     func setInfoContentView() {
         infoContentView.delegate = self
         infoContentView.backgroundColor = .clear
+        infoContentView.frame.size = CGSize(width: mainInfoView.frame.width - 20, height: mainInfoView.frame.height - 20)
+        infoContentView.center = mainInfoView.center
         
-        // TODO: - 개수가 있을 때만, 작동하도록 해야 함. 아닐 때는 추가해보라는 설명이 들어가야 함.
-        if recordsByDate[Int(currentIndex)].count > 0 {
-            infoContentView.snp.makeConstraints { make in
-                make.edges.equalTo(mainInfoView).inset(10)
-                view.addSubview(infoContentView)
-            }
+        if recordsByDate.count > 0 && recordsByDate[Int(currentIndex)].count > 0 {
+            view.addSubview(infoContentView)
             greetingView.removeFromSuperview()
-            infoContentView.setDateLabel()
             infoContentView.setInfoViewContentSize()
             infoContentView.setInfoViewContentLayout()
+            infoContentView.setDateLabel()
         } else {
+            infoContentView.removeFromSuperview()
             greetingView.lineBreakMode = .byWordWrapping
             greetingView.numberOfLines = 0
             greetingView.text = "안녕하세요 \(UserDefaults.standard.string(forKey: "userID") ?? "무명작가")님!\n언제든 감정 기록을 추가하여\n나만의 그림을 완성해보세요!"
