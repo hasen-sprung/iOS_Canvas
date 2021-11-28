@@ -12,7 +12,6 @@ class SettingTableViewCell: UITableViewCell {
 
     let settingText = UILabel()
     let settingDetail = UILabel()
-    let settingToggle = UIView()
     let toggleLabel = UILabel()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -26,7 +25,7 @@ class SettingTableViewCell: UITableViewCell {
     }
     
     func settingToggleAvailable() {
-        self.contentView.addSubview(settingToggle)
+        self.contentView.addSubview(toggleLabel)
     }
     
     func setCellConstraints(viewWidth: CGFloat) {
@@ -34,13 +33,8 @@ class SettingTableViewCell: UITableViewCell {
         settingText.frame.origin = CGPoint(x: viewWidth * 0.1, y: .zero)
         settingDetail.frame.size = CGSize(width: viewWidth * 0.4, height: self.frame.height)
         settingDetail.frame.origin = CGPoint(x: viewWidth * 0.5, y: .zero)
-        settingToggle.frame.size = CGSize(width: self.frame.height, height: self.frame.height)
-        settingToggle.frame.origin = CGPoint(x: viewWidth * 0.9 - self.frame.height, y: .zero)
-        toggleLabel.frame.size = CGSize(width: self.frame.height * 0.7, height: self.frame.height * 0.7)
-        toggleLabel.center = CGPoint(x: settingToggle.frame.width / 2, y: settingToggle.frame.height / 2)
-        toggleLabel.layer.cornerRadius = toggleLabel.frame.width / 2
-        settingToggle.addSubview(toggleLabel)
-        
+        toggleLabel.frame.size = CGSize(width: viewWidth * 0.4, height: self.frame.height)
+        toggleLabel.frame.origin = CGPoint(x: viewWidth * 0.5, y: .zero)
     }
     
     private func setCellUI() {

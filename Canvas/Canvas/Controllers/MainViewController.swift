@@ -64,7 +64,6 @@ class MainViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        print("willappear")
         updateContext()
         setInfoContentView()
         self.canvasCollectionView.reloadData()
@@ -372,23 +371,7 @@ extension MainViewController {
             make.center.equalTo(mainAddRecordButton)
             view.addSubview(addRecordIcon)
         }
-        
-//        infoContentView.snp.makeConstraints { make in
-//            make.edges.equalTo(mainInfoView).inset(10)
-//            view.addSubview(infoContentView)
-//        }
     }
-    
-//    private func setRecordsViewInCanvas(subView: UIView) {
-//        // canvas ui의 frame, layout이 정해진 후 레코드뷰들을 생성해야 함
-//        canvasRecordsView = MainRecordsView(in: subView)
-//        if let recordsView = canvasRecordsView {
-//            subView.addSubview(recordsView)
-//            // 메인 뷰에서 출력되는 숫자는 차후 유저디폴트로 세팅가능하게, 초기값은 10
-//            recordsView.setRecordViewsCount(to: countOfRecordInCanvas)
-//            recordsView.delegate = self
-//        }
-//    }
 }
 
 // MARK: - Set Animation and Gesture
@@ -528,9 +511,9 @@ extension MainViewController: MainInfoViewDelegate {
         if recordsByDate.count > 0 && recordsByDate[Int(currentIndex)].count > 0 {
             view.addSubview(infoContentView)
             greetingView.removeFromSuperview()
-            infoContentView.setInfoViewContentSize()
             infoContentView.setInfoViewContentLayout()
             infoContentView.setDateLabel()
+            infoContentView.setInfoViewContentSize()
         } else {
             infoContentView.removeFromSuperview()
             greetingView.lineBreakMode = .byWordWrapping
