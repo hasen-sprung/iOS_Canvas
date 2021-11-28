@@ -27,8 +27,8 @@ class MainCanavasCollectionViewCell: UICollectionViewCell {
     
     private func updateUI() {
         canvasView.frame = self.contentView.frame
-        canvasView.backgroundColor = .white
-        setShadows(canvasView)
+        canvasView.backgroundColor = .clear
+//        setShadows(canvasView)
         canvasSubView.frame.size = CGSize(width: canvasView.frame.width - 16,
                                           height: canvasView.frame.height - 16)
         self.contentView.addSubview(canvasView)

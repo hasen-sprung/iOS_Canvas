@@ -44,7 +44,7 @@ class MainViewController: UIViewController {
     override func loadView() {
         super.loadView()
         // MARK: - DEVELOP - init seedData :
-        //        DataHelper.shared.loadSeeder()
+                DataHelper.shared.loadSeeder()
         // 처음 앱을 실행되었을 때 = 코어데이터에 아무것도 없는 상태이기 때문에, 레코드들의 위치정보를 제공해줘야 한다.
         if launchedBefore == false {
             UserDefaults.standard.set(true, forKey: "launchedBefore")
@@ -94,6 +94,14 @@ class MainViewController: UIViewController {
             loadUserIdInputMode()
             UserDefaults.standard.synchronize()
         }
+        if recordsByDate.count > 0 {
+            let indexPath = IndexPath(item: 0, section: 0)
+            if let cell = canvasCollectionView.cellForItem(at: indexPath) as? MainCanavasCollectionViewCell {
+                if let view = cell.canvasRecordView {
+                    startRecordsAnimation(view: view)
+                }
+            }
+        }
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -126,18 +134,19 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
     }
     
     private func setCanvasCollectionView() {
-        canvasCollectionView.frame.size = CGSize(width: view.frame.width, height: mainCanvasLayout.frame.height)
+        canvasCollectionView.frame.size = CGSize(width: mainCanvasLayout.frame.width, height: mainCanvasLayout.frame.height)
         canvasCollectionView.center = mainCanvasLayout.center
         canvasCollectionView.backgroundColor = .clear
+        canvasCollectionView.clipsToBounds = true
         
         let cellWidth = mainCanvasLayout.frame.width
         let cellHeight = mainCanvasLayout.frame.height
-        let insetX = (view.bounds.width - cellWidth) / 2.0
+        let insetX: CGFloat = 0//(view.bounds.width - cellWidth) / 2.0
         let insetY: CGFloat = 0
 
         let layout = canvasCollectionView.collectionViewLayout as! UICollectionViewFlowLayout
         layout.itemSize = CGSize(width: cellWidth, height: cellHeight)
-        layout.minimumLineSpacing = 20
+        layout.minimumLineSpacing = 0
         layout.scrollDirection = .horizontal
         
         canvasCollectionView.contentInset = UIEdgeInsets(top: insetY, left: insetX, bottom: insetY, right: insetX)
@@ -219,36 +228,44 @@ extension MainViewController: UIScrollViewDelegate {
         
         // MARK: - TODO: 여기서 애니메이션 스타트를 하고 중지를 하는게 맞는지는 모르겠어요!!!
         // 일단 콜렉션 뷰 안에서 캔버스가 변경될 때마다 idle애니메이션을 끄고 / 키고 해야할 것 같습니다.
-        var indexPath = IndexPath(item: Int(currentIndex), section: 0)
-        
-        // stop animation
-        if let cell = canvasCollectionView.cellForItem(at: indexPath) as? MainCanavasCollectionViewCell {
-            if let view = cell.canvasRecordView {
-                stopRecordsAnimation(view: view)
-            }
-        }
-
         if isOneStepPaging {
             if currentIndex > roundedIndex {
+                var indexPath = IndexPath(item: Int(currentIndex), section: 0)
+                if let cell = canvasCollectionView.cellForItem(at: indexPath) as? MainCanavasCollectionViewCell {
+                    if let view = cell.canvasRecordView {
+                        print("stop")
+                        stopRecordsAnimation(view: view)
+                    }
+                }
                 currentIndex -= 1
                 roundedIndex = currentIndex
                 mainViewLabel.text = dateStrings[Int(currentIndex)]
+                indexPath = IndexPath(item: Int(currentIndex), section: 0)
+                if let cell = canvasCollectionView.cellForItem(at: indexPath) as? MainCanavasCollectionViewCell {
+                    if let view = cell.canvasRecordView {
+                        startRecordsAnimation(view: view)
+                    }
+                }
 
             } else if currentIndex < roundedIndex {
+                var indexPath = IndexPath(item: Int(currentIndex), section: 0)
+                if let cell = canvasCollectionView.cellForItem(at: indexPath) as? MainCanavasCollectionViewCell {
+                    if let view = cell.canvasRecordView {
+                        print("stop")
+                        stopRecordsAnimation(view: view)
+                    }
+                }
                 currentIndex += 1
                 roundedIndex = currentIndex
                 mainViewLabel.text = dateStrings[Int(currentIndex)]
+                indexPath = IndexPath(item: Int(currentIndex), section: 0)
+                if let cell = canvasCollectionView.cellForItem(at: indexPath) as? MainCanavasCollectionViewCell {
+                    if let view = cell.canvasRecordView {
+                        startRecordsAnimation(view: view)
+                    }
+                }
             }
         }
-        
-        // start idle animation
-        indexPath = IndexPath(item: Int(currentIndex), section: 0)
-        if let cell = canvasCollectionView.cellForItem(at: indexPath) as? MainCanavasCollectionViewCell {
-            if let view = cell.canvasRecordView {
-                startRecordsAnimation(view: view)
-            }
-        }
-        
         print("current index: ", Int(currentIndex))
 
         offset = CGPoint(x: roundedIndex * cellWidthIncludingSpacing - scrollView.contentInset.left, y: -scrollView.contentInset.top)
