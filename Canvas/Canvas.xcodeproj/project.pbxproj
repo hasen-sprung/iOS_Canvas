@@ -15,6 +15,7 @@
 		3549F2672740EE7F00C1589A /* GaugeWaveAnimationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3549F2662740EE7F00C1589A /* GaugeWaveAnimationView.swift */; };
 		355B49CB27462DA000A764B2 /* MainRecordsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355B49CA27462DA000A764B2 /* MainRecordsView.swift */; };
 		358BD48B274194C100ACE0E7 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 358BD48A274194C100ACE0E7 /* Constants.swift */; };
+		35A3E2792753AB6800D8F490 /* Ratio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35FF8110274A189400AF43D4 /* Ratio.swift */; };
 		35CC3F2E2747CE4D0059707A /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 35CC3F2D2747CE4D0059707A /* WidgetKit.framework */; };
 		35CC3F302747CE4D0059707A /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 35CC3F2F2747CE4D0059707A /* SwiftUI.framework */; };
 		35CC3F332747CE4D0059707A /* CanvasWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35CC3F322747CE4D0059707A /* CanvasWidget.swift */; };
@@ -455,6 +456,7 @@
 				35CC3F3F2747CE880059707A /* ThemeManager.swift in Sources */,
 				35E81B4B2748F3B70025E506 /* CoreDataStack.swift in Sources */,
 				35EBD2B42749260B00486453 /* Constants.swift in Sources */,
+				35A3E2792753AB6800D8F490 /* Ratio.swift in Sources */,
 				35CC3F402747CE8B0059707A /* Color.swift in Sources */,
 				35CC3F412747D2830059707A /* Canvas.xcdatamodeld in Sources */,
 			);

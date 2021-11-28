@@ -14,6 +14,7 @@ class MainRecordsView: UIView {
     var delegate: MainRecordsViewDelegate?
     private var recordViews: [RecordView] = [RecordView]()
     private var recordViewsCount: Int = defaultCountOfRecordInCanvas
+    private var recordSize: CGFloat?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -48,9 +49,7 @@ class MainRecordsView: UIView {
     
     func setRecordViews(records: [Record], theme: Theme) {
         var views = [RecordView]()
-        var size = RecordViewRatio()
-        size.ratio = CGFloat(records.count)
-        let width: CGFloat = UIScreen.main.bounds.width * size.ratio
+        let width = setRecordSize(records: records)
         
         for i in 0 ..< recordViewsCount {
             if i < records.count {
@@ -82,11 +81,20 @@ class MainRecordsView: UIView {
         return self.recordViews
     }
     
-    func setRandomPosition(records: [Record]) {
-        var views = [RecordView]()
+    func getRecordSize() -> CGFloat? {
+        return recordSize
+    }
+    private func setRecordSize(records: [Record]) -> CGFloat {
         var size = RecordViewRatio()
         size.ratio = CGFloat(records.count)
-        let width: CGFloat = UIScreen.main.bounds.width * size.ratio
+        let width: CGFloat = self.frame.width * size.ratio
+        self.recordSize = width
+        return width
+    }
+    
+    func setRandomPosition(records: [Record]) {
+        var views = [RecordView]()
+        let width = setRecordSize(records: records)
         
         for i in 0..<recordViewsCount {
             if i < records.count {

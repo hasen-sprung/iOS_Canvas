@@ -413,9 +413,15 @@ extension MainViewController {
     
     private func startRecordsAnimation(view: MainRecordsView) {
         let recordViews = view.getRecordViews()
+        var move: CGFloat
         
+        if let size = view.getRecordSize() {
+            move = size / 4
+        } else {
+            move = 10
+        }
         for view in recordViews {
-            addIdleAnimation(view: view, move: 15)
+            addIdleAnimation(view: view, move: move)
         }
     }
     private func addIdleAnimation(_ reversed: Bool = false, view: UIView, move: CGFloat) {

@@ -60,14 +60,16 @@ struct CanvasWidgetEntryView : View {
             Color(uiColor: canvasColor).edgesIgnoringSafeArea(.all)
                 .cornerRadius(15)
             GeometryReader { geometry in
-                ForEach(0 ..< records.count) { index in
+                let width: CGFloat = sizeRatio * geometry.size.width
+                
+                ForEach(0 ..< getIndex(recordNum: records.count)) { index in
                     let record = records[index]
                     
                     ShapeView(level: Int(record.gaugeLevel))
                         .position(x: CGFloat(record.xRatio) * geometry.size.width,
                                   y: CGFloat(record.yRatio) * geometry.size.height)
-                        .frame(width: geometry.size.width / 6,
-                               height: geometry.size.width / 6,
+                        .frame(width: width,
+                               height: width,
                                alignment: .center)
                 }
             }
@@ -76,7 +78,13 @@ struct CanvasWidgetEntryView : View {
         .background(Color(uiColor: bgColor))
     }
     
-    // TODO: 최근날짜 것만 가져올 수 있도록 변경
+    var sizeRatio: CGFloat {
+        var size = RecordViewRatio()
+        
+        size.ratio = CGFloat(records.count)
+        return size.ratio
+    }
+    
     var records: [Record] {
         let context = CoreDataStack.shared.managedObjectContext
         let request = Record.fetchRequest()

@@ -37,15 +37,15 @@ struct RecordViewRatio {
         set(count) {
             switch count {
             case 1...2:
-                tempRatio = 0.145
+                tempRatio = 0.2
             case 3...4:
-                tempRatio = 0.140
+                tempRatio = 0.19
             case 5...6:
-                tempRatio = 0.135
+                tempRatio = 0.18
             case 7...8:
-                tempRatio = 0.130
+                tempRatio = 0.17
             default:
-                tempRatio = 0.125
+                tempRatio = 0.16
             }
         }
     }
