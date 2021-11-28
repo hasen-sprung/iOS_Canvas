@@ -112,8 +112,8 @@ class ListTableViewController: UIViewController, UITableViewDelegate, UITableVie
     
     private func initCalendar() {
         setCalendarViewConstraints()
-        setCalendarDateLabel()
         setCalendarDateCtrButtons()
+        setCalendarDateLabel()
         registerCalendarView()
         dateFormatter.dateFormat = "yyyy . M"
         components.year = cal.component(.year, from: now)
@@ -262,7 +262,7 @@ extension ListTableViewController: UICollectionViewDelegateFlowLayout, UICollect
             calendarDateLabel.frame.size = CGSize(width: calendarDateLabel.intrinsicContentSize.width,
                                               height: calendarDateLabel.intrinsicContentSize.height)
             make.centerX.equalTo(self.view)
-            make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top).offset(paddingInSafeArea)
+            make.centerY.equalTo(self.dateBWButton)
             view.addSubview(calendarDateLabel)
         }
     }
