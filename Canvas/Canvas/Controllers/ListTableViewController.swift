@@ -244,7 +244,7 @@ extension ListTableViewController: UICollectionViewDelegateFlowLayout, UICollect
                 cell?.dateLabel.font = UIFont(name: "Cardo-Bold", size: 13)
             }
         }
-
+        
         return cell ?? UICollectionViewCell()
     }
     
@@ -263,7 +263,7 @@ extension ListTableViewController: UICollectionViewDelegateFlowLayout, UICollect
             calendarDateLabel.textColor = textColor
             calendarDateLabel.textAlignment = .center
             calendarDateLabel.frame.size = CGSize(width: calendarDateLabel.intrinsicContentSize.width,
-                                              height: calendarDateLabel.intrinsicContentSize.height)
+                                                  height: calendarDateLabel.intrinsicContentSize.height)
             make.centerX.equalTo(self.view)
             make.centerY.equalTo(self.dateBWButton)
             view.addSubview(calendarDateLabel)
@@ -388,24 +388,29 @@ extension ListTableViewController {
         header?.contentView.backgroundColor = UIColor(r: 240, g: 240, b: 243)
     }
     
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath)
+    -> UISwipeActionsConfiguration? {
+        let deleteAction = UIContextualAction(style: .destructive, title: nil) { (_, _, completionHandler) in
             let context = CoreDataStack.shared.managedObjectContext
             
-            context.delete(recordsByDate[indexPath.section][indexPath.row])
+            context.delete(self.recordsByDate[indexPath.section][indexPath.row])
             CoreDataStack.shared.saveContext()
-            recordsByDate[indexPath.section].remove(at: indexPath.row)
-            listTableView.deleteRows(at: [indexPath], with: .fade)
-            if recordsByDate[indexPath.section].count == 0 {
-                recordsByDate.remove(at: indexPath.section)
-                dateSections.remove(at: indexPath.section)
-                onlyDateStr.remove(at: indexPath.section)
-                listTableView.deleteSections([indexPath.section], with: .fade)
-                showEmptyMessage()
-                calendarCalculation()
-                calendarView.reloadData()
+            self.recordsByDate[indexPath.section].remove(at: indexPath.row)
+            self.listTableView.deleteRows(at: [indexPath], with: .fade)
+            if self.recordsByDate[indexPath.section].count == 0 {
+                self.recordsByDate.remove(at: indexPath.section)
+                self.dateSections.remove(at: indexPath.section)
+                self.onlyDateStr.remove(at: indexPath.section)
+                self.listTableView.deleteSections([indexPath.section], with: .fade)
+                self.showEmptyMessage()
+                self.calendarCalculation()
             }
+            completionHandler(true)
         }
+        deleteAction.image = UIImage(systemName: "trash")
+        deleteAction.backgroundColor = .systemRed
+        let configuration = UISwipeActionsConfiguration(actions: [deleteAction])
+        return configuration
     }
 }
 
