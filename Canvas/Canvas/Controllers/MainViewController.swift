@@ -61,6 +61,14 @@ class MainViewController: UIViewController {
         canvasCollectionView.dataSource = self
         setAutoLayout()
         setButtonsTarget()
+        
+        NotificationCenter.default.addObserver(forName: UIApplication.willEnterForegroundNotification,
+                                               object: nil,
+                                               queue: .main) {
+            [unowned self] notification in
+            // background에서 foreground로 돌아오는 경우 실행 될 코드
+            animate(command: "start")
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
