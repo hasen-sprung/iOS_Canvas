@@ -24,7 +24,7 @@ class GaugeWaveAnimationView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.backgroundColor = bgColor
-        currentGaugeLevel = 50
+        currentGaugeLevel = 60
         setPanGesture()
     }
     

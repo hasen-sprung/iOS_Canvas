@@ -170,6 +170,7 @@ extension GaugeViewController {
         cancelButton.frame = CGRect(origin: .zero, size: CGSize(width: buttonSize, height: buttonSize))
         setShadows(cancelButton, buttonSize: buttonSize)
         setShapeImage()
+        changedGaugeLevel()
         superview.addSubview(cancelButton)
     }
     
