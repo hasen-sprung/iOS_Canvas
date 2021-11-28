@@ -92,6 +92,7 @@ class MainRecordsView: UIView {
                 views.append(view)
             }
         }
+//        recordViews = views
     }
 }
 
@@ -140,7 +141,7 @@ extension MainRecordsView {
     }
     
     private func isOverlapedInRecordsView(_ view: RecordView, in views: [RecordView]) -> Bool {
-        let overlapRatio: CGFloat = 0.65
+        let overlapRatio: CGFloat = 1.0
         let target = CGRect(origin: view.frame.origin,
                             size: CGSize(width: view.frame.size.width * overlapRatio,
                                          height: view.frame.size.height * overlapRatio))

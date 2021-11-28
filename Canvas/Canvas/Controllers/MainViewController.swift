@@ -39,6 +39,7 @@ class MainViewController: UIViewController {
     override var preferredStatusBarStyle: UIStatusBarStyle {
         .black
     }
+    private var animator: UIViewPropertyAnimator?
     
     override func loadView() {
         super.loadView()
@@ -200,40 +201,60 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
     }
 }
 
-//extension MainViewController: UIScrollViewDelegate {
-//    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-//        let layout = self.canvasCollectionView.collectionViewLayout as! UICollectionViewFlowLayout
-//        let cellWidthIncludingSpacing = layout.itemSize.width + layout.minimumLineSpacing
-//        var offset = targetContentOffset.pointee
-//        let index = (offset.x + scrollView.contentInset.left) / cellWidthIncludingSpacing
-//        var roundedIndex = round(index)
-//
-//        if scrollView.contentOffset.x > targetContentOffset.pointee.x {
-//            roundedIndex = floor(index)
-//        } else if scrollView.contentOffset.x < targetContentOffset.pointee.x {
-//            roundedIndex = ceil(index)
-//        } else {
-//            roundedIndex = round(index)
-//        }
-//
-//        if isOneStepPaging {
-//            if currentIndex > roundedIndex {
-//                currentIndex -= 1
-//                roundedIndex = currentIndex
-//                mainViewLabel.text = dateStrings[Int(currentIndex)]
-//
-//            } else if currentIndex < roundedIndex {
-//                currentIndex += 1
-//                roundedIndex = currentIndex
-//                mainViewLabel.text = dateStrings[Int(currentIndex)]
-//            }
-//            print("current index: ", Int(currentIndex))
-//        }
-//
-//        offset = CGPoint(x: roundedIndex * cellWidthIncludingSpacing - scrollView.contentInset.left, y: -scrollView.contentInset.top)
-//        targetContentOffset.pointee = offset
-//    }
-//}
+extension MainViewController: UIScrollViewDelegate {
+    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        let layout = self.canvasCollectionView.collectionViewLayout as! UICollectionViewFlowLayout
+        let cellWidthIncludingSpacing = layout.itemSize.width + layout.minimumLineSpacing
+        var offset = targetContentOffset.pointee
+        let index = (offset.x + scrollView.contentInset.left) / cellWidthIncludingSpacing
+        var roundedIndex = round(index)
+
+        if scrollView.contentOffset.x > targetContentOffset.pointee.x {
+            roundedIndex = floor(index)
+        } else if scrollView.contentOffset.x < targetContentOffset.pointee.x {
+            roundedIndex = ceil(index)
+        } else {
+            roundedIndex = round(index)
+        }
+        
+        // MARK: - TODO: 여기서 애니메이션 스타트를 하고 중지를 하는게 맞는지는 모르겠어요!!!
+        // 일단 콜렉션 뷰 안에서 캔버스가 변경될 때마다 idle애니메이션을 끄고 / 키고 해야할 것 같습니다.
+        var indexPath = IndexPath(item: Int(currentIndex), section: 0)
+        
+        // stop animation
+        if let cell = canvasCollectionView.cellForItem(at: indexPath) as? MainCanavasCollectionViewCell {
+            if let view = cell.canvasRecordView {
+                stopRecordsAnimation(view: view)
+            }
+        }
+
+        if isOneStepPaging {
+            if currentIndex > roundedIndex {
+                currentIndex -= 1
+                roundedIndex = currentIndex
+                mainViewLabel.text = dateStrings[Int(currentIndex)]
+
+            } else if currentIndex < roundedIndex {
+                currentIndex += 1
+                roundedIndex = currentIndex
+                mainViewLabel.text = dateStrings[Int(currentIndex)]
+            }
+        }
+        
+        // start idle animation
+        indexPath = IndexPath(item: Int(currentIndex), section: 0)
+        if let cell = canvasCollectionView.cellForItem(at: indexPath) as? MainCanavasCollectionViewCell {
+            if let view = cell.canvasRecordView {
+                startRecordsAnimation(view: view)
+            }
+        }
+        
+        print("current index: ", Int(currentIndex))
+
+        offset = CGPoint(x: roundedIndex * cellWidthIncludingSpacing - scrollView.contentInset.left, y: -scrollView.contentInset.top)
+        targetContentOffset.pointee = offset
+    }
+}
 
 // MARK: - Auto Layout & Set Subviews
 
@@ -328,56 +349,72 @@ extension MainViewController {
 //    }
 }
 
-// MARK: - Set Motion and Gesture
+// MARK: - Set Animation and Gesture
 
 extension MainViewController {
     override func motionBegan(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
         let isShake = UserDefaults.standard.bool(forKey: "shakeAvail")
+        let indexPath = IndexPath(item: Int(currentIndex), section: 0)
         
-        print("shake")
         if isShake && motion == .motionShake {
-            canvasRecordsView?.setRandomPosition(records: recordsByDate[Int(currentIndex)])
-            canvasRecordsView?.clearRecordViews()
-            canvasRecordsView?.setRecordViews(records: recordsByDate[Int(currentIndex)], theme: themeManager.getThemeInstance())
+            if let cell = canvasCollectionView.cellForItem(at: indexPath) as? MainCanavasCollectionViewCell {
+                cell.canvasRecordView?.setRandomPosition(records: recordsByDate[Int(currentIndex)])
+                shakeAnimation(canvasRecordsView: cell.canvasRecordView!)
+            }
             motionEnded(motion, with: event)
         }
     }
     
-    private func shakeAnimation(view: UIView) {
+    private func shakeAnimation(canvasRecordsView: MainRecordsView) {
         let records = recordsByDate[Int(currentIndex)]
         var index = 0
+        let recordViews = canvasRecordsView.getRecordViews()
         
-        if let recordViews = canvasRecordsView?.getRecordViews() {
-            for view in recordViews {
-                UIView.animate(withDuration: 3.0, delay: 0.0, options: []) {
-                    view.center = CGPoint(x: CGFloat(records[index].xRatio) * self.canvasRecordsView!.frame.width,
-                                          y: CGFloat(records[index].yRatio) * self.canvasRecordsView!.frame.height)
-                } completion: { finished in
-//                   self.idleAnimation(view: view, move: 15, delay: Double.random(in: 0.0...1.0))
-                }
-                index += 1
-            }
+        for view in recordViews {
+            addShakeAnimator(view: view, record: records[index], superview: canvasRecordsView)
+            index += 1
         }
     }
-    
-    func startRecordsAnimation() {
-        if let recordViews = canvasRecordsView?.getRecordViews() {
-            for view in recordViews {
-                idleAnimation(view: view, move: 15, delay: Double.random(in: 0.0...1.0))
-            }
+    private func addShakeAnimator(view: UIView, record: Record, superview: UIView) {
+        animator = UIViewPropertyAnimator(duration: 3.0, curve: .linear)
+        animator?.addAnimations {
+            view.center = CGPoint(x: CGFloat(record.xRatio) * superview.frame.width,
+                                  y: CGFloat(record.yRatio) * superview.frame.height)
         }
+        animator?.addCompletion({ _ in
+            print("finished shake")
+        })
+        animator?.startAnimation()
     }
     
-    private func idleAnimation(view: UIView, move: Int, delay: Double) {
-        let centerY = view.center.y
+    private func startRecordsAnimation(view: MainRecordsView) {
+        let recordViews = view.getRecordViews()
         
-        UIView.animate(withDuration: 2.0,
-                       delay: delay,
-                       options: [.repeat, .autoreverse, .allowUserInteraction]) {
+        for view in recordViews {
+            addIdleAnimation(view: view, move: 15)
+        }
+    }
+    private func addIdleAnimation(_ reversed: Bool = false, view: UIView, move: CGFloat) {
+        animator = UIViewPropertyAnimator(duration: 2.0, curve: .linear)
+        animator?.addAnimations {
+            let centerY = view.center.y
             view.center.y = centerY - CGFloat(move)
-        } completion: { finished in
-            view.center.y = centerY
         }
+        animator?.addCompletion({ _ in
+            self.addIdleAnimation(!reversed, view: view, move: -move)
+        })
+        animator?.startAnimation(afterDelay: Double.random(in: 0.0...1.5))
+    }
+    
+    private func stopRecordsAnimation(view: MainRecordsView) {
+        let recordViews = view.getRecordViews()
+
+        for _ in recordViews {
+            stopAnimator()
+        }
+    }
+    private func stopAnimator() {
+        animator?.stopAnimation(true)
     }
 }
 
@@ -472,6 +509,7 @@ extension MainViewController: MainInfoViewDelegate {
 
 extension MainViewController: MainRecordsViewDelegate {
     func openRecordTextView(index: Int) {
+        print("record")
         let df = DateFormatter()
         
         df.dateFormat = "M / d EEEE HH:mm"
@@ -504,5 +542,6 @@ extension MainViewController: MainRecordsViewDelegate {
     }
     
     func tapActionRecordView() {
+        print("tap")
     }
 }
