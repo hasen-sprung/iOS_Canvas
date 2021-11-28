@@ -50,7 +50,7 @@ class UserIdInputViewController: UIViewController, UITextFieldDelegate {
         view.addSubview(placeHolder)
         
         textField.frame.size = CGSize(width: placeHolder.frame.width * 0.8,
-                                      height: placeHolder.frame.height * 0.8)
+                                      height: placeHolder.frame.height)
         textField.center = placeHolder.center
         textField.textColor = UIColor(r: 72, g: 80, b: 84)
         textField.backgroundColor = .clear

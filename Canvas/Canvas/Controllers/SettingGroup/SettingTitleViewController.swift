@@ -46,7 +46,7 @@ class SettingTitleViewController: UIViewController, UITextFieldDelegate {
         
         textField.font = UIFont(name: "Pretendard-Regular", size: 14)
         textField.frame.size = CGSize(width: placeHolder.frame.width * 0.8,
-                                      height: placeHolder.frame.height * 0.8)
+                                      height: placeHolder.frame.height)
         textField.center = placeHolder.center
         textField.attributedPlaceholder = NSAttributedString(
             string: UserDefaults.standard.string(forKey: "canvasTitle") ?? "",
