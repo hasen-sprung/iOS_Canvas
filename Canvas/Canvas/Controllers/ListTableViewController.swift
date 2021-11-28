@@ -50,6 +50,10 @@ class ListTableViewController: UIViewController, UITableViewDelegate, UITableVie
         showEmptyMessage()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        view.bringSubviewToFront(searchDateButtonIcon)
+    }
+    
     @objc func backButtonPressed() {
         guard let nextVC = self.storyboard?.instantiateViewController(identifier: "mainViewController") as? MainViewController else { return }
         transitionVc(vc: nextVC, duration: 0.5, type: .fromRight)
@@ -59,7 +63,7 @@ class ListTableViewController: UIViewController, UITableViewDelegate, UITableVie
         if searchDateButtonTag == false {
             searchDateButtonTag = true
             searchDateButton.isEnabled = false
-            searchDateButtonIcon.image = UIImage(named: "SearchButtonClicked")?.withRenderingMode(.alwaysTemplate)
+            searchDateButtonIcon.image = UIImage(named: "searchButtonClicked")?.withRenderingMode(.alwaysTemplate)
             UIView.animate(withDuration: 0.5, delay: 0.0, options: [.curveEaseOut], animations: { [self] in
                 listTableView.frame.origin.y = listTableView.frame.origin.y + view.frame.width / 5 + calendarView.collectionViewLayout.collectionViewContentSize.height
             }) { (completed) in
@@ -68,7 +72,7 @@ class ListTableViewController: UIViewController, UITableViewDelegate, UITableVie
         } else {
             searchDateButtonTag = false
             searchDateButton.isEnabled = false
-            searchDateButtonIcon.image = UIImage(named: "SearchButton")?.withRenderingMode(.alwaysTemplate)
+            searchDateButtonIcon.image = UIImage(named: "searchButton")?.withRenderingMode(.alwaysTemplate)
             UIView.animate(withDuration: 0.5, delay: 0.0, options: [.curveEaseOut], animations: { [self] in
                 listTableView.frame.origin.y = listTableView.frame.origin.y - view.frame.width / 5 - calendarView.collectionViewLayout.collectionViewContentSize.height
             }) { (completed) in
@@ -440,17 +444,18 @@ extension ListTableViewController {
     
     private func setSearchButtonUI() {
         searchDateButton.setTitle("Calendar", for: .normal)
-        searchDateButton.titleLabel?.font = UIFont(name: "Cardo-Bold", size: 17)
         searchDateButton.setTitleColor(UIColor(r: 72, g: 80, b: 84), for: .normal)
         searchDateButton.setTitleColor(UIColor(r: 72, g: 80, b: 84), for: .highlighted)
         searchDateButton.setTitleColor(UIColor(r: 72, g: 80, b: 84), for: .disabled)
         searchDateButton.backgroundColor = .clear
         searchDateButtonIcon.backgroundColor = .clear
-        searchDateButtonIcon.image = UIImage(named: "SearchButton")?.withRenderingMode(.alwaysTemplate)
+        searchDateButtonIcon.image = UIImage(named: "searchButton")?.withRenderingMode(.alwaysTemplate)
         searchDateButtonIcon.tintColor = .darkGray//UIColor(r: 229, g: 151, b: 139)
     }
     
     private func setSearchButtonConstraints() {
+        let searchDateButtonLabel = UILabel()
+        
         searchDateButton.frame.size = CGSize(width: searchDateButton.intrinsicContentSize.width + view.frame.width / 10,
                                              height: view.frame.width / 10)
         searchDateButton.center = CGPoint(x: view.frame.width / 2,
@@ -460,6 +465,14 @@ extension ListTableViewController {
         searchDateButtonIcon.center = CGPoint(x: searchDateButton.center.x + (searchDateButton.frame.width / 2) - (searchDateButtonIcon.frame.size.width),
                                               y: searchDateButton.center.y)
         view.addSubview(searchDateButtonIcon)
+        searchDateButtonLabel.frame = searchDateButton.frame
+        searchDateButtonLabel.text = "Calendar"
+        searchDateButtonLabel.textAlignment = .center
+        searchDateButtonLabel.textColor = UIColor(r: 72, g: 80, b: 84)
+        searchDateButtonLabel.font = UIFont(name: "Cardo-Bold", size: 17)
+        searchDateButtonLabel.isUserInteractionEnabled = false
+        view.addSubview(searchDateButtonLabel)
+        searchDateButton.setTitle("", for: .normal)
     }
     
     private func setBackButton() {
