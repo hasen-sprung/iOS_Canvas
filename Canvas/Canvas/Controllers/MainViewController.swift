@@ -106,12 +106,7 @@ class MainViewController: UIViewController {
             UserDefaults.standard.synchronize()
         }
         if recordsByDate.count > 0 {
-            let indexPath = IndexPath(item: 0, section: 0)
-            if let cell = canvasCollectionView.cellForItem(at: indexPath) as? MainCanavasCollectionViewCell {
-                if let view = cell.canvasRecordView {
-                    startRecordsAnimation(view: view)
-                }
-            }
+            animate(command: "start")
         }
     }
     
@@ -243,47 +238,15 @@ extension MainViewController: UIScrollViewDelegate {
             roundedIndex = round(index)
         }
         
-        // MARK: - TODO: 여기서 애니메이션 스타트를 하고 중지를 하는게 맞는지는 모르겠어요!!!
-        // 일단 콜렉션 뷰 안에서 캔버스가 변경될 때마다 idle애니메이션을 끄고 / 키고 해야할 것 같습니다.
-        if isOneStepPaging {
-            if currentIndex > roundedIndex {
-                var indexPath = IndexPath(item: Int(currentIndex), section: 0)
-                if let cell = canvasCollectionView.cellForItem(at: indexPath) as? MainCanavasCollectionViewCell {
-                    if let view = cell.canvasRecordView {
-                        print("stop")
-                        stopRecordsAnimation(view: view)
-                    }
-                }
-                currentIndex -= 1
-                roundedIndex = currentIndex
-                mainViewLabel.text = dateStrings[Int(currentIndex)]
-                indexPath = IndexPath(item: Int(currentIndex), section: 0)
-                if let cell = canvasCollectionView.cellForItem(at: indexPath) as? MainCanavasCollectionViewCell {
-                    if let view = cell.canvasRecordView {
-                        print("start")
-                        startRecordsAnimation(view: view)
-                    }
-                }
-
-            } else if currentIndex < roundedIndex {
-                var indexPath = IndexPath(item: Int(currentIndex), section: 0)
-                if let cell = canvasCollectionView.cellForItem(at: indexPath) as? MainCanavasCollectionViewCell {
-                    if let view = cell.canvasRecordView {
-                        print("stop")
-                        stopRecordsAnimation(view: view)
-                    }
-                }
-                currentIndex += 1
-                roundedIndex = currentIndex
-                mainViewLabel.text = dateStrings[Int(currentIndex)]
-                indexPath = IndexPath(item: Int(currentIndex), section: 0)
-                if let cell = canvasCollectionView.cellForItem(at: indexPath) as? MainCanavasCollectionViewCell {
-                    if let view = cell.canvasRecordView {
-                        print("start")
-                        startRecordsAnimation(view: view)
-                    }
-                }
-            }
+        // idle애니메이션 Start / Stop by Current CollectionCell Index
+        if isOneStepPaging && (currentIndex != roundedIndex) {
+            let num: CGFloat = currentIndex > roundedIndex ?  -1.0 : 1.0
+            
+            animate(command: "stop")
+            currentIndex += num
+            roundedIndex = currentIndex
+            mainViewLabel.text = dateStrings[Int(currentIndex)]
+            animate(command: "start")
         }
         print("current index: ", Int(currentIndex))
 
@@ -390,6 +353,25 @@ extension MainViewController {
         }
     }
     
+    private func animate(command: String) {
+        let indexPath = IndexPath(item: Int(currentIndex), section: 0)
+        
+        if let cell = canvasCollectionView.cellForItem(at: indexPath) as? MainCanavasCollectionViewCell {
+            if let view = cell.canvasRecordView {
+                switch command {
+                case "start":
+                    print("start")
+                    startRecordsAnimation(view: view)
+                case "stop":
+                    print("stop")
+                    stopRecordsAnimation(view: view)
+                default:
+                    print("no command")
+                }
+            }
+        }
+    }
+    
     private func shakeAnimation(canvasRecordsView: MainRecordsView) {
         let records = recordsByDate[Int(currentIndex)]
         var index = 0
@@ -431,8 +413,19 @@ extension MainViewController {
             let centerY = view.center.y
             view.center.y = centerY - CGFloat(move)
         } 
-        animator?.addCompletion({ _ in
-            self.addIdleAnimation(!reversed, view: view, move: -move)
+        let index = self.currentIndex
+        animator?.addCompletion({ pos in
+            switch pos {
+            case .end:
+                print("end: \(index)")
+            case .start:
+                print("start: \(index)")
+            case .current:
+                print("current: \(index)")
+            default:
+                print("default error")
+            }
+//            self.addIdleAnimation(!reversed, view: view, move: -move)
         })
         animator?.startAnimation(afterDelay: Double.random(in: 0.0...1.5))
     }
