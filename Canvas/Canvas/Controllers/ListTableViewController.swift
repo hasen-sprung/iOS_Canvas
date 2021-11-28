@@ -229,7 +229,6 @@ extension ListTableViewController: UICollectionViewDelegateFlowLayout, UICollect
         } else {
             cell?.dateLabel.textColor = UIColor(r: 72, g: 80, b: 84)
         }
-        
         switch indexPath.section {
         case 0:
             cell?.dateLabel.text = weeks[indexPath.row]
