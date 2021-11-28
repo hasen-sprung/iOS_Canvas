@@ -33,7 +33,7 @@ class GaugeViewController: UIViewController {
             UserDefaults.standard.set(true, forKey: "launchedGauge")
             let greetingLabel = UILabel()
             greetingLabel.text = "게이지를 끝까지 올리면 종료됩니다. :)"
-            greetingLabel.font = UIFont(name: "Helvetica", size: 15)
+            greetingLabel.font = UIFont(name: "Pretendard-Regular", size: 15)
             greetingLabel.textColor = UIColor(r: 72, g: 80, b: 84)
             greetingLabel.frame.size = CGSize(width: view.frame.width,
                                               height: 100)

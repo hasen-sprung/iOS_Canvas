@@ -54,7 +54,7 @@ class CreateRecordView: UIView {
         cancelButton.setTitleColor(.black, for: .normal)
         cancelButton.isEnabled = false
         UIView.animate(withDuration: 0.5, delay: 0.0, animations: { [self] in
-            CRBtnIcon.center.x = CRBackgroundView.frame.width * 0.25
+            CRBtnIcon.center.x = CRBackgroundView.frame.width * 0.22
         }) { (completed) in
             self.cancelButton.isEnabled = true
             if let d = self.delegate {
