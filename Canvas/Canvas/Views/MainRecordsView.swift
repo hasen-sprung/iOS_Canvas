@@ -104,10 +104,10 @@ extension MainRecordsView {
         } else {
             view.center = CGPoint(x: CGFloat(record.xRatio) * superview.frame.width,
                                   y: CGFloat(record.yRatio) * superview.frame.height)
-            if isOverlapedInRecordsView(view, in: views) {
-                print("나중에 들어온 친구들이 먼저있던 애들과 중복될 경우 센터를 다시 랜덤하게 정한다.")
-                setRandomCenter(view: view, views: views, superview: superview, record: record)
-            }
+        }
+        if isOverlapedInRecordsView(view, in: views) {
+            print("나중에 들어온 친구들이 먼저있던 애들과 중복될 경우 센터를 다시 랜덤하게 정한다.")
+            setRandomCenter(view: view, views: views, superview: superview, record: record)
         }
     }
     
@@ -117,6 +117,7 @@ extension MainRecordsView {
         var overlapCount = 0
         
         repeat {
+            print("random 좌표 찾기")
             view.center = setRandomRatio(in: superview, record: record)
             overlapCount += 1
             if overlapCount > 50 {
