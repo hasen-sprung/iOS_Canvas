@@ -27,6 +27,7 @@ let textColor = UIColor(r: 72, g: 80, b: 84)
 
 // MARK: - TEXT
 // - MAIN VIEW
+let recordViewOverlapRatio: CGFloat = 0.7
 
 // - GAUGE VIEW
 

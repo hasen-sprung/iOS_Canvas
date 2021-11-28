@@ -14,7 +14,6 @@ class MainRecordsView: UIView {
     var delegate: MainRecordsViewDelegate?
     private var recordViews: [RecordView] = [RecordView]()
     private var recordViewsCount: Int = defaultCountOfRecordInCanvas
-    private var recordViewSize: CGFloat = UIScreen.main.bounds.width * 0.125
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -48,13 +47,16 @@ class MainRecordsView: UIView {
     }
     
     func setRecordViews(records: [Record], theme: Theme) {
-        var views = [RecordView]()//[UIView]()
+        var views = [RecordView]()
+        var size = RecordViewRatio()
+        size.ratio = CGFloat(records.count)
+        let width: CGFloat = UIScreen.main.bounds.width * size.ratio
         
         for i in 0 ..< recordViewsCount {
             if i < records.count {
                 let view = RecordView()
                 
-                view.frame.size = CGSize(width: recordViewSize, height: recordViewSize)
+                view.frame.size = CGSize(width: width, height: width)
                 view.backgroundColor = .clear
                 view.index = i
                 
@@ -66,7 +68,7 @@ class MainRecordsView: UIView {
                 self.addSubview(view)
                 views.append(view)
             } else {
-                // TODO: Default Record Views
+                // Default Record Views
             }
         }
         recordViews = views
@@ -82,17 +84,19 @@ class MainRecordsView: UIView {
     
     func setRandomPosition(records: [Record]) {
         var views = [RecordView]()
+        var size = RecordViewRatio()
+        size.ratio = CGFloat(records.count)
+        let width: CGFloat = UIScreen.main.bounds.width * size.ratio
         
         for i in 0..<recordViewsCount {
             if i < records.count {
                 let view = RecordView()
                 
-                view.frame.size = CGSize(width: recordViewSize, height: recordViewSize)
+                view.frame.size = CGSize(width: width, height: width)
                 setRandomCenter(view: view, views: views, superview: self, record: records[i])
                 views.append(view)
             }
         }
-//        recordViews = views
     }
 }
 
@@ -142,7 +146,7 @@ extension MainRecordsView {
     }
     
     private func isOverlapedInRecordsView(_ view: RecordView, in views: [RecordView]) -> Bool {
-        let overlapRatio: CGFloat = 1.0
+        let overlapRatio: CGFloat = recordViewOverlapRatio
         let target = CGRect(origin: view.frame.origin,
                             size: CGSize(width: view.frame.size.width * overlapRatio,
                                          height: view.frame.size.height * overlapRatio))
@@ -166,17 +170,6 @@ extension MainRecordsView {
         shapeImage.tintColor = color
         view.addSubview(shapeImage)
     }
-    //
-    //    private func setDefaultShapeImageView(in view: RecordView, index: Int, bound superview: CGRect, _ views: [RecordView]) {
-    //        let shapeImage: UIImageView = UIImageView()
-    //        let size = view.bounds.width
-    //        let name = "default_\(index + 1)"
-    //
-    //        shapeImage.frame = CGRect(origin: .zero, size: CGSize(width: size, height: size))
-    //        shapeImage.image = UIImage(named: name)?.withRenderingMode(.alwaysTemplate)
-    //        shapeImage.tintColor = UIColor(r: 141, g: 146, b: 149)
-    //        view.addSubview(shapeImage)
-    //    }
 }
 
 // MARK: - Set Tap Gesture

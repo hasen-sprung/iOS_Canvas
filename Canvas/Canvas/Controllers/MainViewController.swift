@@ -431,7 +431,9 @@ extension MainViewController {
         }
     }
     private func stopAnimator() {
-        animator?.stopAnimation(true)
+        animator?.stopAnimation(false)
+        animator?.finishAnimation(at: .current)
+//        animator?.stopAnimation(true)
     }
 }
 
