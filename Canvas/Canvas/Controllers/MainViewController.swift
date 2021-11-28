@@ -383,7 +383,7 @@ extension MainViewController {
         }
     }
     private func addShakeAnimator(view: UIView, record: Record, superview: UIView) {
-        animator = UIViewPropertyAnimator(duration: 3.0, curve: .linear)
+        animator = UIViewPropertyAnimator(duration: 1.5, curve: .linear)
         animator?.addAnimations {
             view.center = CGPoint(x: CGFloat(record.xRatio) * superview.frame.width,
                                   y: CGFloat(record.yRatio) * superview.frame.height)
@@ -407,27 +407,26 @@ extension MainViewController {
             addIdleAnimation(view: view, move: move)
         }
     }
-    private func addIdleAnimation(_ reversed: Bool = false, view: UIView, move: CGFloat) {
+    private func addIdleAnimation(view: UIView, move: CGFloat) {
+        let index = self.currentIndex
+        
         animator = UIViewPropertyAnimator(duration: 2.0, curve: .linear)
         animator?.addAnimations {
             let centerY = view.center.y
             view.center.y = centerY - CGFloat(move)
         } 
-        let index = self.currentIndex
         animator?.addCompletion({ pos in
-            switch pos {
-            case .end:
-                print("end: \(index)")
-            case .start:
-                print("start: \(index)")
-            case .current:
-                print("current: \(index)")
-            default:
-                print("default error")
+            if index == self.currentIndex {
+                self.addIdleAnimation(view: view, move: -move)
             }
-//            self.addIdleAnimation(!reversed, view: view, move: -move)
+//            switch pos {
+//            case .end:
+//                print("end \(index), \(self.currentIndex)")
+//            default:
+//                print("default")
+//            }
         })
-        animator?.startAnimation(afterDelay: Double.random(in: 0.0...1.5))
+        animator?.startAnimation(afterDelay: Double.random(in: 0.0...1.0))
     }
     
     private func stopRecordsAnimation(view: MainRecordsView) {
