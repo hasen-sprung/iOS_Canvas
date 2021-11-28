@@ -60,7 +60,7 @@ struct CanvasWidgetEntryView : View {
             Color(uiColor: canvasColor).edgesIgnoringSafeArea(.all)
                 .cornerRadius(15)
             GeometryReader { geometry in
-                ForEach(0 ..< getIndex(recordNum: records.count)) { index in
+                ForEach(0 ..< records.count) { index in
                     let record = records[index]
                     
                     ShapeView(level: Int(record.gaugeLevel))
@@ -81,12 +81,27 @@ struct CanvasWidgetEntryView : View {
         let context = CoreDataStack.shared.managedObjectContext
         let request = Record.fetchRequest()
         var records: [Record] = [Record]()
+        let todayString = getDateString(date: Date())
+        var todayRecords = [Record]()
         
         do {
             records = try context.fetch(request)
         } catch { print("context Error") }
         records.sort(by: {$0.createdDate?.timeIntervalSinceNow ?? Date().timeIntervalSinceNow > $1.createdDate?.timeIntervalSinceNow ?? Date().timeIntervalSinceNow})
-        return records
+        for record in records {
+            if getDateString(date: record.createdDate ?? Date()) == todayString {
+                todayRecords.append(record)
+            }
+        }
+        return todayRecords
+    }
+    
+    private func getDateString(date: Date) -> String {
+        let df = DateFormatter()
+        
+        df.dateFormat = "yyyy. M. d"
+        df.locale = Locale(identifier:"ko_KR")
+        return df.string(from: date)
     }
     
     private func getIndex(recordNum: Int) -> Int {
