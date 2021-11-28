@@ -1,10 +1,3 @@
-//
-//  MainInfoView.swift
-//  Canvas
-//
-//  Created by Junhong Park on 2021/11/21.
-//
-
 import UIKit
 
 protocol MainInfoViewDelegate {
@@ -83,5 +76,4 @@ class MainInfoView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
 }

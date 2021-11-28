@@ -109,6 +109,7 @@ class MainRecordsView: UIView {
 }
 
 // MARK: - Set Record View
+
 extension MainRecordsView {
     private func setRecordViewCenter(view: RecordView, views: [RecordView], superview: UIView, record: Record) {
         if record.xRatio == 0 || record.yRatio == 0 {

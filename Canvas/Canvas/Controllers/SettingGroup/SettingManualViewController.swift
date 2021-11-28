@@ -1,10 +1,3 @@
-//
-//  SettingManualViewController.swift
-//  Canvas
-//
-//  Created by Junhong Park on 2021/11/21.
-//
-
 import UIKit
 
 class SettingManualViewController: UIViewController {
@@ -19,7 +12,6 @@ class SettingManualViewController: UIViewController {
         setSettingTitle()
         setBackButton()
     }
-    
 
     @objc func backButtonPressed() {
         guard let nextVC = self.storyboard?.instantiateViewController(identifier: "settingViewController") as? SettingViewController else { return }

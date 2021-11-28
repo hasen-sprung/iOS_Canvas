@@ -1,10 +1,3 @@
-//
-//  CalendarCollectionViewCell.swift
-//  Canvas
-//
-//  Created by Junhong Park on 2021/11/19.
-//
-
 import UIKit
 
 protocol CalendarCollectionViewCellDelegate {
@@ -36,5 +29,4 @@ class CalendarCollectionViewCell: UICollectionViewCell {
             }
         }
     }
-    
 }

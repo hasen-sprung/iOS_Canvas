@@ -186,6 +186,7 @@ extension CreateRecordView {
 }
 
 // MARK: - set CRBackroundView UI and Constraints
+
 extension CreateRecordView {
     private func setCRBackgroundViewContraints() {
         CRBackgroundView.frame.size = CGSize(width: self.frame.width * 0.8,

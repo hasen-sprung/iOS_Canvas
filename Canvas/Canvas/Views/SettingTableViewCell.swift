@@ -1,10 +1,3 @@
-//
-//  SettingTableViewCell.swift
-//  Canvas
-//
-//  Created by Junhong Park on 2021/11/21.
-//
-
 import UIKit
 import SwiftUI
 

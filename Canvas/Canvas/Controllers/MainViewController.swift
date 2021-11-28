@@ -447,7 +447,6 @@ extension MainViewController {
     private func stopAnimator() {
         animator?.stopAnimation(false)
         animator?.finishAnimation(at: .current)
-//        animator?.stopAnimation(true)
     }
 }
 
@@ -480,6 +479,7 @@ extension MainViewController {
 }
 
 // MARK: - set info Content view in info view
+
 extension MainViewController: MainInfoViewDelegate {
     func getInfoDateString() -> String {
         var recordCount = recordsByDate[Int(currentIndex)].count

@@ -1,10 +1,3 @@
-//
-//  UserIdInputViewController.swift
-//  Canvas
-//
-//  Created by Junhong Park on 2021/11/21.
-//
-
 import UIKit
 
 class UserIdInputViewController: UIViewController, UITextFieldDelegate {
@@ -18,7 +11,6 @@ class UserIdInputViewController: UIViewController, UITextFieldDelegate {
     override var preferredStatusBarStyle: UIStatusBarStyle {
         .black
     }
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -81,8 +73,8 @@ class UserIdInputViewController: UIViewController, UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         let MAX_LENGTH = 15
         let updatedString = ((textField.text ?? "") as NSString).replacingCharacters(in: range, with: string)
-        return updatedString.count <= MAX_LENGTH
         
+        return updatedString.count <= MAX_LENGTH
     }
 }
 
