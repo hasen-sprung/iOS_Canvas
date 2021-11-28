@@ -391,6 +391,19 @@ extension ListTableViewController {
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath)
     -> UISwipeActionsConfiguration? {
         let deleteAction = UIContextualAction(style: .destructive, title: nil) { (_, _, completionHandler) in
+            self.presentDeletionFailsafe(indexPath: indexPath)
+            completionHandler(true)
+        }
+        deleteAction.image = UIImage(systemName: "trash")
+        deleteAction.backgroundColor = .systemRed
+        let configuration = UISwipeActionsConfiguration(actions: [deleteAction])
+        return configuration
+    }
+    
+    func presentDeletionFailsafe(indexPath: IndexPath) {
+        let alert = UIAlertController(title: nil, message: "정말 기록을 삭제할까요?", preferredStyle: .alert)
+        
+        let yesAction = UIAlertAction(title: "네", style: .default) { _ in
             let context = CoreDataStack.shared.managedObjectContext
             
             context.delete(self.recordsByDate[indexPath.section][indexPath.row])
@@ -405,12 +418,11 @@ extension ListTableViewController {
                 self.showEmptyMessage()
                 self.calendarCalculation()
             }
-            completionHandler(true)
         }
-        deleteAction.image = UIImage(systemName: "trash")
-        deleteAction.backgroundColor = .systemRed
-        let configuration = UISwipeActionsConfiguration(actions: [deleteAction])
-        return configuration
+        alert.addAction(yesAction)
+        alert.addAction(UIAlertAction(title: "아니오", style: .cancel, handler: nil))
+        
+        present(alert, animated: true, completion: nil)
     }
 }
 
