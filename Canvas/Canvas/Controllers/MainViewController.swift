@@ -132,7 +132,12 @@ class MainViewController: UIViewController {
     }
 }
 
+// MARK: - CollectionView Delegate
+
 extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, MainCanavasCollectionViewCellDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print("selected collectionView")
+    }
     
     func setCanvasSubView(subView: MainRecordsView, idx: Int) {
         subView.setRecordViewsCount(to: countOfRecordInCanvas)
@@ -145,6 +150,7 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
         canvasCollectionView.center = mainCanvasLayout.center
         canvasCollectionView.backgroundColor = .clear
         canvasCollectionView.clipsToBounds = true
+        canvasCollectionView.allowsSelection = false
         
         let cellWidth = mainCanvasLayout.frame.width
         let cellHeight = mainCanvasLayout.frame.height
@@ -250,6 +256,7 @@ extension MainViewController: UIScrollViewDelegate {
                 indexPath = IndexPath(item: Int(currentIndex), section: 0)
                 if let cell = canvasCollectionView.cellForItem(at: indexPath) as? MainCanavasCollectionViewCell {
                     if let view = cell.canvasRecordView {
+                        print("start")
                         startRecordsAnimation(view: view)
                     }
                 }
@@ -268,6 +275,7 @@ extension MainViewController: UIScrollViewDelegate {
                 indexPath = IndexPath(item: Int(currentIndex), section: 0)
                 if let cell = canvasCollectionView.cellForItem(at: indexPath) as? MainCanavasCollectionViewCell {
                     if let view = cell.canvasRecordView {
+                        print("start")
                         startRecordsAnimation(view: view)
                     }
                 }
