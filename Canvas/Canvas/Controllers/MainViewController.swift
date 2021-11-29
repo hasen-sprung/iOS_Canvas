@@ -51,6 +51,7 @@ class MainViewController: UIViewController {
             UserDefaults.standard.set(true, forKey: "launchedBefore")
             UserDefaults.standard.set("Canvas", forKey: "canvasTitle")
             UserDefaults.standard.set(true, forKey: "shakeAvail")
+            UserDefaults.standard.set(true, forKey: "guideAvail")
             UserDefaults.standard.synchronize()
         }
     }
