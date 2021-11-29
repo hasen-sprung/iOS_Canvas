@@ -23,7 +23,7 @@ class MainRecordsView: UIView {
     convenience init(in superview: UIView) {
         self.init(frame: superview.frame)
         
-        let ratio: CGFloat = 6/7
+        let ratio: CGFloat = 1
         let newSize = CGSize(width: superview.frame.width * ratio,
                              height: superview.frame.width * ratio)
         let newCenter = CGPoint(x: superview.center.x - superview.frame.origin.x,
@@ -47,7 +47,7 @@ class MainRecordsView: UIView {
         }
     }
     
-    func setRecordViews(records: [Record], theme: Theme) {
+    func setRecordViews(records: [Record], theme: Theme, idx: Int) {
         var views = [RecordView]()
         let width = setRecordSize(records: records)
         
@@ -66,11 +66,32 @@ class MainRecordsView: UIView {
                 setTapGesture(view: view)
                 self.addSubview(view)
                 views.append(view)
-            } else {
+            } else if idx == 0 {
                 // Default Record Views
+                let view = RecordView()
+                
+                view.frame.size = CGSize(width: width, height: width)
+                view.backgroundColor = .clear
+                view.index = i
+                
+                setRandomCenter(view: view, views: views, superview: self, record: nil)
+                let num = Int.random(in: 1...100)
+                setShapeImageView(in: view,
+                                  image: theme.getImageByGaugeLevel(gaugeLevel: num),
+                                  color: .lightGray)
+                self.addSubview(view)
+                views.append(view)
             }
         }
         recordViews = views
+        
+        var index = 0
+        for view in recordViews {
+            if index < records.count {
+                self.bringSubviewToFront(view)
+            }
+            index += 1
+        }
     }
     
     func setRecordViewsCount(to count: Int) {
@@ -126,7 +147,7 @@ extension MainRecordsView {
     
     // MARK: - Set Random Center
     
-    private func setRandomCenter(view: RecordView, views: [RecordView], superview: UIView, record: Record) {
+    private func setRandomCenter(view: RecordView, views: [RecordView], superview: UIView, record: Record?) {
         var overlapCount = 0
         
         repeat {
@@ -140,17 +161,19 @@ extension MainRecordsView {
         } while isOverlapedInRecordsView(view, in: views)
     }
     
-    private func setRandomRatio(in view: UIView, record: Record) -> CGPoint {
-        let width = view.bounds.width// - recordViewSize - (recordViewSize / 2)
-        let height = view.bounds.height// - recordViewSize - (recordViewSize / 2)
+    private func setRandomRatio(in view: UIView, record: Record?) -> CGPoint {
+        let width = view.bounds.width
+        let height = view.bounds.height
         let xRatio = CGFloat.random(in: 0.1...0.9)
         let yRatio = CGFloat.random(in: 0.1...0.9)
         let point = CGPoint(x: xRatio * width,
                             y: yRatio * height)
         
-        record.xRatio = Float(xRatio)
-        record.yRatio = Float(yRatio)
-        CoreDataStack.shared.saveContext()
+        if let record = record {
+            record.xRatio = Float(xRatio)
+            record.yRatio = Float(yRatio)
+            CoreDataStack.shared.saveContext()
+        }
         return point
     }
     

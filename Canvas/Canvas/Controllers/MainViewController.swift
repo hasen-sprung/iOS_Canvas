@@ -157,7 +157,7 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
     func setCanvasSubView(subView: MainRecordsView, idx: Int) {
         subView.setRecordViewsCount(to: countOfRecordInCanvas)
         subView.delegate = self
-        subView.setRecordViews(records: recordsByDate[idx], theme: themeManager.getThemeInstance())
+        subView.setRecordViews(records: recordsByDate[idx], theme: themeManager.getThemeInstance(), idx: idx)
     }
     
     private func setCanvasCollectionView() {
@@ -403,8 +403,10 @@ extension MainViewController {
         let recordViews = canvasRecordsView.getRecordViews()
         
         for view in recordViews {
-            addShakeAnimator(view: view, record: records[index], superview: canvasRecordsView)
-            index += 1
+            if index < records.count {
+                addShakeAnimator(view: view, record: records[index], superview: canvasRecordsView)
+                index += 1
+            }
         }
     }
     private func addShakeAnimator(view: UIView, record: Record, superview: UIView) {
