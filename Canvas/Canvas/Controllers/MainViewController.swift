@@ -284,14 +284,14 @@ extension MainViewController {
             goToListButton.backgroundColor = .clear
             goToListButton.setImage(UIImage(named: "SmallBtnBackground"), for: .normal)
             make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top).offset(paddingInSafeArea)
-            make.leading.equalTo(self.view.safeAreaLayoutGuide.snp.leading).offset(paddingInSafeArea)
+            make.trailing.equalTo(self.view.safeAreaLayoutGuide.snp.trailing).offset(-paddingInSafeArea)
             make.size.equalTo(buttonSize)
         }
         goToSettingButton.snp.makeConstraints { make in
             goToSettingButton.backgroundColor = .clear
             goToSettingButton.setImage(UIImage(named: "SmallBtnBackground"), for: .normal)
             make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top).offset(paddingInSafeArea)
-            make.trailing.equalTo(self.view.safeAreaLayoutGuide.snp.trailing).offset(-paddingInSafeArea)
+            make.leading.equalTo(self.view.safeAreaLayoutGuide.snp.leading).offset(paddingInSafeArea)
             make.size.equalTo(buttonSize)
         }
         mainAddRecordButton.snp.makeConstraints { make in
@@ -470,14 +470,15 @@ extension MainViewController {
     @objc func goToListButtonPressed(_ sender: UIButton) {
         
         guard let nextVC = self.storyboard?.instantiateViewController(identifier: "listTableViewController") as? ListTableViewController else { return }
-        present(nextVC, animated: true, completion: nil)
-//        transitionVc(vc: nextVC, duration: 0.5, type: .fromLeft)
+        transitionVc(vc: nextVC, duration: 0.5, type: .fromRight)
     }
     
     @objc func goToSettingPressed(_ sender: UIButton) {
         guard let nextVC = self.storyboard?.instantiateViewController(identifier: "settingViewController") as? SettingViewController else { return }
-        present(nextVC, animated: true, completion: nil)
-//        transitionVc(vc: nextVC, duration: 0.5, type: .fromRight)
+        
+        nextVC.modalTransitionStyle = .coverVertical
+        nextVC.modalPresentationStyle = .fullScreen
+        self.present(nextVC, animated: true, completion: nil)
     }
 }
 

@@ -31,11 +31,12 @@ class SettingViewController: UIViewController {
         settingTableView.register(SettingTableViewCell.classForCoder(), forCellReuseIdentifier: "settingCell")
         setSettingTitle()
         setBackButton()
+        let swipe = UISwipeGestureRecognizer(target: self, action: #selector(backButtonPressed))
+        swipe.direction = .down
+        self.settingTableView.gestureRecognizers = [swipe]
     }
     
     @objc func backButtonPressed() {
-//        guard let nextVC = self.storyboard?.instantiateViewController(identifier: "mainViewController") as? MainViewController else { return }
-//        transitionVc(vc: nextVC, duration: 0.5, type: .fromLeft)
         dismiss(animated: true, completion: nil)
     }
 }
@@ -198,7 +199,7 @@ extension SettingViewController {
     private func setBackButtonUI() {
         backButton.backgroundColor = .clear
         backButton.setImage(UIImage(named: "SmallBtnBackground"), for: .normal)
-        backButtonIcon.image = UIImage(systemName: "arrow.backward")
+        backButtonIcon.image = UIImage(systemName: "xmark")
         backButtonIcon.tintColor = UIColor(r: 163, g: 173, b: 178)
         backButtonIcon.isUserInteractionEnabled = false
     }

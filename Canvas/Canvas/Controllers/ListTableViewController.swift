@@ -48,6 +48,15 @@ class ListTableViewController: UIViewController, UITableViewDelegate, UITableVie
         view.bringSubviewToFront(listTableView)
         setEmptyMessage()
         showEmptyMessage()
+        let swipe = UISwipeGestureRecognizer(target: self, action: #selector(backButtonPressed))
+        let calendarSwipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(dateFWButtonPressed))
+        let calendarSwipeRight = UISwipeGestureRecognizer(target: self, action: #selector(dateBWButtonPressed))
+        swipe.direction = .right
+        swipe.delegate = self
+        calendarSwipeLeft.direction = .left
+        calendarSwipeRight.direction = .right
+        self.listTableView.addGestureRecognizer(swipe)
+        self.calendarView.gestureRecognizers = [calendarSwipeLeft, calendarSwipeRight]
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -56,12 +65,17 @@ class ListTableViewController: UIViewController, UITableViewDelegate, UITableVie
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        dismiss(animated: false, completion: nil)
     }
     
     @objc func backButtonPressed() {
         calendarView.removeFromSuperview()
-        self.dismiss(animated: true)
+        let transition = CATransition()
+        transition.duration = 0.5
+        transition.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
+        transition.type = CATransitionType.push
+        transition.subtype = CATransitionSubtype.fromLeft
+        self.view.window!.layer.add(transition, forKey: nil)
+        self.dismiss(animated: false, completion: nil)
     }
     
     @objc func searchDateButtonPressed() {
@@ -160,8 +174,15 @@ class ListTableViewController: UIViewController, UITableViewDelegate, UITableVie
     }
 }
 
-// MARK: - calculate calendar
+extension ListTableViewController: UIGestureRecognizerDelegate {
+    
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
+    }
+}
 
+
+// MARK: - calculate calendar
 extension ListTableViewController: CalendarCollectionViewCellDelegate {
     func isCellPressed(sectionStr: String) {
         searchDateButtonPressed()
@@ -506,7 +527,7 @@ extension ListTableViewController {
     
     private func setBackButtonConstraints() {
         backButton.snp.makeConstraints { make in
-            make.trailing.equalTo(self.view.safeAreaLayoutGuide.snp.trailing).offset(-paddingInSafeArea)
+            make.leading.equalTo(self.view.safeAreaLayoutGuide.snp.leading).offset(paddingInSafeArea)
             make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top).offset(paddingInSafeArea)
             make.size.equalTo(buttonSize)
         }
@@ -520,7 +541,7 @@ extension ListTableViewController {
     private func setBackButtonUI() {
         backButton.backgroundColor = .clear
         backButton.setImage(UIImage(named: "SmallBtnBackground"), for: .normal)
-        backButtonIcon.image = UIImage(systemName: "arrow.forward")
+        backButtonIcon.image = UIImage(systemName: "arrow.backward")
         backButtonIcon.tintColor = UIColor(r: 163, g: 173, b: 178)
         backButtonIcon.isUserInteractionEnabled = false
     }
