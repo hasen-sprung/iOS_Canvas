@@ -9,19 +9,17 @@ class MainInfoView: UIView {
     var delegate: MainInfoViewDelegate?
     let canvasTitleLabel = UILabel()
     let canvasUserLabel = UILabel()
-    let howMadeLabel = UILabel()
-    let canvasDateLabel = UILabel()
+    let canvasShapesView = UIView()
+    let images = DefaultTheme.shared.instanceImageSet()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
         
         setTitleLabelUI()
         setUserLabelUI()
-        setHowMadeLabel()
         self.addSubview(canvasTitleLabel)
         self.addSubview(canvasUserLabel)
-        self.addSubview(howMadeLabel)
-        self.addSubview(canvasDateLabel)
+        self.addSubview(canvasShapesView)
     }
     
     private func setTitleLabelUI() {
@@ -36,41 +34,40 @@ class MainInfoView: UIView {
         canvasUserLabel.textColor = UIColor(r: 103, g: 114, b: 120)
     }
     
-    private func setHowMadeLabel() {
-        howMadeLabel.text = "Emotions on Canvas"
-        howMadeLabel.font = UIFont(name: "Cardo-Regular", size: 12)
-        howMadeLabel.textColor = UIColor(r: 141, g: 146, b: 149)
+    func setShapesView(records: [Record]) {
+        var idx: CGFloat = 0
+        for record in records {
+            let shapeView = UIImageView()
+            shapeView.frame.size = CGSize(width: canvasShapesView.frame.width * 0.1,
+                                          height: canvasShapesView.frame.width * 0.1)
+            shapeView.center = CGPoint(x: canvasShapesView.frame.width * (0.5 + (1.0 * idx)),
+                                       y: canvasShapesView.frame.height / 2)
+            shapeView.image = DefaultTheme.shared.getImageByGaugeLevel(gaugeLevel: Int(record.gaugeLevel))
+            shapeView.tintColor = DefaultTheme.shared.getColorByGaugeLevel(gaugeLevel: Int(record.gaugeLevel))
+            self.addSubview(shapeView)
+            idx += 1
+        }
     }
     
+    
     // 따로 해주어야 함.
-    func setDateLabel() {
-        if let d = delegate {
-            canvasDateLabel.text = d.getInfoDateString()
-        }
-        canvasDateLabel.font = UIFont(name: "Cardo-Regular", size: 12)
-        canvasDateLabel.textColor = UIColor(r: 103, g: 114, b: 120)
-    }
     
     func setInfoViewContentSize() {
         canvasTitleLabel.frame.size = CGSize(width: canvasTitleLabel.intrinsicContentSize.width,
-                                             height: self.frame.height * 0.34)
+                                             height: self.frame.height * 0.3)
         canvasUserLabel.frame.size = CGSize(width: canvasUserLabel.intrinsicContentSize.width,
-                                             height: self.frame.height * 0.22)
-        howMadeLabel.frame.size = CGSize(width: howMadeLabel.intrinsicContentSize.width,
-                                             height: self.frame.height * 0.22)
-        canvasDateLabel.frame.size = CGSize(width: canvasDateLabel.intrinsicContentSize.width,
-                                             height: self.frame.height * 0.22)
+                                             height: self.frame.height * 0.2)
+        canvasShapesView.frame.size = CGSize(width: self.frame.width,
+                                         height: self.frame.height * 0.5)
     }
     
     func setInfoViewContentLayout() {
         canvasTitleLabel.frame.origin = CGPoint(x: .zero,
                                                 y: self.frame.height * 0.0)
         canvasUserLabel.frame.origin = CGPoint(x: .zero,
-                                                y: self.frame.height * 0.34)
-        howMadeLabel.frame.origin = CGPoint(x: .zero,
-                                                y: self.frame.height * 0.56)
-        canvasDateLabel.frame.origin = CGPoint(x: .zero,
-                                                y: self.frame.height * 0.78)
+                                                y: self.frame.height * 0.3)
+        canvasShapesView.frame.origin = CGPoint(x: .zero,
+                                            y: self.frame.height * 0.5)
     }
         
     required init?(coder: NSCoder) {

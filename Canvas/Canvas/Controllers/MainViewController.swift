@@ -77,6 +77,7 @@ class MainViewController: UIViewController {
         self.canvasCollectionView.reloadData()
         currentIndex = 0
         if dateStrings.count > 0 {
+            infoContentView.setShapesView(records: recordsByDate[Int(currentIndex)])
             mainViewLabel.text = dateStrings[0]
         } else {
             mainViewLabel.text = getDateString(date: Date())
@@ -255,6 +256,7 @@ extension MainViewController: UIScrollViewDelegate {
             roundedIndex = currentIndex
             mainViewLabel.text = dateStrings[Int(currentIndex)]
             animate(command: "start")
+            
         }
         print("current index: ", Int(currentIndex))
 
@@ -516,7 +518,6 @@ extension MainViewController: MainInfoViewDelegate {
             view.addSubview(infoContentView)
             greetingView.removeFromSuperview()
             infoContentView.setInfoViewContentLayout()
-            infoContentView.setDateLabel()
             infoContentView.setInfoViewContentSize()
         } else {
             infoContentView.removeFromSuperview()
