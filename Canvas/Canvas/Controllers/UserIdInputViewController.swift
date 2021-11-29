@@ -7,6 +7,7 @@ class UserIdInputViewController: UIViewController, UITextFieldDelegate {
     private let textField = UITextField()
     private let completeButton = UIButton()
     private let completeButtonLabel = UILabel()
+    private let byteView = UILabel()
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         .black
@@ -20,7 +21,12 @@ class UserIdInputViewController: UIViewController, UITextFieldDelegate {
         setTextField()
         setCompleteButton()
         completeButton.addTarget(self, action: #selector(completeButtonPressed), for: .touchUpInside)
+        textField.addTarget(self, action: #selector(self.textFieldDidChange(textField:)), for: UIControl.Event.editingChanged)
     }
+    
+    @objc func textFieldDidChange(textField : UITextField){
+        self.byteView.text = "\(self.textField.text!.count)/"+"\(15)"
+      }
     
     @objc func completeButtonPressed() {
         let finalText = textField.text?.trimmingCharacters(in: .whitespaces) ?? ""
@@ -48,6 +54,12 @@ class UserIdInputViewController: UIViewController, UITextFieldDelegate {
         textField.backgroundColor = .clear
         textField.becomeFirstResponder()
         view.addSubview(textField)
+        byteView.frame = textField.frame
+        byteView.text = "0/15"
+        byteView.font = UIFont(name: "Cardo-Regular", size: 13)
+        byteView.textColor = .lightGray
+        byteView.textAlignment = .right
+        view.addSubview(byteView)
     }
     
     private func setCompleteButton() {

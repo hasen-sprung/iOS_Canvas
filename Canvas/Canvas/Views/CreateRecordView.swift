@@ -17,6 +17,7 @@ class CreateRecordView: UIView {
     private let completeButton = UIButton()
     private let CRTextView = UITextView()
     private var date = Date()
+    private var byteView = UILabel()
     
     func setCreateRecordView() {
         CRTextView.delegate = self
@@ -46,6 +47,15 @@ class CreateRecordView: UIView {
         CRTextView.becomeFirstResponder()
         CRTextView.isScrollEnabled = true
         CRBackgroundView.addSubview(CRTextView)
+        byteView.text = "0/180"
+        byteView.frame.size = CGSize(width: CRBackgroundView.frame.width * 0.8,
+                                     height: byteView.intrinsicContentSize.height)
+        byteView.frame.origin = CGPoint(x: CRBackgroundView.frame.width * 0.1,
+                                        y: CRBackgroundView.frame.height * 0.8)
+        byteView.textAlignment = .right
+        byteView.textColor = .lightGray
+        byteView.font = UIFont(name: "Cardo-Regular", size: 13)
+        CRBackgroundView.addSubview(byteView)
     }
     
     @objc func cancelButtonPressed() {
@@ -86,7 +96,7 @@ extension CreateRecordView: UITextViewDelegate {
         }
         let newText = (textView.text as NSString).replacingCharacters(in: range, with: text)
         let numberOfChars = newText.count
-        
+        byteView.text = "\(numberOfChars)/180"
         return numberOfChars <= 180
     }
 }
@@ -148,7 +158,7 @@ extension CreateRecordView {
         CRBtnBackgroundView.frame.size = CGSize(width: CRBackgroundView.frame.height / 1.44,
                                                 height: CRBackgroundView.frame.height / 7.7)
         CRBtnBackgroundView.center = CGPoint(x: CRBackgroundView.frame.width / 2,
-                                             y: CRBackgroundView.frame.height * 0.9)
+                                             y: CRBackgroundView.frame.height * 0.925)
         CRBtnBackgroundView.backgroundColor = .clear
         CRBtnBackgroundView.image = UIImage(named: "TextBtnBackground")
         CRBackgroundView.addSubview(CRBtnBackgroundView)
