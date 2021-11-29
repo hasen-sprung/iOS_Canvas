@@ -228,6 +228,13 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
             recordsByDate.append(tempRecords)
         }
         tempRecords.removeAll()
+        let todayString = getDateString(date: Date())
+        if let _ = dateStrings.firstIndex(of: todayString) {
+            return
+        } else {
+            dateStrings.insert(todayString, at: 0)
+            recordsByDate.insert([Record](), at: 0)
+        }
     }
     
     private func getDateString(date: Date) -> String {
