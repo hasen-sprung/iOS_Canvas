@@ -14,7 +14,7 @@ class DefaultRecord {
 }
 
 extension DefaultRecord {
-    static let records: [DefaultRecord] = {
+    static let data: [DefaultRecord] = {
         var records = [DefaultRecord]()
         
         for i in 0..<10 {

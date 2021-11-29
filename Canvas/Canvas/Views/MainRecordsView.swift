@@ -72,15 +72,17 @@ class MainRecordsView: UIView {
             } else if idx == 0  && UserDefaults.standard.bool(forKey: "guideAvail") == true {
                 // Default Record Views
                 let view = RecordView()
+                let record = DefaultRecord.data[i]
                 
                 view.frame.size = CGSize(width: width, height: width)
                 view.backgroundColor = .clear
                 view.index = i
                 
                 setRandomCenter(view: view, views: views, superview: self, record: nil)
-                let num = Int.random(in: 1...100)
+                record.x = Float(view.center.x / self.bounds.width)
+                record.y = Float(view.center.y / self.bounds.height)
                 setShapeImageView(in: view,
-                                  image: theme.getImageByGaugeLevel(gaugeLevel: num),
+                                  image: theme.getImageByGaugeLevel(gaugeLevel: Int(record.gaugeLevel)),
                                   color: .gray)
                 self.addSubview(view)
                 views.append(view)
@@ -116,7 +118,8 @@ class MainRecordsView: UIView {
         return width
     }
     
-    func setRandomPosition(records: [Record]) {
+    // MARK: - 흔들기 애니메이션에서 사용하기 위해서 좌표를 새롭게 저장해 놓는다
+    func resetRandomPosition(records: [Record], idx: Int) {
         var views = [RecordView]()
         let width = setRecordSize(recordsCount: records.count)
         
@@ -126,6 +129,16 @@ class MainRecordsView: UIView {
                 
                 view.frame.size = CGSize(width: width, height: width)
                 setRandomCenter(view: view, views: views, superview: self, record: records[i])
+                views.append(view)
+            } else if idx == 0  && UserDefaults.standard.bool(forKey: "guideAvail") == true {
+                // 첫화면이고, 가이드라인이 켜져있으면 디폴트 레코드들의 위치도 새롭게 저장을 해 놓는다
+                let view = RecordView()
+                let record = DefaultRecord.data[i]
+                
+                view.frame.size = CGSize(width: width, height: width)
+                setRandomCenter(view: view, views: views, superview: self, record: nil)
+                record.x = Float(view.center.x / self.bounds.width)
+                record.y = Float(view.center.y / self.bounds.height)
                 views.append(view)
             }
         }

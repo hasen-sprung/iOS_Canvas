@@ -372,7 +372,7 @@ extension MainViewController {
         
         if isShake && motion == .motionShake {
             if let cell = canvasCollectionView.cellForItem(at: indexPath) as? MainCanavasCollectionViewCell {
-                cell.canvasRecordView?.setRandomPosition(records: recordsByDate[Int(currentIndex)])
+                cell.canvasRecordView?.resetRandomPosition(records: recordsByDate[Int(currentIndex)], idx: Int(currentIndex))
                 shakeAnimation(canvasRecordsView: cell.canvasRecordView!)
             }
             motionEnded(motion, with: event)
@@ -405,16 +405,20 @@ extension MainViewController {
         
         for view in recordViews {
             if index < records.count {
-                addShakeAnimator(view: view, record: records[index], superview: canvasRecordsView)
-                index += 1
+                addShakeAnimatorWithRecord(view: view, superview: canvasRecordsView, xRatio: records[index].xRatio, yRatio: records[index].yRatio)
+            } else if currentIndex == 0  && UserDefaults.standard.bool(forKey: "guideAvail") == true {
+                if let xRatio = DefaultRecord.data[index].x, let yRatio = DefaultRecord.data[index].y {
+                    addShakeAnimatorWithRecord(view: view, superview: canvasRecordsView, xRatio: xRatio, yRatio: yRatio)
+                }
             }
+            index += 1
         }
     }
-    private func addShakeAnimator(view: UIView, record: Record, superview: UIView) {
+    private func addShakeAnimatorWithRecord(view: UIView, superview: UIView, xRatio: Float, yRatio: Float) {
         animator = UIViewPropertyAnimator(duration: 1.5, curve: .easeOut)
         animator?.addAnimations {
-            view.center = CGPoint(x: CGFloat(record.xRatio) * superview.frame.width,
-                                  y: CGFloat(record.yRatio) * superview.frame.height)
+            view.center = CGPoint(x: CGFloat(xRatio) * superview.frame.width,
+                                  y: CGFloat(yRatio) * superview.frame.height)
         }
         animator?.addCompletion({ _ in
             print("finished shake")
@@ -594,7 +598,7 @@ extension MainViewController: MainRecordsViewDelegate {
             detailView.frame = view.frame
             view.addSubview(detailView)
             detailView.setDetailView()
-            detailView.memo.text = DefaultRecord.records[index].memo//"이곳에 랜덤한 설명이 들어갑니다."
+            detailView.memo.text = DefaultRecord.data[index].memo//"이곳에 랜덤한 설명이 들어갑니다."
         }
         
         let attrString = NSMutableAttributedString(string: detailView.memo.text ?? "")
