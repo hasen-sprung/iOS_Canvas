@@ -38,11 +38,6 @@ class SettingTableViewCell: UITableViewCell {
         settingDetail.textAlignment = .right
         settingDetail.font = UIFont(name: "Cardo-Regular", size: 12)
         toggleLabel.backgroundColor = .clear
-        if UserDefaults.standard.bool(forKey: "shakeAvail") == true {
-            toggleLabel.text = "On"
-        } else {
-            toggleLabel.text = "Off"
-        }
         toggleLabel.font = UIFont(name: "Cardo-Regular", size: 12)
         toggleLabel.textColor = UIColor(r: 72, g: 80, b: 84)
         toggleLabel.textAlignment = .right
