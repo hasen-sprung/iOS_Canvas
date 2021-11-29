@@ -34,9 +34,11 @@ class SettingViewController: UIViewController {
         let swipe = UISwipeGestureRecognizer(target: self, action: #selector(backButtonPressed))
         swipe.direction = .down
         self.settingTableView.gestureRecognizers = [swipe]
+        setupFeedbackGenerator()
     }
     
     @objc func backButtonPressed() {
+        feedbackGenerator?.notificationOccurred(.success)
         dismiss(animated: true, completion: nil)
     }
 }
@@ -48,12 +50,15 @@ extension SettingViewController: MFMailComposeViewControllerDelegate {
         tableView.deselectRow(at: indexPath, animated: true)
         switch indexPath.row {
         case 0:
+            feedbackGenerator?.notificationOccurred(.success)
             guard let nextVC = self.storyboard?.instantiateViewController(identifier: "settingUserIDViewController") as? SettingUserIDViewController else { return }
             transitionVc(vc: nextVC, duration: 0.5, type: .fromRight)
         case 1:
+            feedbackGenerator?.notificationOccurred(.success)
             guard let nextVC = self.storyboard?.instantiateViewController(identifier: "settingTitleViewController") as? SettingTitleViewController else { return }
             transitionVc(vc: nextVC, duration: 0.5, type: .fromRight)
         case 2:
+            feedbackGenerator?.notificationOccurred(.success)
             if UserDefaults.standard.bool(forKey: "canvasMode") == true {
                 if let cell = settingTableView.cellForRow(at: indexPath) as? SettingTableViewCell {
                     cell.toggleLabel.text = "Last 10"
@@ -66,6 +71,7 @@ extension SettingViewController: MFMailComposeViewControllerDelegate {
                 UserDefaults.standard.set(true, forKey: "canvasMode")
             }
         case 3:
+            feedbackGenerator?.notificationOccurred(.success)
             if UserDefaults.standard.bool(forKey: "shakeAvail") == true {
                 if let cell = settingTableView.cellForRow(at: indexPath) as? SettingTableViewCell {
                     cell.toggleLabel.text = "Off"
@@ -78,6 +84,7 @@ extension SettingViewController: MFMailComposeViewControllerDelegate {
                 UserDefaults.standard.set(true, forKey: "shakeAvail")
             }
         case 4:
+            feedbackGenerator?.notificationOccurred(.success)
             if UserDefaults.standard.bool(forKey: "guideAvail") == true {
                 if let cell = settingTableView.cellForRow(at: indexPath) as? SettingTableViewCell {
                     cell.toggleLabel.text = "Off"
@@ -90,6 +97,7 @@ extension SettingViewController: MFMailComposeViewControllerDelegate {
                 UserDefaults.standard.set(true, forKey: "guideAvail")
             }
         case 5:
+            feedbackGenerator?.notificationOccurred(.success)
             if MFMailComposeViewController.canSendMail() {
                 
                 let compseVC = MFMailComposeViewController()

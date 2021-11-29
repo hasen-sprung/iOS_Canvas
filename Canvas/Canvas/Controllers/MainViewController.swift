@@ -64,6 +64,7 @@ class MainViewController: UIViewController {
         canvasCollectionView.dataSource = self
         setAutoLayout()
         setButtonsTarget()
+        setupFeedbackGenerator()
         
         NotificationCenter.default.addObserver(forName: UIApplication.willEnterForegroundNotification,
                                                object: nil,
@@ -284,7 +285,7 @@ extension MainViewController: UIScrollViewDelegate {
             mainViewLabel.text = dateStrings[Int(currentIndex)]
             animate(command: "start")
             setInfoContentView()
-            
+            feedbackGenerator?.notificationOccurred(.success)
         }
         print("current index: ", Int(currentIndex))
         
@@ -502,6 +503,7 @@ extension MainViewController {
     }
     
     @objc func addRecordButtonPressed(_ sender: UIButton) {
+        feedbackGenerator?.notificationOccurred(.success)
         guard let nextVC = self.storyboard?.instantiateViewController(identifier: "gaugeViewController") as? GaugeViewController else { return }
         
         nextVC.modalTransitionStyle = .coverVertical
@@ -510,12 +512,13 @@ extension MainViewController {
     }
     
     @objc func goToListButtonPressed(_ sender: UIButton) {
-        
+        feedbackGenerator?.notificationOccurred(.success)
         guard let nextVC = self.storyboard?.instantiateViewController(identifier: "listTableViewController") as? ListTableViewController else { return }
         transitionVc(vc: nextVC, duration: 0.5, type: .fromRight)
     }
     
     @objc func goToSettingPressed(_ sender: UIButton) {
+        feedbackGenerator?.notificationOccurred(.success)
         guard let nextVC = self.storyboard?.instantiateViewController(identifier: "settingViewController") as? SettingViewController else { return }
         
         nextVC.modalTransitionStyle = .coverVertical
@@ -627,4 +630,11 @@ extension MainViewController: MainRecordsViewDelegate {
     func tapActionRecordView() {
         print("tap")
     }
+}
+
+var feedbackGenerator: UINotificationFeedbackGenerator?
+
+func setupFeedbackGenerator() {
+    feedbackGenerator = UINotificationFeedbackGenerator()
+    feedbackGenerator?.prepare()
 }

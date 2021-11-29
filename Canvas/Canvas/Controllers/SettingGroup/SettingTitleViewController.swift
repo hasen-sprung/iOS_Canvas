@@ -21,6 +21,7 @@ class SettingTitleViewController: UIViewController, UITextFieldDelegate {
         setCompleteButton()
         completeButton.addTarget(self, action: #selector(completeButtonPressed), for: .touchUpInside)
         textField.addTarget(self, action: #selector(self.textFieldDidChange(textField:)), for: UIControl.Event.editingChanged)
+        setupFeedbackGenerator()
     }
     
     @objc func textFieldDidChange(textField : UITextField){
@@ -28,6 +29,7 @@ class SettingTitleViewController: UIViewController, UITextFieldDelegate {
       }
     
     @objc func completeButtonPressed() {
+        feedbackGenerator?.notificationOccurred(.success)
         let finalText = textField.text?.trimmingCharacters(in: .whitespaces) ?? ""
         if finalText.count > 0 {
             UserDefaults.standard.set(finalText, forKey: "canvasTitle")
@@ -85,6 +87,7 @@ class SettingTitleViewController: UIViewController, UITextFieldDelegate {
     }
     
     @objc func backButtonPressed() {
+        feedbackGenerator?.notificationOccurred(.success)
         let transition = CATransition()
         transition.duration = 0.5
         transition.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)

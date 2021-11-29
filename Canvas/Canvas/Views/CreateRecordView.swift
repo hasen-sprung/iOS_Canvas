@@ -59,6 +59,7 @@ class CreateRecordView: UIView {
     }
     
     @objc func cancelButtonPressed() {
+        feedbackGenerator?.notificationOccurred(.success)
         CRTextView.endEditing(true)
         completeButton.setTitleColor(UIColor(r: 163, g: 173, b: 178), for: .normal)
         cancelButton.setTitleColor(.black, for: .normal)
@@ -74,6 +75,7 @@ class CreateRecordView: UIView {
     }
     
     @objc func completeButtonPressed() {
+        feedbackGenerator?.notificationOccurred(.success)
         if let d = self.delegate {
             CRTextView.endEditing(true)
             d.completeCreateRecordView()

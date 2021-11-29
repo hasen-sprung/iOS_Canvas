@@ -22,6 +22,7 @@ class GaugeViewController: UIViewController {
         view.backgroundColor = bgColor
         setSubViews()
         setLayout()
+        setupFeedbackGenerator()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -79,12 +80,16 @@ extension GaugeViewController: GaugeWaveAnimationViewDelegate {
     
     func changedGaugeLevel() {
         let level = gaugeWaveView.getCurrentGaugeLevel()
-        
-        shapeImage.image = theme.getImageByGaugeLevel(gaugeLevel: level)
+        let newImage = theme.getImageByGaugeLevel(gaugeLevel: level)
+        if shapeImage.image != newImage {
+            feedbackGenerator?.notificationOccurred(.success)
+            shapeImage.image = newImage
+        }
         shapeImage.tintColor = theme.getColorByGaugeLevel(gaugeLevel: level)
     }
     
     func cancelGaugeView() {
+        feedbackGenerator?.notificationOccurred(.success)
         UIView.animate(withDuration: 0.75, delay: 0.0, options: [.curveEaseOut], animations: { [self] in
             cancelButton.alpha = 0.0
             gaugeWaveView.bounds.origin.y = gaugeWaveView.bounds.origin.y - view.frame.height
@@ -94,6 +99,7 @@ extension GaugeViewController: GaugeWaveAnimationViewDelegate {
     }
     
     func createRecord() {
+        feedbackGenerator?.notificationOccurred(.success)
         if UIScreen.main.bounds.height < 740 {
             cancelButton.alpha = 0.0
         }
@@ -109,6 +115,7 @@ extension GaugeViewController: GaugeWaveAnimationViewDelegate {
         UIView.animate(withDuration: 0.75, delay: 0.0, options: [.curveEaseOut], animations: { [self] in
             gaugeWaveView.bounds.origin.y = gaugeWaveView.bounds.origin.y - view.frame.height
         }) { (completed) in
+            feedbackGenerator?.notificationOccurred(.success)
             self.createRecordView?.setCRTextView()
         }
     }

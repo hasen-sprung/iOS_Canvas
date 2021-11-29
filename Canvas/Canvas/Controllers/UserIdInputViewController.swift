@@ -22,6 +22,7 @@ class UserIdInputViewController: UIViewController, UITextFieldDelegate {
         setCompleteButton()
         completeButton.addTarget(self, action: #selector(completeButtonPressed), for: .touchUpInside)
         textField.addTarget(self, action: #selector(self.textFieldDidChange(textField:)), for: UIControl.Event.editingChanged)
+        setupFeedbackGenerator()
     }
     
     @objc func textFieldDidChange(textField : UITextField){
@@ -29,6 +30,7 @@ class UserIdInputViewController: UIViewController, UITextFieldDelegate {
       }
     
     @objc func completeButtonPressed() {
+        feedbackGenerator?.notificationOccurred(.success)
         let finalText = textField.text?.trimmingCharacters(in: .whitespaces) ?? ""
         if finalText.count > 0 {
             UserDefaults.standard.set(finalText, forKey: "userID")
@@ -75,11 +77,6 @@ class UserIdInputViewController: UIViewController, UITextFieldDelegate {
         completeButtonLabel.isUserInteractionEnabled = false
         view.addSubview(completeButton)
         view.addSubview(completeButtonLabel)
-    }
-    
-    @objc func backButtonPressed() {
-        guard let nextVC = self.storyboard?.instantiateViewController(identifier: "settingViewController") as? SettingViewController else { return }
-        transitionVc(vc: nextVC, duration: 1.0, type: .fromLeft)
     }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {

@@ -83,7 +83,7 @@ class MainRecordsView: UIView {
                 record.y = Float(view.center.y / self.bounds.height)
                 setShapeImageView(in: view,
                                   image: theme.getImageByGaugeLevel(gaugeLevel: Int(record.gaugeLevel)),
-                                  color: .gray)
+                                  color: .lightGray)
                 self.addSubview(view)
                 views.append(view)
             }

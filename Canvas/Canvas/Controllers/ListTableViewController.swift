@@ -57,6 +57,7 @@ class ListTableViewController: UIViewController, UITableViewDelegate, UITableVie
         calendarSwipeRight.direction = .right
         self.listTableView.addGestureRecognizer(swipe)
         self.calendarView.gestureRecognizers = [calendarSwipeLeft, calendarSwipeRight]
+        setupFeedbackGenerator()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -68,6 +69,7 @@ class ListTableViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     
     @objc func backButtonPressed() {
+        feedbackGenerator?.notificationOccurred(.success)
         calendarView.removeFromSuperview()
         let transition = CATransition()
         transition.duration = 0.5
@@ -79,6 +81,7 @@ class ListTableViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     
     @objc func searchDateButtonPressed() {
+        feedbackGenerator?.notificationOccurred(.success)
         if searchDateButtonTag == false {
             searchDateButtonTag = true
             searchDateButton.isEnabled = false
@@ -101,11 +104,13 @@ class ListTableViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     
     @objc func dateFWButtonPressed() {
+        feedbackGenerator?.notificationOccurred(.success)
         components.month = (components.month ?? 1) + 1
         reloadCalendar()
     }
     
     @objc func dateBWButtonPressed() {
+        feedbackGenerator?.notificationOccurred(.success)
         components.month = (components.month ?? 1) - 1
         reloadCalendar()
     }
@@ -185,6 +190,7 @@ extension ListTableViewController: UIGestureRecognizerDelegate {
 // MARK: - calculate calendar
 extension ListTableViewController: CalendarCollectionViewCellDelegate {
     func isCellPressed(sectionStr: String) {
+        feedbackGenerator?.notificationOccurred(.success)
         searchDateButtonPressed()
         DispatchQueue.main.async {
             let indexPath = IndexPath(row: 0, section: self.dateSections.firstIndex(of: sectionStr) ?? 0)
@@ -428,6 +434,7 @@ extension ListTableViewController {
     }
     
     func presentDeletionFailsafe(indexPath: IndexPath) {
+        feedbackGenerator?.notificationOccurred(.success)
         let alert = UIAlertController(title: nil, message: "정말 기록을 삭제할까요?", preferredStyle: .alert)
         
         let yesAction = UIAlertAction(title: "네", style: .default) { _ in
