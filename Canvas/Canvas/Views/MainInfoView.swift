@@ -2,6 +2,7 @@ import UIKit
 
 protocol MainInfoViewDelegate {
     func getInfoDateString() -> String
+    func getCurrentIndex() -> Int
 }
 
 class MainInfoView: UIView {
@@ -35,17 +36,34 @@ class MainInfoView: UIView {
     }
     
     func setShapesView(records: [Record]) {
-        var idx: CGFloat = 0
-        for record in records {
+        for subview in canvasShapesView.subviews {
+            subview.removeFromSuperview()
+        }
+        let recordCount = records.count
+        var idx = records.count
+        var count = records.count
+        if recordCount > 10 {
+            idx = 10
+        }
+        if recordCount < 10 {
+            count = 10
+        }
+        for _ in 1 ... 10  {
             let shapeView = UIImageView()
-            shapeView.frame.size = CGSize(width: canvasShapesView.frame.width * 0.1,
-                                          height: canvasShapesView.frame.width * 0.1)
-            shapeView.center = CGPoint(x: canvasShapesView.frame.width * (0.5 + (1.0 * idx)),
+            shapeView.frame.size = CGSize(width: canvasShapesView.frame.width * 0.1 * 0.8,
+                                      height: canvasShapesView.frame.width * 0.1 * 0.8)
+            shapeView.center = CGPoint(x: canvasShapesView.frame.width * (0.05 + (0.1 * CGFloat(10 - count))),
                                        y: canvasShapesView.frame.height / 2)
-            shapeView.image = DefaultTheme.shared.getImageByGaugeLevel(gaugeLevel: Int(record.gaugeLevel))
-            shapeView.tintColor = DefaultTheme.shared.getColorByGaugeLevel(gaugeLevel: Int(record.gaugeLevel))
-            self.addSubview(shapeView)
-            idx += 1
+            if idx > 0 {
+                shapeView.image = DefaultTheme.shared.getImageByGaugeLevel(gaugeLevel: Int(records[idx - 1].gaugeLevel))
+                shapeView.tintColor = DefaultTheme.shared.getColorByGaugeLevel(gaugeLevel: Int(records[idx - 1].gaugeLevel))
+                idx -= 1
+            } else if (delegate?.getCurrentIndex() ?? 1) == 0 {
+                shapeView.image = DefaultTheme.shared.getImageByGaugeLevel(gaugeLevel: Int.random(in: 1 ..< 100))
+                shapeView.tintColor = .lightGray
+            }
+            count -= 1
+            canvasShapesView.addSubview(shapeView)
         }
     }
     

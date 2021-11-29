@@ -80,7 +80,6 @@ class MainViewController: UIViewController {
         self.canvasCollectionView.reloadData()
         currentIndex = 0
         if dateStrings.count > 0 {
-            infoContentView.setShapesView(records: recordsByDate[Int(currentIndex)])
             mainViewLabel.text = dateStrings[0]
         } else {
             mainViewLabel.text = getDateString(date: Date())
@@ -271,6 +270,7 @@ extension MainViewController: UIScrollViewDelegate {
             roundedIndex = currentIndex
             mainViewLabel.text = dateStrings[Int(currentIndex)]
             animate(command: "start")
+            setInfoContentView()
             
         }
         print("current index: ", Int(currentIndex))
@@ -508,6 +508,10 @@ extension MainViewController {
 // MARK: - set info Content view in info view
 
 extension MainViewController: MainInfoViewDelegate {
+    func getCurrentIndex() -> Int {
+        return Int(currentIndex)
+    }
+    
     func getInfoDateString() -> String {
         var recordCount = recordsByDate[Int(currentIndex)].count
         let df = DateFormatter()
@@ -540,11 +544,13 @@ extension MainViewController: MainInfoViewDelegate {
             greetingView.removeFromSuperview()
             infoContentView.setInfoViewContentLayout()
             infoContentView.setInfoViewContentSize()
+            infoContentView.setShapesView(records: recordsByDate[Int(currentIndex)])
         } else {
             infoContentView.removeFromSuperview()
             greetingView.lineBreakMode = .byWordWrapping
             greetingView.numberOfLines = 0
-            greetingView.text = "안녕하세요 \(UserDefaults.standard.string(forKey: "userID") ?? "무명작가")님!\n언제든 감정 기록을 추가하여\n나만의 그림을 완성해보세요!"
+            greetingView.text = "\(UserDefaults.standard.string(forKey: "userID") ?? "무명작가")님! 어떤 하루를 보내고 계시나요?\n언제든 감정 기록을 추가하여\n나만의 그림을 완성해보세요!"
+            
             greetingView.font = UIFont(name: "Pretendard-Regular", size: 14)
             greetingView.textColor = UIColor(r: 72, g: 80, b: 84)
             
