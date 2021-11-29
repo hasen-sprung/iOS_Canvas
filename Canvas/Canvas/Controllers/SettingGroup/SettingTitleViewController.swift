@@ -26,8 +26,13 @@ class SettingTitleViewController: UIViewController, UITextFieldDelegate {
         if finalText.count > 0 {
             UserDefaults.standard.set(finalText, forKey: "canvasTitle")
         }
-        guard let nextVC = self.storyboard?.instantiateViewController(identifier: "settingViewController") as? SettingViewController else { return }
-        transitionVc(vc: nextVC, duration: 0.5, type: .fromLeft)
+        let transition = CATransition()
+        transition.duration = 0.5
+        transition.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
+        transition.type = CATransitionType.push
+        transition.subtype = CATransitionSubtype.fromLeft
+        self.view.window?.layer.add(transition, forKey: nil)
+        self.dismiss(animated: false, completion: nil)
     }
     
     private func setTextField() {
@@ -68,8 +73,13 @@ class SettingTitleViewController: UIViewController, UITextFieldDelegate {
     }
     
     @objc func backButtonPressed() {
-        guard let nextVC = self.storyboard?.instantiateViewController(identifier: "settingViewController") as? SettingViewController else { return }
-        transitionVc(vc: nextVC, duration: 0.5, type: .fromLeft)
+        let transition = CATransition()
+        transition.duration = 0.5
+        transition.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
+        transition.type = CATransitionType.push
+        transition.subtype = CATransitionSubtype.fromLeft
+        self.view.window?.layer.add(transition, forKey: nil)
+        self.dismiss(animated: false, completion: nil)
     }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
