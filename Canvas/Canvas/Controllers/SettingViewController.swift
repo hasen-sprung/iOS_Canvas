@@ -34,8 +34,9 @@ class SettingViewController: UIViewController {
     }
     
     @objc func backButtonPressed() {
-        guard let nextVC = self.storyboard?.instantiateViewController(identifier: "mainViewController") as? MainViewController else { return }
-        transitionVc(vc: nextVC, duration: 0.5, type: .fromLeft)
+//        guard let nextVC = self.storyboard?.instantiateViewController(identifier: "mainViewController") as? MainViewController else { return }
+//        transitionVc(vc: nextVC, duration: 0.5, type: .fromLeft)
+        dismiss(animated: true, completion: nil)
     }
 }
 

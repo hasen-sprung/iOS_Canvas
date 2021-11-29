@@ -54,9 +54,14 @@ class ListTableViewController: UIViewController, UITableViewDelegate, UITableVie
         view.bringSubviewToFront(searchDateButtonIcon)
     }
     
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        dismiss(animated: false, completion: nil)
+    }
+    
     @objc func backButtonPressed() {
-        guard let nextVC = self.storyboard?.instantiateViewController(identifier: "mainViewController") as? MainViewController else { return }
-        transitionVc(vc: nextVC, duration: 0.5, type: .fromRight)
+        calendarView.removeFromSuperview()
+        self.dismiss(animated: true)
     }
     
     @objc func searchDateButtonPressed() {
