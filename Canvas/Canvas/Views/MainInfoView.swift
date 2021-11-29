@@ -24,13 +24,13 @@ class MainInfoView: UIView {
     }
     
     private func setTitleLabelUI() {
-        canvasTitleLabel.text = UserDefaults.standard.string(forKey: "canvasTitle") ?? "Canvas"
+        canvasTitleLabel.text = UserDefaults.shared.string(forKey: "canvasTitle") ?? "Canvas"
         canvasTitleLabel.font = UIFont(name: "Cardo-Bold", size: 16)
         canvasTitleLabel.textColor = UIColor(r: 72, g: 80, b: 84)
     }
     
     private func setUserLabelUI() {
-        canvasUserLabel.text = UserDefaults.standard.string(forKey: "userID") ?? "User"
+        canvasUserLabel.text = UserDefaults.shared.string(forKey: "userID") ?? "User"
         canvasUserLabel.font = UIFont(name: "Cardo-Regular", size: 14)
         canvasUserLabel.textColor = UIColor(r: 103, g: 114, b: 120)
     }
@@ -58,7 +58,7 @@ class MainInfoView: UIView {
                 shapeView.image = DefaultTheme.shared.getImageByGaugeLevel(gaugeLevel: Int(records[idx - 1].gaugeLevel))
                 shapeView.tintColor = DefaultTheme.shared.getColorByGaugeLevel(gaugeLevel: Int(records[idx - 1].gaugeLevel))
                 idx -= 1
-            } else if (delegate?.getCurrentIndex() ?? 1) == 0  && UserDefaults.standard.bool(forKey: "guideAvail") == true {
+            } else if (delegate?.getCurrentIndex() ?? 1) == 0  && UserDefaults.shared.bool(forKey: "guideAvail") == true {
                 shapeView.image = DefaultTheme.shared.getImageByGaugeLevel(gaugeLevel: Int.random(in: 1 ..< 100))
                 shapeView.tintColor = .lightGray
             }

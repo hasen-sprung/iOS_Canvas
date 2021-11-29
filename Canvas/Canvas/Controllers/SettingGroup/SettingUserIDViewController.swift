@@ -32,7 +32,7 @@ class SettingUserIDViewController: UIViewController, UITextFieldDelegate {
         feedbackGenerator?.notificationOccurred(.success)
         let finalText = textField.text?.trimmingCharacters(in: .whitespaces) ?? ""
         if finalText.count > 0 {
-            UserDefaults.standard.set(finalText, forKey: "userID")
+            UserDefaults.shared.set(finalText, forKey: "userID")
         }
         let transition = CATransition()
         transition.duration = 0.5
@@ -55,7 +55,7 @@ class SettingUserIDViewController: UIViewController, UITextFieldDelegate {
                                       height: placeHolder.frame.height)
         textField.center = placeHolder.center
         textField.attributedPlaceholder = NSAttributedString(
-            string: UserDefaults.standard.string(forKey: "userID") ?? "",
+            string: UserDefaults.shared.string(forKey: "userID") ?? "",
             attributes: [NSAttributedString.Key.foregroundColor: UIColor(r: 103, g: 114, b: 120)]
         )
         textField.textColor = UIColor(r: 72, g: 80, b: 84)

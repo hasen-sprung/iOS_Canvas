@@ -96,6 +96,9 @@ struct CanvasWidgetEntryView : View {
             records = try context.fetch(request)
         } catch { print("context Error") }
         records.sort(by: {$0.createdDate?.timeIntervalSinceNow ?? Date().timeIntervalSinceNow > $1.createdDate?.timeIntervalSinceNow ?? Date().timeIntervalSinceNow})
+        if UserDefaults.shared.bool(forKey: "canvasMode") == false {
+            return records
+        }
         for record in records {
             if getDateString(date: record.createdDate ?? Date()) == todayString {
                 todayRecords.append(record)

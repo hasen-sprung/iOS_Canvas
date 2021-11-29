@@ -59,42 +59,42 @@ extension SettingViewController: MFMailComposeViewControllerDelegate {
             transitionVc(vc: nextVC, duration: 0.5, type: .fromRight)
         case 2:
             feedbackGenerator?.notificationOccurred(.success)
-            if UserDefaults.standard.bool(forKey: "canvasMode") == true {
+            if UserDefaults.shared.bool(forKey: "canvasMode") == true {
                 if let cell = settingTableView.cellForRow(at: indexPath) as? SettingTableViewCell {
                     cell.toggleLabel.text = "최근 10개"
                 }
-                UserDefaults.standard.set(false, forKey: "canvasMode")
+                UserDefaults.shared.set(false, forKey: "canvasMode")
             } else {
                 if let cell = settingTableView.cellForRow(at: indexPath) as? SettingTableViewCell {
                     cell.toggleLabel.text = "하루마다"
                 }
-                UserDefaults.standard.set(true, forKey: "canvasMode")
+                UserDefaults.shared.set(true, forKey: "canvasMode")
             }
         case 3:
             feedbackGenerator?.notificationOccurred(.success)
-            if UserDefaults.standard.bool(forKey: "shakeAvail") == true {
+            if UserDefaults.shared.bool(forKey: "shakeAvail") == true {
                 if let cell = settingTableView.cellForRow(at: indexPath) as? SettingTableViewCell {
                     cell.toggleLabel.text = "Off"
                 }
-                UserDefaults.standard.set(false, forKey: "shakeAvail")
+                UserDefaults.shared.set(false, forKey: "shakeAvail")
             } else {
                 if let cell = settingTableView.cellForRow(at: indexPath) as? SettingTableViewCell {
                     cell.toggleLabel.text = "On"
                 }
-                UserDefaults.standard.set(true, forKey: "shakeAvail")
+                UserDefaults.shared.set(true, forKey: "shakeAvail")
             }
         case 4:
             feedbackGenerator?.notificationOccurred(.success)
-            if UserDefaults.standard.bool(forKey: "guideAvail") == true {
+            if UserDefaults.shared.bool(forKey: "guideAvail") == true {
                 if let cell = settingTableView.cellForRow(at: indexPath) as? SettingTableViewCell {
                     cell.toggleLabel.text = "Off"
                 }
-                UserDefaults.standard.set(false, forKey: "guideAvail")
+                UserDefaults.shared.set(false, forKey: "guideAvail")
             } else {
                 if let cell = settingTableView.cellForRow(at: indexPath) as? SettingTableViewCell {
                     cell.toggleLabel.text = "On"
                 }
-                UserDefaults.standard.set(true, forKey: "guideAvail")
+                UserDefaults.shared.set(true, forKey: "guideAvail")
             }
         case 5:
             feedbackGenerator?.notificationOccurred(.success)
@@ -162,17 +162,17 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
         cell?.backgroundColor = UIColor(r: 240, g: 240, b: 243)
         cell?.settingText.text = settingList[indexPath.row]
         if indexPath.row == 0 {
-            cell?.settingDetail.text = UserDefaults.standard.string(forKey: "userID")
+            cell?.settingDetail.text = UserDefaults.shared.string(forKey: "userID")
             cell?.settingDetailAvailable()
         }
         if indexPath.row == 1 {
-            cell?.settingDetail.text = UserDefaults.standard.string(forKey: "canvasTitle")
+            cell?.settingDetail.text = UserDefaults.shared.string(forKey: "canvasTitle")
             cell?.settingDetailAvailable()
         }
         if indexPath.row == 2 {
             cell?.settingToggleAvailable()
             cell?.toggleLabel.font = UIFont(name: "Pretendard-Regular", size: 12)
-            if UserDefaults.standard.bool(forKey: "canvasMode") == true {
+            if UserDefaults.shared.bool(forKey: "canvasMode") == true {
                 cell?.toggleLabel.text = "하루마다"
             } else {
                 cell?.toggleLabel.text = "최근 10개"
@@ -180,7 +180,7 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
         }
         if indexPath.row == 3 {
             cell?.settingToggleAvailable()
-            if UserDefaults.standard.bool(forKey: "shakeAvail") == true {
+            if UserDefaults.shared.bool(forKey: "shakeAvail") == true {
                 cell?.toggleLabel.text = "On"
             } else {
                 cell?.toggleLabel.text = "Off"
@@ -188,7 +188,7 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
         }
         if indexPath.row == 4 {
             cell?.settingToggleAvailable()
-            if UserDefaults.standard.bool(forKey: "guideAvail") == true {
+            if UserDefaults.shared.bool(forKey: "guideAvail") == true {
                 cell?.toggleLabel.text = "On"
             } else {
                 cell?.toggleLabel.text = "Off"

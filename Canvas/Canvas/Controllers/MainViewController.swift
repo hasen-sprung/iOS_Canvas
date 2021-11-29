@@ -3,8 +3,8 @@ import SnapKit
 
 class MainViewController: UIViewController {
     // Data
-    private let launchedBefore = UserDefaults.standard.bool(forKey: "launchedBefore")
-    private let userIDsetting = UserDefaults.standard.bool(forKey: "userIDsetting")
+    private let launchedBefore = UserDefaults.shared.bool(forKey: "launchedBefore")
+    private let userIDsetting = UserDefaults.shared.bool(forKey: "userIDsetting")
     private let themeManager = ThemeManager.shared
     
     private var recordsByDate = [[Record]]()
@@ -48,12 +48,12 @@ class MainViewController: UIViewController {
         DataHelper.shared.loadSeeder()
         // 처음 앱을 실행되었을 때 = 코어데이터에 아무것도 없는 상태이기 때문에, 레코드들의 위치정보를 제공해줘야 한다.
         if launchedBefore == false {
-            UserDefaults.standard.set(true, forKey: "launchedBefore")
-            UserDefaults.standard.set("Canvas", forKey: "canvasTitle")
-            UserDefaults.standard.set(true, forKey: "shakeAvail")
-            UserDefaults.standard.set(true, forKey: "guideAvail")
-            UserDefaults.standard.set(true, forKey: "canvasMode")
-            UserDefaults.standard.synchronize()
+            UserDefaults.shared.set(true, forKey: "launchedBefore")
+            UserDefaults.shared.set("Canvas", forKey: "canvasTitle")
+            UserDefaults.shared.set(true, forKey: "shakeAvail")
+            UserDefaults.shared.set(true, forKey: "guideAvail")
+            UserDefaults.shared.set(true, forKey: "canvasMode")
+            UserDefaults.shared.synchronize()
         }
     }
     
@@ -117,7 +117,7 @@ class MainViewController: UIViewController {
         shouldInvalidateLayout = false
         if userIDsetting == false {
             loadUserIdInputMode()
-            UserDefaults.standard.synchronize()
+            UserDefaults.shared.synchronize()
         }
         if recordsByDate.count > 0 {
             animate(command: "start")
@@ -211,7 +211,7 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
         recordsByDate = [[Record]]()
         dateStrings = [String]()
         var tempRecords = [Record]()
-        if UserDefaults.standard.bool(forKey: "canvasMode") == true {
+        if UserDefaults.shared.bool(forKey: "canvasMode") == true {
             for r in sortedRecords {
                 let date = r.createdDate ?? Date()
                 let dateString = getDateString(date: date)
@@ -380,7 +380,7 @@ extension MainViewController {
 
 extension MainViewController {
     override func motionBegan(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
-        let isShake = UserDefaults.standard.bool(forKey: "shakeAvail")
+        let isShake = UserDefaults.shared.bool(forKey: "shakeAvail")
         let indexPath = IndexPath(item: Int(currentIndex), section: 0)
         
         if isShake && motion == .motionShake {
@@ -420,7 +420,7 @@ extension MainViewController {
         for view in recordViews {
             if index < records.count {
                 addShakeAnimatorWithRecord(view: view, superview: canvasRecordsView, xRatio: records[index].xRatio, yRatio: records[index].yRatio)
-            } else if currentIndex == 0  && UserDefaults.standard.bool(forKey: "guideAvail") == true {
+            } else if currentIndex == 0  && UserDefaults.shared.bool(forKey: "guideAvail") == true {
                 if let xRatio = DefaultRecord.data[index].x, let yRatio = DefaultRecord.data[index].y {
                     addShakeAnimatorWithRecord(view: view, superview: canvasRecordsView, xRatio: xRatio, yRatio: yRatio)
                 }
@@ -572,7 +572,7 @@ extension MainViewController: MainInfoViewDelegate {
             infoContentView.removeFromSuperview()
             greetingView.lineBreakMode = .byWordWrapping
             greetingView.numberOfLines = 0
-            greetingView.text = "\(UserDefaults.standard.string(forKey: "userID") ?? "무명작가")님! 어떤 하루를 보내고 계시나요?\n언제든 감정 기록을 추가하여\n나만의 그림을 완성해보세요!"
+            greetingView.text = "\(UserDefaults.shared.string(forKey: "userID") ?? "무명작가")님! 어떤 하루를 보내고 계시나요?\n언제든 감정 기록을 추가하여\n나만의 그림을 완성해보세요!"
             
             greetingView.font = UIFont(name: "Pretendard-Regular", size: 14)
             greetingView.textColor = UIColor(r: 72, g: 80, b: 84)
