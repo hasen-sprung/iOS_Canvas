@@ -66,7 +66,7 @@ class MainRecordsView: UIView {
                 setTapGesture(view: view)
                 self.addSubview(view)
                 views.append(view)
-            } else if idx == 0 {
+            } else if idx == 0  && UserDefaults.standard.bool(forKey: "guideAvail") == true {
                 // Default Record Views
                 let view = RecordView()
                 
