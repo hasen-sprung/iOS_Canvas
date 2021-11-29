@@ -384,6 +384,7 @@ extension MainViewController {
         let indexPath = IndexPath(item: Int(currentIndex), section: 0)
         
         if isShake && motion == .motionShake {
+            feedbackGenerator?.notificationOccurred(.success)
             if let cell = canvasCollectionView.cellForItem(at: indexPath) as? MainCanavasCollectionViewCell {
                 cell.canvasRecordView?.resetRandomPosition(records: recordsByDate[Int(currentIndex)], idx: Int(currentIndex))
                 shakeAnimation(canvasRecordsView: cell.canvasRecordView!)
@@ -595,6 +596,7 @@ extension MainViewController: MainInfoViewDelegate {
 
 extension MainViewController: MainRecordsViewDelegate {
     func openRecordTextView(index: Int) {
+        feedbackGenerator?.notificationOccurred(.success)
         print("record")
         let df = DateFormatter()
         
