@@ -38,7 +38,7 @@ struct ShapeView: View {
     
     init(level: Int) {
         self.image = ThemeManager.shared.getThemeInstance().getImageByGaugeLevel(gaugeLevel: level)
-        self.color = Color(uiColor: ThemeManager.shared.getThemeInstance().getColorByGaugeLevel(gaugeLevel: level))
+        self.color = Color(ThemeManager.shared.getThemeInstance().getColorByGaugeLevel(gaugeLevel: level))
     }
     
     var body: some View {
@@ -57,7 +57,7 @@ struct CanvasWidgetEntryView : View {
     
     var body: some View {
         ZStack{
-            Color(uiColor: canvasColor).edgesIgnoringSafeArea(.all)
+            Color(canvasColor).edgesIgnoringSafeArea(.all)
                 .cornerRadius(15)
             GeometryReader { geometry in
                 let width: CGFloat = sizeRatio * geometry.size.width
@@ -75,7 +75,7 @@ struct CanvasWidgetEntryView : View {
             }
         }
         .padding(10)
-        .background(Color(uiColor: bgColor))
+        .background(Color(bgColor))
     }
     
     var sizeRatio: CGFloat {

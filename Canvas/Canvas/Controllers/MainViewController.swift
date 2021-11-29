@@ -423,7 +423,7 @@ extension MainViewController {
         }
     }
     private func addShakeAnimator(view: UIView, record: Record, superview: UIView) {
-        animator = UIViewPropertyAnimator(duration: 1.5, curve: .linear)
+        animator = UIViewPropertyAnimator(duration: 1.5, curve: .easeOut)
         animator?.addAnimations {
             view.center = CGPoint(x: CGFloat(record.xRatio) * superview.frame.width,
                                   y: CGFloat(record.yRatio) * superview.frame.height)
