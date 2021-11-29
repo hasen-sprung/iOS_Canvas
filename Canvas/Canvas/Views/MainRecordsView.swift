@@ -81,7 +81,7 @@ class MainRecordsView: UIView {
                 let num = Int.random(in: 1...100)
                 setShapeImageView(in: view,
                                   image: theme.getImageByGaugeLevel(gaugeLevel: num),
-                                  color: .lightGray)
+                                  color: .gray)
                 self.addSubview(view)
                 views.append(view)
             }
