@@ -61,12 +61,12 @@ extension SettingViewController: MFMailComposeViewControllerDelegate {
             feedbackGenerator?.notificationOccurred(.success)
             if UserDefaults.standard.bool(forKey: "canvasMode") == true {
                 if let cell = settingTableView.cellForRow(at: indexPath) as? SettingTableViewCell {
-                    cell.toggleLabel.text = "Last 10"
+                    cell.toggleLabel.text = "최근 10개"
                 }
                 UserDefaults.standard.set(false, forKey: "canvasMode")
             } else {
                 if let cell = settingTableView.cellForRow(at: indexPath) as? SettingTableViewCell {
-                    cell.toggleLabel.text = "Each Date"
+                    cell.toggleLabel.text = "하루마다"
                 }
                 UserDefaults.standard.set(true, forKey: "canvasMode")
             }
@@ -171,10 +171,11 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
         }
         if indexPath.row == 2 {
             cell?.settingToggleAvailable()
+            cell?.toggleLabel.font = UIFont(name: "Pretendard-Regular", size: 12)
             if UserDefaults.standard.bool(forKey: "canvasMode") == true {
-                cell?.toggleLabel.text = "Each Date"
+                cell?.toggleLabel.text = "하루마다"
             } else {
-                cell?.toggleLabel.text = "Last 10"
+                cell?.toggleLabel.text = "최근 10개"
             }
         }
         if indexPath.row == 3 {
