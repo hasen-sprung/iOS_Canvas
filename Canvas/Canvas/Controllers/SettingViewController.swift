@@ -20,7 +20,7 @@ class SettingViewController: UIViewController {
         .black
     }
     
-    private let settingList = ["작가명", "작품명", "흔들어서 그림 섞기", "가이드 도형", "개발자에게 의견 남기기", "Canvas 정보"]
+    private let settingList = ["작가명", "작품명", "작품 모드", "흔들어서 그림 섞기", "가이드 도형", "개발자에게 의견 남기기", "Canvas 정보"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -54,6 +54,18 @@ extension SettingViewController: MFMailComposeViewControllerDelegate {
             guard let nextVC = self.storyboard?.instantiateViewController(identifier: "settingTitleViewController") as? SettingTitleViewController else { return }
             transitionVc(vc: nextVC, duration: 0.5, type: .fromRight)
         case 2:
+            if UserDefaults.standard.bool(forKey: "canvasMode") == true {
+                if let cell = settingTableView.cellForRow(at: indexPath) as? SettingTableViewCell {
+                    cell.toggleLabel.text = "Last 10"
+                }
+                UserDefaults.standard.set(false, forKey: "canvasMode")
+            } else {
+                if let cell = settingTableView.cellForRow(at: indexPath) as? SettingTableViewCell {
+                    cell.toggleLabel.text = "Each Date"
+                }
+                UserDefaults.standard.set(true, forKey: "canvasMode")
+            }
+        case 3:
             if UserDefaults.standard.bool(forKey: "shakeAvail") == true {
                 if let cell = settingTableView.cellForRow(at: indexPath) as? SettingTableViewCell {
                     cell.toggleLabel.text = "Off"
@@ -65,7 +77,7 @@ extension SettingViewController: MFMailComposeViewControllerDelegate {
                 }
                 UserDefaults.standard.set(true, forKey: "shakeAvail")
             }
-        case 3:
+        case 4:
             if UserDefaults.standard.bool(forKey: "guideAvail") == true {
                 if let cell = settingTableView.cellForRow(at: indexPath) as? SettingTableViewCell {
                     cell.toggleLabel.text = "Off"
@@ -77,7 +89,7 @@ extension SettingViewController: MFMailComposeViewControllerDelegate {
                 }
                 UserDefaults.standard.set(true, forKey: "guideAvail")
             }
-        case 4:
+        case 5:
             if MFMailComposeViewController.canSendMail() {
                 
                 let compseVC = MFMailComposeViewController()
@@ -151,13 +163,21 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
         }
         if indexPath.row == 2 {
             cell?.settingToggleAvailable()
+            if UserDefaults.standard.bool(forKey: "canvasMode") == true {
+                cell?.toggleLabel.text = "Each Date"
+            } else {
+                cell?.toggleLabel.text = "Last 10"
+            }
+        }
+        if indexPath.row == 3 {
+            cell?.settingToggleAvailable()
             if UserDefaults.standard.bool(forKey: "shakeAvail") == true {
                 cell?.toggleLabel.text = "On"
             } else {
                 cell?.toggleLabel.text = "Off"
             }
         }
-        if indexPath.row == 3 {
+        if indexPath.row == 4 {
             cell?.settingToggleAvailable()
             if UserDefaults.standard.bool(forKey: "guideAvail") == true {
                 cell?.toggleLabel.text = "On"
@@ -165,7 +185,7 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
                 cell?.toggleLabel.text = "Off"
             }
         }
-        if indexPath.row == 4 {
+        if indexPath.row == 6 {
             cell?.settingDetail.text = version
             cell?.settingDetailAvailable()
             cell?.settingDetail.font = UIFont(name: "Pretendard-Regular", size: 12)
