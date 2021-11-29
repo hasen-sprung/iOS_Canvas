@@ -40,6 +40,7 @@ class MainViewController: UIViewController {
         .black
     }
     private var animator: UIViewPropertyAnimator?
+    private var willDisappear: Bool = false
     
     override func loadView() {
         super.loadView()
@@ -72,6 +73,8 @@ class MainViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        willDisappear = false
+        
         updateContext()
         setInfoContentView()
         self.canvasCollectionView.reloadData()
@@ -117,6 +120,11 @@ class MainViewController: UIViewController {
         if recordsByDate.count > 0 {
             animate(command: "start")
         }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        print("view will disappear")
+        willDisappear = true
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -426,15 +434,21 @@ extension MainViewController {
             view.center.y = centerY - CGFloat(move)
         } 
         animator?.addCompletion({ pos in
-            if index == self.currentIndex {
-                self.addIdleAnimation(view: view, move: -move)
+            if index == self.currentIndex && !self.willDisappear {
+                if UIApplication.shared.applicationState == .active {
+                    self.addIdleAnimation(view: view, move: -move)
+                }
             }
-//            switch pos {
-//            case .end:
-//                print("end \(index), \(self.currentIndex)")
-//            default:
-//                print("default")
-//            }
+            switch pos {
+            case .end:
+                print("end \(index), \(self.currentIndex)")
+            case .start:
+                print("start")
+            case .current:
+                print("start")
+            default:
+                print("default")
+            }
         })
         animator?.startAnimation(afterDelay: Double.random(in: 0.0...1.0))
     }
