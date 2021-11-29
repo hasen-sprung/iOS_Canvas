@@ -45,13 +45,14 @@ class MainViewController: UIViewController {
     override func loadView() {
         super.loadView()
         // MARK: - DEVELOP - init seedData :
-                DataHelper.shared.loadSeeder()
+        DataHelper.shared.loadSeeder()
         // 처음 앱을 실행되었을 때 = 코어데이터에 아무것도 없는 상태이기 때문에, 레코드들의 위치정보를 제공해줘야 한다.
         if launchedBefore == false {
             UserDefaults.standard.set(true, forKey: "launchedBefore")
             UserDefaults.standard.set("Canvas", forKey: "canvasTitle")
             UserDefaults.standard.set(true, forKey: "shakeAvail")
             UserDefaults.standard.set(true, forKey: "guideAvail")
+            UserDefaults.standard.set(true, forKey: "canvasMode")
             UserDefaults.standard.synchronize()
         }
     }
@@ -172,7 +173,7 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
         let cellHeight = mainCanvasLayout.frame.height
         let insetX: CGFloat = 0//(view.bounds.width - cellWidth) / 2.0
         let insetY: CGFloat = 0
-
+        
         let layout = canvasCollectionView.collectionViewLayout as! UICollectionViewFlowLayout
         layout.itemSize = CGSize(width: cellWidth, height: cellHeight)
         layout.minimumLineSpacing = 0
@@ -209,31 +210,42 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
         recordsByDate = [[Record]]()
         dateStrings = [String]()
         var tempRecords = [Record]()
-        for r in sortedRecords {
-            let date = r.createdDate ?? Date()
-            let dateString = getDateString(date: date)
-            
-            if let _ = dateStrings.firstIndex(of: dateString) {
-                tempRecords.append(r)
-            } else {
-                dateStrings.append(dateString)
-                if tempRecords.count > 0 {
-                    recordsByDate.append(tempRecords)
-                    tempRecords = [Record]()
+        if UserDefaults.standard.bool(forKey: "canvasMode") == true {
+            for r in sortedRecords {
+                let date = r.createdDate ?? Date()
+                let dateString = getDateString(date: date)
+                
+                if let _ = dateStrings.firstIndex(of: dateString) {
+                    tempRecords.append(r)
+                } else {
+                    dateStrings.append(dateString)
+                    if tempRecords.count > 0 {
+                        recordsByDate.append(tempRecords)
+                        tempRecords = [Record]()
+                    }
+                    tempRecords.append(r)
                 }
-                tempRecords.append(r)
             }
-        }
-        if sortedRecords.count > 0 {
-            recordsByDate.append(tempRecords)
-        }
-        tempRecords.removeAll()
-        let todayString = getDateString(date: Date())
-        if let _ = dateStrings.firstIndex(of: todayString) {
-            return
+            if sortedRecords.count > 0 {
+                recordsByDate.append(tempRecords)
+            }
+            tempRecords.removeAll()
+            let todayString = getDateString(date: Date())
+            if let _ = dateStrings.firstIndex(of: todayString) {
+                return
+            } else {
+                dateStrings.insert(todayString, at: 0)
+                recordsByDate.insert([Record](), at: 0)
+            }
         } else {
-            dateStrings.insert(todayString, at: 0)
-            recordsByDate.insert([Record](), at: 0)
+            for record in sortedRecords {
+                tempRecords.append(record)
+                if tempRecords.count >= 10 {
+                    break
+                }
+            }
+            recordsByDate.append(tempRecords)
+            dateStrings.append(getDateString(date: Date()))
         }
     }
     
@@ -253,7 +265,7 @@ extension MainViewController: UIScrollViewDelegate {
         var offset = targetContentOffset.pointee
         let index = (offset.x + scrollView.contentInset.left) / cellWidthIncludingSpacing
         var roundedIndex = round(index)
-
+        
         if scrollView.contentOffset.x > targetContentOffset.pointee.x {
             roundedIndex = floor(index)
         } else if scrollView.contentOffset.x < targetContentOffset.pointee.x {
@@ -275,7 +287,7 @@ extension MainViewController: UIScrollViewDelegate {
             
         }
         print("current index: ", Int(currentIndex))
-
+        
         offset = CGPoint(x: roundedIndex * cellWidthIncludingSpacing - scrollView.contentInset.left, y: -scrollView.contentInset.top)
         targetContentOffset.pointee = offset
     }
@@ -446,7 +458,7 @@ extension MainViewController {
         animator?.addAnimations {
             let centerY = view.center.y
             view.center.y = centerY - CGFloat(move)
-        } 
+        }
         animator?.addCompletion({ pos in
             if index == self.currentIndex && !self.willDisappear {
                 if UIApplication.shared.applicationState == .active {
@@ -469,7 +481,7 @@ extension MainViewController {
     
     private func stopRecordsAnimation(view: MainRecordsView) {
         let recordViews = view.getRecordViews()
-
+        
         for _ in recordViews {
             stopAnimator()
         }

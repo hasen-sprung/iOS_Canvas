@@ -80,9 +80,9 @@ class MainInfoView: UIView {
     }
     
     func setInfoViewContentLayout() {
-        canvasTitleLabel.frame.origin = CGPoint(x: .zero,
+        canvasTitleLabel.frame.origin = CGPoint(x: 5,
                                                 y: self.frame.height * 0.0)
-        canvasUserLabel.frame.origin = CGPoint(x: .zero,
+        canvasUserLabel.frame.origin = CGPoint(x: 10,
                                                 y: self.frame.height * 0.3)
         canvasShapesView.frame.origin = CGPoint(x: .zero,
                                             y: self.frame.height * 0.5)
