@@ -49,7 +49,10 @@ class MainRecordsView: UIView {
     
     func setRecordViews(records: [Record], theme: Theme, idx: Int) {
         var views = [RecordView]()
-        let width = setRecordSize(records: records)
+        var width = setRecordSize(recordsCount: records.count)
+        if UserDefaults.standard.bool(forKey: "guideAvail") {
+            width = setRecordSize(recordsCount: defaultCountOfRecordInCanvas)
+        }
         
         for i in 0 ..< recordViewsCount {
             if i < records.count {
@@ -105,9 +108,9 @@ class MainRecordsView: UIView {
     func getRecordSize() -> CGFloat? {
         return recordSize
     }
-    private func setRecordSize(records: [Record]) -> CGFloat {
+    private func setRecordSize(recordsCount: Int) -> CGFloat {
         var size = RecordViewRatio()
-        size.ratio = CGFloat(records.count)
+        size.ratio = CGFloat(recordsCount)
         let width: CGFloat = self.frame.width * size.ratio
         self.recordSize = width
         return width
@@ -115,7 +118,7 @@ class MainRecordsView: UIView {
     
     func setRandomPosition(records: [Record]) {
         var views = [RecordView]()
-        let width = setRecordSize(records: records)
+        let width = setRecordSize(recordsCount: records.count)
         
         for i in 0..<recordViewsCount {
             if i < records.count {
