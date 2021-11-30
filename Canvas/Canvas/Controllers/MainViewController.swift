@@ -54,6 +54,17 @@ class MainViewController: UIViewController {
             UserDefaults.shared.set(true, forKey: "guideAvail")
             UserDefaults.shared.set(true, forKey: "canvasMode")
             UserDefaults.shared.synchronize()
+            
+            // MARK: - init position by Default Ratio
+            // 레코드들의 포지션 정보(비율)를 초기화
+            for i in 0..<countOfRecordInCanvas {
+                let context = CoreDataStack.shared.managedObjectContext
+                let position = DefaultPosition(context: context)
+                
+                position.xRatio = Ratio.DefaultRatio[i].x
+                position.yRatio = Ratio.DefaultRatio[i].y
+                CoreDataStack.shared.saveContext()
+            }
         }
     }
     

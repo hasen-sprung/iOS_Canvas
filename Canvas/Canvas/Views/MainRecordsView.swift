@@ -89,6 +89,10 @@ class MainRecordsView: UIView {
             }
         }
         recordViews = views
+        if idx == 0  && UserDefaults.shared.bool(forKey: "guideAvail") == true {
+            print("save default position")
+            DefaultRecord.savePosition()
+        }
         
         var index = 0
         for view in recordViews {
@@ -141,6 +145,10 @@ class MainRecordsView: UIView {
                 record.y = Float(view.center.y / self.bounds.height)
                 views.append(view)
             }
+        }
+        if idx == 0  && UserDefaults.shared.bool(forKey: "guideAvail") == true {
+            print("save default position")
+            DefaultRecord.savePosition()
         }
     }
 }
