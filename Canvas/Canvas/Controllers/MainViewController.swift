@@ -444,7 +444,7 @@ extension MainViewController {
             view.center = CGPoint(x: CGFloat(xRatio) * superview.frame.width,
                                   y: CGFloat(yRatio) * superview.frame.height)
         }
-        animator?.addCompletion({ _ in
+        animator?.addCompletion({ pos in
 //            print("finished shake")
         })
         animator?.startAnimation()
@@ -466,11 +466,10 @@ extension MainViewController {
     private func addIdleAnimation(view: UIView, move: CGFloat) {
         let index = self.currentIndex
         
-        animator = UIViewPropertyAnimator(duration: 2.3, curve: .linear)
+        animator = UIViewPropertyAnimator(duration: 2.0, curve: .easeOut)
         animator?.addAnimations {
             let centerY = view.center.y
             view.center.y = centerY - CGFloat(move)
-            view.alpha = move < 0 ? 1 : 0.7
         }
         animator?.addCompletion({ pos in
             if index == self.currentIndex && !self.willDisappear {
