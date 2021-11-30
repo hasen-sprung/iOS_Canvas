@@ -39,6 +39,14 @@ class MainViewController: UIViewController {
     override var preferredStatusBarStyle: UIStatusBarStyle {
         .black
     }
+    override var prefersStatusBarHidden: Bool {
+        if UIDevice.hasNotch {
+            return false
+        } else {
+            return true
+        }
+    }
+    
     private var animator: UIViewPropertyAnimator?
     private var willDisappear: Bool = false
     
