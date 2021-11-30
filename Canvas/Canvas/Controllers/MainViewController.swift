@@ -45,7 +45,7 @@ class MainViewController: UIViewController {
     override func loadView() {
         super.loadView()
         // MARK: - DEVELOP - init seedData :
-        DataHelper.shared.loadSeeder()
+//        DataHelper.shared.loadSeeder()
         // 처음 앱을 실행되었을 때 = 코어데이터에 아무것도 없는 상태이기 때문에, 레코드들의 위치정보를 제공해줘야 한다.
         if launchedBefore == false {
             UserDefaults.standard.set(true, forKey: "launchedBefore")

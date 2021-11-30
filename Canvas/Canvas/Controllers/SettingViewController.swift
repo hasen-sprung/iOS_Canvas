@@ -20,7 +20,7 @@ class SettingViewController: UIViewController {
         .black
     }
     
-    private let settingList = ["작가명", "작품명", "작품 모드", "흔들어서 그림 섞기", "가이드 도형", "개발자에게 의견 남기기", "Canvas 정보"]
+    private let settingList = ["작가명", "작품명", "작품 모드", "흔들어서 그림 섞기", "가이드 도형", "개발자에게 의견 남기기", "Canvas 정보", "[DEV] 데모 데이터 추가"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -110,6 +110,9 @@ extension SettingViewController: MFMailComposeViewControllerDelegate {
             else {
                 self.showSendMailErrorAlert()
             }
+        case 7:
+            feedbackGenerator?.notificationOccurred(.warning)
+            DataHelper.shared.loadSeeder()
         default:
             return
         }
