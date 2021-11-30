@@ -297,6 +297,7 @@ extension MainViewController: UIScrollViewDelegate {
             setInfoContentView()
             feedbackGenerator?.notificationOccurred(.success)
         }
+        print("currentIndex: \(currentIndex)")
         
         offset = CGPoint(x: roundedIndex * cellWidthIncludingSpacing - scrollView.contentInset.left, y: -scrollView.contentInset.top)
         targetContentOffset.pointee = offset
@@ -499,8 +500,8 @@ extension MainViewController {
         }
     }
     private func stopAnimator() {
-        animator?.stopAnimation(false)
-        animator?.finishAnimation(at: .current)
+//        animator?.stopAnimation(false)
+//        animator?.finishAnimation(at: .current)
     }
 }
 
