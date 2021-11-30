@@ -11,6 +11,10 @@ class SettingUserIDViewController: UIViewController, UITextFieldDelegate {
     private let completeButtonLabel = UILabel()
     private let byteView = UILabel()
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        .black
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor(r: 240, g: 240, b: 243)
@@ -20,6 +24,7 @@ class SettingUserIDViewController: UIViewController, UITextFieldDelegate {
         setTextField()
         setCompleteButton()
         completeButton.addTarget(self, action: #selector(completeButtonPressed), for: .touchUpInside)
+        completeButton.adjustsImageWhenHighlighted = false
         textField.addTarget(self, action: #selector(self.textFieldDidChange(textField:)), for: UIControl.Event.editingChanged)
         setupFeedbackGenerator()
     }

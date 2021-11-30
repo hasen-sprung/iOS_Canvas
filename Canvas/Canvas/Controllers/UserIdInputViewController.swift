@@ -21,6 +21,7 @@ class UserIdInputViewController: UIViewController, UITextFieldDelegate {
         setTextField()
         setCompleteButton()
         completeButton.addTarget(self, action: #selector(completeButtonPressed), for: .touchUpInside)
+        completeButton.adjustsImageWhenHighlighted = false
         textField.addTarget(self, action: #selector(self.textFieldDidChange(textField:)), for: UIControl.Event.editingChanged)
         setupFeedbackGenerator()
     }
