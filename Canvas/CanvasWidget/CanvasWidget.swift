@@ -38,8 +38,7 @@ struct ShapeView: View {
     
     init(level: Int, color: Color) {
         self.image = ThemeManager.shared.getThemeInstance().getImageByGaugeLevel(gaugeLevel: level)
-//        self.color = Color(ThemeManager.shared.getThemeInstance().getColorByGaugeLevel(gaugeLevel: level))
-        self.color = color//Color(ThemeManager.shared.getThemeInstance().getColorByGaugeLevel(gaugeLevel: level))
+        self.color = color
     }
     
     var body: some View {

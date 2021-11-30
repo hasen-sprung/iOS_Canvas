@@ -497,6 +497,10 @@ extension ListTableViewController {
     }
     
     private func setListTableViwConstraints() {
+//        listTableView.snp.makeConstraints { make in
+//            make.top.equalTo(searchDateButton.snp.bottom).offset(50)
+//            make.leading.trailing.bottom.equalTo(self.view)
+//        }
         listTableView.frame.size = CGSize(width: view.frame.width,
                                           height: view.frame.height * 5 / 6)
         listTableView.frame.origin = CGPoint(x: .zero,
@@ -527,23 +531,31 @@ extension ListTableViewController {
     private func setSearchButtonConstraints() {
         let searchDateButtonLabel = UILabel()
         
-        searchDateButton.frame.size = CGSize(width: searchDateButton.intrinsicContentSize.width + view.frame.width / 10,
-                                             height: view.frame.width / 10)
-        searchDateButton.center = CGPoint(x: view.frame.width / 2,
-                                          y: view.frame.height * 0.11)
-        searchDateButtonIcon.frame.size = CGSize(width: view.frame.width / 10 * 0.5,
-                                                 height: view.frame.width / 10 * 0.5)
-        searchDateButtonIcon.center = CGPoint(x: searchDateButton.center.x + (searchDateButton.frame.width / 2) - (searchDateButtonIcon.frame.size.width),
-                                              y: searchDateButton.center.y)
-        view.addSubview(searchDateButtonIcon)
-        searchDateButtonLabel.frame = searchDateButton.frame
-        searchDateButtonLabel.text = "Calendar"
-        searchDateButtonLabel.textAlignment = .center
-        searchDateButtonLabel.textColor = UIColor(r: 72, g: 80, b: 84)
-        searchDateButtonLabel.font = UIFont(name: "Cardo-Bold", size: 17)
-        searchDateButtonLabel.isUserInteractionEnabled = false
-        view.addSubview(searchDateButtonLabel)
-        searchDateButton.setTitle("", for: .normal)
+        searchDateButton.snp.makeConstraints { make in
+            make.centerX.equalTo(self.view)
+            make.centerY.equalTo(backButtonIcon.snp.centerY)
+            make.height.equalTo(buttonSize)
+            make.width.equalTo(searchDateButton.intrinsicContentSize.width + 20)
+            
+            searchDateButton.setTitle("", for: .normal)
+        }
+        searchDateButtonIcon.snp.makeConstraints { make in
+            make.centerY.equalTo(backButtonIcon.snp.centerY)
+            make.size.equalTo(20)
+            make.leading.equalTo(searchDateButton.snp.trailing).offset(-10)
+            
+            view.addSubview(searchDateButtonIcon)
+        }
+        searchDateButtonLabel.snp.makeConstraints { make in
+            make.edges.equalTo(searchDateButton)
+            
+            searchDateButtonLabel.text = "Calendar"
+            searchDateButtonLabel.textAlignment = .center
+            searchDateButtonLabel.textColor = UIColor(r: 72, g: 80, b: 84)
+            searchDateButtonLabel.font = UIFont(name: "Cardo-Bold", size: CGFloat(fontSize))
+            searchDateButtonLabel.isUserInteractionEnabled = false
+            view.addSubview(searchDateButtonLabel)
+        }
     }
     
     private func setBackButton() {
@@ -576,19 +588,24 @@ extension ListTableViewController {
     
     private func setSeperateLine() {
         let seperateUpperView = UIView()
-        let seperateUnderView = UIView()
+        seperateUpperView.snp.makeConstraints { make in
+            make.top.equalTo(searchDateButton.snp.bottom).offset(20)
+            make.leading.trailing.equalTo(self.view)
+            make.height.equalTo(1)
+            
+            seperateUpperView.backgroundColor = .white
+            view.addSubview(seperateUpperView)
+        }
         
-        seperateUpperView.frame.size = CGSize(width: view.frame.width,
-                                              height: 1)
-        seperateUnderView.frame.size = seperateUpperView.frame.size
-        seperateUpperView.backgroundColor = .white
-        seperateUnderView.backgroundColor = UIColor(r: 195, g: 201, b: 205)
-        seperateUpperView.center = CGPoint(x: view.frame.width / 2,
-                                           y: view.frame.height / 6)
-        seperateUnderView.center = CGPoint(x: view.frame.width / 2,
-                                           y: view.frame.height / 6 + 1)
-        view.addSubview(seperateUpperView)
-        view.addSubview(seperateUnderView)
+        let seperateUnderView = UIView()
+        seperateUnderView.snp.makeConstraints { make in
+            make.top.equalTo(seperateUpperView.snp.bottom)
+            make.leading.trailing.equalTo(self.view)
+            make.height.equalTo(1)
+            
+            seperateUnderView.backgroundColor = UIColor(r: 195, g: 201, b: 205)
+            view.addSubview(seperateUnderView)
+        }
     }
 }
 
