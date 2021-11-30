@@ -136,7 +136,6 @@ class MainViewController: UIViewController {
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        print("view will disappear")
         willDisappear = true
     }
     
@@ -298,7 +297,6 @@ extension MainViewController: UIScrollViewDelegate {
             setInfoContentView()
             feedbackGenerator?.notificationOccurred(.success)
         }
-        print("current index: ", Int(currentIndex))
         
         offset = CGPoint(x: roundedIndex * cellWidthIncludingSpacing - scrollView.contentInset.left, y: -scrollView.contentInset.top)
         targetContentOffset.pointee = offset
@@ -413,10 +411,8 @@ extension MainViewController {
             if let view = cell.canvasRecordView {
                 switch command {
                 case "start":
-                    print("start")
                     startRecordsAnimation(view: view)
                 case "stop":
-                    print("stop")
                     stopRecordsAnimation(view: view)
                 default:
                     print("no command")
@@ -448,7 +444,7 @@ extension MainViewController {
                                   y: CGFloat(yRatio) * superview.frame.height)
         }
         animator?.addCompletion({ _ in
-            print("finished shake")
+//            print("finished shake")
         })
         animator?.startAnimation()
     }
@@ -458,7 +454,7 @@ extension MainViewController {
         var move: CGFloat
         
         if let size = view.getRecordSize() {
-            move = size / 4
+            move = size / 5
         } else {
             move = 10
         }
@@ -469,10 +465,11 @@ extension MainViewController {
     private func addIdleAnimation(view: UIView, move: CGFloat) {
         let index = self.currentIndex
         
-        animator = UIViewPropertyAnimator(duration: 2.0, curve: .linear)
+        animator = UIViewPropertyAnimator(duration: 2.3, curve: .linear)
         animator?.addAnimations {
             let centerY = view.center.y
             view.center.y = centerY - CGFloat(move)
+            view.alpha = move < 0 ? 1 : 0.7
         }
         animator?.addCompletion({ pos in
             if index == self.currentIndex && !self.willDisappear {
@@ -480,16 +477,16 @@ extension MainViewController {
                     self.addIdleAnimation(view: view, move: -move)
                 }
             }
-            switch pos {
-            case .end:
-                print("end \(index), \(self.currentIndex)")
-            case .start:
-                print("start")
-            case .current:
-                print("start")
-            default:
-                print("default")
-            }
+//            switch pos {
+//            case .end:
+//                print("end \(index), \(self.currentIndex)")
+//            case .start:
+//                print("start")
+//            case .current:
+//                print("start")
+//            default:
+//                print("default")
+//            }
         })
         animator?.startAnimation(afterDelay: Double.random(in: 0.0...1.0))
     }
