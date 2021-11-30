@@ -1,4 +1,5 @@
 import UIKit
+import SnapKit
 
 protocol CreateRecordViewDelegate {
     func getGaugeLevel() -> Int
@@ -9,63 +10,190 @@ protocol CreateRecordViewDelegate {
 
 class CreateRecordView: UIView {
     var delegate: CreateRecordViewDelegate?
+    private var date = Date()
     
-    private let CRBackgroundView =  UIView()
+    private let CRBackgroundView = UIView()
+    private let CRBackgroundImageView = UIImageView()
+    
+    private let dateLabelView = UILabel()
+    private var byteView = UILabel()
+    private let CRTextView = UITextView()
+    
     private let CRBtnBackgroundView = UIImageView()
     private let CRBtnIcon = UIImageView()
     private let cancelButton = UIButton()
     private let completeButton = UIButton()
-    private let CRTextView = UITextView()
-    private var date = Date()
-    private var byteView = UILabel()
     
-    func setCreateRecordView() {
-        CRTextView.delegate = self
-        let viewSize = self.frame.width * 0.8
-        
+    private var bottomConstraint: Constraint?
+    private var createRecordViewBottomOffset: CGFloat = {
+        var offset = UIScreen.main.bounds.height * 0.4
+        return offset
+    }()
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
         self.backgroundColor = .clear
-        date = Date()
-        CRBackgroundView.frame = CGRect(x: 0, y: 0, width: viewSize, height: viewSize * 1.22)
-        self.addSubview(CRBackgroundView)
-        setCRBackgroundViewShape()
-        setCRBackgroundViewContraints()
-        setCRBackgroundViewComponents()
-        CRBtnBackgroundView.isUserInteractionEnabled = true
-        cancelButton.addTarget(self, action: #selector(cancelButtonPressed), for: .touchUpInside)
-        completeButton.addTarget(self, action: #selector(completeButtonPressed), for: .touchUpInside)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
-    func setCRTextView() {
-        CRTextView.textContainer.maximumNumberOfLines = 15
-        CRTextView.frame.size = CGSize(width: CRBackgroundView.frame.width * 0.8,
-                                       height: CRBackgroundView.frame.height * 0.6)
-        CRTextView.center = CGPoint(x: CRBackgroundView.frame.width / 2,
-                                    y: CRBackgroundView.frame.height / 2)
-        CRTextView.font = UIFont(name: "Pretendard-Regular", size: 16)
-        CRTextView.backgroundColor = .clear
-        CRTextView.textColor = .black
-        CRTextView.becomeFirstResponder()
-        CRTextView.isScrollEnabled = true
-        CRBackgroundView.addSubview(CRTextView)
-        byteView.text = "0/180"
-        byteView.frame.size = CGSize(width: CRBackgroundView.frame.width * 0.8,
-                                     height: byteView.intrinsicContentSize.height)
-        byteView.frame.origin = CGPoint(x: CRBackgroundView.frame.width * 0.1,
-                                        y: CRBackgroundView.frame.height * 0.8)
-        byteView.textAlignment = .right
-        byteView.textColor = .lightGray
-        byteView.font = UIFont(name: "Cardo-Regular", size: 13)
-        CRBackgroundView.addSubview(byteView)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
+    func setLayout() {
+        CRBackgroundView.snp.makeConstraints { make in
+            make.top.equalTo(self.snp.top).offset(self.frame.width / 7 * 2.5)
+            make.leading.equalTo(self.snp.leading).offset(40)
+            make.trailing.equalTo(self.snp.trailing).offset(-40)
+            // TODO: KEYBOARD NOTIFICATION
+            self.bottomConstraint = make.bottom.equalTo(self.snp.bottom).offset(-createRecordViewBottomOffset).constraint
+            
+            CRBackgroundView.backgroundColor = .clear
+            CRBackgroundView.layer.cornerRadius = 10
+            self.addSubview(CRBackgroundView)
+        }
+        CRBackgroundImageView.snp.makeConstraints { make in
+            make.top.equalTo(CRBackgroundView).offset(-30)
+            make.leading.equalTo(CRBackgroundView).offset(-20)
+            make.trailing.equalTo(CRBackgroundView).offset(30)
+            make.bottom.equalTo(CRBackgroundView).offset(30)
+            
+            CRBackgroundImageView.image = UIImage(named: "CreateBackground")
+            self.addSubview(CRBackgroundImageView)
+        }
+        dateLabelView.snp.makeConstraints { make in
+            make.top.equalTo(CRBackgroundView.snp.top).offset(10)
+            make.centerX.equalTo(self.snp.centerX)
+            
+            dateLabelView.backgroundColor = .clear
+            dateLabelView.text = getDateString()
+            dateLabelView.font = UIFont(name: "Cardo-Regular", size: 17)
+            dateLabelView.textColor = .black
+            dateLabelView.textAlignment = .center
+            dateLabelView.frame.size = CGSize(width: dateLabelView.intrinsicContentSize.width,
+                                              height: dateLabelView.intrinsicContentSize.height)
+            self.addSubview(dateLabelView)
+        }
+        CRBtnBackgroundView.snp.makeConstraints { make in
+            make.leading.equalTo(CRBackgroundView.snp.leading).offset(30)
+            make.trailing.equalTo(CRBackgroundView.snp.trailing).offset(-30)
+            make.bottom.equalTo(CRBackgroundView.snp.bottom).offset(-20)
+            make.height.equalTo(50)
+            
+            CRBtnBackgroundView.image = UIImage(named: "TextBtnBackground")
+            CRBtnBackgroundView.isUserInteractionEnabled = false
+            CRBtnBackgroundView.backgroundColor = .clear
+            self.addSubview(CRBtnBackgroundView)
+        }
+        cancelButton.snp.makeConstraints { make in
+            make.width.equalTo(CRBtnBackgroundView.snp.width).dividedBy(2)
+            make.height.equalTo(CRBtnBackgroundView.snp.height)
+            make.centerY.leading.equalTo(CRBtnBackgroundView)
+            
+            cancelButton.setTitle("취소", for: .normal)
+            cancelButton.setTitleColor(UIColor(r: 163, g: 173, b: 178), for: .normal)
+            cancelButton.titleLabel?.font = UIFont(name: "Pretendard-Regular", size: 15)
+            cancelButton.backgroundColor = .clear
+            cancelButton.addTarget(self, action: #selector(cancelButtonPressed), for: .touchUpInside)
+            self.addSubview(cancelButton)
+        }
+        completeButton.snp.makeConstraints { make in
+            make.width.equalTo(CRBtnBackgroundView.snp.width).dividedBy(2)
+            make.height.equalTo(CRBtnBackgroundView.snp.height)
+            make.centerY.trailing.equalTo(CRBtnBackgroundView)
+            
+            completeButton.setTitle("완료", for: .normal)
+            completeButton.setTitleColor(.black, for: .normal)
+            completeButton.titleLabel?.font = UIFont(name: "Pretendard-Regular", size: 15)
+            completeButton.backgroundColor = .clear
+            completeButton.addTarget(self, action: #selector(completeButtonPressed), for: .touchUpInside)
+            self.addSubview(completeButton)
+        }
+        CRBtnIcon.snp.makeConstraints { make in
+            make.height.width.equalTo(completeButton).offset(14)
+            make.centerX.equalTo(completeButton)
+            make.centerY.equalTo(completeButton).offset(2)
+            
+            CRBtnIcon.image = UIImage(named: "TextBtn")
+            CRBtnIcon.backgroundColor = .clear
+            self.addSubview(CRBtnIcon)
+        }
+        CRTextView.snp.makeConstraints { make in
+            make.top.equalTo(dateLabelView.snp.bottom).offset(20)
+            make.leading.equalTo(CRBackgroundView.snp.leading).offset(30)
+            make.trailing.equalTo(CRBackgroundView.snp.trailing).offset(-30)
+            make.bottom.equalTo(CRBtnBackgroundView.snp.top).offset(-20)
+            
+            CRTextView.delegate = self
+            CRTextView.backgroundColor = .clear
+            CRTextView.textContainer.maximumNumberOfLines = 15
+            CRTextView.font = UIFont(name: "Pretendard-Regular", size: 16)
+            CRTextView.textColor = .black
+            CRTextView.becomeFirstResponder()
+            CRTextView.isScrollEnabled = true
+            self.addSubview(CRTextView)
+        }
+        byteView.snp.makeConstraints { make in
+            make.bottom.equalTo(CRBtnBackgroundView.snp.top)
+            make.trailing.equalTo(CRTextView)
+
+            byteView.frame.size = CGSize(width: dateLabelView.intrinsicContentSize.width,
+                                         height: dateLabelView.intrinsicContentSize.height)
+            byteView.text = "0/180"
+            byteView.textAlignment = .right
+            byteView.textColor = .lightGray
+            byteView.font = UIFont(name: "Cardo-Regular", size: 13)
+            self.addSubview(byteView)
+        }
+        self.bringSubviewToFront(cancelButton)
+        self.bringSubviewToFront(completeButton)
+        setSeperateLine()
+    }
+}
+
+// MARK: - Keyboard Notification
+
+extension CreateRecordView {
+    @objc
+    func keyboardWillShow(_ sender: Notification) {
+        if let userInfo = sender.userInfo as? Dictionary<String, Any> {
+            if let keyboardFrameValue = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+                let keyboardFrame = keyboardFrameValue.cgRectValue
+                
+                self.bottomConstraint?.update(offset: -keyboardFrame.height - 20)
+                self.setNeedsLayout()
+                
+                UIView.animate(withDuration: 0.4, animations: {
+                    self.layoutIfNeeded()
+                })
+            }
+        }
+    }
+    
+    @objc
+    func keyboardWillHide(_ sender: Notification) {
+        self.bottomConstraint?.update(offset:-createRecordViewBottomOffset)
+        self.setNeedsLayout()
+        
+        UIView.animate(withDuration: 0.4, animations: {
+            self.layoutIfNeeded()
+        })
+    }
+}
+
+// MARK: - Button Press
+
+extension CreateRecordView {
     @objc func cancelButtonPressed() {
         feedbackGenerator?.notificationOccurred(.success)
         CRTextView.endEditing(true)
         completeButton.setTitleColor(UIColor(r: 163, g: 173, b: 178), for: .normal)
         cancelButton.setTitleColor(.black, for: .normal)
         cancelButton.isEnabled = false
-        UIView.animate(withDuration: 0.5, delay: 0.0, animations: { [self] in
-            CRBtnIcon.center.x = CRBackgroundView.frame.width * 0.22
+        UIView.animate(withDuration: 0.7, delay: 0.0, animations: { [self] in
+            CRBtnIcon.center.x = cancelButton.center.x + 4
         }) { (completed) in
             self.cancelButton.isEnabled = true
             if let d = self.delegate {
@@ -106,43 +234,26 @@ extension CreateRecordView: UITextViewDelegate {
 // MARK: - set components
 
 extension CreateRecordView {
-    private func setCRBackgroundViewComponents() {
-        setSeperateLine()
-        setDateLabel()
-        setButtonBackground()
-        setBtnIcon()
-        setButtons()
-    }
-    
     private func setSeperateLine() {
         let seperateUpperView = UIView()
+        seperateUpperView.snp.makeConstraints { make in
+            make.top.equalTo(dateLabelView.snp.bottom).offset(10)
+            make.leading.trailing.equalTo(CRTextView)
+            make.height.equalTo(1)
+            
+            seperateUpperView.backgroundColor = .white
+            self.addSubview(seperateUpperView)
+        }
+        
         let seperateUnderView = UIView()
-        
-        seperateUpperView.frame.size = CGSize(width: CRBackgroundView.frame.width,
-                                              height: 1)
-        seperateUnderView.frame.size = seperateUpperView.frame.size
-        seperateUpperView.backgroundColor = .white
-        seperateUnderView.backgroundColor = UIColor(r: 195, g: 201, b: 205)
-        seperateUpperView.center = CGPoint(x: CRBackgroundView.frame.width / 2,
-                                           y: CRBackgroundView.frame.height / 6)
-        seperateUnderView.center = CGPoint(x: CRBackgroundView.frame.width / 2,
-                                           y: CRBackgroundView.frame.height / 6 + 1)
-        CRBackgroundView.addSubview(seperateUpperView)
-        CRBackgroundView.addSubview(seperateUnderView)
-    }
-    
-    private func setDateLabel() {
-        let dateLabel = UILabel()
-        
-        dateLabel.text = getDateString()
-        dateLabel.font = UIFont(name: "Cardo-Regular", size: 17)
-        dateLabel.textColor = .black
-        dateLabel.textAlignment = .center
-        dateLabel.frame.size = CGSize(width: CRBackgroundView.frame.width,
-                                      height: CRBackgroundView.frame.height / 8)
-        dateLabel.center = CGPoint(x: CRBackgroundView.frame.width / 2,
-                                   y: CRBackgroundView.frame.height / 11)
-        CRBackgroundView.addSubview(dateLabel)
+        seperateUnderView.snp.makeConstraints { make in
+            make.top.equalTo(seperateUpperView.snp.bottom)
+            make.leading.trailing.equalTo(CRTextView)
+            make.height.equalTo(1)
+            
+            seperateUnderView.backgroundColor = UIColor(r: 195, g: 201, b: 205)
+            self.addSubview(seperateUnderView)
+        }
     }
     
     private func getDateString() -> String {
@@ -152,124 +263,6 @@ extension CreateRecordView {
         df.dateFormat = "yyyy. M. d. HH:mm"
         df.locale = Locale(identifier:"ko_KR")
         dateString = df.string(from: date)
-        
         return dateString ?? ""
-    }
-    
-    private func setButtonBackground() {
-        CRBtnBackgroundView.frame.size = CGSize(width: CRBackgroundView.frame.height / 1.44,
-                                                height: CRBackgroundView.frame.height / 7.7)
-        CRBtnBackgroundView.center = CGPoint(x: CRBackgroundView.frame.width / 2,
-                                             y: CRBackgroundView.frame.height * 0.925)
-        CRBtnBackgroundView.backgroundColor = .clear
-        CRBtnBackgroundView.image = UIImage(named: "TextBtnBackground")
-        CRBackgroundView.addSubview(CRBtnBackgroundView)
-    }
-    
-    private func setBtnIcon() {
-        CRBtnIcon.frame.size = CGSize(width: CRBtnBackgroundView.frame.width / 2 * 1.2,
-                                      height: CRBtnBackgroundView.frame.height * 1.3)
-        CRBtnIcon.backgroundColor = .clear
-        CRBtnIcon.image = UIImage(named: "TextBtn")
-        CRBtnIcon.center = CGPoint(x: CRBtnBackgroundView.frame.width * 0.75,
-                                   y: CRBtnBackgroundView.frame.height * 0.55)
-        CRBtnBackgroundView.addSubview(CRBtnIcon)
-    }
-    
-    private func setButtons() {
-        let buttons: [UIButton : CGFloat] = [completeButton : 0.75,
-                                               cancelButton : 0.28]
-        
-        for button in buttons {
-            (button.key).frame.size = CGSize(width: CRBtnBackgroundView.frame.width / 2,
-                                             height: CRBtnBackgroundView.frame.height)
-            (button.key).center = CGPoint(x: CRBtnBackgroundView.frame.width * button.value,
-                                          y: CRBtnBackgroundView.frame.height / 2)
-            (button.key).backgroundColor = .clear
-            (button.key).setTitleColor(UIColor(r: 163, g: 173, b: 178), for: .normal)
-            CRBtnBackgroundView.addSubview(button.key)
-        }
-        cancelButton.setTitle("취소", for: .normal)
-        cancelButton.titleLabel?.font = UIFont(name: "Pretendard-Regular", size: 15)
-        completeButton.setTitle("완료", for: .normal)
-        completeButton.titleLabel?.font = UIFont(name: "Pretendard-Regular", size: 15)
-        completeButton.setTitleColor(.black, for: .normal)
-    }
-}
-
-// MARK: - set CRBackroundView UI and Constraints
-
-extension CreateRecordView {
-    private func setCRBackgroundViewContraints() {
-        CRBackgroundView.frame.size = CGSize(width: self.frame.width * 0.8,
-                                             height: self.frame.width * 0.8 * 1.15)
-        CRBackgroundView.center = CGPoint(x: self.frame.width * 0.5, y: self.frame.height * 0.38)
-        if UIScreen.main.bounds.height < 820 {
-            CRBackgroundView.frame.size = CGSize(width: self.frame.width * 0.8,
-                                                 height: self.frame.width * 0.8)
-            CRBackgroundView.center = CGPoint(x: self.frame.width * 0.5, y: self.frame.height * 0.35)
-        }
-    }
-    
-    private func setCRBackgroundViewShape() {
-        CRBackgroundView.backgroundColor = .clear
-        CRBackgroundView.layer.cornerRadius = 10
-        
-        let shadows = UIView()
-        
-        shadows.frame = CRBackgroundView.frame
-        shadows.clipsToBounds = false
-        CRBackgroundView.addSubview(shadows)
-        
-        let shadowPath0 = UIBezierPath(roundedRect: shadows.bounds, cornerRadius: 10)
-        let layer0 = CALayer()
-        
-        layer0.shadowPath = shadowPath0.cgPath
-        layer0.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.06).cgColor
-        layer0.shadowOpacity = 1
-        layer0.shadowRadius = 36
-        layer0.shadowOffset = CGSize(width: 6, height: 6)
-        layer0.bounds = shadows.bounds
-        layer0.position = shadows.center
-        shadows.layer.addSublayer(layer0)
-        
-        let shadowPath1 = UIBezierPath(roundedRect: shadows.bounds, cornerRadius: 10)
-        let layer1 = CALayer()
-        
-        layer1.shadowPath = shadowPath1.cgPath
-        layer1.shadowColor = UIColor(red: 1, green: 1, blue: 1, alpha: 1).cgColor
-        layer1.shadowOpacity = 1
-        layer1.shadowRadius = 13
-        layer1.shadowOffset = CGSize(width: -4, height: -4)
-        layer1.bounds = shadows.bounds
-        layer1.position = shadows.center
-        shadows.layer.addSublayer(layer1)
-        
-        let shadowPath2 = UIBezierPath(roundedRect: shadows.bounds, cornerRadius: 10)
-        let layer2 = CALayer()
-        
-        layer2.shadowPath = shadowPath2.cgPath
-        layer2.shadowColor = UIColor(red: 0.682, green: 0.682, blue: 0.753, alpha: 0.1).cgColor
-        layer2.shadowOpacity = 1
-        layer2.shadowRadius = 7
-        layer2.shadowOffset = CGSize(width: 4, height: 4)
-        layer2.compositingFilter = "multiplyBlendMode"
-        layer2.bounds = shadows.bounds
-        layer2.position = shadows.center
-        shadows.layer.addSublayer(layer2)
-        
-        let shapes = UIView()
-        
-        shapes.frame = CRBackgroundView.frame
-        shapes.clipsToBounds = true
-        CRBackgroundView.addSubview(shapes)
-        
-        let layer3 = CALayer()
-        
-        layer3.backgroundColor = UIColor(red: 0.941, green: 0.941, blue: 0.953, alpha: 1).cgColor
-        layer3.bounds = shapes.bounds
-        layer3.position = shapes.center
-        shapes.layer.addSublayer(layer3)
-        shapes.layer.cornerRadius = 10
     }
 }

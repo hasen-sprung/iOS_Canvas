@@ -100,23 +100,18 @@ extension GaugeViewController: GaugeWaveAnimationViewDelegate {
     
     func createRecord() {
         feedbackGenerator?.notificationOccurred(.success)
-        if UIScreen.main.bounds.height < 740 {
-            cancelButton.alpha = 0.0
-        }
-        createRecordView = CreateRecordView()
-        createRecordView?.frame = view.frame
-        createRecordView?.setCreateRecordView()
+        
+        createRecordView = CreateRecordView(frame: view.frame)
         createRecordView?.alpha = 0.0
-        if let CRView = createRecordView {
-            CRView.delegate = self
-            CRView.fadeIn()
-            view.addSubview(CRView)
-        }
+        createRecordView?.delegate = self
+        view.addSubview(createRecordView!)
+        createRecordView?.setLayout()
+        createRecordView?.fadeIn()
+        
         UIView.animate(withDuration: 0.75, delay: 0.0, options: [.curveEaseOut], animations: { [self] in
             gaugeWaveView.bounds.origin.y = gaugeWaveView.bounds.origin.y - view.frame.height
         }) { (completed) in
             feedbackGenerator?.notificationOccurred(.success)
-            self.createRecordView?.setCRTextView()
         }
     }
 }
