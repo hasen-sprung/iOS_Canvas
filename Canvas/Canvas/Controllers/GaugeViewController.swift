@@ -131,9 +131,9 @@ extension GaugeViewController: CreateRecordViewDelegate {
         let fetchRequest = FinalDate.fetchRequest()
         var calendar = Calendar.current
         calendar.timeZone = NSTimeZone.local
-        let dateFrom = calendar.startOfDay(for: Date())
+        let dateFrom = calendar.startOfDay(for: newDate)
         let dateTo = calendar.date(byAdding: .day, value: 1, to: dateFrom) ?? Date()
-        let fromPredicate = NSPredicate(format: "%@ >= %K", dateFrom as NSDate, #keyPath(FinalDate.creationDate))
+        let fromPredicate = NSPredicate(format: "%@ <= %K", dateFrom as NSDate, #keyPath(FinalDate.creationDate))
         let toPredicate = NSPredicate(format: "%K < %@", #keyPath(FinalDate.creationDate), dateTo as NSDate)
         let datePredicate = NSCompoundPredicate(andPredicateWithSubpredicates: [fromPredicate, toPredicate])
         fetchRequest.predicate = datePredicate
@@ -148,7 +148,6 @@ extension GaugeViewController: CreateRecordViewDelegate {
         }
         if matchingDate.count > 0 {
             matchingDate[0].addToRecords(newRecord)
-            print("add in existing date")
         } else {
             let newFinalDate = NSEntityDescription.insertNewObject(forEntityName: "FinalDate", into: context)
             newFinalDate.setValue(getStartOfDate(date: newDate), forKey: "creationDate")

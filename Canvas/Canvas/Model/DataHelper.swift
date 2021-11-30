@@ -19,19 +19,19 @@ class DataHelper {
 
     private func seedRecords() {
         
-        for _ in 1 ... 100 {
+        for _ in 1 ... 400 {
 
             let userCalendar = Calendar.current
             var date = DateComponents()
             
             date.timeZone = NSTimeZone.local
             date.year = 2021
-            date.month = Int.random(in: 9...11)
-            if date.month ?? 1 <= 10 {
-                date.day = Int.random(in: 1...31)
+            date.month = Int.random(in: 10...11)
+            if date.month ?? 1 <= 11 {
+                date.day = Int.random(in: 1...30)
             }
             else {
-                date.day = Int.random(in: 1...22)
+                date.day = Int.random(in: 1...1)
             }
             date.hour = Int.random(in: 0...23)
             date.minute = Int.random(in: 0...59)
@@ -71,8 +71,36 @@ class DataHelper {
             newRecord.createdDate = createdDate
             newRecord.gaugeLevel = Int16.random(in: 1...100)
             newRecord.memo = texts[Int.random(in: 0 ..< texts.count)]
+            
+            var matchingDate = [FinalDate]()
+            let context = CoreDataStack.shared.managedObjectContext
+            let fetchRequest = FinalDate.fetchRequest()
+            var calendar = Calendar.current
+            calendar.timeZone = NSTimeZone.local
+            let dateFrom = calendar.startOfDay(for: createdDate ?? Date())
+            let dateTo = calendar.date(byAdding: .day, value: 1, to: dateFrom) ?? Date()
+            let fromPredicate = NSPredicate(format: "%@ <= %K", dateFrom as NSDate, #keyPath(FinalDate.creationDate))
+            let toPredicate = NSPredicate(format: "%K < %@", #keyPath(FinalDate.creationDate), dateTo as NSDate)
+            let datePredicate = NSCompoundPredicate(andPredicateWithSubpredicates: [fromPredicate, toPredicate])
+            fetchRequest.predicate = datePredicate
+            do {
+                matchingDate = try context.fetch(fetchRequest)
+            } catch { print("context Error") }
+            matchingDate.sort(by: {$0.creationDate?.timeIntervalSinceNow ?? Date().timeIntervalSinceNow > $1.creationDate?.timeIntervalSinceNow ?? Date().timeIntervalSinceNow})
+            if matchingDate.count > 0 {
+                matchingDate[0].addToRecords(newRecord)
+            } else {
+                let newFinalDate = NSEntityDescription.insertNewObject(forEntityName: "FinalDate", into: context)
+                newFinalDate.setValue(getStartOfDate(date: getStartOfDate(date: createdDate)), forKey: "creationDate")
+                newFinalDate.setValue(Int16(0), forKey: "theme")
+                (newFinalDate as! FinalDate).addToRecords(newRecord)
+            }
         }
         
         CoreDataStack.shared.saveContext()
+    }
+    
+    private func getStartOfDate(date: Date?) -> Date {
+        return Calendar.current.startOfDay(for: date ?? Date())
     }
 }
