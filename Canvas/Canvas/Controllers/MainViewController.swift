@@ -42,6 +42,8 @@ class MainViewController: UIViewController {
     private var animator: UIViewPropertyAnimator?
     private var willDisappear: Bool = false
     
+    private var infoRecordIndex = 0
+    
     override func loadView() {
         super.loadView()
         // MARK: - DEVELOP - init seedData :
@@ -103,6 +105,7 @@ class MainViewController: UIViewController {
             self.canvasCollectionView?.contentOffset.x = 0
         }
         goTofirstAnimation.startAnimation()
+        infoRecordIndex = 0
     }
     
     override func viewWillLayoutSubviews() {
@@ -133,6 +136,7 @@ class MainViewController: UIViewController {
         if recordsByDate.count > 0 {
             animate(command: "start")
         }
+        setinfoViewSwipeAction()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -157,6 +161,49 @@ class MainViewController: UIViewController {
     private func loadUserIdInputMode() {
         guard let nextVC = self.storyboard?.instantiateViewController(identifier: "userIdInputViewController") as? UserIdInputViewController else { return }
         transitionVc(vc: nextVC, duration: 0.5, type: .fromBottom)
+    }
+    
+    private func setinfoViewSwipeAction() {
+        let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(infoviewSwipeLeft))
+        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(infoviewSwipeRight))
+        swipeLeft.direction = .left
+        swipeRight.direction = .right
+        swipeLeft.delegate = self
+        swipeRight.delegate = self
+        infoContentView.addGestureRecognizer(swipeRight)
+        infoContentView.addGestureRecognizer(swipeLeft)
+    }
+    
+    @objc func infoviewSwipeLeft() {
+        infoRecordIndex -= 1
+        if infoRecordIndex < 0 {
+            infoRecordIndex = 0
+            return
+        }
+        feedbackGenerator?.notificationOccurred(.warning)
+        setInfoContentView()
+    }
+    
+    @objc func infoviewSwipeRight() {
+        let endIndex = (recordsByDate[Int(currentIndex)].count) - 1
+        infoRecordIndex += 1
+        if infoRecordIndex > endIndex {
+            infoRecordIndex = endIndex
+            return
+        }
+        if infoRecordIndex > 9 {
+            infoRecordIndex = 9
+            return
+        }
+        feedbackGenerator?.notificationOccurred(.warning)
+        setInfoContentView()
+    }
+}
+
+extension MainViewController: UIGestureRecognizerDelegate {
+    
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
     }
 }
 
@@ -289,6 +336,7 @@ extension MainViewController: UIScrollViewDelegate {
         if isOneStepPaging && (currentIndex != roundedIndex) {
             let num: CGFloat = currentIndex > roundedIndex ?  -1.0 : 1.0
             
+            infoRecordIndex = 0
             animate(command: "stop")
             currentIndex += num
             roundedIndex = currentIndex
@@ -541,6 +589,11 @@ extension MainViewController {
 // MARK: - set info Content view in info view
 
 extension MainViewController: MainInfoViewDelegate {
+    
+    func getLastRecord() -> Record {
+        return recordsByDate[Int(currentIndex)][infoRecordIndex]
+    }
+    
     func getCurrentIndex() -> Int {
         return Int(currentIndex)
     }
@@ -575,9 +628,8 @@ extension MainViewController: MainInfoViewDelegate {
         if recordsByDate.count > 0 && recordsByDate[Int(currentIndex)].count > 0 {
             view.addSubview(infoContentView)
             greetingView.removeFromSuperview()
-            infoContentView.setInfoViewContentLayout()
-            infoContentView.setInfoViewContentSize()
-            infoContentView.setShapesView(records: recordsByDate[Int(currentIndex)])
+            infoContentView.setLastMemoView()
+//            infoContentView.setShapesView(records: recordsByDate[Int(currentIndex)])
         } else {
             infoContentView.removeFromSuperview()
             greetingView.lineBreakMode = .byWordWrapping
