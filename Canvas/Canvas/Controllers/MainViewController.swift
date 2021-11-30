@@ -220,6 +220,30 @@ class MainViewController: UIViewController {
     }
 }
 
+extension MainViewController {
+    private func setRecordsByDate() {
+        var rawDates = [FinalDate]()
+        let context = CoreDataStack.shared.managedObjectContext
+        let request = FinalDate.fetchRequest()
+        do {
+            rawDates = try context.fetch(request)
+        } catch { print("context Error") }
+        rawDates.sort(by: {$0.creationDate?.timeIntervalSinceNow ?? Date().timeIntervalSinceNow > $1.creationDate?.timeIntervalSinceNow ?? Date().timeIntervalSinceNow})
+        for rawDate in rawDates {
+            dateStrings.append(getStartOfDateString(date: rawDate.creationDate))
+            var rawRecords = rawDate.records?.allObjects as? [Record] ?? [Record]()
+            rawRecords.sort(by: {$0.createdDate?.timeIntervalSinceNow ?? Date().timeIntervalSinceNow > $1.createdDate?.timeIntervalSinceNow ?? Date().timeIntervalSinceNow})
+            recordsByDate.append(rawRecords)
+        }
+    }
+    
+    private func getStartOfDateString(date: Date?) -> String{
+        return getDateString(date: Calendar.current.startOfDay(for: date ?? Date()))
+    }
+    
+}
+
+
 extension MainViewController: UIGestureRecognizerDelegate {
     
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
