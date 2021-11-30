@@ -76,7 +76,7 @@ class ListTableViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     
     @objc func backButtonPressed() {
-        feedbackGenerator?.notificationOccurred(.success)
+        impactFeedbackGenerator?.impactOccurred()
         calendarView.removeFromSuperview()
         let transition = CATransition()
         transition.duration = 0.5
@@ -88,7 +88,7 @@ class ListTableViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     
     @objc func searchDateButtonPressed() {
-        feedbackGenerator?.notificationOccurred(.success)
+        impactFeedbackGenerator?.impactOccurred()
         if searchDateButtonTag == false {
             searchDateButtonTag = true
             searchDateButton.isEnabled = false
@@ -111,13 +111,13 @@ class ListTableViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     
     @objc func dateFWButtonPressed() {
-        feedbackGenerator?.notificationOccurred(.success)
+        impactFeedbackGenerator?.impactOccurred()
         components.month = (components.month ?? 1) + 1
         reloadCalendar()
     }
     
     @objc func dateBWButtonPressed() {
-        feedbackGenerator?.notificationOccurred(.success)
+        impactFeedbackGenerator?.impactOccurred()
         components.month = (components.month ?? 1) - 1
         reloadCalendar()
     }
@@ -197,7 +197,7 @@ extension ListTableViewController: UIGestureRecognizerDelegate {
 // MARK: - calculate calendar
 extension ListTableViewController: CalendarCollectionViewCellDelegate {
     func isCellPressed(sectionStr: String) {
-        feedbackGenerator?.notificationOccurred(.success)
+        impactFeedbackGenerator?.impactOccurred()
         searchDateButtonPressed()
         DispatchQueue.main.async {
             let indexPath = IndexPath(row: 0, section: self.dateSections.firstIndex(of: sectionStr) ?? 0)
@@ -441,7 +441,7 @@ extension ListTableViewController {
     }
     
     func presentDeletionFailsafe(indexPath: IndexPath) {
-        feedbackGenerator?.notificationOccurred(.success)
+        impactFeedbackGenerator?.impactOccurred()
         let alert = UIAlertController(title: nil, message: "정말 기록을 삭제할까요?", preferredStyle: .alert)
         
         let yesAction = UIAlertAction(title: "네", style: .default) { _ in
@@ -459,9 +459,13 @@ extension ListTableViewController {
                 self.showEmptyMessage()
                 self.calendarCalculation()
             }
+            feedbackGenerator?.notificationOccurred(.success)
         }
         alert.addAction(yesAction)
-        alert.addAction(UIAlertAction(title: "아니오", style: .cancel, handler: nil))
+        let noAction = UIAlertAction(title: "아니오", style: .cancel) { _ in
+            impactFeedbackGenerator?.impactOccurred()
+        }
+        alert.addAction(noAction)
         
         present(alert, animated: true, completion: nil)
     }

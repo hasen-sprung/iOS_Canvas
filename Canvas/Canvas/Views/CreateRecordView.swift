@@ -59,7 +59,7 @@ class CreateRecordView: UIView {
     }
     
     @objc func cancelButtonPressed() {
-        feedbackGenerator?.notificationOccurred(.success)
+        impactFeedbackGenerator?.impactOccurred()
         CRTextView.endEditing(true)
         completeButton.setTitleColor(UIColor(r: 163, g: 173, b: 178), for: .normal)
         cancelButton.setTitleColor(.black, for: .normal)
@@ -82,6 +82,7 @@ class CreateRecordView: UIView {
             d.saveRecord(newDate: date,
                          newGagueLevel: d.getGaugeLevel(),
                          newMemo: CRTextView.text)
+            UserDefaults.shared.set(false, forKey: "guideAvail")
         }
     }
 }

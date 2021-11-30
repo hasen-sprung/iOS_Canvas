@@ -87,7 +87,7 @@ class SettingTitleViewController: UIViewController, UITextFieldDelegate {
     }
     
     @objc func backButtonPressed() {
-        feedbackGenerator?.notificationOccurred(.success)
+        impactFeedbackGenerator?.impactOccurred()
         let transition = CATransition()
         transition.duration = 0.5
         transition.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)

@@ -82,14 +82,14 @@ extension GaugeViewController: GaugeWaveAnimationViewDelegate {
         let level = gaugeWaveView.getCurrentGaugeLevel()
         let newImage = theme.getImageByGaugeLevel(gaugeLevel: level)
         if shapeImage.image != newImage {
-            feedbackGenerator?.notificationOccurred(.success)
+            impactFeedbackGenerator?.impactOccurred()
             shapeImage.image = newImage
         }
         shapeImage.tintColor = theme.getColorByGaugeLevel(gaugeLevel: level)
     }
     
     func cancelGaugeView() {
-        feedbackGenerator?.notificationOccurred(.success)
+        impactFeedbackGenerator?.impactOccurred()
         UIView.animate(withDuration: 0.75, delay: 0.0, options: [.curveEaseOut], animations: { [self] in
             cancelButton.alpha = 0.0
             gaugeWaveView.bounds.origin.y = gaugeWaveView.bounds.origin.y - view.frame.height
@@ -99,7 +99,7 @@ extension GaugeViewController: GaugeWaveAnimationViewDelegate {
     }
     
     func createRecord() {
-        feedbackGenerator?.notificationOccurred(.success)
+        impactFeedbackGenerator?.impactOccurred()
         if UIScreen.main.bounds.height < 740 {
             cancelButton.alpha = 0.0
         }
@@ -115,7 +115,7 @@ extension GaugeViewController: GaugeWaveAnimationViewDelegate {
         UIView.animate(withDuration: 0.75, delay: 0.0, options: [.curveEaseOut], animations: { [self] in
             gaugeWaveView.bounds.origin.y = gaugeWaveView.bounds.origin.y - view.frame.height
         }) { (completed) in
-            feedbackGenerator?.notificationOccurred(.success)
+            impactFeedbackGenerator?.impactOccurred()
             self.createRecordView?.setCRTextView()
         }
     }

@@ -69,7 +69,7 @@ class RecordDetailView: UIView {
     }
     
     @objc func dismissbuttonPressed() {
-        feedbackGenerator?.notificationOccurred(.success)
+        impactFeedbackGenerator?.impactOccurred()
         self.removeFromSuperview()
         detailView.removeFromSuperview()
     }
