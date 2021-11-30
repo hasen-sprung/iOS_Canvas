@@ -155,16 +155,16 @@ class MainViewController: UIViewController {
         canvasRecordsView?.clearRecordViews()
     }
     
-    private func updateContext() {
-        var rawRecords = [Record]()
-        let context = CoreDataStack.shared.managedObjectContext
-        let request = Record.fetchRequest()
-        do {
-            rawRecords = try context.fetch(request)
-        } catch { print("context Error") }
-        rawRecords.sort(by: {$0.createdDate?.timeIntervalSinceNow ?? Date().timeIntervalSinceNow > $1.createdDate?.timeIntervalSinceNow ?? Date().timeIntervalSinceNow})
-        setRecordsByDate(sortedRecords: rawRecords)
-    }
+    //    private func updateContext() {
+    //        var rawRecords = [Record]()
+    //        let context = CoreDataStack.shared.managedObjectContext
+    //        let request = Record.fetchRequest()
+    //        do {
+    //            rawRecords = try context.fetch(request)
+    //        } catch { print("context Error") }
+    //        rawRecords.sort(by: {$0.createdDate?.timeIntervalSinceNow ?? Date().timeIntervalSinceNow > $1.createdDate?.timeIntervalSinceNow ?? Date().timeIntervalSinceNow})
+    //        setRecordsByDate(sortedRecords: rawRecords)
+    //    }
     
     private func loadUserIdInputMode() {
         guard let nextVC = self.storyboard?.instantiateViewController(identifier: "userIdInputViewController") as? UserIdInputViewController else { return }
@@ -219,6 +219,40 @@ class MainViewController: UIViewController {
         setInfoContentView()
     }
 }
+
+extension MainViewController {
+    
+    private func updateContext() {
+        recordsByDate = [[Record]]()
+        dateStrings = [String]()
+        var rawDates = [FinalDate]()
+        let context = CoreDataStack.shared.managedObjectContext
+        let request = FinalDate.fetchRequest()
+        do {
+            rawDates = try context.fetch(request)
+        } catch { print("context Error") }
+        rawDates.sort(by: {$0.creationDate?.timeIntervalSinceNow ?? Date().timeIntervalSinceNow > $1.creationDate?.timeIntervalSinceNow ?? Date().timeIntervalSinceNow})
+        for rawDate in rawDates {
+            dateStrings.append(getStartOfDateString(date: rawDate.creationDate))
+            var rawRecords = rawDate.records?.allObjects as? [Record] ?? [Record]()
+            rawRecords.sort(by: {$0.createdDate?.timeIntervalSinceNow ?? Date().timeIntervalSinceNow > $1.createdDate?.timeIntervalSinceNow ?? Date().timeIntervalSinceNow})
+            recordsByDate.append(rawRecords)
+        }
+        let todayString = getDateString(date: Date())
+        if let _ = dateStrings.firstIndex(of: todayString) {
+            return
+        } else {
+            dateStrings.insert(todayString, at: 0)
+            recordsByDate.insert([Record](), at: 0)
+        }
+    }
+    
+    private func getStartOfDateString(date: Date?) -> String{
+        return getDateString(date: Calendar.current.startOfDay(for: date ?? Date()))
+    }
+    
+}
+
 
 extension MainViewController: UIGestureRecognizerDelegate {
     
@@ -284,48 +318,48 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
         super.didReceiveMemoryWarning()
     }
     
-    private func setRecordsByDate(sortedRecords: [Record]) {
-        recordsByDate = [[Record]]()
-        dateStrings = [String]()
-        var tempRecords = [Record]()
-        if UserDefaults.shared.bool(forKey: "canvasMode") == true {
-            for r in sortedRecords {
-                let date = r.createdDate ?? Date()
-                let dateString = getDateString(date: date)
-                
-                if let _ = dateStrings.firstIndex(of: dateString) {
-                    tempRecords.append(r)
-                } else {
-                    dateStrings.append(dateString)
-                    if tempRecords.count > 0 {
-                        recordsByDate.append(tempRecords)
-                        tempRecords = [Record]()
-                    }
-                    tempRecords.append(r)
-                }
-            }
-            if sortedRecords.count > 0 {
-                recordsByDate.append(tempRecords)
-            }
-            tempRecords.removeAll()
-            let todayString = getDateString(date: Date())
-            if let _ = dateStrings.firstIndex(of: todayString) {
-                return
-            } else {
-                dateStrings.insert(todayString, at: 0)
-                recordsByDate.insert([Record](), at: 0)
-            }
-        } else {
-            for record in sortedRecords {
-                tempRecords.append(record)
-                if tempRecords.count >= 10 {
-                    break
-                }
-            }
-            recordsByDate.append(tempRecords)
-            dateStrings.append(getDateString(date: Date()))
-        }
-    }
+    //    private func setRecordsByDate(sortedRecords: [Record]) {
+    //        recordsByDate = [[Record]]()
+    //        dateStrings = [String]()
+    //        var tempRecords = [Record]()
+    //        if UserDefaults.shared.bool(forKey: "canvasMode") == true {
+    //            for r in sortedRecords {
+    //                let date = r.createdDate ?? Date()
+    //                let dateString = getDateString(date: date)
+    //
+    //                if let _ = dateStrings.firstIndex(of: dateString) {
+    //                    tempRecords.append(r)
+    //                } else {
+    //                    dateStrings.append(dateString)
+    //                    if tempRecords.count > 0 {
+    //                        recordsByDate.append(tempRecords)
+    //                        tempRecords = [Record]()
+    //                    }
+    //                    tempRecords.append(r)
+    //                }
+    //            }
+    //            if sortedRecords.count > 0 {
+    //                recordsByDate.append(tempRecords)
+    //            }
+    //            tempRecords.removeAll()
+    //            let todayString = getDateString(date: Date())
+    //            if let _ = dateStrings.firstIndex(of: todayString) {
+    //                return
+    //            } else {
+    //                dateStrings.insert(todayString, at: 0)
+    //                recordsByDate.insert([Record](), at: 0)
+    //            }
+    //        } else {
+    //            for record in sortedRecords {
+    //                tempRecords.append(record)
+    //                if tempRecords.count >= 10 {
+    //                    break
+    //                }
+    //            }
+    //            recordsByDate.append(tempRecords)
+    //            dateStrings.append(getDateString(date: Date()))
+    //        }
+    //    }
     
     private func getDateString(date: Date) -> String {
         let df = DateFormatter()
@@ -631,8 +665,10 @@ extension MainViewController {
 extension MainViewController: MainInfoViewDelegate {
     
     func getLastRecord() -> Record? {
-        if recordsByDate[Int(currentIndex)].count > 0 {
-            return recordsByDate[Int(currentIndex)][infoRecordIndex]
+        if recordsByDate.count > 0 {
+            if recordsByDate[Int(currentIndex)].count > 0 {
+                return recordsByDate[Int(currentIndex)][infoRecordIndex]
+            }
         }
         return nil
     }
@@ -677,7 +713,12 @@ extension MainViewController: MainInfoViewDelegate {
             infoContentView.removeFromSuperview()
             greetingView.lineBreakMode = .byWordWrapping
             greetingView.numberOfLines = 0
-            greetingView.text = "\(UserDefaults.shared.string(forKey: "userID") ?? "무명작가")님! 어떤 하루를 보내고 계시나요?\n언제든 감정 기록을 추가하여\n나만의 그림을 완성해보세요!"
+            let greetingMessages = ["\(UserDefaults.shared.string(forKey: "userID") ?? "무명작가")님! 어떤 하루를 보내고 계시나요?\n언제든 감정 기록을 추가하여\n나만의 그림을 완성해보세요!",
+                                    "좋은 하루에요! \(UserDefaults.shared.string(forKey: "userID") ?? "무명작가")님!\n틈틈히 느끼는 생각을 기록하시면서\n나만의 그림을 완성해보세요!",
+                                    "\(UserDefaults.shared.string(forKey: "userID") ?? "무명작가")님 오늘 날씨는 어떤가요?\n사소한 것도 기록 하다 보면\n소중한 추억이 쌓이게 될거에요!",
+                                    "\(UserDefaults.shared.string(forKey: "userID") ?? "무명작가")님은 기록만 열심히 하세요!\n저희는 앞으로 많은 작가들과 함께\n예쁜 기록을 만들어드릴게요!",
+                                    "\(UserDefaults.shared.string(forKey: "userID") ?? "무명작가")님!\n오늘 밤 잠들기 전에\n작성한 기록들을 읽어보시는건 어때요?"]
+            greetingView.text = greetingMessages[Int.random(in: 0 ..< greetingMessages.count)]
             
             greetingView.font = UIFont(name: "Pretendard-Regular", size: 14)
             greetingView.textColor = UIColor(r: 72, g: 80, b: 84)

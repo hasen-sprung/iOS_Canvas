@@ -136,13 +136,23 @@ class ListTableViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     
     private func setSectionAndRecords() {
-        var rawRecords: [Record]?
+        recordsByDate = [[Record]]()
+        onlyDateStr = [String]()
+        dateSections = [String]()
+        var rawDates = [FinalDate]()
         let context = CoreDataStack.shared.managedObjectContext
-        let request = Record.fetchRequest()
-        
-        do { rawRecords = try context.fetch(request) } catch { print("context Error") }
-        rawRecords?.sort(by: {$0.createdDate?.timeIntervalSinceNow ?? Date().timeIntervalSinceNow > $1.createdDate?.timeIntervalSinceNow ?? Date().timeIntervalSinceNow})
-        setDateSections(sortedRecords: rawRecords ?? [Record]())
+        let request = FinalDate.fetchRequest()
+        do {
+            rawDates = try context.fetch(request)
+        } catch { print("context Error") }
+        rawDates.sort(by: {$0.creationDate?.timeIntervalSinceNow ?? Date().timeIntervalSinceNow > $1.creationDate?.timeIntervalSinceNow ?? Date().timeIntervalSinceNow})
+        for rawDate in rawDates {
+            dateSections.append(getSectionDateStr(date: rawDate.creationDate ?? Date()))
+            onlyDateStr.append(getOnlyDate(date: rawDate.creationDate ?? Date()))
+            var rawRecords = rawDate.records?.allObjects as? [Record] ?? [Record]()
+            rawRecords.sort(by: {$0.createdDate?.timeIntervalSinceNow ?? Date().timeIntervalSinceNow > $1.createdDate?.timeIntervalSinceNow ?? Date().timeIntervalSinceNow})
+            recordsByDate.append(rawRecords)
+        }
     }
     
     private func initCalendar() {
@@ -343,29 +353,29 @@ extension ListTableViewController: UICollectionViewDelegateFlowLayout, UICollect
 // MARK: - TableView delegate and datasource delegate
 
 extension ListTableViewController {
-    private func setDateSections(sortedRecords: [Record]) {
-        var tempRecords = [Record]()
-        for r in sortedRecords {
-            let date = r.createdDate ?? Date()
-            let dateString = getSectionDateStr(date: date)
-            
-            if let _ = dateSections.firstIndex(of: dateString) {
-                tempRecords.append(r)
-            } else {
-                dateSections.append(dateString)
-                onlyDateStr.append(getOnlyDate(date: date))
-                if tempRecords.count > 0 {
-                    recordsByDate.append(tempRecords)
-                    tempRecords = [Record]()
-                }
-                tempRecords.append(r)
-            }
-        }
-        if sortedRecords.count > 0 {
-            recordsByDate.append(tempRecords)
-        }
-        tempRecords.removeAll()
-    }
+    //    private func setDateSections(sortedRecords: [Record]) {
+    //        var tempRecords = [Record]()
+    //        for r in sortedRecords {
+    //            let date = r.createdDate ?? Date()
+    //            let dateString = getSectionDateStr(date: date)
+    //
+    //            if let _ = dateSections.firstIndex(of: dateString) {
+    //                tempRecords.append(r)
+    //            } else {
+    //                dateSections.append(dateString)
+    //                onlyDateStr.append(getOnlyDate(date: date))
+    //                if tempRecords.count > 0 {
+    //                    recordsByDate.append(tempRecords)
+    //                    tempRecords = [Record]()
+    //                }
+    //                tempRecords.append(r)
+    //            }
+    //        }
+    //        if sortedRecords.count > 0 {
+    //            recordsByDate.append(tempRecords)
+    //        }
+    //        tempRecords.removeAll()
+    //    }
     
     private func getSectionDateStr(date: Date) -> String {
         let df = DateFormatter()

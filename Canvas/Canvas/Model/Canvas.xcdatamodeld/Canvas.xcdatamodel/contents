@@ -4,15 +4,22 @@
         <attribute name="xRatio" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="yRatio" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
     </entity>
+    <entity name="FinalDate" representedClassName="FinalDate" syncable="YES" codeGenerationType="class">
+        <attribute name="creationDate" attributeType="Date" defaultDateTimeInterval="440532240" usesScalarValueType="NO"/>
+        <attribute name="theme" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="records" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Record" inverseName="date" inverseEntity="Record"/>
+    </entity>
     <entity name="Record" representedClassName="Record" syncable="YES" codeGenerationType="class">
         <attribute name="createdDate" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="gaugeLevel" attributeType="Integer 16" defaultValueString="50" usesScalarValueType="YES"/>
         <attribute name="memo" optional="YES" attributeType="String"/>
         <attribute name="xRatio" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="yRatio" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <relationship name="date" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="FinalDate" inverseName="records" inverseEntity="FinalDate"/>
     </entity>
     <elements>
-        <element name="Record" positionX="-63" positionY="-18" width="128" height="118"/>
         <element name="DefaultPosition" positionX="-63" positionY="27" width="128" height="59"/>
+        <element name="FinalDate" positionX="-306.5441284179688" positionY="-220.0990905761719" width="128" height="88"/>
+        <element name="Record" positionX="-268.541259765625" positionY="-14.74322509765625" width="128" height="133"/>
     </elements>
 </model>

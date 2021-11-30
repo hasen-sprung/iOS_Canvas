@@ -126,15 +126,40 @@ extension GaugeViewController: CreateRecordViewDelegate {
     }
     
     func saveRecord(newDate: Date, newGagueLevel: Int, newMemo: String?) {
-        let context = CoreDataStack.shared.managedObjectContext//appDelegate.persistentContainer.viewContext
+        var matchingDate = [FinalDate]()
+        let context = CoreDataStack.shared.managedObjectContext
+        let fetchRequest = FinalDate.fetchRequest()
+        var calendar = Calendar.current
+        calendar.timeZone = NSTimeZone.local
+        let dateFrom = calendar.startOfDay(for: Date())
+        let dateTo = calendar.date(byAdding: .day, value: 1, to: dateFrom) ?? Date()
+        let fromPredicate = NSPredicate(format: "%@ >= %K", dateFrom as NSDate, #keyPath(FinalDate.creationDate))
+        let toPredicate = NSPredicate(format: "%K < %@", #keyPath(FinalDate.creationDate), dateTo as NSDate)
+        let datePredicate = NSCompoundPredicate(andPredicateWithSubpredicates: [fromPredicate, toPredicate])
+        fetchRequest.predicate = datePredicate
+        do {
+            matchingDate = try context.fetch(fetchRequest)
+        } catch { print("context Error") }
         let newRecord = Record(context: context)
-        
         newRecord.createdDate = newDate
         newRecord.gaugeLevel = Int16(newGagueLevel)
         if let newMemo = newMemo {
             newRecord.memo = newMemo
         }
+        if matchingDate.count > 0 {
+            matchingDate[0].addToRecords(newRecord)
+            print("add in existing date")
+        } else {
+            let newFinalDate = NSEntityDescription.insertNewObject(forEntityName: "FinalDate", into: context)
+            newFinalDate.setValue(getStartOfDate(date: newDate), forKey: "creationDate")
+            newFinalDate.setValue(Int16(0), forKey: "theme")
+            (newFinalDate as! FinalDate).addToRecords(newRecord)
+        }
         CoreDataStack.shared.saveContext()
+    }
+    
+    private func getStartOfDate(date: Date?) -> Date {
+        return Calendar.current.startOfDay(for: date ?? Date())
     }
     
     func completeCreateRecordView() {
