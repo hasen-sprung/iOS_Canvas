@@ -29,11 +29,13 @@ extension UIViewController {
     }
 }
 
+// MARK: - App Group URL
 extension FileManager {
     static let appGroupContainerURL = FileManager.default
         .containerURL(forSecurityApplicationGroupIdentifier: "group.com.hasensprung.Canvas")!
 }
 
+// MARK: - 스테이터스바 색상 고정 (다크모드시 흰색 x)
 extension UIStatusBarStyle {
     static var black: UIStatusBarStyle {
         if #available(iOS 13.0, *) {
@@ -43,9 +45,11 @@ extension UIStatusBarStyle {
     }
 }
 
+// MARK: - App Group을 사용해서 위젯과 앱 사이 UserDefault 교환
 extension UserDefaults {
     static var shared: UserDefaults {
         let appGroupId = "group.com.hasensprung.Canvas"
         return UserDefaults(suiteName: appGroupId)!
     }
 }
+

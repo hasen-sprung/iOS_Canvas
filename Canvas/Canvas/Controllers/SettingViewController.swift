@@ -19,6 +19,13 @@ class SettingViewController: UIViewController {
     override var preferredStatusBarStyle: UIStatusBarStyle {
         .black
     }
+    override var prefersStatusBarHidden: Bool {
+        if UIDevice.hasNotch {
+            return false
+        } else {
+            return true
+        }
+    }
     
     private let settingList = ["작가명", "작품명", "작품 모드", "흔들어서 그림 섞기", "가이드 도형", "개발자에게 의견 남기기", "Canvas 정보", "[DEV] 데모 데이터 추가"]
     

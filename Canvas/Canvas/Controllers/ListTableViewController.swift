@@ -31,6 +31,13 @@ class ListTableViewController: UIViewController, UITableViewDelegate, UITableVie
     override var preferredStatusBarStyle: UIStatusBarStyle {
         .black
     }
+    override var prefersStatusBarHidden: Bool {
+        if UIDevice.hasNotch {
+            return false
+        } else {
+            return true
+        }
+    }
     
     private let theme = ThemeManager.shared.getThemeInstance()
     

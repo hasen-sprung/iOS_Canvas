@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		350E6D0E274AD5E000BB5647 /* JosefinSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 350E6D0D274AD5E000BB5647 /* JosefinSans-Regular.ttf */; };
 		35103745274D46590013C5F7 /* Shadows.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35103744274D46590013C5F7 /* Shadows.swift */; };
+		3545F35B27561D74000EF87A /* DeviceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3545F35A27561D74000EF87A /* DeviceModel.swift */; };
 		3549F25F273E4E7500C1589A /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 3549F25E273E4E7500C1589A /* SnapKit */; };
 		3549F2612740D53600C1589A /* WaveAnimationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3549F2602740D53600C1589A /* WaveAnimationView.swift */; };
 		3549F2632740D6A800C1589A /* GaugeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3549F2622740D6A800C1589A /* GaugeViewController.swift */; };
@@ -101,6 +102,7 @@
 /* Begin PBXFileReference section */
 		350E6D0D274AD5E000BB5647 /* JosefinSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "JosefinSans-Regular.ttf"; sourceTree = "<group>"; };
 		35103744274D46590013C5F7 /* Shadows.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shadows.swift; sourceTree = "<group>"; };
+		3545F35A27561D74000EF87A /* DeviceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceModel.swift; sourceTree = "<group>"; };
 		3549F2602740D53600C1589A /* WaveAnimationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaveAnimationView.swift; sourceTree = "<group>"; };
 		3549F2622740D6A800C1589A /* GaugeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GaugeViewController.swift; sourceTree = "<group>"; };
 		3549F2662740EE7F00C1589A /* GaugeWaveAnimationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GaugeWaveAnimationView.swift; sourceTree = "<group>"; };
@@ -294,6 +296,7 @@
 				4F0A39FB27424C74009E3AAF /* Color.swift */,
 				4F0A39FF27425E90009E3AAF /* Extension.swift */,
 				35103744274D46590013C5F7 /* Shadows.swift */,
+				3545F35A27561D74000EF87A /* DeviceModel.swift */,
 			);
 			path = Utilites;
 			sourceTree = "<group>";
@@ -476,6 +479,7 @@
 				4F0A39D5273BC852009E3AAF /* AppDelegate.swift in Sources */,
 				4F0590AE2745193000C4DF41 /* ListTableViewController.swift in Sources */,
 				4F0590B227461E7300C4DF41 /* ListTableViewCell.swift in Sources */,
+				3545F35B27561D74000EF87A /* DeviceModel.swift in Sources */,
 				4F29B8E7274A2B0300747DDD /* SettingTitleViewController.swift in Sources */,
 				4F29B8E5274A2AF300747DDD /* SettingUserIDViewController.swift in Sources */,
 				4F29B92E274BE33E00747DDD /* DataHelper.swift in Sources */,
