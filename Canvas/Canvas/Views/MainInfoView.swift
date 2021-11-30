@@ -53,8 +53,11 @@ class MainInfoView: UIView {
     
     private func getTimeString(date: Date) -> String {
         let df = DateFormatter()
-            
-        df.dateFormat = "a hh:mm"
+        if UserDefaults.shared.bool(forKey: "canvasMode") == true {
+            df.dateFormat = "a hh:mm"
+        } else {
+            df.dateFormat = "M. dd. a hh: mm"
+        }
         df.locale = Locale(identifier:"ko_KR")
         return df.string(from: date)
     }

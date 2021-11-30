@@ -151,7 +151,6 @@ extension GaugeViewController: CreateRecordViewDelegate {
         if let newMemo = newMemo {
             newRecord.memo = newMemo
         }
-        print(matchingDate.count)
         if matchingDate.count > 0 {
             matchingDate[0].addToRecords(newRecord)
             print("add in existing date")
