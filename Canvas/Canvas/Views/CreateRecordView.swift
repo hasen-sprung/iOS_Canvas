@@ -94,13 +94,9 @@ extension CreateRecordView: UITextViewDelegate {
         let existingLines = textView.text.components(separatedBy: CharacterSet.newlines)
         let newLines = text.components(separatedBy: CharacterSet.newlines)
         let linesAfterChange = existingLines.count + newLines.count - 1
-        if(text == "\n") {
-            return linesAfterChange <= textView.textContainer.maximumNumberOfLines
-        }
         let newText = (textView.text as NSString).replacingCharacters(in: range, with: text)
-        let numberOfChars = newText.count
-        byteView.text = "\(numberOfChars)/180"
-        return numberOfChars <= 180
+        byteView.text = "\(newText.utf16.count)/180"
+        return linesAfterChange <= textView.textContainer.maximumNumberOfLines && newText.utf16.count < 180
     }
 }
 

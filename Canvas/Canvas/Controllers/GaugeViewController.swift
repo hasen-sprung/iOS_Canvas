@@ -33,7 +33,9 @@ class GaugeViewController: UIViewController {
         if launchedBefore == false {
             UserDefaults.shared.set(true, forKey: "launchedGauge")
             let greetingLabel = UILabel()
-            greetingLabel.text = "게이지를 끝까지 올리면 종료됩니다. :)"
+            greetingLabel.lineBreakMode = .byWordWrapping
+            greetingLabel.numberOfLines = 0
+            greetingLabel.text = "행복하신 만큼 게이지를 올려주세요!\n게이지를 끝까지 올리면 종료됩니다. :)"
             greetingLabel.font = UIFont(name: "Pretendard-Regular", size: 15)
             greetingLabel.textColor = UIColor(r: 72, g: 80, b: 84)
             greetingLabel.frame.size = CGSize(width: view.frame.width,
