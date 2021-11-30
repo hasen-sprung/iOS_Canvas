@@ -90,7 +90,7 @@ class MainRecordsView: UIView {
         }
         recordViews = views
         if idx == 0  && UserDefaults.shared.bool(forKey: "guideAvail") == true {
-            print("save default position")
+//            print("save default position")
             DefaultRecord.savePosition()
         }
         
@@ -147,7 +147,7 @@ class MainRecordsView: UIView {
             }
         }
         if idx == 0  && UserDefaults.shared.bool(forKey: "guideAvail") == true {
-            print("save default position")
+//            print("save default position")
             DefaultRecord.savePosition()
         }
     }
@@ -164,7 +164,7 @@ extension MainRecordsView {
                                   y: CGFloat(record.yRatio) * superview.frame.height)
         }
         if isOverlapedInRecordsView(view, in: views) {
-            print("나중에 들어온 친구들이 먼저있던 애들과 중복될 경우 센터를 다시 랜덤하게 정한다.")
+//            print("나중에 들어온 친구들이 먼저있던 애들과 중복될 경우 센터를 다시 랜덤하게 정한다.")
             setRandomCenter(view: view, views: views, superview: superview, record: record)
         }
     }
@@ -175,11 +175,11 @@ extension MainRecordsView {
         var overlapCount = 0
         
         repeat {
-            print("random 좌표 찾기")
+//            print("random 좌표 찾기")
             view.center = setRandomRatio(in: superview, record: record)
             overlapCount += 1
             if overlapCount > 50 {
-                print("위치 찾기가 50번을 초과")
+//                print("위치 찾기가 50번을 초과")
                 return
             }
         } while isOverlapedInRecordsView(view, in: views)
