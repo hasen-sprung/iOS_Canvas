@@ -1,7 +1,7 @@
 import UIKit
 
 protocol MainInfoViewDelegate {
-    func getLastRecord() -> Record
+    func getLastRecord() -> Record?
     func getInfoDateString() -> String
     func getCurrentIndex() -> Int
 }
@@ -12,7 +12,7 @@ class MainInfoView: UIView {
 //    let canvasUserLabel = UILabel()
 //    let canvasShapesView = UIView()
     let lastTimeView = UILabel()
-    let lastMemoView = UITextView()
+    let lastMemoView = UITextViewFixed()
     let images = DefaultTheme.shared.instanceImageSet()
 
     override init(frame: CGRect) {
@@ -33,22 +33,22 @@ class MainInfoView: UIView {
     
     func setLastMemoView() {
         
-        let lastRecord = delegate?.getLastRecord() ?? Record()
-        
-        lastTimeView.frame.size = CGSize(width: self.frame.width * 0.9, height: self.frame.height * 0.2)
-        lastTimeView.center = CGPoint(x: self.frame.width / 2, y: self.frame.height * 1 / 9)
-        lastMemoView.frame.size = CGSize(width: self.frame.width * 0.9, height: self.frame.height * 0.7)
-        lastMemoView.center = CGPoint(x: self.frame.width / 2, y: self.frame.height * 5.5 / 9)
-        lastTimeView.backgroundColor = .clear
-        lastMemoView.backgroundColor = .clear
-        lastTimeView.text = getTimeString(date: lastRecord.createdDate ?? Date())
-        lastMemoView.text = lastRecord.memo ?? ""
-        lastTimeView.textColor = UIColor(r: 103, g: 114, b: 120)
-        lastMemoView.textColor = UIColor(r: 103, g: 114, b: 120)
-        lastTimeView.font = UIFont(name: "Cardo-Regular", size: 12)
-        lastMemoView.font = UIFont(name: "Pretendard-Regular", size: 13)
-        lastMemoView.isEditable = false
-        lastMemoView.isSelectable = false
+        if let lastRecord = delegate?.getLastRecord() {
+            lastTimeView.frame.size = CGSize(width: self.frame.width * 0.9, height: self.frame.height * 0.2)
+            lastTimeView.center = CGPoint(x: self.frame.width / 2, y: self.frame.height * 1 / 9)
+            lastMemoView.frame.size = CGSize(width: self.frame.width * 0.9, height: self.frame.height * 0.7)
+            lastMemoView.center = CGPoint(x: self.frame.width / 2, y: self.frame.height * 5.5 / 9)
+            lastTimeView.backgroundColor = .clear
+            lastMemoView.backgroundColor = .clear
+            lastTimeView.text = getTimeString(date: lastRecord.createdDate ?? Date())
+            lastMemoView.text = lastRecord.memo ?? ""
+            lastTimeView.textColor = UIColor(r: 103, g: 114, b: 120)
+            lastMemoView.textColor = UIColor(r: 103, g: 114, b: 120)
+            lastTimeView.font = UIFont(name: "Cardo-Regular", size: 12)
+            lastMemoView.font = UIFont(name: "Pretendard-Regular", size: 13)
+            lastMemoView.isEditable = false
+            lastMemoView.isSelectable = false
+        }
     }
     
     private func getTimeString(date: Date) -> String {

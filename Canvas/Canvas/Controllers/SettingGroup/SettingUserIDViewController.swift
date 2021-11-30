@@ -54,16 +54,13 @@ class SettingUserIDViewController: UIViewController, UITextFieldDelegate {
         textField.frame.size = CGSize(width: placeHolder.frame.width * 0.8,
                                       height: placeHolder.frame.height)
         textField.center = placeHolder.center
-        textField.attributedPlaceholder = NSAttributedString(
-            string: UserDefaults.shared.string(forKey: "userID") ?? "",
-            attributes: [NSAttributedString.Key.foregroundColor: UIColor(r: 103, g: 114, b: 120)]
-        )
+        textField.text = UserDefaults.shared.string(forKey: "userID") ?? ""
         textField.textColor = UIColor(r: 72, g: 80, b: 84)
         textField.backgroundColor = .clear
         textField.becomeFirstResponder()
         view.addSubview(textField)
         byteView.frame = textField.frame
-        byteView.text = "0/15"
+        byteView.text = "\((textField.text ?? "").count)/15"
         byteView.font = UIFont(name: "Cardo-Regular", size: 13)
         byteView.textColor = .lightGray
         byteView.textAlignment = .right
@@ -87,7 +84,7 @@ class SettingUserIDViewController: UIViewController, UITextFieldDelegate {
     }
     
     @objc func backButtonPressed() {
-        feedbackGenerator?.notificationOccurred(.success)
+        impactFeedbackGenerator?.impactOccurred()
         let transition = CATransition()
         transition.duration = 0.5
         transition.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)

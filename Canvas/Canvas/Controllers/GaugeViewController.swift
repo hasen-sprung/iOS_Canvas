@@ -33,7 +33,9 @@ class GaugeViewController: UIViewController {
         if launchedBefore == false {
             UserDefaults.shared.set(true, forKey: "launchedGauge")
             let greetingLabel = UILabel()
-            greetingLabel.text = "게이지를 끝까지 올리면 종료됩니다. :)"
+            greetingLabel.lineBreakMode = .byWordWrapping
+            greetingLabel.numberOfLines = 0
+            greetingLabel.text = "행복하신 만큼 게이지를 올려주세요!\n게이지를 끝까지 올리면 종료됩니다. :)"
             greetingLabel.font = UIFont(name: "Pretendard-Regular", size: 15)
             greetingLabel.textColor = UIColor(r: 72, g: 80, b: 84)
             greetingLabel.frame.size = CGSize(width: view.frame.width,
@@ -82,14 +84,14 @@ extension GaugeViewController: GaugeWaveAnimationViewDelegate {
         let level = gaugeWaveView.getCurrentGaugeLevel()
         let newImage = theme.getImageByGaugeLevel(gaugeLevel: level)
         if shapeImage.image != newImage {
-            feedbackGenerator?.notificationOccurred(.success)
+            impactFeedbackGenerator?.impactOccurred()
             shapeImage.image = newImage
         }
         shapeImage.tintColor = theme.getColorByGaugeLevel(gaugeLevel: level)
     }
     
     func cancelGaugeView() {
-        feedbackGenerator?.notificationOccurred(.success)
+        impactFeedbackGenerator?.impactOccurred()
         UIView.animate(withDuration: 0.75, delay: 0.0, options: [.curveEaseOut], animations: { [self] in
             cancelButton.alpha = 0.0
             gaugeWaveView.bounds.origin.y = gaugeWaveView.bounds.origin.y - view.frame.height
@@ -99,9 +101,8 @@ extension GaugeViewController: GaugeWaveAnimationViewDelegate {
     }
     
     func createRecord() {
-        feedbackGenerator?.notificationOccurred(.success)
-        
         createRecordView = CreateRecordView(frame: view.frame)
+        impactFeedbackGenerator?.impactOccurred()
         createRecordView?.alpha = 0.0
         createRecordView?.delegate = self
         view.addSubview(createRecordView!)
@@ -111,7 +112,8 @@ extension GaugeViewController: GaugeWaveAnimationViewDelegate {
         UIView.animate(withDuration: 0.75, delay: 0.0, options: [.curveEaseOut], animations: { [self] in
             gaugeWaveView.bounds.origin.y = gaugeWaveView.bounds.origin.y - view.frame.height
         }) { (completed) in
-            feedbackGenerator?.notificationOccurred(.success)
+            impactFeedbackGenerator?.impactOccurred()
+//            self.createRecordView?.setCRTextView()
         }
     }
 }

@@ -187,7 +187,7 @@ extension CreateRecordView {
 
 extension CreateRecordView {
     @objc func cancelButtonPressed() {
-        feedbackGenerator?.notificationOccurred(.success)
+        impactFeedbackGenerator?.impactOccurred()
         CRTextView.endEditing(true)
         completeButton.setTitleColor(UIColor(r: 163, g: 173, b: 178), for: .normal)
         cancelButton.setTitleColor(.black, for: .normal)
@@ -210,6 +210,7 @@ extension CreateRecordView {
             d.saveRecord(newDate: date,
                          newGagueLevel: d.getGaugeLevel(),
                          newMemo: CRTextView.text)
+            UserDefaults.shared.set(false, forKey: "guideAvail")
         }
     }
 }
@@ -221,13 +222,9 @@ extension CreateRecordView: UITextViewDelegate {
         let existingLines = textView.text.components(separatedBy: CharacterSet.newlines)
         let newLines = text.components(separatedBy: CharacterSet.newlines)
         let linesAfterChange = existingLines.count + newLines.count - 1
-        if(text == "\n") {
-            return linesAfterChange <= textView.textContainer.maximumNumberOfLines
-        }
         let newText = (textView.text as NSString).replacingCharacters(in: range, with: text)
-        let numberOfChars = newText.count
-        byteView.text = "\(numberOfChars)/180"
-        return numberOfChars <= 180
+        byteView.text = "\(newText.count)/180"
+        return linesAfterChange <= textView.textContainer.maximumNumberOfLines && newText.count < 180
     }
 }
 

@@ -55,11 +55,10 @@ class MainViewController: UIViewController {
     override func loadView() {
         super.loadView()
         // MARK: - DEVELOP - init seedData :
-//        DataHelper.shared.loadSeeder()
+        //        DataHelper.shared.loadSeeder()
         // 처음 앱을 실행되었을 때 = 코어데이터에 아무것도 없는 상태이기 때문에, 레코드들의 위치정보를 제공해줘야 한다.
         if launchedBefore == false {
             UserDefaults.shared.set(true, forKey: "launchedBefore")
-            UserDefaults.shared.set("Canvas", forKey: "canvasTitle")
             UserDefaults.shared.set(true, forKey: "shakeAvail")
             UserDefaults.shared.set(true, forKey: "guideAvail")
             UserDefaults.shared.set(true, forKey: "canvasMode")
@@ -85,6 +84,7 @@ class MainViewController: UIViewController {
         canvasCollectionView.dataSource = self
         setAutoLayout()
         setButtonsTarget()
+        setinfoViewUserAction()
         setupFeedbackGenerator()
         
         NotificationCenter.default.addObserver(forName: UIApplication.willEnterForegroundNotification,
@@ -100,7 +100,6 @@ class MainViewController: UIViewController {
         willDisappear = false
         
         updateContext()
-        setInfoContentView()
         self.canvasCollectionView.reloadData()
         currentIndex = 0
         if dateStrings.count > 0 {
@@ -113,7 +112,6 @@ class MainViewController: UIViewController {
             self.canvasCollectionView?.contentOffset.x = 0
         }
         goTofirstAnimation.startAnimation()
-        infoRecordIndex = 0
     }
     
     override func viewWillLayoutSubviews() {
@@ -144,7 +142,9 @@ class MainViewController: UIViewController {
         if recordsByDate.count > 0 {
             animate(command: "start")
         }
-        setinfoViewSwipeAction()
+        infoRecordIndex = 0
+        setInfoContentView()
+        infoContentView.setLastMemoView()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -171,15 +171,23 @@ class MainViewController: UIViewController {
         transitionVc(vc: nextVC, duration: 0.5, type: .fromBottom)
     }
     
-    private func setinfoViewSwipeAction() {
+    private func setinfoViewUserAction() {
         let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(infoviewSwipeLeft))
         let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(infoviewSwipeRight))
+        let tap = UITapGestureRecognizer(target: self, action: #selector(infoviewTap))
         swipeLeft.direction = .left
         swipeRight.direction = .right
         swipeLeft.delegate = self
         swipeRight.delegate = self
+        tap.delegate = self
         infoContentView.addGestureRecognizer(swipeRight)
         infoContentView.addGestureRecognizer(swipeLeft)
+        infoContentView.addGestureRecognizer(tap)
+    }
+    
+    @objc func infoviewTap() {
+        animate(command: "select")
+        impactFeedbackGenerator?.impactOccurred()
     }
     
     @objc func infoviewSwipeLeft() {
@@ -188,7 +196,9 @@ class MainViewController: UIViewController {
             infoRecordIndex = 0
             return
         }
-        feedbackGenerator?.notificationOccurred(.warning)
+        print(infoRecordIndex)
+        animate(command: "select")
+        impactFeedbackGenerator?.impactOccurred()
         setInfoContentView()
     }
     
@@ -203,7 +213,9 @@ class MainViewController: UIViewController {
             infoRecordIndex = 9
             return
         }
-        feedbackGenerator?.notificationOccurred(.warning)
+        print(infoRecordIndex)
+        animate(command: "select")
+        impactFeedbackGenerator?.impactOccurred()
         setInfoContentView()
     }
 }
@@ -351,7 +363,7 @@ extension MainViewController: UIScrollViewDelegate {
             mainViewLabel.text = dateStrings[Int(currentIndex)]
             animate(command: "start")
             setInfoContentView()
-            feedbackGenerator?.notificationOccurred(.success)
+            impactFeedbackGenerator?.impactOccurred()
         }
         print("currentIndex: \(currentIndex)")
         
@@ -469,6 +481,8 @@ extension MainViewController {
                 switch command {
                 case "start":
                     startRecordsAnimation(view: view)
+                case "select":
+                    addSelectAnimation(view: view)
                 case "stop":
                     stopRecordsAnimation(view: view)
                 default:
@@ -501,7 +515,7 @@ extension MainViewController {
                                   y: CGFloat(yRatio) * superview.frame.height)
         }
         animator?.addCompletion({ pos in
-//            print("finished shake")
+            //            print("finished shake")
         })
         animator?.startAnimation()
     }
@@ -533,18 +547,36 @@ extension MainViewController {
                     self.addIdleAnimation(view: view, move: -move)
                 }
             }
-//            switch pos {
-//            case .end:
-//                print("end \(index), \(self.currentIndex)")
-//            case .start:
-//                print("start")
-//            case .current:
-//                print("start")
-//            default:
-//                print("default")
-//            }
+            //            switch pos {
+            //            case .end:
+            //                print("end \(index), \(self.currentIndex)")
+            //            case .start:
+            //                print("start")
+            //            case .current:
+            //                print("start")
+            //            default:
+            //                print("default")
+            //            }
         })
         animator?.startAnimation(afterDelay: Double.random(in: 0.0...1.0))
+    }
+    
+    private func addSelectAnimation(view: MainRecordsView) {
+        let views = view.getRecordViews()
+        
+        animator = UIViewPropertyAnimator(duration: 0.3, curve: .easeIn)
+        animator?.addAnimations {
+            print("run add animations")
+            views[self.infoRecordIndex].alpha = 0.0
+            self.infoContentView.isUserInteractionEnabled = false
+        }
+        animator?.addCompletion({ pos in
+            print("animation completion")
+            views[self.infoRecordIndex].alpha = 1.0
+            self.infoContentView.isUserInteractionEnabled = true
+        })
+        print("run select animation")
+        animator?.startAnimation()
     }
     
     private func stopRecordsAnimation(view: MainRecordsView) {
@@ -555,8 +587,8 @@ extension MainViewController {
         }
     }
     private func stopAnimator() {
-//        animator?.stopAnimation(false)
-//        animator?.finishAnimation(at: .current)
+        //        animator?.stopAnimation(false)
+        //        animator?.finishAnimation(at: .current)
     }
 }
 
@@ -570,7 +602,7 @@ extension MainViewController {
     }
     
     @objc func addRecordButtonPressed(_ sender: UIButton) {
-        feedbackGenerator?.notificationOccurred(.success)
+        impactFeedbackGenerator?.impactOccurred()
         guard let nextVC = self.storyboard?.instantiateViewController(identifier: "gaugeViewController") as? GaugeViewController else { return }
         
         nextVC.modalTransitionStyle = .coverVertical
@@ -579,13 +611,13 @@ extension MainViewController {
     }
     
     @objc func goToListButtonPressed(_ sender: UIButton) {
-        feedbackGenerator?.notificationOccurred(.success)
+        impactFeedbackGenerator?.impactOccurred()
         guard let nextVC = self.storyboard?.instantiateViewController(identifier: "listTableViewController") as? ListTableViewController else { return }
         transitionVc(vc: nextVC, duration: 0.5, type: .fromRight)
     }
     
     @objc func goToSettingPressed(_ sender: UIButton) {
-        feedbackGenerator?.notificationOccurred(.success)
+        impactFeedbackGenerator?.impactOccurred()
         guard let nextVC = self.storyboard?.instantiateViewController(identifier: "settingViewController") as? SettingViewController else { return }
         
         nextVC.modalTransitionStyle = .coverVertical
@@ -598,8 +630,11 @@ extension MainViewController {
 
 extension MainViewController: MainInfoViewDelegate {
     
-    func getLastRecord() -> Record {
-        return recordsByDate[Int(currentIndex)][infoRecordIndex]
+    func getLastRecord() -> Record? {
+        if recordsByDate[Int(currentIndex)].count > 0 {
+            return recordsByDate[Int(currentIndex)][infoRecordIndex]
+        }
+        return nil
     }
     
     func getCurrentIndex() -> Int {
@@ -637,7 +672,7 @@ extension MainViewController: MainInfoViewDelegate {
             view.addSubview(infoContentView)
             greetingView.removeFromSuperview()
             infoContentView.setLastMemoView()
-//            infoContentView.setShapesView(records: recordsByDate[Int(currentIndex)])
+            //            infoContentView.setShapesView(records: recordsByDate[Int(currentIndex)])
         } else {
             infoContentView.removeFromSuperview()
             greetingView.lineBreakMode = .byWordWrapping
@@ -666,7 +701,7 @@ extension MainViewController: MainInfoViewDelegate {
 
 extension MainViewController: MainRecordsViewDelegate {
     func openRecordTextView(index: Int) {
-        feedbackGenerator?.notificationOccurred(.success)
+        impactFeedbackGenerator?.impactOccurred()
         print("record")
         let df = DateFormatter()
         
@@ -705,8 +740,21 @@ extension MainViewController: MainRecordsViewDelegate {
 }
 
 var feedbackGenerator: UINotificationFeedbackGenerator?
+var impactFeedbackGenerator: UIImpactFeedbackGenerator?
 
 func setupFeedbackGenerator() {
     feedbackGenerator = UINotificationFeedbackGenerator()
     feedbackGenerator?.prepare()
+    impactFeedbackGenerator = UIImpactFeedbackGenerator(style: .light)
+}
+
+@IBDesignable class UITextViewFixed: UITextView {
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        setup()
+    }
+    func setup() {
+        textContainerInset = UIEdgeInsets.zero
+        textContainer.lineFragmentPadding = 0
+    }
 }

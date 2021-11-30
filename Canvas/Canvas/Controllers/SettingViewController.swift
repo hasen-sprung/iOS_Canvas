@@ -27,7 +27,7 @@ class SettingViewController: UIViewController {
         }
     }
     
-    private let settingList = ["작가명", "작품명", "작품 모드", "흔들어서 그림 섞기", "가이드 도형", "개발자에게 의견 남기기", "Canvas 정보", "[DEV] 데모 데이터 추가"]
+    private let settingList = ["작가명", "작품 모드", "흔들어서 그림 섞기", "개발자에게 의견 남기기", "Canvas 정보"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,7 +45,7 @@ class SettingViewController: UIViewController {
     }
     
     @objc func backButtonPressed() {
-        feedbackGenerator?.notificationOccurred(.success)
+        impactFeedbackGenerator?.impactOccurred()
         dismiss(animated: true, completion: nil)
     }
 }
@@ -57,15 +57,11 @@ extension SettingViewController: MFMailComposeViewControllerDelegate {
         tableView.deselectRow(at: indexPath, animated: true)
         switch indexPath.row {
         case 0:
-            feedbackGenerator?.notificationOccurred(.success)
+            impactFeedbackGenerator?.impactOccurred()
             guard let nextVC = self.storyboard?.instantiateViewController(identifier: "settingUserIDViewController") as? SettingUserIDViewController else { return }
             transitionVc(vc: nextVC, duration: 0.5, type: .fromRight)
         case 1:
-            feedbackGenerator?.notificationOccurred(.success)
-            guard let nextVC = self.storyboard?.instantiateViewController(identifier: "settingTitleViewController") as? SettingTitleViewController else { return }
-            transitionVc(vc: nextVC, duration: 0.5, type: .fromRight)
-        case 2:
-            feedbackGenerator?.notificationOccurred(.success)
+            impactFeedbackGenerator?.impactOccurred()
             if UserDefaults.shared.bool(forKey: "canvasMode") == true {
                 if let cell = settingTableView.cellForRow(at: indexPath) as? SettingTableViewCell {
                     cell.toggleLabel.text = "최근 10개"
@@ -77,8 +73,8 @@ extension SettingViewController: MFMailComposeViewControllerDelegate {
                 }
                 UserDefaults.shared.set(true, forKey: "canvasMode")
             }
-        case 3:
-            feedbackGenerator?.notificationOccurred(.success)
+        case 2:
+            impactFeedbackGenerator?.impactOccurred()
             if UserDefaults.shared.bool(forKey: "shakeAvail") == true {
                 if let cell = settingTableView.cellForRow(at: indexPath) as? SettingTableViewCell {
                     cell.toggleLabel.text = "Off"
@@ -90,21 +86,8 @@ extension SettingViewController: MFMailComposeViewControllerDelegate {
                 }
                 UserDefaults.shared.set(true, forKey: "shakeAvail")
             }
-        case 4:
-            feedbackGenerator?.notificationOccurred(.success)
-            if UserDefaults.shared.bool(forKey: "guideAvail") == true {
-                if let cell = settingTableView.cellForRow(at: indexPath) as? SettingTableViewCell {
-                    cell.toggleLabel.text = "Off"
-                }
-                UserDefaults.shared.set(false, forKey: "guideAvail")
-            } else {
-                if let cell = settingTableView.cellForRow(at: indexPath) as? SettingTableViewCell {
-                    cell.toggleLabel.text = "On"
-                }
-                UserDefaults.shared.set(true, forKey: "guideAvail")
-            }
-        case 5:
-            feedbackGenerator?.notificationOccurred(.success)
+        case 3:
+            impactFeedbackGenerator?.impactOccurred()
             if MFMailComposeViewController.canSendMail() {
                 
                 let compseVC = MFMailComposeViewController()
@@ -117,9 +100,6 @@ extension SettingViewController: MFMailComposeViewControllerDelegate {
             else {
                 self.showSendMailErrorAlert()
             }
-        case 7:
-            feedbackGenerator?.notificationOccurred(.warning)
-            DataHelper.shared.loadSeeder()
         default:
             return
         }
@@ -176,10 +156,6 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
             cell?.settingDetailAvailable()
         }
         if indexPath.row == 1 {
-            cell?.settingDetail.text = UserDefaults.shared.string(forKey: "canvasTitle")
-            cell?.settingDetailAvailable()
-        }
-        if indexPath.row == 2 {
             cell?.settingToggleAvailable()
             cell?.toggleLabel.font = UIFont(name: "Pretendard-Regular", size: 12)
             if UserDefaults.shared.bool(forKey: "canvasMode") == true {
@@ -188,7 +164,7 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
                 cell?.toggleLabel.text = "최근 10개"
             }
         }
-        if indexPath.row == 3 {
+        if indexPath.row == 2 {
             cell?.settingToggleAvailable()
             if UserDefaults.shared.bool(forKey: "shakeAvail") == true {
                 cell?.toggleLabel.text = "On"
@@ -197,14 +173,6 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
             }
         }
         if indexPath.row == 4 {
-            cell?.settingToggleAvailable()
-            if UserDefaults.shared.bool(forKey: "guideAvail") == true {
-                cell?.toggleLabel.text = "On"
-            } else {
-                cell?.toggleLabel.text = "Off"
-            }
-        }
-        if indexPath.row == 6 {
             cell?.settingDetail.text = version
             cell?.settingDetailAvailable()
             cell?.settingDetail.font = UIFont(name: "Pretendard-Regular", size: 12)
