@@ -155,16 +155,16 @@ class MainViewController: UIViewController {
         canvasRecordsView?.clearRecordViews()
     }
     
-    private func updateContext() {
-        var rawRecords = [Record]()
-        let context = CoreDataStack.shared.managedObjectContext
-        let request = Record.fetchRequest()
-        do {
-            rawRecords = try context.fetch(request)
-        } catch { print("context Error") }
-        rawRecords.sort(by: {$0.createdDate?.timeIntervalSinceNow ?? Date().timeIntervalSinceNow > $1.createdDate?.timeIntervalSinceNow ?? Date().timeIntervalSinceNow})
-        setRecordsByDate(sortedRecords: rawRecords)
-    }
+    //    private func updateContext() {
+    //        var rawRecords = [Record]()
+    //        let context = CoreDataStack.shared.managedObjectContext
+    //        let request = Record.fetchRequest()
+    //        do {
+    //            rawRecords = try context.fetch(request)
+    //        } catch { print("context Error") }
+    //        rawRecords.sort(by: {$0.createdDate?.timeIntervalSinceNow ?? Date().timeIntervalSinceNow > $1.createdDate?.timeIntervalSinceNow ?? Date().timeIntervalSinceNow})
+    //        setRecordsByDate(sortedRecords: rawRecords)
+    //    }
     
     private func loadUserIdInputMode() {
         guard let nextVC = self.storyboard?.instantiateViewController(identifier: "userIdInputViewController") as? UserIdInputViewController else { return }
@@ -221,7 +221,9 @@ class MainViewController: UIViewController {
 }
 
 extension MainViewController {
-    private func setRecordsByDate() {
+    
+    private func updateContext() {
+        recordsByDate = [[Record]]()
         var rawDates = [FinalDate]()
         let context = CoreDataStack.shared.managedObjectContext
         let request = FinalDate.fetchRequest()
@@ -234,6 +236,13 @@ extension MainViewController {
             var rawRecords = rawDate.records?.allObjects as? [Record] ?? [Record]()
             rawRecords.sort(by: {$0.createdDate?.timeIntervalSinceNow ?? Date().timeIntervalSinceNow > $1.createdDate?.timeIntervalSinceNow ?? Date().timeIntervalSinceNow})
             recordsByDate.append(rawRecords)
+        }
+        let todayString = getDateString(date: Date())
+        if let _ = dateStrings.firstIndex(of: todayString) {
+            return
+        } else {
+            dateStrings.insert(todayString, at: 0)
+            recordsByDate.insert([Record](), at: 0)
         }
     }
     
@@ -308,48 +317,48 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
         super.didReceiveMemoryWarning()
     }
     
-    private func setRecordsByDate(sortedRecords: [Record]) {
-        recordsByDate = [[Record]]()
-        dateStrings = [String]()
-        var tempRecords = [Record]()
-        if UserDefaults.shared.bool(forKey: "canvasMode") == true {
-            for r in sortedRecords {
-                let date = r.createdDate ?? Date()
-                let dateString = getDateString(date: date)
-                
-                if let _ = dateStrings.firstIndex(of: dateString) {
-                    tempRecords.append(r)
-                } else {
-                    dateStrings.append(dateString)
-                    if tempRecords.count > 0 {
-                        recordsByDate.append(tempRecords)
-                        tempRecords = [Record]()
-                    }
-                    tempRecords.append(r)
-                }
-            }
-            if sortedRecords.count > 0 {
-                recordsByDate.append(tempRecords)
-            }
-            tempRecords.removeAll()
-            let todayString = getDateString(date: Date())
-            if let _ = dateStrings.firstIndex(of: todayString) {
-                return
-            } else {
-                dateStrings.insert(todayString, at: 0)
-                recordsByDate.insert([Record](), at: 0)
-            }
-        } else {
-            for record in sortedRecords {
-                tempRecords.append(record)
-                if tempRecords.count >= 10 {
-                    break
-                }
-            }
-            recordsByDate.append(tempRecords)
-            dateStrings.append(getDateString(date: Date()))
-        }
-    }
+    //    private func setRecordsByDate(sortedRecords: [Record]) {
+    //        recordsByDate = [[Record]]()
+    //        dateStrings = [String]()
+    //        var tempRecords = [Record]()
+    //        if UserDefaults.shared.bool(forKey: "canvasMode") == true {
+    //            for r in sortedRecords {
+    //                let date = r.createdDate ?? Date()
+    //                let dateString = getDateString(date: date)
+    //
+    //                if let _ = dateStrings.firstIndex(of: dateString) {
+    //                    tempRecords.append(r)
+    //                } else {
+    //                    dateStrings.append(dateString)
+    //                    if tempRecords.count > 0 {
+    //                        recordsByDate.append(tempRecords)
+    //                        tempRecords = [Record]()
+    //                    }
+    //                    tempRecords.append(r)
+    //                }
+    //            }
+    //            if sortedRecords.count > 0 {
+    //                recordsByDate.append(tempRecords)
+    //            }
+    //            tempRecords.removeAll()
+    //            let todayString = getDateString(date: Date())
+    //            if let _ = dateStrings.firstIndex(of: todayString) {
+    //                return
+    //            } else {
+    //                dateStrings.insert(todayString, at: 0)
+    //                recordsByDate.insert([Record](), at: 0)
+    //            }
+    //        } else {
+    //            for record in sortedRecords {
+    //                tempRecords.append(record)
+    //                if tempRecords.count >= 10 {
+    //                    break
+    //                }
+    //            }
+    //            recordsByDate.append(tempRecords)
+    //            dateStrings.append(getDateString(date: Date()))
+    //        }
+    //    }
     
     private func getDateString(date: Date) -> String {
         let df = DateFormatter()
@@ -655,8 +664,10 @@ extension MainViewController {
 extension MainViewController: MainInfoViewDelegate {
     
     func getLastRecord() -> Record? {
-        if recordsByDate[Int(currentIndex)].count > 0 {
-            return recordsByDate[Int(currentIndex)][infoRecordIndex]
+        if recordsByDate.count > 0 {
+            if recordsByDate[Int(currentIndex)].count > 0 {
+                return recordsByDate[Int(currentIndex)][infoRecordIndex]
+            }
         }
         return nil
     }
