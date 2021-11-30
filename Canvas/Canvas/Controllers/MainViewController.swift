@@ -324,6 +324,7 @@ extension MainViewController {
         }
         goToListButton.snp.makeConstraints { make in
             goToListButton.backgroundColor = .clear
+            goToListButton.setTitle("", for: .normal)
             goToListButton.setImage(UIImage(named: "SmallBtnBackground"), for: .normal)
             make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top).offset(paddingInSafeArea)
             make.trailing.equalTo(self.view.safeAreaLayoutGuide.snp.trailing).offset(-paddingInSafeArea)
@@ -331,6 +332,7 @@ extension MainViewController {
         }
         goToSettingButton.snp.makeConstraints { make in
             goToSettingButton.backgroundColor = .clear
+            goToSettingButton.setTitle("", for: .normal)
             goToSettingButton.setImage(UIImage(named: "SmallBtnBackground"), for: .normal)
             make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top).offset(paddingInSafeArea)
             make.leading.equalTo(self.view.safeAreaLayoutGuide.snp.leading).offset(paddingInSafeArea)
