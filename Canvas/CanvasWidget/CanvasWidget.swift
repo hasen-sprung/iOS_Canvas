@@ -36,9 +36,10 @@ struct ShapeView: View {
     var image: UIImage?
     var color: Color
     
-    init(level: Int) {
+    init(level: Int, color: Color) {
         self.image = ThemeManager.shared.getThemeInstance().getImageByGaugeLevel(gaugeLevel: level)
-        self.color = Color(ThemeManager.shared.getThemeInstance().getColorByGaugeLevel(gaugeLevel: level))
+//        self.color = Color(ThemeManager.shared.getThemeInstance().getColorByGaugeLevel(gaugeLevel: level))
+        self.color = color//Color(ThemeManager.shared.getThemeInstance().getColorByGaugeLevel(gaugeLevel: level))
     }
     
     var body: some View {
@@ -65,13 +66,28 @@ struct CanvasWidgetEntryView : View {
                 ForEach(0 ..< getIndex(recordNum: records.count)) { index in
                     let record = records[index]
                     
-                    ShapeView(level: Int(record.gaugeLevel))
+                    ShapeView(level: Int(record.gaugeLevel),
+                              color: Color(ThemeManager.shared.getThemeInstance().getColorByGaugeLevel(gaugeLevel: Int(record.gaugeLevel))))
                         .position(x: CGFloat(record.xRatio) * geometry.size.width,
                                   y: CGFloat(record.yRatio) * geometry.size.height)
                         .frame(width: width,
                                height: width,
                                alignment: .center)
                 }
+                
+                if  UserDefaults.shared.bool(forKey: "guideAvail") == true {
+                    ForEach(getIndex(recordNum: records.count) ..< 10) { index in
+                        let record = DefaultRecord.data[index]
+                        let pos = defaultPosition[index]
+                        ShapeView(level: Int(record.gaugeLevel), color: .gray)
+                            .position(x: CGFloat(pos.xRatio) * geometry.size.width,
+                                      y: CGFloat(pos.yRatio) * geometry.size.height)
+                            .frame(width: width,
+                                   height: width,
+                                   alignment: .center)
+                    }
+                }
+                
             }
         }
         .padding(10)
@@ -81,7 +97,11 @@ struct CanvasWidgetEntryView : View {
     var sizeRatio: CGFloat {
         var size = RecordViewRatio()
         
-        size.ratio = CGFloat(records.count)
+        if  UserDefaults.shared.bool(forKey: "guideAvail") == true {
+            size.ratio = CGFloat(10)
+        } else {
+            size.ratio = CGFloat(records.count)
+        }
         return size.ratio
     }
     
@@ -96,12 +116,26 @@ struct CanvasWidgetEntryView : View {
             records = try context.fetch(request)
         } catch { print("context Error") }
         records.sort(by: {$0.createdDate?.timeIntervalSinceNow ?? Date().timeIntervalSinceNow > $1.createdDate?.timeIntervalSinceNow ?? Date().timeIntervalSinceNow})
+        if UserDefaults.shared.bool(forKey: "canvasMode") == false {
+            return records
+        }
         for record in records {
             if getDateString(date: record.createdDate ?? Date()) == todayString {
                 todayRecords.append(record)
             }
         }
         return todayRecords
+    }
+    
+    var defaultPosition: [DefaultPosition] {
+        let context = CoreDataStack.shared.managedObjectContext
+        let request = DefaultPosition.fetchRequest()
+        var positions: [DefaultPosition] = [DefaultPosition]()
+        
+        do {
+            positions = try context.fetch(request)
+        } catch { print("context Error") }
+        return positions
     }
     
     private func getDateString(date: Date) -> String {

@@ -42,3 +42,10 @@ extension UIStatusBarStyle {
         return .default
     }
 }
+
+extension UserDefaults {
+    static var shared: UserDefaults {
+        let appGroupId = "group.com.hasensprung.Canvas"
+        return UserDefaults(suiteName: appGroupId)!
+    }
+}

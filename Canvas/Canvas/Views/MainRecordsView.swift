@@ -50,7 +50,7 @@ class MainRecordsView: UIView {
     func setRecordViews(records: [Record], theme: Theme, idx: Int) {
         var views = [RecordView]()
         var width = setRecordSize(recordsCount: records.count)
-        if UserDefaults.standard.bool(forKey: "guideAvail") {
+        if UserDefaults.shared.bool(forKey: "guideAvail") {
             width = setRecordSize(recordsCount: defaultCountOfRecordInCanvas)
         }
         
@@ -69,7 +69,7 @@ class MainRecordsView: UIView {
                 setTapGesture(view: view)
                 self.addSubview(view)
                 views.append(view)
-            } else if idx == 0  && UserDefaults.standard.bool(forKey: "guideAvail") == true {
+            } else if idx == 0  && UserDefaults.shared.bool(forKey: "guideAvail") == true {
                 // Default Record Views
                 let view = RecordView()
                 let record = DefaultRecord.data[i]
@@ -89,6 +89,10 @@ class MainRecordsView: UIView {
             }
         }
         recordViews = views
+        if idx == 0  && UserDefaults.shared.bool(forKey: "guideAvail") == true {
+            print("save default position")
+            DefaultRecord.savePosition()
+        }
         
         var index = 0
         for view in recordViews {
@@ -130,7 +134,7 @@ class MainRecordsView: UIView {
                 view.frame.size = CGSize(width: width, height: width)
                 setRandomCenter(view: view, views: views, superview: self, record: records[i])
                 views.append(view)
-            } else if idx == 0  && UserDefaults.standard.bool(forKey: "guideAvail") == true {
+            } else if idx == 0  && UserDefaults.shared.bool(forKey: "guideAvail") == true {
                 // 첫화면이고, 가이드라인이 켜져있으면 디폴트 레코드들의 위치도 새롭게 저장을 해 놓는다
                 let view = RecordView()
                 let record = DefaultRecord.data[i]
@@ -141,6 +145,10 @@ class MainRecordsView: UIView {
                 record.y = Float(view.center.y / self.bounds.height)
                 views.append(view)
             }
+        }
+        if idx == 0  && UserDefaults.shared.bool(forKey: "guideAvail") == true {
+            print("save default position")
+            DefaultRecord.savePosition()
         }
     }
 }

@@ -11,6 +11,23 @@ class DefaultRecord {
         self.gaugeLevel = gaugeLevel
         self.createDate = createDate
     }
+    
+    static func savePosition() {
+        let context = CoreDataStack.shared.managedObjectContext
+        let request = DefaultPosition.fetchRequest()
+        var positions: [DefaultPosition] = [DefaultPosition]()
+        
+        do {
+            positions = try context.fetch(request)
+        } catch { print("context Error") }
+        for i in 0..<positions.count {
+            if let x = DefaultRecord.data[i].x, let y = DefaultRecord.data[i].y {
+                positions[i].xRatio = x
+                positions[i].yRatio = y
+            }
+        }
+        CoreDataStack.shared.saveContext()
+    }
 }
 
 extension DefaultRecord {

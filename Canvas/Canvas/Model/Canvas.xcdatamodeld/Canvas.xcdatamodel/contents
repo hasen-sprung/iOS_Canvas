@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="19461" systemVersion="21A559" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="DefaultPosition" representedClassName="DefaultPosition" syncable="YES" codeGenerationType="class">
+        <attribute name="xRatio" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="yRatio" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
+    </entity>
     <entity name="Record" representedClassName="Record" syncable="YES" codeGenerationType="class">
         <attribute name="createdDate" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="gaugeLevel" attributeType="Integer 16" defaultValueString="50" usesScalarValueType="YES"/>
@@ -9,5 +13,6 @@
     </entity>
     <elements>
         <element name="Record" positionX="-63" positionY="-18" width="128" height="118"/>
+        <element name="DefaultPosition" positionX="-63" positionY="27" width="128" height="59"/>
     </elements>
 </model>

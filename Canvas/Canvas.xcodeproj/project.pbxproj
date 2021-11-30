@@ -30,6 +30,7 @@
 		35E81B4B2748F3B70025E506 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 358CF23A2748E13600D7EEDD /* CoreDataStack.swift */; };
 		35EBD2B42749260B00486453 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 358BD48A274194C100ACE0E7 /* Constants.swift */; };
 		35EBD2B6274939CA00486453 /* DefaultRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35EBD2B5274939CA00486453 /* DefaultRecord.swift */; };
+		35FB5B8527559FBC009E2ACF /* DefaultRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35EBD2B5274939CA00486453 /* DefaultRecord.swift */; };
 		35FF8111274A189400AF43D4 /* Ratio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35FF8110274A189400AF43D4 /* Ratio.swift */; };
 		4F0590AE2745193000C4DF41 /* ListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0590AD2745193000C4DF41 /* ListTableViewController.swift */; };
 		4F0590B227461E7300C4DF41 /* ListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0590B127461E7300C4DF41 /* ListTableViewCell.swift */; };
@@ -457,6 +458,7 @@
 				35E81B4B2748F3B70025E506 /* CoreDataStack.swift in Sources */,
 				35EBD2B42749260B00486453 /* Constants.swift in Sources */,
 				35A3E2792753AB6800D8F490 /* Ratio.swift in Sources */,
+				35FB5B8527559FBC009E2ACF /* DefaultRecord.swift in Sources */,
 				35CC3F402747CE8B0059707A /* Color.swift in Sources */,
 				35CC3F412747D2830059707A /* Canvas.xcdatamodeld in Sources */,
 			);

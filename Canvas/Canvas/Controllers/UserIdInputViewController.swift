@@ -33,11 +33,11 @@ class UserIdInputViewController: UIViewController, UITextFieldDelegate {
         feedbackGenerator?.notificationOccurred(.success)
         let finalText = textField.text?.trimmingCharacters(in: .whitespaces) ?? ""
         if finalText.count > 0 {
-            UserDefaults.standard.set(finalText, forKey: "userID")
+            UserDefaults.shared.set(finalText, forKey: "userID")
         } else {
-            UserDefaults.standard.set("무명작가", forKey: "userID")
+            UserDefaults.shared.set("무명작가", forKey: "userID")
         }
-        UserDefaults.standard.set(true, forKey: "userIDsetting")
+        UserDefaults.shared.set(true, forKey: "userIDsetting")
         guard let nextVC = self.storyboard?.instantiateViewController(identifier: "mainViewController") as? MainViewController else { return }
         transitionVc(vc: nextVC, duration: 0.5, type: .fromTop)
     }
