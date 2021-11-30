@@ -76,7 +76,7 @@ struct CanvasWidgetEntryView : View {
                 }
                 
                 if  UserDefaults.shared.bool(forKey: "guideAvail") == true {
-                    ForEach(0 ..< 10) { index in
+                    ForEach(getIndex(recordNum: records.count) ..< 10) { index in
                         let record = DefaultRecord.data[index]
                         let pos = defaultPosition[index]
                         ShapeView(level: Int(record.gaugeLevel), color: .gray)
