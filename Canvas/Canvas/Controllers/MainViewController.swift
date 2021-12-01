@@ -55,7 +55,7 @@ class MainViewController: UIViewController {
     override func loadView() {
         super.loadView()
         // MARK: - DEVELOP - init seedData :
-                DataHelper.shared.loadSeeder()
+//                DataHelper.shared.loadSeeder()
         // 처음 앱을 실행되었을 때 = 코어데이터에 아무것도 없는 상태이기 때문에, 레코드들의 위치정보를 제공해줘야 한다.
         if launchedBefore == false {
             UserDefaults.shared.set(true, forKey: "launchedBefore")
@@ -172,6 +172,7 @@ class MainViewController: UIViewController {
     }
     
     private func setinfoViewUserAction() {
+//        if recordsByDate.first?.count == 0 {
         let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(infoviewSwipeLeft))
         let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(infoviewSwipeRight))
         let tap = UITapGestureRecognizer(target: self, action: #selector(infoviewTap))
@@ -183,6 +184,7 @@ class MainViewController: UIViewController {
         infoContentView.addGestureRecognizer(swipeRight)
         infoContentView.addGestureRecognizer(swipeLeft)
         infoContentView.addGestureRecognizer(tap)
+//        }
     }
     
     @objc func infoviewTap() {
@@ -225,25 +227,44 @@ extension MainViewController {
     private func updateContext() {
         recordsByDate = [[Record]]()
         dateStrings = [String]()
-        var rawDates = [FinalDate]()
         let context = CoreDataStack.shared.managedObjectContext
-        let request = FinalDate.fetchRequest()
-        do {
-            rawDates = try context.fetch(request)
-        } catch { print("context Error") }
-        rawDates.sort(by: {$0.creationDate?.timeIntervalSinceNow ?? Date().timeIntervalSinceNow > $1.creationDate?.timeIntervalSinceNow ?? Date().timeIntervalSinceNow})
-        for rawDate in rawDates {
-            dateStrings.append(getStartOfDateString(date: rawDate.creationDate))
-            var rawRecords = rawDate.records?.allObjects as? [Record] ?? [Record]()
-            rawRecords.sort(by: {$0.createdDate?.timeIntervalSinceNow ?? Date().timeIntervalSinceNow > $1.createdDate?.timeIntervalSinceNow ?? Date().timeIntervalSinceNow})
-            recordsByDate.append(rawRecords)
-        }
-        let todayString = getDateString(date: Date())
-        if let _ = dateStrings.firstIndex(of: todayString) {
-            return
+        if UserDefaults.shared.bool(forKey: "canvasMode") == true {
+            var rawDates = [FinalDate]()
+            let request = FinalDate.fetchRequest()
+            do {
+                rawDates = try context.fetch(request)
+            } catch { print("context Error") }
+            rawDates.sort(by: {$0.creationDate?.timeIntervalSinceNow ?? Date().timeIntervalSinceNow > $1.creationDate?.timeIntervalSinceNow ?? Date().timeIntervalSinceNow})
+            for rawDate in rawDates {
+                dateStrings.append(getStartOfDateString(date: rawDate.creationDate))
+                var rawRecords = rawDate.records?.allObjects as? [Record] ?? [Record]()
+                rawRecords.sort(by: {$0.createdDate?.timeIntervalSinceNow ?? Date().timeIntervalSinceNow > $1.createdDate?.timeIntervalSinceNow ?? Date().timeIntervalSinceNow})
+                recordsByDate.append(rawRecords)
+            }
+            let todayString = getDateString(date: Date())
+            if let _ = dateStrings.firstIndex(of: todayString) {
+                return
+            } else {
+                dateStrings.insert(todayString, at: 0)
+                recordsByDate.insert([Record](), at: 0)
+            }
         } else {
-            dateStrings.insert(todayString, at: 0)
-            recordsByDate.insert([Record](), at: 0)
+            dateStrings.append(getDateString(date: Date()))
+            var rawRecords = [Record]()
+            let request = Record.fetchRequest()
+            do {
+                rawRecords = try context.fetch(request)
+            } catch { print("context Error") }
+            rawRecords.sort(by: {$0.createdDate?.timeIntervalSinceNow ?? Date().timeIntervalSinceNow > $1.createdDate?.timeIntervalSinceNow ?? Date().timeIntervalSinceNow})
+            if rawRecords.count > 10 {
+                var tempRecord = [Record]()
+                for idx in 0 ..< 10 {
+                    tempRecord.append(rawRecords[idx])
+                }
+                recordsByDate.append(tempRecord)
+            } else {
+                recordsByDate.append(rawRecords)
+            }
         }
     }
     
@@ -317,49 +338,6 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
-    
-    //    private func setRecordsByDate(sortedRecords: [Record]) {
-    //        recordsByDate = [[Record]]()
-    //        dateStrings = [String]()
-    //        var tempRecords = [Record]()
-    //        if UserDefaults.shared.bool(forKey: "canvasMode") == true {
-    //            for r in sortedRecords {
-    //                let date = r.createdDate ?? Date()
-    //                let dateString = getDateString(date: date)
-    //
-    //                if let _ = dateStrings.firstIndex(of: dateString) {
-    //                    tempRecords.append(r)
-    //                } else {
-    //                    dateStrings.append(dateString)
-    //                    if tempRecords.count > 0 {
-    //                        recordsByDate.append(tempRecords)
-    //                        tempRecords = [Record]()
-    //                    }
-    //                    tempRecords.append(r)
-    //                }
-    //            }
-    //            if sortedRecords.count > 0 {
-    //                recordsByDate.append(tempRecords)
-    //            }
-    //            tempRecords.removeAll()
-    //            let todayString = getDateString(date: Date())
-    //            if let _ = dateStrings.firstIndex(of: todayString) {
-    //                return
-    //            } else {
-    //                dateStrings.insert(todayString, at: 0)
-    //                recordsByDate.insert([Record](), at: 0)
-    //            }
-    //        } else {
-    //            for record in sortedRecords {
-    //                tempRecords.append(record)
-    //                if tempRecords.count >= 10 {
-    //                    break
-    //                }
-    //            }
-    //            recordsByDate.append(tempRecords)
-    //            dateStrings.append(getDateString(date: Date()))
-    //        }
-    //    }
     
     private func getDateString(date: Date) -> String {
         let df = DateFormatter()

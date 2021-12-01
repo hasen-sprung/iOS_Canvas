@@ -44,6 +44,10 @@ class SettingViewController: UIViewController {
         setupFeedbackGenerator()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        settingTableView.reloadData()
+    }
+    
     @objc func backButtonPressed() {
         impactFeedbackGenerator?.impactOccurred()
         dismiss(animated: true, completion: nil)
