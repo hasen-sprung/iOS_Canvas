@@ -84,7 +84,6 @@ class MainViewController: UIViewController {
         canvasCollectionView.dataSource = self
         setAutoLayout()
         setButtonsTarget()
-        setinfoViewUserAction()
         setupFeedbackGenerator()
         
         NotificationCenter.default.addObserver(forName: UIApplication.willEnterForegroundNotification,
@@ -112,6 +111,7 @@ class MainViewController: UIViewController {
             self.canvasCollectionView?.contentOffset.x = 0
         }
         goTofirstAnimation.startAnimation()
+        setinfoViewUserAction()
     }
     
     override func viewWillLayoutSubviews() {
@@ -172,19 +172,36 @@ class MainViewController: UIViewController {
     }
     
     private func setinfoViewUserAction() {
-//        if recordsByDate.first?.count == 0 {
         let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(infoviewSwipeLeft))
         let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(infoviewSwipeRight))
         let tap = UITapGestureRecognizer(target: self, action: #selector(infoviewTap))
+        let greetingTap = UITapGestureRecognizer(target: self, action: #selector(changeGreetginMessage))
         swipeLeft.direction = .left
         swipeRight.direction = .right
         swipeLeft.delegate = self
         swipeRight.delegate = self
         tap.delegate = self
-        infoContentView.addGestureRecognizer(swipeRight)
-        infoContentView.addGestureRecognizer(swipeLeft)
-        infoContentView.addGestureRecognizer(tap)
-//        }
+        greetingTap.delegate = self
+        print("made")
+        if recordsByDate.count > 0 {
+            if recordsByDate.first?.count ?? 0 > 0 {
+                print("swipe")
+                greetingView.removeGestureRecognizer(greetingTap)
+                infoContentView.addGestureRecognizer(swipeRight)
+                infoContentView.addGestureRecognizer(swipeLeft)
+                infoContentView.addGestureRecognizer(tap)
+            } else {
+                print("tap")
+                infoContentView.removeGestureRecognizer(swipeRight)
+                infoContentView.removeGestureRecognizer(swipeLeft)
+                infoContentView.removeGestureRecognizer(tap)
+                greetingView.addGestureRecognizer(greetingTap)
+            }
+        }
+    }
+    
+    @objc func changeGreetginMessage() {
+        greetingView.text = greetingMessages[Int.random(in: 0 ..< greetingMessages.count)]
     }
     
     @objc func infoviewTap() {
@@ -684,6 +701,7 @@ extension MainViewController: MainInfoViewDelegate {
         
         if recordsByDate.count > 0 && recordsByDate[Int(currentIndex)].count > 0 {
             view.addSubview(infoContentView)
+            view.bringSubviewToFront(infoContentView)
             greetingView.removeFromSuperview()
             infoContentView.setLastMemoView()
             //            infoContentView.setShapesView(records: recordsByDate[Int(currentIndex)])
@@ -691,11 +709,6 @@ extension MainViewController: MainInfoViewDelegate {
             infoContentView.removeFromSuperview()
             greetingView.lineBreakMode = .byWordWrapping
             greetingView.numberOfLines = 0
-            let greetingMessages = ["\(UserDefaults.shared.string(forKey: "userID") ?? "무명작가")님! 어떤 하루를 보내고 계시나요?\n언제든 감정 기록을 추가하여\n나만의 그림을 완성해보세요!",
-                                    "좋은 하루에요! \(UserDefaults.shared.string(forKey: "userID") ?? "무명작가")님!\n틈틈히 느끼는 생각을 기록하시면서\n나만의 그림을 완성해보세요!",
-                                    "\(UserDefaults.shared.string(forKey: "userID") ?? "무명작가")님 오늘 날씨는 어떤가요?\n사소한 것도 기록 하다 보면\n소중한 추억이 쌓이게 될거에요!",
-                                    "\(UserDefaults.shared.string(forKey: "userID") ?? "무명작가")님은 기록만 열심히 하세요!\n저희는 앞으로 많은 작가들과 함께\n예쁜 기록을 만들어드릴게요!",
-                                    "\(UserDefaults.shared.string(forKey: "userID") ?? "무명작가")님!\n오늘 밤 잠들기 전에\n작성한 기록들을 읽어보시는건 어때요?"]
             greetingView.text = greetingMessages[Int.random(in: 0 ..< greetingMessages.count)]
             
             greetingView.font = UIFont(name: "Pretendard-Regular", size: 14)
@@ -712,6 +725,8 @@ extension MainViewController: MainInfoViewDelegate {
                                              height: greetingView.intrinsicContentSize.height)
             greetingView.center = mainInfoView.center
             view.addSubview(greetingView)
+            view.bringSubviewToFront(greetingView)
+            greetingView.isUserInteractionEnabled = true
         }
     }
 }

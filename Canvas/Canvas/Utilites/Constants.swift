@@ -35,3 +35,9 @@ let recordViewOverlapRatio: CGFloat = 0.7
 
 // - SETTING
 let textSettingVersion = "버전"
+
+let greetingMessages = ["\(UserDefaults.shared.string(forKey: "userID") ?? "무명작가")님! 어떤 하루를 보내고 계시나요?\n언제든 감정 기록을 추가하여\n나만의 그림을 완성해보세요!",
+                        "좋은 하루에요! \(UserDefaults.shared.string(forKey: "userID") ?? "무명작가")님!\n틈틈히 느끼는 생각을 기록하시면서\n나만의 그림을 완성해보세요!",
+                        "\(UserDefaults.shared.string(forKey: "userID") ?? "무명작가")님 오늘 날씨는 어떤가요?\n사소한 것도 기록 하다 보면\n소중한 추억이 쌓이게 될거에요!",
+                        "\(UserDefaults.shared.string(forKey: "userID") ?? "무명작가")님은 기록만 열심히 하세요!\n저희는 앞으로 많은 작가들과 함께\n예쁜 기록을 만들어드릴게요!",
+                        "\(UserDefaults.shared.string(forKey: "userID") ?? "무명작가")님!\n오늘 밤 잠들기 전에\n작성한 기록들을 읽어보시는건 어때요?"]
