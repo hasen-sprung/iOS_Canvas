@@ -85,6 +85,7 @@ class MainViewController: UIViewController {
         setAutoLayout()
         setButtonsTarget()
         setupFeedbackGenerator()
+        setinfoViewUserAction()
         
         NotificationCenter.default.addObserver(forName: UIApplication.willEnterForegroundNotification,
                                                object: nil,
@@ -111,7 +112,7 @@ class MainViewController: UIViewController {
             self.canvasCollectionView?.contentOffset.x = 0
         }
         goTofirstAnimation.startAnimation()
-        setinfoViewUserAction()
+        infoRecordIndex = 0
     }
     
     override func viewWillLayoutSubviews() {
@@ -171,22 +172,14 @@ class MainViewController: UIViewController {
         swipeRight.delegate = self
         tap.delegate = self
         greetingTap.delegate = self
-        if recordsByDate.count > 0 {
-            if recordsByDate.first?.count ?? 0 > 0 {
-                greetingView.removeGestureRecognizer(greetingTap)
-                infoContentView.addGestureRecognizer(swipeRight)
-                infoContentView.addGestureRecognizer(swipeLeft)
-                infoContentView.addGestureRecognizer(tap)
-            } else {
-                infoContentView.removeGestureRecognizer(swipeRight)
-                infoContentView.removeGestureRecognizer(swipeLeft)
-                infoContentView.removeGestureRecognizer(tap)
-                greetingView.addGestureRecognizer(greetingTap)
-            }
-        }
+        infoContentView.addGestureRecognizer(swipeRight)
+        infoContentView.addGestureRecognizer(swipeLeft)
+        infoContentView.addGestureRecognizer(tap)
+        greetingView.addGestureRecognizer(greetingTap)
     }
     
     @objc func changeGreetginMessage() {
+        impactFeedbackGenerator?.impactOccurred()
         greetingView.text = greetingMessages[Int.random(in: 0 ..< greetingMessages.count)]
     }
     
@@ -199,6 +192,7 @@ class MainViewController: UIViewController {
         infoRecordIndex -= 1
         if infoRecordIndex < 0 {
             infoRecordIndex = 0
+            feedbackGenerator?.notificationOccurred(.error)
             return
         }
         animate(command: "select")
@@ -211,10 +205,12 @@ class MainViewController: UIViewController {
         infoRecordIndex += 1
         if infoRecordIndex > endIndex {
             infoRecordIndex = endIndex
+            feedbackGenerator?.notificationOccurred(.error)
             return
         }
         if infoRecordIndex > 9 {
             infoRecordIndex = 9
+            feedbackGenerator?.notificationOccurred(.error)
             return
         }
         animate(command: "select")
