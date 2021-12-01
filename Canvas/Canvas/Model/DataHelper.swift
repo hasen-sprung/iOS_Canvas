@@ -18,8 +18,7 @@ class DataHelper {
     }
 
     private func seedRecords() {
-        
-        for _ in 1 ... 400 {
+        for _ in 1 ... 600 {
 
             let userCalendar = Calendar.current
             var date = DateComponents()
@@ -95,9 +94,8 @@ class DataHelper {
                 newFinalDate.setValue(Int16(0), forKey: "theme")
                 (newFinalDate as! FinalDate).addToRecords(newRecord)
             }
+            CoreDataStack.shared.saveContext()
         }
-        
-        CoreDataStack.shared.saveContext()
     }
     
     private func getStartOfDate(date: Date?) -> Date {

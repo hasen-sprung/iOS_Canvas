@@ -580,8 +580,6 @@ extension MainViewController {
         }
     }
     private func stopAnimator() {
-        //        animator?.stopAnimation(false)
-        //        animator?.finishAnimation(at: .current)
     }
 }
 
@@ -685,10 +683,11 @@ extension MainViewController: MainInfoViewDelegate {
             attrString.addAttribute(NSAttributedString.Key.paragraphStyle, value: paragraphStyle, range: NSMakeRange(0, attrString.length))
             greetingView.attributedText = attrString
             greetingView.textAlignment = .center
-            greetingView.frame.size = CGSize(width: greetingView.intrinsicContentSize.width,
-                                             height: greetingView.intrinsicContentSize.height)
-            greetingView.center = mainInfoView.center
-            view.addSubview(greetingView)
+            greetingView.snp.makeConstraints { make in
+                make.edges.equalTo(self.mainInfoView).inset(5)
+                view.addSubview(greetingView)
+            }
+            
             view.bringSubviewToFront(greetingView)
             greetingView.isUserInteractionEnabled = true
         }
