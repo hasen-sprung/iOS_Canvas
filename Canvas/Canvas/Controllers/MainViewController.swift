@@ -155,17 +155,6 @@ class MainViewController: UIViewController {
         canvasRecordsView?.clearRecordViews()
     }
     
-    //    private func updateContext() {
-    //        var rawRecords = [Record]()
-    //        let context = CoreDataStack.shared.managedObjectContext
-    //        let request = Record.fetchRequest()
-    //        do {
-    //            rawRecords = try context.fetch(request)
-    //        } catch { print("context Error") }
-    //        rawRecords.sort(by: {$0.createdDate?.timeIntervalSinceNow ?? Date().timeIntervalSinceNow > $1.createdDate?.timeIntervalSinceNow ?? Date().timeIntervalSinceNow})
-    //        setRecordsByDate(sortedRecords: rawRecords)
-    //    }
-    
     private func loadUserIdInputMode() {
         guard let nextVC = self.storyboard?.instantiateViewController(identifier: "userIdInputViewController") as? UserIdInputViewController else { return }
         transitionVc(vc: nextVC, duration: 0.5, type: .fromBottom)
@@ -182,16 +171,13 @@ class MainViewController: UIViewController {
         swipeRight.delegate = self
         tap.delegate = self
         greetingTap.delegate = self
-        print("made")
         if recordsByDate.count > 0 {
             if recordsByDate.first?.count ?? 0 > 0 {
-                print("swipe")
                 greetingView.removeGestureRecognizer(greetingTap)
                 infoContentView.addGestureRecognizer(swipeRight)
                 infoContentView.addGestureRecognizer(swipeLeft)
                 infoContentView.addGestureRecognizer(tap)
             } else {
-                print("tap")
                 infoContentView.removeGestureRecognizer(swipeRight)
                 infoContentView.removeGestureRecognizer(swipeLeft)
                 infoContentView.removeGestureRecognizer(tap)
@@ -215,7 +201,6 @@ class MainViewController: UIViewController {
             infoRecordIndex = 0
             return
         }
-        print(infoRecordIndex)
         animate(command: "select")
         impactFeedbackGenerator?.impactOccurred()
         setInfoContentView()
@@ -232,7 +217,6 @@ class MainViewController: UIViewController {
             infoRecordIndex = 9
             return
         }
-        print(infoRecordIndex)
         animate(command: "select")
         impactFeedbackGenerator?.impactOccurred()
         setInfoContentView()
@@ -303,7 +287,6 @@ extension MainViewController: UIGestureRecognizerDelegate {
 
 extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, MainCanavasCollectionViewCellDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print("selected collectionView")
     }
     
     func setCanvasSubView(subView: MainRecordsView, idx: Int) {
@@ -394,7 +377,6 @@ extension MainViewController: UIScrollViewDelegate {
             setInfoContentView()
             impactFeedbackGenerator?.impactOccurred()
         }
-        print("currentIndex: \(currentIndex)")
         
         offset = CGPoint(x: roundedIndex * cellWidthIncludingSpacing - scrollView.contentInset.left, y: -scrollView.contentInset.top)
         targetContentOffset.pointee = offset
@@ -515,7 +497,7 @@ extension MainViewController {
                 case "stop":
                     stopRecordsAnimation(view: view)
                 default:
-                    print("no command")
+                    print("")
                 }
             }
         }
@@ -544,7 +526,6 @@ extension MainViewController {
                                   y: CGFloat(yRatio) * superview.frame.height)
         }
         animator?.addCompletion({ pos in
-            //            print("finished shake")
         })
         animator?.startAnimation()
     }
@@ -576,16 +557,6 @@ extension MainViewController {
                     self.addIdleAnimation(view: view, move: -move)
                 }
             }
-            //            switch pos {
-            //            case .end:
-            //                print("end \(index), \(self.currentIndex)")
-            //            case .start:
-            //                print("start")
-            //            case .current:
-            //                print("start")
-            //            default:
-            //                print("default")
-            //            }
         })
         animator?.startAnimation(afterDelay: Double.random(in: 0.0...1.0))
     }
@@ -595,16 +566,13 @@ extension MainViewController {
         
         animator = UIViewPropertyAnimator(duration: 0.3, curve: .easeIn)
         animator?.addAnimations {
-            print("run add animations")
             views[self.infoRecordIndex].alpha = 0.0
             self.infoContentView.isUserInteractionEnabled = false
         }
         animator?.addCompletion({ pos in
-            print("animation completion")
             views[self.infoRecordIndex].alpha = 1.0
             self.infoContentView.isUserInteractionEnabled = true
         })
-        print("run select animation")
         animator?.startAnimation()
     }
     
@@ -736,7 +704,6 @@ extension MainViewController: MainInfoViewDelegate {
 extension MainViewController: MainRecordsViewDelegate {
     func openRecordTextView(index: Int) {
         impactFeedbackGenerator?.impactOccurred()
-        print("record")
         let df = DateFormatter()
         
         df.dateFormat = "M / d EEEE HH:mm"
@@ -769,7 +736,6 @@ extension MainViewController: MainRecordsViewDelegate {
     }
     
     func tapActionRecordView() {
-        print("tap")
     }
 }
 
