@@ -27,7 +27,7 @@ class SettingViewController: UIViewController {
         }
     }
     
-    private let settingList = ["작가명", "작품 모드", "흔들어서 그림 섞기", "개발자에게 의견 남기기", "Canvas 정보"]
+    private let settingList = ["작가명", "작품 구성", "흔들어서 그림 섞기", "개발자에게 의견 남기기", "Canvas 정보"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
