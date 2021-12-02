@@ -487,7 +487,7 @@ extension MainViewController {
         let isShake = UserDefaults.shared.bool(forKey: "shakeAvail")
         let indexPath = IndexPath(item: Int(currentIndex), section: 0)
         
-        if isShake && motion == .motionShake {
+        if !willDisappear && isShake && motion == .motionShake {
             feedbackGenerator?.notificationOccurred(.success)
             if let cell = canvasCollectionView.cellForItem(at: indexPath) as? MainCanavasCollectionViewCell {
                 cell.canvasRecordView?.resetRandomPosition(records: recordsByDate[Int(currentIndex)], idx: Int(currentIndex))
