@@ -55,14 +55,14 @@ class ListTableViewController: UIViewController, UITableViewDelegate, UITableVie
         view.bringSubviewToFront(listTableView)
         setEmptyMessage()
         showEmptyMessage()
-        let swipe = UISwipeGestureRecognizer(target: self, action: #selector(backButtonPressed))
+//        let swipe = UIScreenEdgePanGestureRecognizer(target: self, action: #selector(backButtonPressed))
         let calendarSwipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(dateFWButtonPressed))
         let calendarSwipeRight = UISwipeGestureRecognizer(target: self, action: #selector(dateBWButtonPressed))
-        swipe.direction = .right
-        swipe.delegate = self
+//        swipe.edges = .left
+//        swipe.delegate = self
         calendarSwipeLeft.direction = .left
         calendarSwipeRight.direction = .right
-        self.listTableView.addGestureRecognizer(swipe)
+//        self.listTableView.addGestureRecognizer(swipe)
         self.calendarView.gestureRecognizers = [calendarSwipeLeft, calendarSwipeRight]
         setupFeedbackGenerator()
     }
@@ -485,6 +485,7 @@ extension ListTableViewController {
                 self.showEmptyMessage()
                 self.calendarCalculation()
             }
+            self.calendarView.reloadData()
             feedbackGenerator?.notificationOccurred(.success)
         }
         alert.addAction(yesAction)
