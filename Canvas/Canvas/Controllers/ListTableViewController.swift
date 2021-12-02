@@ -55,14 +55,14 @@ class ListTableViewController: UIViewController, UITableViewDelegate, UITableVie
         view.bringSubviewToFront(listTableView)
         setEmptyMessage()
         showEmptyMessage()
-//        let swipe = UIScreenEdgePanGestureRecognizer(target: self, action: #selector(backButtonPressed))
+        let swipe = UIScreenEdgePanGestureRecognizer(target: self, action: #selector(screenEdgeSwiped))
         let calendarSwipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(dateFWButtonPressed))
         let calendarSwipeRight = UISwipeGestureRecognizer(target: self, action: #selector(dateBWButtonPressed))
-//        swipe.edges = .left
-//        swipe.delegate = self
+        swipe.edges = .left
+        swipe.delegate = self
         calendarSwipeLeft.direction = .left
         calendarSwipeRight.direction = .right
-//        self.listTableView.addGestureRecognizer(swipe)
+        self.listTableView.addGestureRecognizer(swipe)
         self.calendarView.gestureRecognizers = [calendarSwipeLeft, calendarSwipeRight]
         setupFeedbackGenerator()
     }
@@ -73,6 +73,20 @@ class ListTableViewController: UIViewController, UITableViewDelegate, UITableVie
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
+    }
+    
+    @objc func screenEdgeSwiped(_ recognizer: UIScreenEdgePanGestureRecognizer) {
+        if recognizer.state == .recognized {
+            impactFeedbackGenerator?.impactOccurred()
+            calendarView.removeFromSuperview()
+            let transition = CATransition()
+            transition.duration = 0.5
+            transition.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
+            transition.type = CATransitionType.push
+            transition.subtype = CATransitionSubtype.fromLeft
+            self.view.window?.layer.add(transition, forKey: nil)
+            self.dismiss(animated: false, completion: nil)
+        }
     }
     
     @objc func backButtonPressed() {
@@ -486,6 +500,7 @@ extension ListTableViewController {
                 self.calendarCalculation()
             }
             self.calendarView.reloadData()
+            CoreDataStack.shared.saveContext()
             feedbackGenerator?.notificationOccurred(.success)
         }
         alert.addAction(yesAction)

@@ -166,8 +166,11 @@ class MainViewController: UIViewController {
         let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(infoviewSwipeRight))
         let tap = UITapGestureRecognizer(target: self, action: #selector(infoviewTap))
         let greetingTap = UITapGestureRecognizer(target: self, action: #selector(changeGreetginMessage))
+        let swipe = UIScreenEdgePanGestureRecognizer(target: self, action: #selector(screenEdgeSwiped))
         swipeLeft.direction = .left
         swipeRight.direction = .right
+        swipe.edges = .right
+        swipe.delegate = self
         swipeLeft.delegate = self
         swipeRight.delegate = self
         tap.delegate = self
@@ -176,6 +179,15 @@ class MainViewController: UIViewController {
         infoContentView.addGestureRecognizer(swipeLeft)
         infoContentView.addGestureRecognizer(tap)
         greetingView.addGestureRecognizer(greetingTap)
+        view.addGestureRecognizer(swipe)
+    }
+    
+    @objc func screenEdgeSwiped(_ recognizer: UIScreenEdgePanGestureRecognizer) {
+        if recognizer.state == .recognized {
+            impactFeedbackGenerator?.impactOccurred()
+            guard let nextVC = self.storyboard?.instantiateViewController(identifier: "listTableViewController") as? ListTableViewController else { return }
+            transitionVc(vc: nextVC, duration: 0.5, type: .fromRight)
+        }
     }
     
     @objc func changeGreetginMessage() {
