@@ -456,12 +456,28 @@ extension ListTableViewController {
         
         let yesAction = UIAlertAction(title: "네", style: .default) { _ in
             let context = CoreDataStack.shared.managedObjectContext
-            
+            let date = self.recordsByDate[indexPath.section][indexPath.row].createdDate ?? Date()
+            var calendar = Calendar.current
+            calendar.timeZone = NSTimeZone.local
             context.delete(self.recordsByDate[indexPath.section][indexPath.row])
             CoreDataStack.shared.saveContext()
             self.recordsByDate[indexPath.section].remove(at: indexPath.row)
             self.listTableView.deleteRows(at: [indexPath], with: .fade)
             if self.recordsByDate[indexPath.section].count == 0 {
+                var matchingDate = [FinalDate]()
+                let fetchRequest = FinalDate.fetchRequest()
+                let dateFrom = calendar.startOfDay(for: date)
+                let dateTo = calendar.date(byAdding: .day, value: 1, to: dateFrom) ?? Date()
+                let fromPredicate = NSPredicate(format: "%@ <= %K", dateFrom as NSDate, #keyPath(FinalDate.creationDate))
+                let toPredicate = NSPredicate(format: "%K < %@", #keyPath(FinalDate.creationDate), dateTo as NSDate)
+                let datePredicate = NSCompoundPredicate(andPredicateWithSubpredicates: [fromPredicate, toPredicate])
+                fetchRequest.predicate = datePredicate
+                do {
+                    matchingDate = try context.fetch(fetchRequest)
+                } catch { print("context Error") }
+                if matchingDate.count > 0 {
+                    context.delete(matchingDate[0])
+                }
                 self.recordsByDate.remove(at: indexPath.section)
                 self.dateSections.remove(at: indexPath.section)
                 self.onlyDateStr.remove(at: indexPath.section)
