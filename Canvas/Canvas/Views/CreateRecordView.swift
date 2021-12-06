@@ -33,6 +33,7 @@ class CreateRecordView: UIView {
     private let changeDateButton = UIButton()
     private let datePicker = UIDatePicker()
     private var keyboardFrame = CGRect(x: 0, y: 0, width: 0, height: 0)
+    private let modifyDateIcon = UIImageView()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -72,7 +73,7 @@ class CreateRecordView: UIView {
             make.centerX.equalTo(self.snp.centerX)
             
             dateLabelView.backgroundColor = .clear
-            dateLabelView.text = getDateString()
+            dateLabelView.text = getDateString() + " ✎"
             dateLabelView.font = UIFont(name: "Cardo-Regular", size: 17)
             dateLabelView.textColor = .black
             dateLabelView.textAlignment = .center
@@ -190,7 +191,7 @@ class CreateRecordView: UIView {
         formatter.timeStyle = .none
 
         date = datePicker.date
-        dateLabelView.text = getDateString()
+        dateLabelView.text = getDateString() + " ✎"
         CRTextView.inputAccessoryView = nil
         CRTextView.inputView = nil
         CRTextView.reloadInputViews()
