@@ -72,6 +72,8 @@
 		4F29B92B274AC76200747DDD /* Pretendard-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4F29B922274AC76200747DDD /* Pretendard-Regular.otf */; };
 		4F29B92C274AC76200747DDD /* Pretendard-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4F29B923274AC76200747DDD /* Pretendard-Bold.otf */; };
 		4F29B92E274BE33E00747DDD /* DataHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F29B92D274BE33E00747DDD /* DataHelper.swift */; };
+		4F74C5B8275A34E10034C015 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4F74C5B7275A34E10034C015 /* GoogleService-Info.plist */; };
+		4F74C5BD275A47850034C015 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 4F74C5BC275A47850034C015 /* FirebaseAnalytics */; };
 		4FF8A6822750D22B009DAC2B /* MainCanavasCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF8A6812750D22B009DAC2B /* MainCanavasCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
@@ -160,6 +162,7 @@
 		4F29B922274AC76200747DDD /* Pretendard-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Regular.otf"; sourceTree = "<group>"; };
 		4F29B923274AC76200747DDD /* Pretendard-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Bold.otf"; sourceTree = "<group>"; };
 		4F29B92D274BE33E00747DDD /* DataHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataHelper.swift; sourceTree = "<group>"; };
+		4F74C5B7275A34E10034C015 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		4FF8A6812750D22B009DAC2B /* MainCanavasCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCanavasCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -178,6 +181,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3549F25F273E4E7500C1589A /* SnapKit in Frameworks */,
+				4F74C5BD275A47850034C015 /* FirebaseAnalytics in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -236,6 +240,7 @@
 				4F0A39E0273BC853009E3AAF /* Assets.xcassets */,
 				4F0A39E2273BC853009E3AAF /* LaunchScreen.storyboard */,
 				4F0A39E5273BC853009E3AAF /* Info.plist */,
+				4F74C5B7275A34E10034C015 /* GoogleService-Info.plist */,
 			);
 			path = Canvas;
 			sourceTree = "<group>";
@@ -368,6 +373,7 @@
 			name = Canvas;
 			packageProductDependencies = (
 				3549F25E273E4E7500C1589A /* SnapKit */,
+				4F74C5BC275A47850034C015 /* FirebaseAnalytics */,
 			);
 			productName = Canvas;
 			productReference = 4F0A39D1273BC852009E3AAF /* Canvas.app */;
@@ -402,6 +408,7 @@
 			mainGroup = 4F0A39C8273BC852009E3AAF;
 			packageReferences = (
 				3549F25D273E4E7500C1589A /* XCRemoteSwiftPackageReference "SnapKit" */,
+				4F74C5B9275A37230034C015 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			productRefGroup = 4F0A39D2273BC852009E3AAF /* Products */;
 			projectDirPath = "";
@@ -438,6 +445,7 @@
 				4F0A39E1273BC853009E3AAF /* Assets.xcassets in Resources */,
 				4F29B92C274AC76200747DDD /* Pretendard-Bold.otf in Resources */,
 				4F0590B82747726F00C4DF41 /* CalendarCollectionViewCell.xib in Resources */,
+				4F74C5B8275A34E10034C015 /* GoogleService-Info.plist in Resources */,
 				4F29B927274AC76200747DDD /* Pretendard-Light.otf in Resources */,
 				4F29B924274AC76200747DDD /* Pretendard-Black.otf in Resources */,
 				4F29B918274AC74D00747DDD /* Cardo-Italic.ttf in Resources */,
@@ -731,7 +739,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.hasensprung.Canvas;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -762,7 +770,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.hasensprung.Canvas;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -812,6 +820,14 @@
 				minimumVersion = 5.0.0;
 			};
 		};
+		4F74C5B9275A37230034C015 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -819,6 +835,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 3549F25D273E4E7500C1589A /* XCRemoteSwiftPackageReference "SnapKit" */;
 			productName = SnapKit;
+		};
+		4F74C5BC275A47850034C015 /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4F74C5B9275A37230034C015 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
 		};
 /* End XCSwiftPackageProductDependency section */
 

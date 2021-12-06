@@ -1,5 +1,6 @@
 import UIKit
 import SnapKit
+import FirebaseAnalytics
 
 class MainViewController: UIViewController {
     // Data
@@ -79,6 +80,7 @@ class MainViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         self.view.backgroundColor = UIColor(r: 240, g: 240, b: 243)
         canvasCollectionView.delegate = self
         canvasCollectionView.dataSource = self

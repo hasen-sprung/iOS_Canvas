@@ -17,6 +17,7 @@ class GaugeViewController: UIViewController {
         .black
     }
     
+    let datePicker = UIDatePicker()
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = bgColor
@@ -24,6 +25,7 @@ class GaugeViewController: UIViewController {
         setLayout()
         setupFeedbackGenerator()
     }
+    
     
     override func viewWillAppear(_ animated: Bool) {
         gaugeWaveView.startWaveAnimation()

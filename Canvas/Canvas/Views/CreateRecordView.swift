@@ -30,6 +30,10 @@ class CreateRecordView: UIView {
         return offset
     }()
     
+    private let changeDateButton = UIButton()
+    private let datePicker = UIDatePicker()
+    private var keyboardFrame = CGRect(x: 0, y: 0, width: 0, height: 0)
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.backgroundColor = .clear
@@ -76,6 +80,19 @@ class CreateRecordView: UIView {
                                               height: dateLabelView.intrinsicContentSize.height)
             self.addSubview(dateLabelView)
         }
+        
+        changeDateButton.snp.makeConstraints { make in
+            make.top.equalTo(CRBackgroundView.snp.top).offset(10)
+            make.leading.equalTo(CRBackgroundView.snp.leading).offset(0)
+            make.trailing.equalTo(CRBackgroundView.snp.trailing).offset(0)
+            make.centerX.equalTo(self.snp.centerX)
+            
+            changeDateButton.backgroundColor = .clear
+            changeDateButton.setTitle("", for: .normal)
+            changeDateButton.addTarget(self, action: #selector(createDatePickerView), for: .touchUpInside)
+            self.addSubview(changeDateButton)
+        }
+        
         CRBtnBackgroundView.snp.makeConstraints { make in
             make.leading.equalTo(CRBackgroundView.snp.leading).offset(30)
             make.trailing.equalTo(CRBackgroundView.snp.trailing).offset(-30)
@@ -151,6 +168,32 @@ class CreateRecordView: UIView {
         self.bringSubviewToFront(completeButton)
         setSeperateLine()
     }
+    
+    @objc func createDatePickerView(){
+        let toolbar = UIToolbar()
+        let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target : nil, action: #selector(donePressed))
+        
+        toolbar.sizeToFit()
+        toolbar.setItems([doneButton], animated: true)
+        datePicker.preferredDatePickerStyle = .wheels
+        datePicker.frame.size = CGSize(width: self.frame.width, height: keyboardFrame.height)
+        CRTextView.inputAccessoryView = toolbar
+        CRTextView.inputView = datePicker
+        CRTextView.reloadInputViews()
+    }
+    
+    @objc func donePressed(){
+        //formatter
+        let formatter = DateFormatter()
+        formatter.dateStyle = .medium
+        formatter.timeStyle = .none
+
+        date = datePicker.date
+        dateLabelView.text = getDateString()
+        CRTextView.inputAccessoryView = nil
+        CRTextView.inputView = nil
+        CRTextView.reloadInputViews()
+    }
 }
 
 // MARK: - Keyboard Notification
@@ -160,7 +203,7 @@ extension CreateRecordView {
     func keyboardWillShow(_ sender: Notification) {
         if let userInfo = sender.userInfo as? Dictionary<String, Any> {
             if let keyboardFrameValue = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
-                let keyboardFrame = keyboardFrameValue.cgRectValue
+                keyboardFrame = keyboardFrameValue.cgRectValue
                 
                 self.bottomConstraint?.update(offset: -keyboardFrame.height - 20)
                 self.setNeedsLayout()
