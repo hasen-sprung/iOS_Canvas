@@ -73,7 +73,15 @@ class CreateRecordView: UIView {
             make.centerX.equalTo(self.snp.centerX)
             
             dateLabelView.backgroundColor = .clear
-            dateLabelView.text = getDateString() + " ✎"
+            
+            let imageAttachment = NSTextAttachment()
+            imageAttachment.image = UIImage(systemName: "pencil")
+            imageAttachment.image = UIImage(systemName: "pencil")?.withTintColor(.black)
+            
+            let fullString = NSMutableAttributedString(string: getDateString() + " ")
+            fullString.append(NSAttributedString(attachment: imageAttachment))
+            dateLabelView.attributedText = fullString
+//            dateLabelView.text = getDateString() + " ✎"
             dateLabelView.font = UIFont(name: "Cardo-Regular", size: 17)
             dateLabelView.textColor = .black
             dateLabelView.textAlignment = .center
@@ -124,6 +132,7 @@ class CreateRecordView: UIView {
             
             completeButton.setTitle("완료", for: .normal)
             completeButton.setTitleColor(.black, for: .normal)
+            completeButton.setTitleColor(UIColor(r: 163, g: 173, b: 178), for: .disabled)
             completeButton.titleLabel?.font = UIFont(name: "Pretendard-Regular", size: 15)
             completeButton.backgroundColor = .clear
             completeButton.addTarget(self, action: #selector(completeButtonPressed), for: .touchUpInside)
@@ -191,7 +200,14 @@ class CreateRecordView: UIView {
         formatter.timeStyle = .none
 
         date = datePicker.date
-        dateLabelView.text = getDateString() + " ✎"
+        let imageAttachment = NSTextAttachment()
+        imageAttachment.image = UIImage(systemName: "pencil")
+        imageAttachment.image = UIImage(systemName: "pencil")?.withTintColor(.black)
+        
+        let fullString = NSMutableAttributedString(string: getDateString() + " ")
+        fullString.append(NSAttributedString(attachment: imageAttachment))
+        dateLabelView.attributedText = fullString
+//        dateLabelView.text = getDateString() + " ✎"
         CRTextView.inputAccessoryView = nil
         CRTextView.inputView = nil
         CRTextView.reloadInputViews()
