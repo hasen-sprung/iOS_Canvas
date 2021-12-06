@@ -102,18 +102,20 @@ class MainViewController: UIViewController {
         willDisappear = false
         
         updateContext()
+        let todayIndex = dateStrings.firstIndex(of: getDateString(date: Date())) ?? 0
         self.canvasCollectionView.reloadData()
-        currentIndex = 0
+        currentIndex = CGFloat(todayIndex)
         if dateStrings.count > 0 {
-            mainViewLabel.text = dateStrings[0]
+            mainViewLabel.text = dateStrings[todayIndex]
         } else {
             mainViewLabel.text = getDateString(date: Date())
         }
-        let goTofirstAnimation = UIViewPropertyAnimator(duration: 0.5, curve: .linear)
-        goTofirstAnimation.addAnimations {
-            self.canvasCollectionView?.contentOffset.x = 0
-        }
-        goTofirstAnimation.startAnimation()
+        
+//        let goTofirstAnimation = UIViewPropertyAnimator(duration: 0.5, curve: .linear)
+//        goTofirstAnimation.addAnimations {
+//            self.canvasCollectionView?.contentOffset.x = self.canvasCollectionView.frame.width * CGFloat(todayIndex)
+//        }
+//        goTofirstAnimation.startAnimation()
         infoRecordIndex = 0
     }
     
@@ -148,6 +150,9 @@ class MainViewController: UIViewController {
         infoRecordIndex = 0
         setInfoContentView()
         infoContentView.setLastMemoView()
+        let todayIndex = dateStrings.firstIndex(of: getDateString(date: Date())) ?? 0
+        let indexPath = IndexPath(item: todayIndex, section: 0)
+        canvasCollectionView.scrollToItem(at: indexPath, at: [.centeredVertically, .centeredHorizontally], animated: false)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -262,7 +267,9 @@ extension MainViewController {
                 return
             } else {
                 dateStrings.insert(todayString, at: 0)
-                recordsByDate.insert([Record](), at: 0)
+                dateStrings.sort(by: >)
+                recordsByDate.insert([Record](), at: dateStrings.firstIndex(of: todayString) ?? 0)
+                
             }
         } else {
             dateStrings.append(getDateString(date: Date()))
@@ -357,7 +364,7 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
     private func getDateString(date: Date) -> String {
         let df = DateFormatter()
         
-        df.dateFormat = "yyyy. M. d"
+        df.dateFormat = "yyyy. MM. dd"
         df.locale = Locale(identifier:"ko_KR")
         return df.string(from: date)
     }
