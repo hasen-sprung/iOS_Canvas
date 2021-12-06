@@ -180,6 +180,7 @@ class CreateRecordView: UIView {
         CRTextView.inputAccessoryView = toolbar
         CRTextView.inputView = datePicker
         CRTextView.reloadInputViews()
+        completeButton.isEnabled = false
     }
     
     @objc func donePressed(){
@@ -193,6 +194,7 @@ class CreateRecordView: UIView {
         CRTextView.inputAccessoryView = nil
         CRTextView.inputView = nil
         CRTextView.reloadInputViews()
+        completeButton.isEnabled = true
     }
 }
 
