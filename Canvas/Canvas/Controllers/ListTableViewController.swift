@@ -164,7 +164,7 @@ class ListTableViewController: UIViewController, UITableViewDelegate, UITableVie
             dateSections.append(getSectionDateStr(date: rawDate.creationDate ?? Date()))
             onlyDateStr.append(getOnlyDate(date: rawDate.creationDate ?? Date()))
             var rawRecords = rawDate.records?.allObjects as? [Record] ?? [Record]()
-            rawRecords.sort(by: {$0.createdDate?.timeIntervalSinceNow ?? Date().timeIntervalSinceNow > $1.createdDate?.timeIntervalSinceNow ?? Date().timeIntervalSinceNow})
+            rawRecords.sort(by: {$0.createdDate?.timeIntervalSinceNow ?? Date().timeIntervalSinceNow < $1.createdDate?.timeIntervalSinceNow ?? Date().timeIntervalSinceNow})
             recordsByDate.append(rawRecords)
         }
     }
