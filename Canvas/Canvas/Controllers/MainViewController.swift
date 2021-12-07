@@ -5,6 +5,7 @@ import FirebaseAnalytics
 class MainViewController: UIViewController {
     // Data
     private let launchedBefore = UserDefaults.shared.bool(forKey: "launchedBefore")
+    private let v1_2LaunchBefore = UserDefaults.shared.bool(forKey: "v1_2LaunchBefore")
     private let userIDsetting = UserDefaults.shared.bool(forKey: "userIDsetting")
     private let themeManager = ThemeManager.shared
     
@@ -67,7 +68,7 @@ class MainViewController: UIViewController {
             
             // MARK: - init position by Default Ratio
             // 레코드들의 포지션 정보(비율)를 초기화
-            for i in 0..<countOfRecordInCanvas {
+            for i in 0 ..< countOfRecordInCanvas {
                 let context = CoreDataStack.shared.managedObjectContext
                 let position = DefaultPosition(context: context)
                 
@@ -75,6 +76,11 @@ class MainViewController: UIViewController {
                 position.yRatio = Ratio.DefaultRatio[i].y
                 CoreDataStack.shared.saveContext()
             }
+        }
+        
+        if v1_2LaunchBefore == false {
+            UserDefaults.shared.set(true, forKey: "v1_2LaunchBefore")
+            UserDefaults.shared.set(true, forKey: "launchMode")
         }
     }
     
@@ -88,6 +94,7 @@ class MainViewController: UIViewController {
         setButtonsTarget()
         setupFeedbackGenerator()
         setinfoViewUserAction()
+        UserDefaults.shared.set(false, forKey: "startCycle")
         
         NotificationCenter.default.addObserver(forName: UIApplication.willEnterForegroundNotification,
                                                object: nil,
@@ -95,6 +102,17 @@ class MainViewController: UIViewController {
             [unowned self] notification in
             // background에서 foreground로 돌아오는 경우 실행 될 코드
             animate(command: "start")
+            UserDefaults.shared.set(false, forKey: "startCycle")
+            if UserDefaults.shared.bool(forKey: "startCycle") == false {
+                if UserDefaults.shared.bool(forKey: "launchMode") == false {
+                    UserDefaults.shared.set(true, forKey: "startCycle")
+                    guard let nextVC = self.storyboard?.instantiateViewController(identifier: "gaugeViewController") as? GaugeViewController else { return }
+                    nextVC.modalTransitionStyle = .coverVertical
+                    nextVC.modalPresentationStyle = .fullScreen
+                    self.present(nextVC, animated: false, completion: nil)
+                }
+            }
+            UserDefaults.shared.set(true, forKey: "startCycle")
         }
     }
     
@@ -110,12 +128,6 @@ class MainViewController: UIViewController {
         } else {
             mainViewLabel.text = getDateString(date: Date())
         }
-        
-//        let goTofirstAnimation = UIViewPropertyAnimator(duration: 0.5, curve: .linear)
-//        goTofirstAnimation.addAnimations {
-//            self.canvasCollectionView?.contentOffset.x = self.canvasCollectionView.frame.width * CGFloat(todayIndex)
-//        }
-//        goTofirstAnimation.startAnimation()
         infoRecordIndex = 0
     }
     
@@ -144,6 +156,16 @@ class MainViewController: UIViewController {
             loadUserIdInputMode()
             UserDefaults.shared.synchronize()
         }
+        if UserDefaults.shared.bool(forKey: "startCycle") == false {
+            if UserDefaults.shared.bool(forKey: "launchMode") == false {
+                UserDefaults.shared.set(true, forKey: "startCycle")
+                guard let nextVC = self.storyboard?.instantiateViewController(identifier: "gaugeViewController") as? GaugeViewController else { return }
+                nextVC.modalTransitionStyle = .coverVertical
+                nextVC.modalPresentationStyle = .fullScreen
+                self.present(nextVC, animated: false, completion: nil)
+            }
+        }
+        UserDefaults.shared.set(true, forKey: "startCycle")
         if recordsByDate.count > 0 {
             animate(command: "start")
         }
