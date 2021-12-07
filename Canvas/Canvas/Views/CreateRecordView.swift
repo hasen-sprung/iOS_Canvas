@@ -280,19 +280,15 @@ extension CreateRecordView {
 // MARK: - set textview setting
 
 extension CreateRecordView: UITextViewDelegate {
-    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-        let oldText = textView.text
-        let newText = (textView.text as NSString).replacingCharacters(in: range, with: text)
-        var isOutOfLine = false
-        
-        textView.text = newText
-        // MARK: - TODO: 새로운 Font를 추가할 때, 정상적으로 폰트 사이즈를 얻는지 테스트 필요
-        if textView.numberOfLine() >= textView.textContainer.maximumNumberOfLines {
-            isOutOfLine = true
+    
+    func textViewDidChange(_ textView: UITextView) {
+        if textView.text.count > 180 {
+            textView.deleteBackward()
         }
-        textView.text = oldText
-        byteView.text = "\(newText.count)/180"
-        return !isOutOfLine && newText.count < 180
+        if textView.numberOfLine() >= textView.textContainer.maximumNumberOfLines {
+            textView.deleteBackward()
+        }
+        byteView.text = "\(textView.text.count)/180"
     }
 }
 extension UITextView {
