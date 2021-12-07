@@ -27,7 +27,7 @@ class SettingViewController: UIViewController {
         }
     }
     
-    private let settingList = ["작가명", "작품 구성", "흔들어서 그림 섞기", "실행 화면", "개발자에게 의견 남기기", "Canvas 정보"]
+    private let settingList = ["작가명", "작품 구성", "흔들어서 그림 섞기", "실행 화면", "개발자에게 의견 남기기", "앱 평가하기", "Canvas 정보"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -116,6 +116,10 @@ extension SettingViewController: MFMailComposeViewControllerDelegate {
             }
             else {
                 self.showSendMailErrorAlert()
+            }
+        case 5:
+            if let url = URL(string: "itms-apps://apple.com/app/id1596669616") {
+                UIApplication.shared.open(url)
             }
         default:
             return
@@ -209,7 +213,7 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
             cell?.settingText.frame.size = CGSize(width: cell?.settingText.intrinsicContentSize.width ?? CGFloat(0),
                                                     height: cell?.frame.height ?? CGFloat(0))
         }
-        if indexPath.row == 5 {
+        if indexPath.row == 6 {
             cell?.settingDetail.text = version
             cell?.settingDetailAvailable()
             cell?.settingDetail.font = UIFont(name: "Pretendard-Regular", size: 12)
