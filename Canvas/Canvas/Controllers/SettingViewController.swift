@@ -27,7 +27,7 @@ class SettingViewController: UIViewController {
         }
     }
     
-    private let settingList = ["작가명", "작품 구성", "흔들어서 그림 섞기", "개발자에게 의견 남기기", "Canvas 정보"]
+    private let settingList = ["작가명", "작품 구성", "흔들어서 그림 섞기", "실행 화면", "개발자에게 의견 남기기", "Canvas 정보"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -92,12 +92,25 @@ extension SettingViewController: MFMailComposeViewControllerDelegate {
             }
         case 3:
             impactFeedbackGenerator?.impactOccurred()
+            if UserDefaults.shared.bool(forKey: "launchMode") == true {
+                if let cell = settingTableView.cellForRow(at: indexPath) as? SettingTableViewCell {
+                    cell.toggleLabel.text = "기록추가"
+                }
+                UserDefaults.shared.set(false, forKey: "launchMode")
+            } else {
+                if let cell = settingTableView.cellForRow(at: indexPath) as? SettingTableViewCell {
+                    cell.toggleLabel.text = "Canvas"
+                }
+                UserDefaults.shared.set(true, forKey: "launchMode")
+            }
+        case 4:
+            impactFeedbackGenerator?.impactOccurred()
             if MFMailComposeViewController.canSendMail() {
                 
                 let compseVC = MFMailComposeViewController()
                 compseVC.mailComposeDelegate = self
                 compseVC.setToRecipients(["hasensprung42@gmail.com"])
-                compseVC.setSubject("")
+                compseVC.setSubject("[Canvas] ")
                 compseVC.setMessageBody("", isHTML: false)
                 self.present(compseVC, animated: true, completion: nil)
             }
@@ -182,10 +195,21 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
             }
         }
         if indexPath.row == 3 {
+            cell?.settingToggleAvailable()
+            cell?.settingText.frame.size = CGSize(width: cell?.settingText.intrinsicContentSize.width ?? CGFloat(0),
+                                                    height: cell?.frame.height ?? CGFloat(0))
+            cell?.toggleLabel.font = UIFont(name: "Pretendard-Regular", size: 12)
+            if UserDefaults.shared.bool(forKey: "launchMode") == true {
+                cell?.toggleLabel.text = "Canvas"
+            } else {
+                cell?.toggleLabel.text = "기록추가"
+            }
+        }
+        if indexPath.row == 4 {
             cell?.settingText.frame.size = CGSize(width: cell?.settingText.intrinsicContentSize.width ?? CGFloat(0),
                                                     height: cell?.frame.height ?? CGFloat(0))
         }
-        if indexPath.row == 4 {
+        if indexPath.row == 5 {
             cell?.settingDetail.text = version
             cell?.settingDetailAvailable()
             cell?.settingDetail.font = UIFont(name: "Pretendard-Regular", size: 12)
