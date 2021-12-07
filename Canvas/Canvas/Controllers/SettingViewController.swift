@@ -157,6 +157,12 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
         cell?.settingText.text = settingList[indexPath.row]
         if indexPath.row == 0 {
             cell?.settingDetail.text = UserDefaults.shared.string(forKey: "userID")
+            if cell?.settingDetail.text?.count ?? 0 > 10 {
+                cell?.settingDetail.font = UIFont(name: "Cardo-Regular", size: 10)
+            }
+            if cell?.settingDetail.text?.count ?? 0 > 13 {
+                cell?.settingDetail.font = UIFont(name: "Cardo-Regular", size: 8)
+            }
             cell?.settingDetailAvailable()
         }
         if indexPath.row == 1 {
