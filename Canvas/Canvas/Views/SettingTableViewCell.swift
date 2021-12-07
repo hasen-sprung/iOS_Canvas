@@ -22,10 +22,10 @@ class SettingTableViewCell: UITableViewCell {
     }
     
     func setCellConstraints(viewWidth: CGFloat) {
-        settingText.frame.size = CGSize(width: viewWidth * 0.4, height: self.frame.height)
+        settingText.frame.size = CGSize(width: viewWidth * 0.2, height: self.frame.height)
         settingText.frame.origin = CGPoint(x: viewWidth * 0.1, y: .zero)
-        settingDetail.frame.size = CGSize(width: viewWidth * 0.4, height: self.frame.height)
-        settingDetail.frame.origin = CGPoint(x: viewWidth * 0.5, y: .zero)
+        settingDetail.frame.size = CGSize(width: viewWidth * 0.6, height: self.frame.height)
+        settingDetail.frame.origin = CGPoint(x: viewWidth * 0.3, y: .zero)
         toggleLabel.frame.size = CGSize(width: viewWidth * 0.4, height: self.frame.height)
         toggleLabel.frame.origin = CGPoint(x: viewWidth * 0.5, y: .zero)
     }

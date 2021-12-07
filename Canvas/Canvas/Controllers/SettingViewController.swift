@@ -157,11 +157,8 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
         cell?.settingText.text = settingList[indexPath.row]
         if indexPath.row == 0 {
             cell?.settingDetail.text = UserDefaults.shared.string(forKey: "userID")
-            if cell?.settingDetail.text?.count ?? 0 > 10 {
-                cell?.settingDetail.font = UIFont(name: "Cardo-Regular", size: 10)
-            }
             if cell?.settingDetail.text?.count ?? 0 > 13 {
-                cell?.settingDetail.font = UIFont(name: "Cardo-Regular", size: 8)
+                cell?.settingDetail.font = UIFont(name: "Cardo-Regular", size: 10)
             }
             cell?.settingDetailAvailable()
         }
@@ -176,11 +173,17 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
         }
         if indexPath.row == 2 {
             cell?.settingToggleAvailable()
+            cell?.settingText.frame.size = CGSize(width: cell?.settingText.intrinsicContentSize.width ?? CGFloat(0),
+                                                    height: cell?.frame.height ?? CGFloat(0))
             if UserDefaults.shared.bool(forKey: "shakeAvail") == true {
                 cell?.toggleLabel.text = "On"
             } else {
                 cell?.toggleLabel.text = "Off"
             }
+        }
+        if indexPath.row == 3 {
+            cell?.settingText.frame.size = CGSize(width: cell?.settingText.intrinsicContentSize.width ?? CGFloat(0),
+                                                    height: cell?.frame.height ?? CGFloat(0))
         }
         if indexPath.row == 4 {
             cell?.settingDetail.text = version
