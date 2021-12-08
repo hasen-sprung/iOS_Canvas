@@ -44,7 +44,7 @@ class ListTableViewController: UIViewController, UITableViewDelegate, UITableVie
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = UIColor(r: 240, g: 240, b: 243)
+        view.backgroundColor = defaultBackGroundColor
         listTableView.dataSource = self
         listTableView.delegate = self
         setListTableView()

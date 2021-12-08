@@ -4,7 +4,6 @@ import FirebaseAnalytics
 
 class MainViewController: UIViewController {
     // Data
-    private let launchedBefore = UserDefaults.shared.bool(forKey: "launchedBefore")
     private let v1_2LaunchBefore = UserDefaults.shared.bool(forKey: "v1_2LaunchBefore")
     private let userIDsetting = UserDefaults.shared.bool(forKey: "userIDsetting")
     private let themeManager = ThemeManager.shared
@@ -51,32 +50,12 @@ class MainViewController: UIViewController {
     
     private var animator: UIViewPropertyAnimator?
     private var willDisappear: Bool = false
-    
     private var infoRecordIndex = 0
     
     override func loadView() {
         super.loadView()
-        // MARK: - DEVELOP - init seedData :
-//                DataHelper.shared.loadSeeder()
-        // 처음 앱을 실행되었을 때 = 코어데이터에 아무것도 없는 상태이기 때문에, 레코드들의 위치정보를 제공해줘야 한다.
-        if launchedBefore == false {
-            UserDefaults.shared.set(true, forKey: "launchedBefore")
-            UserDefaults.shared.set(true, forKey: "shakeAvail")
-            UserDefaults.shared.set(true, forKey: "guideAvail")
-            UserDefaults.shared.set(true, forKey: "canvasMode")
-            UserDefaults.shared.synchronize()
-            
-            // MARK: - init position by Default Ratio
-            // 레코드들의 포지션 정보(비율)를 초기화
-            for i in 0 ..< countOfRecordInCanvas {
-                let context = CoreDataStack.shared.managedObjectContext
-                let position = DefaultPosition(context: context)
-                
-                position.xRatio = Ratio.DefaultRatio[i].x
-                position.yRatio = Ratio.DefaultRatio[i].y
-                CoreDataStack.shared.saveContext()
-            }
-        }
+        
+        setInitUserDefault()
         
         if v1_2LaunchBefore == false {
             UserDefaults.shared.set(true, forKey: "v1_2LaunchBefore")
@@ -87,7 +66,7 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.backgroundColor = UIColor(r: 240, g: 240, b: 243)
+        self.view.backgroundColor = defaultBackGroundColor
         canvasCollectionView.delegate = self
         canvasCollectionView.dataSource = self
         setAutoLayout()
@@ -123,11 +102,7 @@ class MainViewController: UIViewController {
         let todayIndex = dateStrings.firstIndex(of: getDateString(date: Date())) ?? 0
         self.canvasCollectionView.reloadData()
         currentIndex = CGFloat(todayIndex)
-        if dateStrings.count > 0 {
-            mainViewLabel.text = dateStrings[todayIndex]
-        } else {
-            mainViewLabel.text = getDateString(date: Date())
-        }
+        mainViewLabel.text = dateStrings.count > 0 ? dateStrings[todayIndex] : getDateString(date: Date())
         infoRecordIndex = 0
     }
     
@@ -190,12 +165,34 @@ class MainViewController: UIViewController {
         transitionVc(vc: nextVC, duration: 0.5, type: .fromBottom)
     }
     
+    private func setInitUserDefault() {
+        if UserDefaults.shared.bool(forKey: "launchedBefore") == false {
+            print("set init")
+            UserDefaults.shared.set(true, forKey: "launchedBefore")
+            UserDefaults.shared.set(true, forKey: "shakeAvail")
+            UserDefaults.shared.set(true, forKey: "guideAvail")
+            UserDefaults.shared.set(true, forKey: "canvasMode")
+            UserDefaults.shared.synchronize()
+            
+            // MARK: - init position by Default Ratio
+            for i in 0 ..< countOfRecordInCanvas {
+                let context = CoreDataStack.shared.managedObjectContext
+                let position = DefaultPosition(context: context)
+                
+                position.xRatio = Ratio.DefaultRatio[i].x
+                position.yRatio = Ratio.DefaultRatio[i].y
+                CoreDataStack.shared.saveContext()
+            }
+        }
+    }
+    
     private func setinfoViewUserAction() {
         let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(infoviewSwipeLeft))
         let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(infoviewSwipeRight))
         let tap = UITapGestureRecognizer(target: self, action: #selector(infoviewTap))
         let greetingTap = UITapGestureRecognizer(target: self, action: #selector(changeGreetginMessage))
         let swipe = UIScreenEdgePanGestureRecognizer(target: self, action: #selector(screenEdgeSwiped))
+        
         swipeLeft.direction = .left
         swipeRight.direction = .right
         swipe.edges = .right
@@ -372,6 +369,7 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "mainCanavasCollectionViewCell", for: indexPath) as? MainCanavasCollectionViewCell
+        
         cell?.delegate = self
         cell?.index = indexPath.row
         collectionView.transform = CGAffineTransform(scaleX:-1,y: 1);
@@ -421,7 +419,6 @@ extension MainViewController: UIScrollViewDelegate {
             setInfoContentView()
             impactFeedbackGenerator?.impactOccurred()
         }
-        
         offset = CGPoint(x: roundedIndex * cellWidthIncludingSpacing - scrollView.contentInset.left, y: -scrollView.contentInset.top)
         targetContentOffset.pointee = offset
     }

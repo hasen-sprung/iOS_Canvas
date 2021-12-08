@@ -1,7 +1,11 @@
 import UIKit
 
 class UserIdInputViewController: UIViewController, UITextFieldDelegate {
-
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        .black
+    }
+    
+    // UserID property
     private let settingTitle = UILabel()
     private let placeHolder = UIImageView()
     private let textField = UITextField()
@@ -9,13 +13,10 @@ class UserIdInputViewController: UIViewController, UITextFieldDelegate {
     private let completeButtonLabel = UILabel()
     private let byteView = UILabel()
     
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        .black
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = UIColor(r: 240, g: 240, b: 243)
+        
+        view.backgroundColor = defaultBackGroundColor
         textField.delegate = self
         setSettingTitle()
         setTextField()
