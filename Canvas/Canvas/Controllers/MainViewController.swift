@@ -534,7 +534,7 @@ extension MainViewController {
                 case "start":
                     startRecordsAnimation(view: view)
                 case "select":
-                    addSelectAnimation(view: view)
+                    addSelectAnimation(view: view, alpha: 0.0)
                 case "stop":
                     stopRecordsAnimation(view: view)
                 default:
@@ -602,16 +602,18 @@ extension MainViewController {
         animator?.startAnimation(afterDelay: Double.random(in: 0.0...1.0))
     }
     
-    private func addSelectAnimation(view: MainRecordsView) {
+    private func addSelectAnimation(view: MainRecordsView, alpha: CGFloat) {
         let views = view.getRecordViews()
         
-        animator = UIViewPropertyAnimator(duration: 0.3, curve: .easeIn)
+        animator = UIViewPropertyAnimator(duration: 0.3, curve: .linear)
         animator?.addAnimations {
-            views[self.infoRecordIndex].alpha = 0.0
+            views[self.infoRecordIndex].alpha = alpha
             self.infoContentView.isUserInteractionEnabled = false
         }
         animator?.addCompletion({ pos in
-            views[self.infoRecordIndex].alpha = 1.0
+            if alpha == 0.0 {
+                self.addSelectAnimation(view: view, alpha: 1.0)
+            }
             self.infoContentView.isUserInteractionEnabled = true
         })
         animator?.startAnimation()
