@@ -3,7 +3,13 @@ import SnapKit
 import CoreData
 
 class GaugeViewController: UIViewController {
-    private let launchedBefore = UserDefaults.shared.bool(forKey: "launchedGauge")
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        .black
+    }
+    private let theme = ThemeManager.shared.getThemeInstance()
+    private let datePicker = UIDatePicker()
+    
+    // Gauge Views Property
     private var gaugeWaveView: GaugeWaveAnimationView = {
         let view = GaugeWaveAnimationView(frame: UIScreen.main.bounds)
         return view
@@ -11,45 +17,27 @@ class GaugeViewController: UIViewController {
     private var createRecordView: CreateRecordView?
     private var cancelButton: UIView = UIView()
     private var shapeImage: UIImageView = UIImageView()
-    private let theme = ThemeManager.shared.getThemeInstance()
     
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        .black
-    }
-    
-    let datePicker = UIDatePicker()
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         view.backgroundColor = bgColor
         setSubViews()
         setLayout()
         setupFeedbackGenerator()
     }
     
-    
     override func viewWillAppear(_ animated: Bool) {
         gaugeWaveView.startWaveAnimation()
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        if launchedBefore == false {
-            UserDefaults.shared.set(true, forKey: "launchedGauge")
-            let greetingLabel = UILabel()
-            greetingLabel.lineBreakMode = .byWordWrapping
-            greetingLabel.numberOfLines = 0
-            greetingLabel.text = "행복하신 만큼 게이지를 올려주세요!\n게이지를 끝까지 올리면 종료됩니다. :)"
-            greetingLabel.font = UIFont(name: "Pretendard-Regular", size: 15)
-            greetingLabel.textColor = UIColor(r: 72, g: 80, b: 84)
-            greetingLabel.frame.size = CGSize(width: view.frame.width,
-                                              height: 100)
-            greetingLabel.textAlignment = .center
-            greetingLabel.center = CGPoint(x: view.frame.width / 2, y: view.frame.height * 0.2)
-            view.addSubview(greetingLabel)
-        }
+        addGreetingLabel()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
+        
         gaugeWaveView.stopWaveAnimation()
     }
     
@@ -71,6 +59,24 @@ class GaugeViewController: UIViewController {
         cancelButton.snp.makeConstraints { make in
             make.top.equalTo(view.snp.top).offset(view.frame.height * 0.075)
             make.centerX.equalToSuperview().offset(-view.frame.width / 7 / 2)
+        }
+    }
+    
+    private func addGreetingLabel() {
+        if UserDefaults.shared.bool(forKey: "launchedGauge") == false {
+            let greetingLabel = UILabel()
+            
+            UserDefaults.shared.set(true, forKey: "launchedGauge")
+            greetingLabel.lineBreakMode = .byWordWrapping
+            greetingLabel.numberOfLines = 0
+            greetingLabel.text = "행복하신 만큼 게이지를 올려주세요!\n게이지를 끝까지 올리면 종료됩니다. :)"
+            greetingLabel.font = UIFont(name: "Pretendard-Regular", size: 15)
+            greetingLabel.textColor = UIColor(r: 72, g: 80, b: 84)
+            greetingLabel.frame.size = CGSize(width: view.frame.width,
+                                              height: 100)
+            greetingLabel.textAlignment = .center
+            greetingLabel.center = CGPoint(x: view.frame.width / 2, y: view.frame.height * 0.2)
+            view.addSubview(greetingLabel)
         }
     }
 }
@@ -115,7 +121,6 @@ extension GaugeViewController: GaugeWaveAnimationViewDelegate {
             gaugeWaveView.bounds.origin.y = gaugeWaveView.bounds.origin.y - view.frame.height
         }) { (completed) in
             impactFeedbackGenerator?.impactOccurred()
-//            self.createRecordView?.setCRTextView()
         }
     }
 }
@@ -138,6 +143,7 @@ extension GaugeViewController: CreateRecordViewDelegate {
         let fromPredicate = NSPredicate(format: "%@ <= %K", dateFrom as NSDate, #keyPath(FinalDate.creationDate))
         let toPredicate = NSPredicate(format: "%K < %@", #keyPath(FinalDate.creationDate), dateTo as NSDate)
         let datePredicate = NSCompoundPredicate(andPredicateWithSubpredicates: [fromPredicate, toPredicate])
+        
         fetchRequest.predicate = datePredicate
         do {
             matchingDate = try context.fetch(fetchRequest)

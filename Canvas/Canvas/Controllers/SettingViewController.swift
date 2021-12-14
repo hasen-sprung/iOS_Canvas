@@ -2,23 +2,24 @@ import UIKit
 import MessageUI
 
 class SettingViewController: UIViewController {
-    private let settingTitle = UILabel()
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var settingTableView: UITableView!
+    private let settingTitle = UILabel()
     private let backButtonIcon = UIImageView()
     private var version: String? {
         guard let dictionary = Bundle.main.infoDictionary,
               let version = dictionary["CFBundleShortVersionString"] as? String,
               let build = dictionary["CFBundleVersion"] as? String
         else { return nil }
-        
         let versionAndBuild: String = "\(textSettingVersion) \(version).\(build)"
+        
         return versionAndBuild
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         .black
     }
+    
     override var prefersStatusBarHidden: Bool {
         if UIDevice.hasNotch {
             return false
@@ -31,7 +32,8 @@ class SettingViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = UIColor(r: 240, g: 240, b: 243)
+        
+        view.backgroundColor = defaultBackGroundColor
         setTableView()
         settingTableView.delegate = self
         settingTableView.dataSource = self
@@ -206,7 +208,7 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
         }
         
         let bgColorView = UIView()
-        bgColorView.backgroundColor = UIColor(r: 240, g: 240, b: 243)
+        bgColorView.backgroundColor = defaultBackGroundColor
         cell?.selectedBackgroundView = bgColorView
         
         return cell ?? UITableViewCell()

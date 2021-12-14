@@ -24,6 +24,7 @@ let iconSizeRatio = 0.7
 
 let fontSize = 20
 let textColor = UIColor(r: 72, g: 80, b: 84)
+let defaultBackGroundColor = UIColor(r: 240, g: 240, b: 243)
 
 // MARK: - TEXT
 // - MAIN VIEW

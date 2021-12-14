@@ -50,7 +50,6 @@ class MainViewController: UIViewController {
     
     private var animator: UIViewPropertyAnimator?
     private var willDisappear: Bool = false
-    
     private var infoRecordIndex = 0
     
     override func loadView() {
@@ -75,13 +74,14 @@ class MainViewController: UIViewController {
                 position.yRatio = Ratio.DefaultRatio[i].y
                 CoreDataStack.shared.saveContext()
             }
+            setInitUserDefault()
         }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.backgroundColor = UIColor(r: 240, g: 240, b: 243)
+        self.view.backgroundColor = defaultBackGroundColor
         canvasCollectionView.delegate = self
         canvasCollectionView.dataSource = self
         setAutoLayout()
@@ -117,11 +117,7 @@ class MainViewController: UIViewController {
         let todayIndex = dateStrings.firstIndex(of: getDateString(date: Date())) ?? 0
         self.canvasCollectionView.reloadData()
         currentIndex = CGFloat(todayIndex)
-        if dateStrings.count > 0 {
-            mainViewLabel.text = dateStrings[todayIndex]
-        } else {
-            mainViewLabel.text = getDateString(date: Date())
-        }
+        mainViewLabel.text = dateStrings.count > 0 ? dateStrings[todayIndex] : getDateString(date: Date())
         infoRecordIndex = 0
     }
     
@@ -184,12 +180,34 @@ class MainViewController: UIViewController {
         transitionVc(vc: nextVC, duration: 0.5, type: .fromBottom)
     }
     
+    private func setInitUserDefault() {
+        if UserDefaults.shared.bool(forKey: "launchedBefore") == false {
+            print("set init")
+            UserDefaults.shared.set(true, forKey: "launchedBefore")
+            UserDefaults.shared.set(true, forKey: "shakeAvail")
+            UserDefaults.shared.set(true, forKey: "guideAvail")
+            UserDefaults.shared.set(true, forKey: "canvasMode")
+            UserDefaults.shared.synchronize()
+            
+            // MARK: - init position by Default Ratio
+            for i in 0 ..< countOfRecordInCanvas {
+                let context = CoreDataStack.shared.managedObjectContext
+                let position = DefaultPosition(context: context)
+                
+                position.xRatio = Ratio.DefaultRatio[i].x
+                position.yRatio = Ratio.DefaultRatio[i].y
+                CoreDataStack.shared.saveContext()
+            }
+        }
+    }
+    
     private func setinfoViewUserAction() {
         let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(infoviewSwipeLeft))
         let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(infoviewSwipeRight))
         let tap = UITapGestureRecognizer(target: self, action: #selector(infoviewTap))
         let greetingTap = UITapGestureRecognizer(target: self, action: #selector(changeGreetginMessage))
         let swipe = UIScreenEdgePanGestureRecognizer(target: self, action: #selector(screenEdgeSwiped))
+        
         swipeLeft.direction = .left
         swipeRight.direction = .right
         swipe.edges = .right
@@ -366,6 +384,7 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "mainCanavasCollectionViewCell", for: indexPath) as? MainCanavasCollectionViewCell
+        
         cell?.delegate = self
         cell?.index = indexPath.row
         collectionView.transform = CGAffineTransform(scaleX: -1,y: 1);
@@ -415,7 +434,6 @@ extension MainViewController: UIScrollViewDelegate {
             setInfoContentView()
             impactFeedbackGenerator?.impactOccurred()
         }
-        
         offset = CGPoint(x: roundedIndex * cellWidthIncludingSpacing - scrollView.contentInset.left, y: -scrollView.contentInset.top)
         targetContentOffset.pointee = offset
     }
@@ -534,7 +552,7 @@ extension MainViewController {
                 case "start":
                     startRecordsAnimation(view: view)
                 case "select":
-                    addSelectAnimation(view: view)
+                    addSelectAnimation(view: view, alpha: 0.0)
                 case "stop":
                     stopRecordsAnimation(view: view)
                 default:
@@ -602,16 +620,18 @@ extension MainViewController {
         animator?.startAnimation(afterDelay: Double.random(in: 0.0...1.0))
     }
     
-    private func addSelectAnimation(view: MainRecordsView) {
+    private func addSelectAnimation(view: MainRecordsView, alpha: CGFloat) {
         let views = view.getRecordViews()
         
-        animator = UIViewPropertyAnimator(duration: 0.3, curve: .easeIn)
+        animator = UIViewPropertyAnimator(duration: 0.3, curve: .linear)
         animator?.addAnimations {
-            views[self.infoRecordIndex].alpha = 0.0
+            views[self.infoRecordIndex].alpha = alpha
             self.infoContentView.isUserInteractionEnabled = false
         }
         animator?.addCompletion({ pos in
-            views[self.infoRecordIndex].alpha = 1.0
+            if alpha == 0.0 {
+                self.addSelectAnimation(view: view, alpha: 1.0)
+            }
             self.infoContentView.isUserInteractionEnabled = true
         })
         animator?.startAnimation()
