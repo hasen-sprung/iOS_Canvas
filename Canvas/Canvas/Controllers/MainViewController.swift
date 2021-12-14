@@ -4,10 +4,7 @@ import FirebaseAnalytics
 
 class MainViewController: UIViewController {
     // Data
-    private let launchedBefore = UserDefaults.shared.bool(forKey: "launchedBefore")
-    private let userIDsetting = UserDefaults.shared.bool(forKey: "userIDsetting")
     private let themeManager = ThemeManager.shared
-    
     private var recordsByDate = [[Record]]()
     private var dateStrings = [String]()
     var currentIndex: CGFloat = 0
@@ -54,28 +51,8 @@ class MainViewController: UIViewController {
     
     override func loadView() {
         super.loadView()
-        // MARK: - DEVELOP - init seedData :
-//                DataHelper.shared.loadSeeder()
-        // 처음 앱을 실행되었을 때 = 코어데이터에 아무것도 없는 상태이기 때문에, 레코드들의 위치정보를 제공해줘야 한다.
-        if launchedBefore == false {
-            UserDefaults.shared.set(true, forKey: "launchedBefore")
-            UserDefaults.shared.set(true, forKey: "shakeAvail")
-            UserDefaults.shared.set(true, forKey: "guideAvail")
-            UserDefaults.shared.set(true, forKey: "canvasMode")
-            UserDefaults.shared.synchronize()
-            
-            // MARK: - init position by Default Ratio
-            // 레코드들의 포지션 정보(비율)를 초기화
-            for i in 0 ..< countOfRecordInCanvas {
-                let context = CoreDataStack.shared.managedObjectContext
-                let position = DefaultPosition(context: context)
-                
-                position.xRatio = Ratio.DefaultRatio[i].x
-                position.yRatio = Ratio.DefaultRatio[i].y
-                CoreDataStack.shared.saveContext()
-            }
-            setInitUserDefault()
-        }
+        
+        setInitUserDefault()
     }
     
     override func viewDidLoad() {
@@ -88,7 +65,6 @@ class MainViewController: UIViewController {
         setButtonsTarget()
         setupFeedbackGenerator()
         setinfoViewUserAction()
-        UserDefaults.shared.set(false, forKey: "startCycle")
         
         NotificationCenter.default.addObserver(forName: UIApplication.willEnterForegroundNotification,
                                                object: nil,
@@ -96,17 +72,6 @@ class MainViewController: UIViewController {
             [unowned self] notification in
             // background에서 foreground로 돌아오는 경우 실행 될 코드
             animate(command: "start")
-            UserDefaults.shared.set(false, forKey: "startCycle")
-            if UserDefaults.shared.bool(forKey: "startCycle") == false {
-                if UserDefaults.shared.bool(forKey: "launchMode") == false {
-                    UserDefaults.shared.set(true, forKey: "startCycle")
-                    guard let nextVC = self.storyboard?.instantiateViewController(identifier: "gaugeViewController") as? GaugeViewController else { return }
-                    nextVC.modalTransitionStyle = .coverVertical
-                    nextVC.modalPresentationStyle = .fullScreen
-                    self.present(nextVC, animated: false, completion: nil)
-                }
-            }
-            UserDefaults.shared.set(true, forKey: "startCycle")
         }
     }
     
@@ -142,28 +107,20 @@ class MainViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         shouldInvalidateLayout = false
-        if userIDsetting == false {
+        if UserDefaults.shared.bool(forKey: "userIDsetting") == false {
             loadUserIdInputMode()
             UserDefaults.shared.synchronize()
         }
-        if UserDefaults.shared.bool(forKey: "startCycle") == false {
-            if UserDefaults.shared.bool(forKey: "launchMode") == false {
-                UserDefaults.shared.set(true, forKey: "startCycle")
-                guard let nextVC = self.storyboard?.instantiateViewController(identifier: "gaugeViewController") as? GaugeViewController else { return }
-                nextVC.modalTransitionStyle = .coverVertical
-                nextVC.modalPresentationStyle = .fullScreen
-                self.present(nextVC, animated: false, completion: nil)
-            }
-        }
-        UserDefaults.shared.set(true, forKey: "startCycle")
         if recordsByDate.count > 0 {
             animate(command: "start")
         }
         infoRecordIndex = 0
         setInfoContentView()
         infoContentView.setLastMemoView()
+        
         let todayIndex = dateStrings.firstIndex(of: getDateString(date: Date())) ?? 0
         let indexPath = IndexPath(item: todayIndex, section: 0)
+        
         canvasCollectionView.scrollToItem(at: indexPath, at: [.centeredVertically, .centeredHorizontally], animated: false)
     }
     
@@ -182,7 +139,6 @@ class MainViewController: UIViewController {
     
     private func setInitUserDefault() {
         if UserDefaults.shared.bool(forKey: "launchedBefore") == false {
-            print("set init")
             UserDefaults.shared.set(true, forKey: "launchedBefore")
             UserDefaults.shared.set(true, forKey: "shakeAvail")
             UserDefaults.shared.set(true, forKey: "guideAvail")
@@ -260,6 +216,7 @@ class MainViewController: UIViewController {
     
     @objc func infoviewSwipeRight() {
         let endIndex = (recordsByDate[Int(currentIndex)].count) - 1
+        
         infoRecordIndex += 1
         if infoRecordIndex > endIndex {
             infoRecordIndex = endIndex
@@ -331,7 +288,6 @@ extension MainViewController {
     
 }
 
-
 extension MainViewController: UIGestureRecognizerDelegate {
     
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
@@ -360,16 +316,15 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
         
         let cellWidth = mainCanvasLayout.frame.width
         let cellHeight = mainCanvasLayout.frame.height
-        let insetX: CGFloat = 0//(view.bounds.width - cellWidth) / 2.0
+        let insetX: CGFloat = 0
         let insetY: CGFloat = 0
-        
         let layout = canvasCollectionView.collectionViewLayout as! UICollectionViewFlowLayout
+        
         layout.itemSize = CGSize(width: cellWidth, height: cellHeight)
         layout.minimumLineSpacing = 0
         layout.scrollDirection = .horizontal
         
         canvasCollectionView.contentInset = UIEdgeInsets(top: insetY, left: insetX, bottom: insetY, right: insetX)
-        
         canvasCollectionView.decelerationRate = UIScrollView.DecelerationRate.fast
         view.addSubview(canvasCollectionView)
     }
@@ -420,7 +375,6 @@ extension MainViewController: UIScrollViewDelegate {
         } else {
             roundedIndex = round(index)
         }
-        
         // idle애니메이션 Start / Stop by Current CollectionCell Index
         if isOneStepPaging && (currentIndex != roundedIndex) {
             let num: CGFloat = currentIndex > roundedIndex ?  -1.0 : 1.0
@@ -438,7 +392,6 @@ extension MainViewController: UIScrollViewDelegate {
         targetContentOffset.pointee = offset
     }
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-//        print("finish")
     }
 }
 
