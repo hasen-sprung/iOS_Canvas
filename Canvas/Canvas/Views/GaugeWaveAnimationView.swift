@@ -104,31 +104,28 @@ extension GaugeWaveAnimationView {
         let state = sender.state
         let location = sender.location(in: self)
         var touchPoint: CGFloat = (location.y - self.frame.height * 0.15) / (self.frame.height * 0.85)
+        guard let delegate = delegate else { return }
+        var isCancelArea: Bool = false
         
-        if touchPoint < -0.06 {
-            if let d = delegate {
-                d.touchInCancelArea()
-            }
-            if state == .ended {
-                if let d = delegate { d.cancelGaugeView() }
-            }
-        } else if touchPoint < 0.0 {
+        switch touchPoint {
+        case ..<(-0.06):
+            delegate.touchInCancelArea()
+            isCancelArea = true
+        case ..<0.0:
             touchPoint = 0.0
             currentGaugeLevel = calculateLevel(point: touchPoint)
-            if state == .ended {
-                if let d = delegate { d.createRecord() }
-            }
-        } else if touchPoint > 1.0 {
-            touchPoint = 1.0
-            if state == .ended {
-                if let d = delegate { d.createRecord() }
-            }
-        } else {
+        case ...1.0:
             currentGaugeLevel = calculateLevel(point: touchPoint)
-            if state == .ended {
-                if let d = delegate { d.createRecord() }
-            }
             waveView.frame.size.height = location.y + self.frame.height * 0.1
+        default:
+            touchPoint = 1.0
+        }
+        if state == .ended {
+            if isCancelArea {
+                delegate.cancelGaugeView()
+            } else {
+                delegate.createRecord()
+            }
         }
     }
     
