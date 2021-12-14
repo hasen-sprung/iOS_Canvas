@@ -27,7 +27,7 @@ class SettingViewController: UIViewController {
         }
     }
     
-    private let settingList = ["작가명", "작품 구성", "흔들어서 그림 섞기", "실행 화면", "개발자에게 의견 남기기", "앱 평가하기", "Canvas 정보"]
+    private let settingList = ["작가명", "작품 구성", "흔들어서 그림 섞기", "개발자에게 의견 남기기", "앱 평가하기", "Canvas 정보"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -92,19 +92,6 @@ extension SettingViewController: MFMailComposeViewControllerDelegate {
             }
         case 3:
             impactFeedbackGenerator?.impactOccurred()
-            if UserDefaults.shared.bool(forKey: "launchMode") == true {
-                if let cell = settingTableView.cellForRow(at: indexPath) as? SettingTableViewCell {
-                    cell.toggleLabel.text = "기록추가"
-                }
-                UserDefaults.shared.set(false, forKey: "launchMode")
-            } else {
-                if let cell = settingTableView.cellForRow(at: indexPath) as? SettingTableViewCell {
-                    cell.toggleLabel.text = "Canvas"
-                }
-                UserDefaults.shared.set(true, forKey: "launchMode")
-            }
-        case 4:
-            impactFeedbackGenerator?.impactOccurred()
             if MFMailComposeViewController.canSendMail() {
                 
                 let compseVC = MFMailComposeViewController()
@@ -117,7 +104,7 @@ extension SettingViewController: MFMailComposeViewControllerDelegate {
             else {
                 self.showSendMailErrorAlert()
             }
-        case 5:
+        case 4:
             if let url = URL(string: "itms-apps://apple.com/app/id1596669616") {
                 UIApplication.shared.open(url)
             }
@@ -178,6 +165,7 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
                 cell?.settingDetail.font = UIFont(name: "Cardo-Regular", size: 10)
             }
             cell?.settingDetailAvailable()
+            cell?.toggleLabel.removeFromSuperview()
         }
         if indexPath.row == 1 {
             cell?.settingToggleAvailable()
@@ -187,6 +175,7 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
             } else {
                 cell?.toggleLabel.text = "최근 10개"
             }
+            cell?.settingDetail.removeFromSuperview()
         }
         if indexPath.row == 2 {
             cell?.settingToggleAvailable()
@@ -197,26 +186,23 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
             } else {
                 cell?.toggleLabel.text = "Off"
             }
+            cell?.settingDetail.removeFromSuperview()
         }
         if indexPath.row == 3 {
-            cell?.settingToggleAvailable()
             cell?.settingText.frame.size = CGSize(width: cell?.settingText.intrinsicContentSize.width ?? CGFloat(0),
                                                     height: cell?.frame.height ?? CGFloat(0))
-            cell?.toggleLabel.font = UIFont(name: "Pretendard-Regular", size: 12)
-            if UserDefaults.shared.bool(forKey: "launchMode") == true {
-                cell?.toggleLabel.text = "Canvas"
-            } else {
-                cell?.toggleLabel.text = "기록추가"
-            }
+            cell?.settingDetail.removeFromSuperview()
+            cell?.toggleLabel.removeFromSuperview()
         }
         if indexPath.row == 4 {
-            cell?.settingText.frame.size = CGSize(width: cell?.settingText.intrinsicContentSize.width ?? CGFloat(0),
-                                                    height: cell?.frame.height ?? CGFloat(0))
+            cell?.settingDetail.removeFromSuperview()
+            cell?.toggleLabel.removeFromSuperview()
         }
-        if indexPath.row == 6 {
+        if indexPath.row == 5 {
             cell?.settingDetail.text = version
             cell?.settingDetailAvailable()
             cell?.settingDetail.font = UIFont(name: "Pretendard-Regular", size: 12)
+            cell?.toggleLabel.removeFromSuperview()
         }
         
         let bgColorView = UIView()

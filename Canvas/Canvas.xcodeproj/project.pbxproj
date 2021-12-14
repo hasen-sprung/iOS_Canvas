@@ -51,6 +51,7 @@
 		4F0A39FC27424C75009E3AAF /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0A39FB27424C74009E3AAF /* Color.swift */; };
 		4F0A39FE27425C39009E3AAF /* CreateRecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0A39FD27425C39009E3AAF /* CreateRecordView.swift */; };
 		4F0A3A0027425E90009E3AAF /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0A39FF27425E90009E3AAF /* Extension.swift */; };
+		4F14246D276893AF00AA605C /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 4F14246C276893AF00AA605C /* FirebaseCrashlytics */; };
 		4F29B8DF274960BD00747DDD /* MainInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F29B8DE274960BD00747DDD /* MainInfoView.swift */; };
 		4F29B8E12749FC1C00747DDD /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F29B8E02749FC1C00747DDD /* SettingViewController.swift */; };
 		4F29B8E3274A106300747DDD /* SettingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F29B8E2274A106300747DDD /* SettingTableViewCell.swift */; };
@@ -180,6 +181,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4F14246D276893AF00AA605C /* FirebaseCrashlytics in Frameworks */,
 				3549F25F273E4E7500C1589A /* SnapKit in Frameworks */,
 				4F74C5BD275A47850034C015 /* FirebaseAnalytics in Frameworks */,
 			);
@@ -239,6 +241,7 @@
 				4F0A39ED273BC8A8009E3AAF /* Controllers */,
 				4F0A39E0273BC853009E3AAF /* Assets.xcassets */,
 				4F0A39E2273BC853009E3AAF /* LaunchScreen.storyboard */,
+				4F0A39DA273BC852009E3AAF /* Main.storyboard */,
 				4F0A39E5273BC853009E3AAF /* Info.plist */,
 				4F2CB2DF275F6A340008E96C /* GoogleService-Info.plist */,
 			);
@@ -261,7 +264,6 @@
 			isa = PBXGroup;
 			children = (
 				4F29B914274AC73B00747DDD /* Font */,
-				4F0A39DA273BC852009E3AAF /* Main.storyboard */,
 				3549F2662740EE7F00C1589A /* GaugeWaveAnimationView.swift */,
 				4F0A39FD27425C39009E3AAF /* CreateRecordView.swift */,
 				4F0590B127461E7300C4DF41 /* ListTableViewCell.swift */,
@@ -364,6 +366,7 @@
 				4F0A39CE273BC852009E3AAF /* Frameworks */,
 				4F0A39CF273BC852009E3AAF /* Resources */,
 				35CC3F3A2747CE4E0059707A /* Embed App Extensions */,
+				4F14246E2768946A00AA605C /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -374,6 +377,7 @@
 			packageProductDependencies = (
 				3549F25E273E4E7500C1589A /* SnapKit */,
 				4F74C5BC275A47850034C015 /* FirebaseAnalytics */,
+				4F14246C276893AF00AA605C /* FirebaseCrashlytics */,
 			);
 			productName = Canvas;
 			productReference = 4F0A39D1273BC852009E3AAF /* Canvas.app */;
@@ -457,6 +461,28 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		4F14246E2768946A00AA605C /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${TARGET_NAME}",
+				"$(SRCROOT)/$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)",
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${BUILD_DIR%Build/*}SourcePackages/checkouts/firebase-ios-sdk/Crashlytics/run\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		35CC3F272747CE4D0059707A /* Sources */ = {
@@ -726,6 +752,7 @@
 				CODE_SIGN_ENTITLEMENTS = Canvas/Canvas.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 8QSTXVD8H9;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Canvas/Info.plist;
@@ -835,6 +862,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 3549F25D273E4E7500C1589A /* XCRemoteSwiftPackageReference "SnapKit" */;
 			productName = SnapKit;
+		};
+		4F14246C276893AF00AA605C /* FirebaseCrashlytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4F74C5B9275A37230034C015 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCrashlytics;
 		};
 		4F74C5BC275A47850034C015 /* FirebaseAnalytics */ = {
 			isa = XCSwiftPackageProductDependency;

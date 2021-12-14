@@ -5,7 +5,6 @@ import FirebaseAnalytics
 class MainViewController: UIViewController {
     // Data
     private let launchedBefore = UserDefaults.shared.bool(forKey: "launchedBefore")
-    private let v1_2LaunchBefore = UserDefaults.shared.bool(forKey: "v1_2LaunchBefore")
     private let userIDsetting = UserDefaults.shared.bool(forKey: "userIDsetting")
     private let themeManager = ThemeManager.shared
     
@@ -76,11 +75,6 @@ class MainViewController: UIViewController {
                 position.yRatio = Ratio.DefaultRatio[i].y
                 CoreDataStack.shared.saveContext()
             }
-        }
-        
-        if v1_2LaunchBefore == false {
-            UserDefaults.shared.set(true, forKey: "v1_2LaunchBefore")
-            UserDefaults.shared.set(true, forKey: "launchMode")
         }
     }
     
@@ -374,8 +368,8 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "mainCanavasCollectionViewCell", for: indexPath) as? MainCanavasCollectionViewCell
         cell?.delegate = self
         cell?.index = indexPath.row
-        collectionView.transform = CGAffineTransform(scaleX:-1,y: 1);
-        cell?.transform = CGAffineTransform(scaleX:-1,y: 1);
+        collectionView.transform = CGAffineTransform(scaleX: -1,y: 1);
+        cell?.transform = CGAffineTransform(scaleX: -1,y: 1);
         return cell ?? UICollectionViewCell()
     }
     
@@ -424,6 +418,9 @@ extension MainViewController: UIScrollViewDelegate {
         
         offset = CGPoint(x: roundedIndex * cellWidthIncludingSpacing - scrollView.contentInset.left, y: -scrollView.contentInset.top)
         targetContentOffset.pointee = offset
+    }
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+//        print("finish")
     }
 }
 
