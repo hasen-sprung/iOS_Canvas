@@ -136,6 +136,7 @@ class CreateRecordView: UIView {
             completeButton.titleLabel?.font = UIFont(name: "Pretendard-Regular", size: 15)
             completeButton.backgroundColor = .clear
             completeButton.addTarget(self, action: #selector(completeButtonPressed), for: .touchUpInside)
+            completeButton.isEnabled = false
             self.addSubview(completeButton)
         }
         CRBtnIcon.snp.makeConstraints { make in
@@ -287,6 +288,11 @@ extension CreateRecordView: UITextViewDelegate {
         }
         if textView.numberOfLine() >= textView.textContainer.maximumNumberOfLines {
             textView.deleteBackward()
+        }
+        completeButton.isEnabled = false
+        let finalText = textView.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+        if finalText.count > 0 {
+            completeButton.isEnabled = true
         }
         byteView.text = "\(textView.text.count)/180"
     }
