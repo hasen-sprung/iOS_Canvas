@@ -65,14 +65,7 @@ class MainViewController: UIViewController {
         setButtonsTarget()
         setupFeedbackGenerator()
         setinfoViewUserAction()
-        
-        NotificationCenter.default.addObserver(forName: UIApplication.willEnterForegroundNotification,
-                                               object: nil,
-                                               queue: .main) {
-            [unowned self] notification in
-            // background에서 foreground로 돌아오는 경우 실행 될 코드
-            animate(command: "start")
-        }
+        addBackToFrontObserver()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -107,13 +100,8 @@ class MainViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         shouldInvalidateLayout = false
-        if UserDefaults.shared.bool(forKey: "userIDsetting") == false {
-            loadUserIdInputMode()
-            UserDefaults.shared.synchronize()
-        }
-        if recordsByDate.count > 0 {
-            animate(command: "start")
-        }
+        loadSetUserIDController()
+        startAnimation()
         infoRecordIndex = 0
         setInfoContentView()
         infoContentView.setLastMemoView()
@@ -130,6 +118,29 @@ class MainViewController: UIViewController {
     
     override func viewDidDisappear(_ animated: Bool) {
         canvasRecordsView?.clearRecordViews()
+    }
+    
+    private func loadSetUserIDController() {
+        if UserDefaults.shared.bool(forKey: "userIDsetting") == false {
+            loadUserIdInputMode()
+            UserDefaults.shared.synchronize()
+        }
+    }
+    
+    private func addBackToFrontObserver() {
+        NotificationCenter.default.addObserver(forName: UIApplication.willEnterForegroundNotification,
+                                               object: nil,
+                                               queue: .main) {
+            [unowned self] notification in
+            // background에서 foreground로 돌아오는 경우 실행 될 코드
+            animate(command: "start")
+        }
+    }
+    
+    private func startAnimation() {
+        if recordsByDate.count > 0 {
+            animate(command: "start")
+        }
     }
     
     private func loadUserIdInputMode() {
@@ -720,6 +731,7 @@ extension MainViewController: MainInfoViewDelegate {
 // MARK: - MainRecordsViewDelegate
 
 extension MainViewController: MainRecordsViewDelegate {
+    
     func openRecordTextView(index: Int) {
         impactFeedbackGenerator?.impactOccurred()
         let df = DateFormatter()
@@ -751,9 +763,6 @@ extension MainViewController: MainRecordsViewDelegate {
         detailView.memo.textAlignment = .left
         detailView.memo.textColor = UIColor(r: 41, g: 46, b: 48)
         detailView.memo.font = UIFont(name: "Pretendard-Regular", size: 15)
-    }
-    
-    func tapActionRecordView() {
     }
 }
 

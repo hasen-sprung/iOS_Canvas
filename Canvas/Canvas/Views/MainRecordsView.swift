@@ -7,7 +7,7 @@ class RecordView: UIView {
 
 protocol MainRecordsViewDelegate {
     func openRecordTextView(index: Int)
-    func tapActionRecordView()
+//    func tapActionRecordView()
 }
 
 class MainRecordsView: UIView {
@@ -242,8 +242,8 @@ extension MainRecordsView {
     }
     
     @objc func tapRecordViewAction(_ sender: UITapGestureRecognizer) {
-        if let d = delegate {
-            d.tapActionRecordView()
-        }
+//        if let d = delegate {
+//            d.tapActionRecordView()
+//        }
     }
 }
