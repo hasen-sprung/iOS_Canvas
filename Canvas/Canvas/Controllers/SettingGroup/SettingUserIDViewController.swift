@@ -73,13 +73,17 @@ class SettingUserIDViewController: UIViewController, UITextFieldDelegate {
     }
     
     private func setCompleteButton() {
-        completeButton.frame.size = CGSize(width: view.frame.width * 0.6, height: view.frame.width * 0.6 / 3)
+        completeButton.frame.size = CGSize(width: view.frame.width * 0.4, height: view.frame.width * 0.4 / 3)
         completeButton.center = CGPoint(x: view.frame.width / 2, y: view.frame.height * 0.4)
-        completeButton.setImage(UIImage(named: "ChangeSettingBtn"), for: .normal)
+        setShadows(completeButton,
+                   firstRadius: completeButton.frame.height * 0.8,
+                   secondRadius: completeButton.frame.height * 0.8,
+                   thirdRadius: completeButton.frame.height * 0.8)
         
         completeButtonLabel.frame.size = CGSize(width: completeButton.frame.width * 0.6, height: completeButton.frame.height * 0.6)
         completeButtonLabel.center = completeButton.center
         completeButtonLabel.text = "변경"
+        completeButtonLabel.textColor = UIColor(r: 72, g: 80, b: 84)
         completeButtonLabel.font = UIFont(name: "Pretendard-Regular", size: 15)
         completeButtonLabel.textAlignment = .center
         completeButtonLabel.textColor = .black
