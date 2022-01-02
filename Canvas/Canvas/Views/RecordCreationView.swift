@@ -8,19 +8,19 @@ protocol CreateRecordViewDelegate {
     func saveRecord(newDate: Date, newGagueLevel: Int, newMemo: String?)
 }
 
-class CreateRecordView: UIView {
+class RecordCreationView: UIView {
     var delegate: CreateRecordViewDelegate?
     private var date = Date()
     
-    private let CRBackgroundView = UIView()
-    private let CRBackgroundImageView = UIImageView()
+    private let rootBackgroundView = UIView()
+    private let rootBackgroundImageView = UIImageView()
     
     private let dateLabelView = UILabel()
     private var byteView = UILabel()
-    private let CRTextView = UITextView()
+    private let memoTextView = UITextView()
     
-    private let CRBtnBackgroundView = UIImageView()
-    private let CRBtnIcon = UIImageView()
+    private let completeButtonBackground = UIImageView()
+    private let completeButtonIcon = UIImageView()
     private let cancelButton = UIButton()
     private let completeButton = UIButton()
     
@@ -48,28 +48,28 @@ class CreateRecordView: UIView {
     }
     
     func setLayout() {
-        CRBackgroundView.snp.makeConstraints { make in
+        rootBackgroundView.snp.makeConstraints { make in
             make.top.equalTo(self.snp.top).offset(self.frame.width / 7 * 2.5)
             make.leading.equalTo(self.snp.leading).offset(40)
             make.trailing.equalTo(self.snp.trailing).offset(-40)
             // TODO: KEYBOARD NOTIFICATION
             self.bottomConstraint = make.bottom.equalTo(self.snp.bottom).offset(-createRecordViewBottomOffset).constraint
             
-            CRBackgroundView.backgroundColor = .clear
-            CRBackgroundView.layer.cornerRadius = 10
-            self.addSubview(CRBackgroundView)
+            rootBackgroundView.backgroundColor = .clear
+            rootBackgroundView.layer.cornerRadius = 10
+            self.addSubview(rootBackgroundView)
         }
-        CRBackgroundImageView.snp.makeConstraints { make in
-            make.top.equalTo(CRBackgroundView).offset(-30)
-            make.leading.equalTo(CRBackgroundView).offset(-20)
-            make.trailing.equalTo(CRBackgroundView).offset(30)
-            make.bottom.equalTo(CRBackgroundView).offset(30)
+        rootBackgroundImageView.snp.makeConstraints { make in
+            make.top.equalTo(rootBackgroundView).offset(-30)
+            make.leading.equalTo(rootBackgroundView).offset(-20)
+            make.trailing.equalTo(rootBackgroundView).offset(30)
+            make.bottom.equalTo(rootBackgroundView).offset(30)
             
-            CRBackgroundImageView.image = UIImage(named: "CreateBackground")
-            self.addSubview(CRBackgroundImageView)
+            rootBackgroundImageView.image = UIImage(named: "CreateBackground")
+            self.addSubview(rootBackgroundImageView)
         }
         dateLabelView.snp.makeConstraints { make in
-            make.top.equalTo(CRBackgroundView.snp.top).offset(10)
+            make.top.equalTo(rootBackgroundView.snp.top).offset(10)
             make.centerX.equalTo(self.snp.centerX)
             
             dateLabelView.backgroundColor = .clear
@@ -91,9 +91,9 @@ class CreateRecordView: UIView {
         }
         
         changeDateButton.snp.makeConstraints { make in
-            make.top.equalTo(CRBackgroundView.snp.top).offset(10)
-            make.leading.equalTo(CRBackgroundView.snp.leading).offset(0)
-            make.trailing.equalTo(CRBackgroundView.snp.trailing).offset(0)
+            make.top.equalTo(rootBackgroundView.snp.top).offset(10)
+            make.leading.equalTo(rootBackgroundView.snp.leading).offset(0)
+            make.trailing.equalTo(rootBackgroundView.snp.trailing).offset(0)
             make.centerX.equalTo(self.snp.centerX)
             
             changeDateButton.backgroundColor = .clear
@@ -102,21 +102,21 @@ class CreateRecordView: UIView {
             self.addSubview(changeDateButton)
         }
         
-        CRBtnBackgroundView.snp.makeConstraints { make in
-            make.leading.equalTo(CRBackgroundView.snp.leading).offset(30)
-            make.trailing.equalTo(CRBackgroundView.snp.trailing).offset(-30)
-            make.bottom.equalTo(CRBackgroundView.snp.bottom).offset(-20)
+        completeButtonBackground.snp.makeConstraints { make in
+            make.leading.equalTo(rootBackgroundView.snp.leading).offset(30)
+            make.trailing.equalTo(rootBackgroundView.snp.trailing).offset(-30)
+            make.bottom.equalTo(rootBackgroundView.snp.bottom).offset(-20)
             make.height.equalTo(50)
             
-            CRBtnBackgroundView.image = UIImage(named: "TextBtnBackground")
-            CRBtnBackgroundView.isUserInteractionEnabled = false
-            CRBtnBackgroundView.backgroundColor = .clear
-            self.addSubview(CRBtnBackgroundView)
+            completeButtonBackground.image = UIImage(named: "TextBtnBackground")
+            completeButtonBackground.isUserInteractionEnabled = false
+            completeButtonBackground.backgroundColor = .clear
+            self.addSubview(completeButtonBackground)
         }
         cancelButton.snp.makeConstraints { make in
-            make.width.equalTo(CRBtnBackgroundView.snp.width).dividedBy(2)
-            make.height.equalTo(CRBtnBackgroundView.snp.height)
-            make.centerY.leading.equalTo(CRBtnBackgroundView)
+            make.width.equalTo(completeButtonBackground.snp.width).dividedBy(2)
+            make.height.equalTo(completeButtonBackground.snp.height)
+            make.centerY.leading.equalTo(completeButtonBackground)
             
             cancelButton.setTitle("취소", for: .normal)
             cancelButton.setTitleColor(UIColor(r: 163, g: 173, b: 178), for: .normal)
@@ -126,9 +126,9 @@ class CreateRecordView: UIView {
             self.addSubview(cancelButton)
         }
         completeButton.snp.makeConstraints { make in
-            make.width.equalTo(CRBtnBackgroundView.snp.width).dividedBy(2)
-            make.height.equalTo(CRBtnBackgroundView.snp.height)
-            make.centerY.trailing.equalTo(CRBtnBackgroundView)
+            make.width.equalTo(completeButtonBackground.snp.width).dividedBy(2)
+            make.height.equalTo(completeButtonBackground.snp.height)
+            make.centerY.trailing.equalTo(completeButtonBackground)
             
             completeButton.setTitle("완료", for: .normal)
             completeButton.setTitleColor(.black, for: .normal)
@@ -139,33 +139,33 @@ class CreateRecordView: UIView {
             completeButton.isEnabled = false
             self.addSubview(completeButton)
         }
-        CRBtnIcon.snp.makeConstraints { make in
+        completeButtonIcon.snp.makeConstraints { make in
             make.height.width.equalTo(completeButton).offset(14)
             make.centerX.equalTo(completeButton)
             make.centerY.equalTo(completeButton).offset(2)
             
-            CRBtnIcon.image = UIImage(named: "TextBtn")
-            CRBtnIcon.backgroundColor = .clear
-            self.addSubview(CRBtnIcon)
+            completeButtonIcon.image = UIImage(named: "TextBtn")
+            completeButtonIcon.backgroundColor = .clear
+            self.addSubview(completeButtonIcon)
         }
-        CRTextView.snp.makeConstraints { make in
+        memoTextView.snp.makeConstraints { make in
             make.top.equalTo(dateLabelView.snp.bottom).offset(20)
-            make.leading.equalTo(CRBackgroundView.snp.leading).offset(30)
-            make.trailing.equalTo(CRBackgroundView.snp.trailing).offset(-30)
-            make.bottom.equalTo(CRBtnBackgroundView.snp.top).offset(-20)
+            make.leading.equalTo(rootBackgroundView.snp.leading).offset(30)
+            make.trailing.equalTo(rootBackgroundView.snp.trailing).offset(-30)
+            make.bottom.equalTo(completeButtonBackground.snp.top).offset(-20)
             
-            CRTextView.delegate = self
-            CRTextView.backgroundColor = .clear
-            CRTextView.textContainer.maximumNumberOfLines = 15
-            CRTextView.font = UIFont(name: "Pretendard-Regular", size: 16)
-            CRTextView.textColor = .black
-            CRTextView.becomeFirstResponder()
-            CRTextView.isScrollEnabled = true
-            self.addSubview(CRTextView)
+            memoTextView.delegate = self
+            memoTextView.backgroundColor = .clear
+            memoTextView.textContainer.maximumNumberOfLines = 15
+            memoTextView.font = UIFont(name: "Pretendard-Regular", size: 16)
+            memoTextView.textColor = .black
+            memoTextView.becomeFirstResponder()
+            memoTextView.isScrollEnabled = true
+            self.addSubview(memoTextView)
         }
         byteView.snp.makeConstraints { make in
-            make.bottom.equalTo(CRBtnBackgroundView.snp.top)
-            make.trailing.equalTo(CRTextView)
+            make.bottom.equalTo(completeButtonBackground.snp.top)
+            make.trailing.equalTo(memoTextView)
 
             byteView.frame.size = CGSize(width: dateLabelView.intrinsicContentSize.width,
                                          height: dateLabelView.intrinsicContentSize.height)
@@ -188,9 +188,9 @@ class CreateRecordView: UIView {
         toolbar.setItems([doneButton], animated: true)
         datePicker.preferredDatePickerStyle = .wheels
         datePicker.frame.size = CGSize(width: self.frame.width, height: keyboardFrame.height)
-        CRTextView.inputAccessoryView = toolbar
-        CRTextView.inputView = datePicker
-        CRTextView.reloadInputViews()
+        memoTextView.inputAccessoryView = toolbar
+        memoTextView.inputView = datePicker
+        memoTextView.reloadInputViews()
         completeButton.isEnabled = false
     }
     
@@ -209,16 +209,16 @@ class CreateRecordView: UIView {
         fullString.append(NSAttributedString(attachment: imageAttachment))
         dateLabelView.attributedText = fullString
 //        dateLabelView.text = getDateString() + " ✎"
-        CRTextView.inputAccessoryView = nil
-        CRTextView.inputView = nil
-        CRTextView.reloadInputViews()
+        memoTextView.inputAccessoryView = nil
+        memoTextView.inputView = nil
+        memoTextView.reloadInputViews()
         completeButton.isEnabled = true
     }
 }
 
 // MARK: - Keyboard Notification
 
-extension CreateRecordView {
+extension RecordCreationView {
     @objc
     func keyboardWillShow(_ sender: Notification) {
         if let userInfo = sender.userInfo as? Dictionary<String, Any> {
@@ -248,15 +248,15 @@ extension CreateRecordView {
 
 // MARK: - Button Press
 
-extension CreateRecordView {
+extension RecordCreationView {
     @objc func cancelButtonPressed() {
         impactFeedbackGenerator?.impactOccurred()
-        CRTextView.endEditing(true)
+        memoTextView.endEditing(true)
         completeButton.setTitleColor(UIColor(r: 163, g: 173, b: 178), for: .normal)
         cancelButton.setTitleColor(.black, for: .normal)
         cancelButton.isEnabled = false
         UIView.animate(withDuration: 0.7, delay: 0.0, animations: { [self] in
-            CRBtnIcon.center.x = cancelButton.center.x + 4
+            completeButtonIcon.center.x = cancelButton.center.x + 4
         }) { (completed) in
             self.cancelButton.isEnabled = true
             if let d = self.delegate {
@@ -268,11 +268,11 @@ extension CreateRecordView {
     @objc func completeButtonPressed() {
         feedbackGenerator?.notificationOccurred(.success)
         if let d = self.delegate {
-            CRTextView.endEditing(true)
+            memoTextView.endEditing(true)
             d.completeCreateRecordView()
             d.saveRecord(newDate: date,
                          newGagueLevel: d.getGaugeLevel(),
-                         newMemo: CRTextView.text)
+                         newMemo: memoTextView.text)
             UserDefaults.shared.set(false, forKey: "guideAvail")
         }
     }
@@ -280,7 +280,7 @@ extension CreateRecordView {
 
 // MARK: - set textview setting
 
-extension CreateRecordView: UITextViewDelegate {
+extension RecordCreationView: UITextViewDelegate {
     
     func textViewDidChange(_ textView: UITextView) {
         if textView.text.count > 180 {
@@ -311,12 +311,12 @@ extension UITextView {
 
 // MARK: - set components
 
-extension CreateRecordView {
+extension RecordCreationView {
     private func setSeperateLine() {
         let seperateUpperView = UIView()
         seperateUpperView.snp.makeConstraints { make in
             make.top.equalTo(dateLabelView.snp.bottom).offset(10)
-            make.leading.trailing.equalTo(CRTextView)
+            make.leading.trailing.equalTo(memoTextView)
             make.height.equalTo(1)
             
             seperateUpperView.backgroundColor = .white
@@ -326,7 +326,7 @@ extension CreateRecordView {
         let seperateUnderView = UIView()
         seperateUnderView.snp.makeConstraints { make in
             make.top.equalTo(seperateUpperView.snp.bottom)
-            make.leading.trailing.equalTo(CRTextView)
+            make.leading.trailing.equalTo(memoTextView)
             make.height.equalTo(1)
             
             seperateUnderView.backgroundColor = UIColor(r: 195, g: 201, b: 205)

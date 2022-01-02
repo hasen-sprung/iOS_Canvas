@@ -14,7 +14,7 @@ class GaugeViewController: UIViewController {
         let view = GaugeWaveAnimationView(frame: UIScreen.main.bounds)
         return view
     }()
-    private var createRecordView: CreateRecordView?
+    private var createRecordView: RecordCreationView?
     private var cancelButton: UIView = UIView()
     private var shapeImage: UIImageView = UIImageView()
     
@@ -109,7 +109,7 @@ extension GaugeViewController: GaugeWaveAnimationViewDelegate {
     }
     
     func createRecord() {
-        createRecordView = CreateRecordView(frame: view.frame)
+        createRecordView = RecordCreationView(frame: view.frame)
         impactFeedbackGenerator?.impactOccurred()
         createRecordView?.alpha = 0.0
         createRecordView?.delegate = self
