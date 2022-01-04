@@ -43,9 +43,9 @@
 <br/>
 
 ## 고민했던 부분, 기술적 도전
-- 사용자 UX 개선을 위해 게이지와 애니메이션을 활용해서 Gauge Custom View 개발
+- 사용자 UX 개선을 위해 게이지와 애니메이션을 활용해서 Gauge Custom View 개발 [🔗](https://github.com/hasen-sprung/iOS_Canvas/wiki/gauge-view-prototype)
 - 기존에 사용했던 애니메이션 라이브러리를 애플에서 제공하는 기본 클래스(UIViewPropertyAnimator)를 사용해서 리펙토링
-- UIKit 기반 앱에서 WidgetKit을 사용해서 위젯 개발
+- UIKit 기반 앱에서 WidgetKit을 사용해서 위젯 개발 [🔗](https://jaeylee.notion.site/Set-Widget-in-UIkit-based-App-351d26d3fc38455093a8864581d79e41)
 <br/>
 
 ## 문제 해결 및 개선 사례
