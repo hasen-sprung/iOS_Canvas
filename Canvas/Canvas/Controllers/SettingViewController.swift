@@ -120,7 +120,7 @@ extension SettingViewController: MFMailComposeViewControllerDelegate {
     }
     
     func showSendMailErrorAlert() {
-        let sendMailErrorAlert = UIAlertController(title: "메일을 전송 실패", message: "이메일앱을 확인하고 다시 시도해주세요.", preferredStyle: .alert)
+        let sendMailErrorAlert = UIAlertController(title: "메일을 전송 실패", message: "mail앱을 확인하고 다시 시도해주세요.", preferredStyle: .alert)
         let confirmAction = UIAlertAction(title: "확인", style: .default) {
             (action) in
         }

@@ -14,7 +14,7 @@ class ListTableViewController: UIViewController, UITableViewDelegate, UITableVie
     private let emptyMessage = UILabel()
     
     // MARK: - record parsing properties
-    private var recordsByDate = [[Record]]()
+    private var recordsByDates = [[Record]]()
     private var dateSections = [String]()
     private var onlyDateStr = [String]()
     
@@ -150,22 +150,22 @@ class ListTableViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     
     private func setSectionAndRecords() {
-        recordsByDate = [[Record]]()
+        recordsByDates = [[Record]]()
         onlyDateStr = [String]()
         dateSections = [String]()
-        var rawDates = [FinalDate]()
+        var superDates = [FinalDate]()
         let context = CoreDataStack.shared.managedObjectContext
         let request = FinalDate.fetchRequest()
         do {
-            rawDates = try context.fetch(request)
+            superDates = try context.fetch(request)
         } catch { print("context Error") }
-        rawDates.sort(by: {$0.creationDate?.timeIntervalSinceNow ?? Date().timeIntervalSinceNow > $1.creationDate?.timeIntervalSinceNow ?? Date().timeIntervalSinceNow})
-        for rawDate in rawDates {
-            dateSections.append(getSectionDateStr(date: rawDate.creationDate ?? Date()))
-            onlyDateStr.append(getOnlyDate(date: rawDate.creationDate ?? Date()))
-            var rawRecords = rawDate.records?.allObjects as? [Record] ?? [Record]()
-            rawRecords.sort(by: {$0.createdDate?.timeIntervalSinceNow ?? Date().timeIntervalSinceNow < $1.createdDate?.timeIntervalSinceNow ?? Date().timeIntervalSinceNow})
-            recordsByDate.append(rawRecords)
+        superDates.sort(by: {$0.creationDate?.timeIntervalSinceNow ?? Date().timeIntervalSinceNow > $1.creationDate?.timeIntervalSinceNow ?? Date().timeIntervalSinceNow})
+        for superDate in superDates {
+            dateSections.append(getSectionDateStr(date: superDate.creationDate ?? Date()))
+            onlyDateStr.append(getOnlyDate(date: superDate.creationDate ?? Date()))
+            var recordByOneDate = superDate.records?.allObjects as? [Record] ?? [Record]()
+            recordByOneDate.sort(by: {$0.createdDate?.timeIntervalSinceNow ?? Date().timeIntervalSinceNow < $1.createdDate?.timeIntervalSinceNow ?? Date().timeIntervalSinceNow})
+            recordsByDates.append(recordByOneDate)
         }
     }
     
@@ -204,7 +204,7 @@ class ListTableViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     
     private func showEmptyMessage() {
-        if recordsByDate.count == 0 {
+        if recordsByDates.count == 0 {
             emptyMessage.fadeIn()
         }
     }
@@ -367,30 +367,30 @@ extension ListTableViewController: UICollectionViewDelegateFlowLayout, UICollect
 // MARK: - TableView delegate and datasource delegate
 
 extension ListTableViewController {
-    //    private func setDateSections(sortedRecords: [Record]) {
-    //        var tempRecords = [Record]()
-    //        for r in sortedRecords {
-    //            let date = r.createdDate ?? Date()
-    //            let dateString = getSectionDateStr(date: date)
-    //
-    //            if let _ = dateSections.firstIndex(of: dateString) {
-    //                tempRecords.append(r)
-    //            } else {
-    //                dateSections.append(dateString)
-    //                onlyDateStr.append(getOnlyDate(date: date))
-    //                if tempRecords.count > 0 {
-    //                    recordsByDate.append(tempRecords)
-    //                    tempRecords = [Record]()
-    //                }
-    //                tempRecords.append(r)
-    //            }
-    //        }
-    //        if sortedRecords.count > 0 {
-    //            recordsByDate.append(tempRecords)
-    //        }
-    //        tempRecords.removeAll()
-    //    }
-    
+//        private func setDateSections(sortedRecords: [Record]) {
+//            var tempRecords = [Record]()
+//            for r in sortedRecords {
+//                let date = r.createdDate ?? Date()
+//                let dateString = getSectionDateStr(date: date)
+//
+//                if let _ = dateSections.firstIndex(of: dateString) {
+//                    tempRecords.append(r)
+//                } else {
+//                    dateSections.append(dateString)
+//                    onlyDateStr.append(getOnlyDate(date: date))
+//                    if tempRecords.count > 0 {
+//                        recordsByDate.append(tempRecords)
+//                        tempRecords = [Record]()
+//                    }
+//                    tempRecords.append(r)
+//                }
+//            }
+//            if sortedRecords.count > 0 {
+//                recordsByDate.append(tempRecords)
+//            }
+//            tempRecords.removeAll()
+//        }
+//
     private func getSectionDateStr(date: Date) -> String {
         let df = DateFormatter()
         
@@ -410,7 +410,7 @@ extension ListTableViewController {
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return recordsByDate.count
+        return recordsByDates.count
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -418,16 +418,16 @@ extension ListTableViewController {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return recordsByDate[section].count
+        return recordsByDates[section].count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "listTableViewCell", for: indexPath) as? ListTableViewCell else { return UITableViewCell() }
         
-        cell.timeLabel.text = getCellDateStr(date: recordsByDate[indexPath.section][indexPath.row].createdDate ?? Date())
-        cell.shapeImage.image = theme.getImageByGaugeLevel(gaugeLevel: Int(recordsByDate[indexPath.section][indexPath.row].gaugeLevel))
-        cell.shapeImage.tintColor = theme.getColorByGaugeLevel(gaugeLevel: Int(recordsByDate[indexPath.section][indexPath.row].gaugeLevel))
-        if let memo = recordsByDate[indexPath.section][indexPath.row].memo {
+        cell.timeLabel.text = getCellDateStr(date: recordsByDates[indexPath.section][indexPath.row].createdDate ?? Date())
+        cell.shapeImage.image = theme.getImageByGaugeLevel(gaugeLevel: Int(recordsByDates[indexPath.section][indexPath.row].gaugeLevel))
+        cell.shapeImage.tintColor = theme.getColorByGaugeLevel(gaugeLevel: Int(recordsByDates[indexPath.section][indexPath.row].gaugeLevel))
+        if let memo = recordsByDates[indexPath.section][indexPath.row].memo {
             cell.userMemo.text = memo
         }
         cell.selectionStyle = .none
@@ -455,7 +455,7 @@ extension ListTableViewController {
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath)
     -> UISwipeActionsConfiguration? {
         let deleteAction = UIContextualAction(style: .destructive, title: nil) { (_, _, completionHandler) in
-            self.presentDeletionFailsafe(indexPath: indexPath)
+            self.alertForSafeDeletion(indexPath: indexPath)
             completionHandler(true)
         }
         deleteAction.image = UIImage(systemName: "trash")
@@ -464,20 +464,20 @@ extension ListTableViewController {
         return configuration
     }
     
-    func presentDeletionFailsafe(indexPath: IndexPath) {
+    func alertForSafeDeletion(indexPath: IndexPath) {
         impactFeedbackGenerator?.impactOccurred()
         let alert = UIAlertController(title: nil, message: "정말 기록을 삭제할까요?", preferredStyle: .alert)
         
         let yesAction = UIAlertAction(title: "네", style: .default) { _ in
             let context = CoreDataStack.shared.managedObjectContext
-            let date = self.recordsByDate[indexPath.section][indexPath.row].createdDate ?? Date()
+            let date = self.recordsByDates[indexPath.section][indexPath.row].createdDate ?? Date()
             var calendar = Calendar.current
             calendar.timeZone = NSTimeZone.local
-            context.delete(self.recordsByDate[indexPath.section][indexPath.row])
+            context.delete(self.recordsByDates[indexPath.section][indexPath.row])
             CoreDataStack.shared.saveContext()
-            self.recordsByDate[indexPath.section].remove(at: indexPath.row)
+            self.recordsByDates[indexPath.section].remove(at: indexPath.row)
             self.listTableView.deleteRows(at: [indexPath], with: .fade)
-            if self.recordsByDate[indexPath.section].count == 0 {
+            if self.recordsByDates[indexPath.section].count == 0 {
                 var matchingDate = [FinalDate]()
                 let fetchRequest = FinalDate.fetchRequest()
                 let dateFrom = calendar.startOfDay(for: date)
@@ -492,7 +492,7 @@ extension ListTableViewController {
                 if matchingDate.count > 0 {
                     context.delete(matchingDate[0])
                 }
-                self.recordsByDate.remove(at: indexPath.section)
+                self.recordsByDates.remove(at: indexPath.section)
                 self.dateSections.remove(at: indexPath.section)
                 self.onlyDateStr.remove(at: indexPath.section)
                 self.listTableView.deleteSections([indexPath.section], with: .fade)
