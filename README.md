@@ -12,18 +12,26 @@
 
 ## 프로젝트 소개
 
-**프로젝트 발표**
-<p float"left>
+**프로젝트 사례 발표**
 <p float"left>
   <a href="https://youtu.be/zNynKuK6wUE?t=15881">
     <img src="https://user-images.githubusercontent.com/53016167/148317435-db297ca1-7f4a-40d5-a12d-40a62989e46c.png" width="400">
   </a>
+  <a href="https://youtu.be/zNynKuK6wUE?t=15881">
+      유튜브 영상으로 바로가기
+  </a>
 </p>
-[바로가기](https://youtu.be/zNynKuK6wUE?t=15881)
-<img width="400" src="https://user-images.githubusercontent.com/20364535/148074891-b98b2ae9-0ebc-4cc0-8118-b7eb75a2e856.jpeg">
-<img width="400" src="https://user-images.githubusercontent.com/20364535/148074914-416d5853-139c-4f05-af22-d6d96774e9dd.jpeg">
-<img width="400" src="https://user-images.githubusercontent.com/20364535/148074922-95d41586-6873-4185-b1a3-42cc3e642973.jpeg">
-<img width="400" src="https://user-images.githubusercontent.com/20364535/148074938-2ad4dbe0-4bea-4e0b-884d-a4485c17e465.jpeg">
+<br/><br/>
+<p float"left>
+  <p>
+    <img width="400" src="https://user-images.githubusercontent.com/20364535/148074891-b98b2ae9-0ebc-4cc0-8118-b7eb75a2e856.jpeg">
+    <img width="400" src="https://user-images.githubusercontent.com/20364535/148074914-416d5853-139c-4f05-af22-d6d96774e9dd.jpeg">
+  </p>
+  <p>
+    <img width="400" src="https://user-images.githubusercontent.com/20364535/148074922-95d41586-6873-4185-b1a3-42cc3e642973.jpeg">
+    <img width="400" src="https://user-images.githubusercontent.com/20364535/148074938-2ad4dbe0-4bea-4e0b-884d-a4485c17e465.jpeg">
+  </p>
+</p>
 
 </p>
 <br/>
