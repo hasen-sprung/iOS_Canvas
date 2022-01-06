@@ -84,11 +84,15 @@
 - 유저의 첫 로딩을 감지하여 첫 인삿말과 함께 유저의 이름을 지정하도록 함 [🔗](https://hasensprung.tistory.com/92)<br/>
 #### DB
 - 출시 직전, 기존의 단일 Record Entity에서 Date Entity를 추가하여 Relationship을 통해 기록과 테마를 Date별로 관리하여 빠르게 접근 가능하고, 날짜마다 독립적으로 테마 구성이 가능하도록 함. [🔗](https://hasensprung.tistory.com/105) <br/>
-날짜별, 시간별 분류 작업을 최악의 경우 O(전체 기록의 개수에 대한 sorting시간 복잡도 + N)에서 O(Date개수에 대한 sorting시간 복잡도 + (하루 단위 sorting시간 복잡도 * 날짜 개수))로 단축</br>
+날짜별, 시간별 분류 작업의 시간복잡도를 하루 평균 10번 기록을 하는 사람 기준으로 약 10배정도 줄일 수 있었습니다.<br/>
+O(2N)(전체 기록개수 N에 대한 정렬 + N)  ->->  O(Date개수 * 각각 날짜마다 시간순 정렬)(Date개수에 대한 sorting시간 복잡도 + (하루 단위 sorting시간 복잡도 * 날짜 개수))로 단축</br>
 -> 현재는 3년 동안 매일 10개씩 무작위로 기록을 작성했을 때, 딜레이 체감 없이 사용 가능하지만 추후 당장 필요한 DB를 제한해서 분류하는 리팩토링이 필요</br>
 - DB seeder를 통한 무작위 DB 생성을 통해 테스트에 활용<br/>
 > ##### CoreData개념/사용법<br/>
 > context: [🔗](https://hasensprung.tistory.com/69) EX1: [🔗](https://hasensprung.tistory.com/70) EX2: [🔗](https://hasensprung.tistory.com/71) EX3: [🔗](https://hasensprung.tistory.com/72) EX4: [🔗](https://hasensprung.tistory.com/73)<br/>
+#### 위젯
+- UIKit 기반 앱에서 SwiftUI와 WidgetKit을 사용해서 위젯 개발 [🔗](https://jaeylee.notion.site/Set-Widget-in-UIkit-based-App-351d26d3fc38455093a8864581d79e41) [🔗]()<br/>
+- CoreData, UserDefault 데이터 공유를 위해 AppGroup 사용 [🔗](https://jaeylee.notion.site/Get-Data-in-CoreData-2ab732209eaf4fb496d71211625b53fd)<br/>
 #### Canvas 화면
 - Canvas가 스와이프가 절반 이상 진행되었을떄 한장씩만 넘어가도록 UIScrollViewDelegate에서 scrollViewWillEndDragging을 구현 [🔗](https://hasensprung.tistory.com/89)
 - 기존에 사용했던 애니메이션 라이브러리를 애플에서 제공하는 기본 클래스(UIViewPropertyAnimator)를 사용해서 리펙토링<br/>
@@ -106,10 +110,7 @@ CPU 사용량을 70%에서 10%로 개선 [🔗](https://jaeylee.notion.site/UIVi
 - Calendar에서 날짜를 클릭시, 해당 날짜 section으로 바로 갈 수 있도록 Calendar와 TableView의 연관관계를 구현 [🔗](https://hasensprung.tistory.com/91)<br/>
 #### 설정 화면
 - 개발자에게 메일 보내기 구현 [🔗](https://hasensprung.tistory.com/91)
-- 외부 앱 (앱스토어)으로 사용자 이동시키기 [🔗]()
-#### 위젯
-- UIKit 기반 앱에서 WidgetKit을 사용해서 위젯 개발 [🔗](https://jaeylee.notion.site/Set-Widget-in-UIkit-based-App-351d26d3fc38455093a8864581d79e41)<br/>
-- CoreData, UserDefault 데이터 공유를 위해 AppGroup 사용 [🔗](https://jaeylee.notion.site/Get-Data-in-CoreData-2ab732209eaf4fb496d71211625b53fd)<br/>
+- 외부 앱 (앱스토어)으로 사용자 이동시키기
 #### 의존성 도구
 - 코코아팟에서 SPM으로 변경시 발생했던 에러 처리 [🔗](https://jaeylee.notion.site/SPM-Delete-CocoaPods-06bb2700857843cea9c29ac384ab0107)<br/>
 <br/>
