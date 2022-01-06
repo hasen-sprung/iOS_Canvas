@@ -83,9 +83,9 @@
 - 유저가 Gesture을 통해 화면간 이동을 조작할 수 있도록 필요한 위치에 UIGestureRecognizer을 사용하여 적용 [🔗](https://hasensprung.tistory.com/90)<br/>
 - 유저의 첫 로딩을 감지하여 첫 인삿말과 함께 유저의 이름을 지정하도록 함 [🔗](https://hasensprung.tistory.com/92)<br/>
 #### DB
-- 출시 직전, 기존의 단일 Record Entity에서 Date Entity를 추가하여 Relationship을 통해 기록과 테마를 Date별로 관리하여 빠르게 접근 가능하고, 날짜마다 독립적으로 테마 구성이 가능하도록 함. [🔗]() <br/>
-날짜별, 시간별 분류 작업을 최악의 경우 O(기록의 개수^2 * sorting시간복잡도)에서 O(Date개수 * sorting시간복잡도)로 단축</br>
--> 현재는 3년 동안 매일 10개씩 기록을 작성했을 때, 딜레이 체감 없이 사용 가능하지만 추후 당장 필요한 DB를 제한해서 분류하는 리팩토링이 필요</br>
+- 출시 직전, 기존의 단일 Record Entity에서 Date Entity를 추가하여 Relationship을 통해 기록과 테마를 Date별로 관리하여 빠르게 접근 가능하고, 날짜마다 독립적으로 테마 구성이 가능하도록 함. [🔗](https://hasensprung.tistory.com/105) <br/>
+날짜별, 시간별 분류 작업을 최악의 경우 O(전체 기록의 개수에 대한 sorting시간 복잡도 + N)에서 O(Date개수에 대한 sorting시간 복잡도 + (하루 단위 sorting시간 복잡도 * 날짜 개수))로 단축</br>
+-> 현재는 3년 동안 매일 10개씩 무작위로 기록을 작성했을 때, 딜레이 체감 없이 사용 가능하지만 추후 당장 필요한 DB를 제한해서 분류하는 리팩토링이 필요</br>
 - DB seeder를 통한 무작위 DB 생성을 통해 테스트에 활용<br/>
 > ##### CoreData개념/사용법<br/>
 > context: [🔗](https://hasensprung.tistory.com/69) EX1: [🔗](https://hasensprung.tistory.com/70) EX2: [🔗](https://hasensprung.tistory.com/71) EX3: [🔗](https://hasensprung.tistory.com/72) EX4: [🔗](https://hasensprung.tistory.com/73)<br/>
@@ -98,7 +98,7 @@ CPU 사용량을 70%에서 10%로 개선 [🔗](https://jaeylee.notion.site/UIVi
 #### 기록 화면
 - 사용자 UX 개선을 위해 게이지와 애니메이션을 활용해서 Gauge Custom View 개발 [🔗](https://github.com/hasen-sprung/iOS_Canvas/wiki/gauge-view-prototype)<br/>
 - 키보드 중첩 문제를 Notification과 오토레이아웃 Constraints를 사용해서 해결 [🔗](https://jaeylee.notion.site/SnapKit-and-Keyboard-10f5520be1e642a98e875a7cec304b1d)<br/>
-- 키보드 높이에 맞추어 구현된 UIDatePicker [🔗]()
+- 키보드 높이에 맞추어 구현된 UIDatePicker
 #### 일기장 화면 
 - UITalbeView를 Custom할 때, text 길이에 따라 자동적으로 Cell의 높이를 조절해주기 위해 autoDemesion 사용 [🔗](https://hasensprung.tistory.com/79)<br/>
 - UIGestureRecognizer을 사용할 때, UITalbeView와 UITableViewCell의 Swipe action이 작동하지 않는 문제를 addGestureRecognizer을 통해 해결[🔗](https://hasensprung.tistory.com/96)
