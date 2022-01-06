@@ -75,33 +75,32 @@
 #### UI / 사용자경험 측면
 - Canvas라는, 전체적으로 통일감 있는 사용자 경험을 느낄 수 있도록 모든 View에서 테마의 느낌과 글시체의 통일성을 고려하였음<br/>
 - 비율을 사용하여 View frame를 구성했을 떄, 8과 SE를 비롯한 예전 디바이스의 디스플레이 비율이 달라 발생하는 문제를 오토레이아웃을 통해서 해결<br/>
-- 유저가 Gesture을 통해 화면간 이동을 조작할 수 있도록 필요한 위치에 UIGestureRecognizer을 사용하여 적용 [🔗]()<br/>
-- 유저의 첫 로딩을 감지하여 첫 인삿말과 함께 유저의 이름을 지정하도록 함 [🔗]()<br/>
+- 유저가 Gesture을 통해 화면간 이동을 조작할 수 있도록 필요한 위치에 UIGestureRecognizer을 사용하여 적용 [🔗](https://hasensprung.tistory.com/90)<br/>
+- 유저의 첫 로딩을 감지하여 첫 인삿말과 함께 유저의 이름을 지정하도록 함 [🔗](https://hasensprung.tistory.com/92)<br/>
 #### DB
-- 출시 직전, 기존의 단일 Entity에서 Entity를 추가하여 Relationship을 통해 기록과 테마를 Date별로 관리하여 빠르게 접근 가능하고, 날짜마다 독립적으로 테마 구성이 가능하도록 함. [🔗]() <br/>
+- 출시 직전, 기존의 단일 Record Entity에서 Date Entity를 추가하여 Relationship을 통해 기록과 테마를 Date별로 관리하여 빠르게 접근 가능하고, 날짜마다 독립적으로 테마 구성이 가능하도록 함. [🔗]() <br/>
 날짜별, 시간별 분류 작업을 최악의 경우 O(기록의 개수^2 * sorting시간복잡도)에서 O(Date개수 * sorting시간복잡도)로 단축</br>
 -> 현재는 3년 동안 매일 10개씩 기록을 작성했을 때, 딜레이 체감 없이 사용 가능하지만 추후 당장 필요한 DB를 제한해서 분류하는 리팩토링이 필요</br>
 - DB seeder를 통한 무작위 DB 생성을 통해 테스트에 활용<br/>
 context: [🔗](https://hasensprung.tistory.com/69) EX1: [🔗](https://hasensprung.tistory.com/70) EX2: [🔗](https://hasensprung.tistory.com/71) EX3: [🔗](https://hasensprung.tistory.com/72) EX4: [🔗](https://hasensprung.tistory.com/73)<br/>
 #### Canvas 화면
-- Canvas가 스와이프가 절반 이상 진행되었을떄 한장씩만 넘어가도록 UIScrollViewDelegate에서 scrollViewWillEndDragging을 구현함.
+- Canvas가 스와이프가 절반 이상 진행되었을떄 한장씩만 넘어가도록 UIScrollViewDelegate에서 scrollViewWillEndDragging을 구현 [🔗](https://hasensprung.tistory.com/89)
 - 기존에 사용했던 애니메이션 라이브러리를 애플에서 제공하는 기본 클래스(UIViewPropertyAnimator)를 사용해서 리펙토링<br/>
 CPU 사용량을 70%에서 10%로 개선 [🔗](https://jaeylee.notion.site/UIViewPropertyAnimator-43fa9b329a174650b59cd14e4d9e84f7)<br/>
-- 최신 기록을 보여주는 Info모듈의 경우, UITapGestureRecognizer를 사용하여 상황에 따라 다른 Taptic을 적용하여 유저가 착오없이 사용할 수 있도록 업데이트함.
+- 최신 기록을 보여주는 Info모듈의 경우, impactFeedbackGenerator를 사용하여 상황에 따라 다른 Taptic feedback을 적용하여 유저가 착오없이 사용할 수 있도록 업데이트함.
 - 도형을 눌러서 새로운 해당 기록에 대한 View가 생성되었을 떄, 뒷 배경의 자연스러운 Blur처리를 위해서 UIBlurEffect를 사용 [🔗](https://hasensprung.tistory.com/93)
 #### 기록 화면
 - 사용자 UX 개선을 위해 게이지와 애니메이션을 활용해서 Gauge Custom View 개발 [🔗](https://github.com/hasen-sprung/iOS_Canvas/wiki/gauge-view-prototype)<br/>
 - 키보드 중첩 문제를 Notification과 오토레이아웃 Constraints를 사용해서 해결 [🔗](https://jaeylee.notion.site/SnapKit-and-Keyboard-10f5520be1e642a98e875a7cec304b1d)<br/>
 - 키보드 높이에 맞추어 구현된 UIDatePicker [🔗]()
-- UITextView의 최대 줄수와 최대 글자수 제한하는 방법 [🔗]()
 #### 일기장 화면 
 - UITalbeView를 Custom할 때, text 길이에 따라 자동적으로 Cell의 높이를 조절해주기 위해 autoDemesion 사용 [🔗](https://hasensprung.tistory.com/79)<br/>
 - UIGestureRecognizer을 사용할 때, UITalbeView와 UITableViewCell의 Swipe action이 작동하지 않는 문제를 addGestureRecognizer을 통해 해결[🔗](https://hasensprung.tistory.com/96)
 - Cell 삭제시 안전한 삭제를 위해서 Alert를 통한 유저 확인 절차 추가 [🔗](https://hasensprung.tistory.com/95)<br/>
 - Calendar에서 날짜를 클릭시, 해당 날짜 section으로 바로 갈 수 있도록 Calendar와 TableView의 연관관계를 구현 [🔗](https://hasensprung.tistory.com/91)<br/>
 #### 설정 화면
-- 개발자에게 메일 보내기 구현
-- 외부 앱 (앱스토어)으로 사용자 이동시키기
+- 개발자에게 메일 보내기 구현 [🔗]()
+- 외부 앱 (앱스토어)으로 사용자 이동시키기 [🔗]()
 #### 위젯
 - UIKit 기반 앱에서 WidgetKit을 사용해서 위젯 개발 [🔗](https://jaeylee.notion.site/Set-Widget-in-UIkit-based-App-351d26d3fc38455093a8864581d79e41)<br/>
 - CoreData, UserDefault 데이터 공유를 위해 AppGroup 사용 [🔗](https://jaeylee.notion.site/Get-Data-in-CoreData-2ab732209eaf4fb496d71211625b53fd)<br/>
