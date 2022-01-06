@@ -6,7 +6,8 @@
 </p>
 
 > **"순간 순간의 감정을 그림으로 기록하세요"** <br/><br/>
-> **개발 기간 :  21.08.27 ~ 21.12.01** <br/><br/>
+> **개발 기간 :  21.09. ~ 현재** <br/><br/>
+> **AppStore Launching : 21.12.01** <br/><br/>
 > **팀 소개 : [박준홍](https://github.com/feldblume5263), [이재영](https://github.com/ejei0g)**
 <br/>
 
@@ -60,6 +61,10 @@
 - 쌓인 기록들을 날짜순, 시간순으로 보여주는 Custom TableView<br/>
 - 기록으로 바로가기 기능을 지원하는 Calandar 모듈<br/>
 - 안전하고 간편한 삭제가 가능한 Cell<br/>
+#### 설정 화면
+- 유저 이름 
+- 작품 구성 변경 기능 (하루마다의 기록 <-> 최근 10개 기록)
+- 흔들어서 그림섞기 on/off
 <br/>
 
 ## 아키텍쳐
@@ -82,7 +87,8 @@
 날짜별, 시간별 분류 작업을 최악의 경우 O(기록의 개수^2 * sorting시간복잡도)에서 O(Date개수 * sorting시간복잡도)로 단축</br>
 -> 현재는 3년 동안 매일 10개씩 기록을 작성했을 때, 딜레이 체감 없이 사용 가능하지만 추후 당장 필요한 DB를 제한해서 분류하는 리팩토링이 필요</br>
 - DB seeder를 통한 무작위 DB 생성을 통해 테스트에 활용<br/>
-context: [🔗](https://hasensprung.tistory.com/69) EX1: [🔗](https://hasensprung.tistory.com/70) EX2: [🔗](https://hasensprung.tistory.com/71) EX3: [🔗](https://hasensprung.tistory.com/72) EX4: [🔗](https://hasensprung.tistory.com/73)<br/>
+> ##### CoreData개념/사용법<br/>
+> context: [🔗](https://hasensprung.tistory.com/69) EX1: [🔗](https://hasensprung.tistory.com/70) EX2: [🔗](https://hasensprung.tistory.com/71) EX3: [🔗](https://hasensprung.tistory.com/72) EX4: [🔗](https://hasensprung.tistory.com/73)<br/>
 #### Canvas 화면
 - Canvas가 스와이프가 절반 이상 진행되었을떄 한장씩만 넘어가도록 UIScrollViewDelegate에서 scrollViewWillEndDragging을 구현 [🔗](https://hasensprung.tistory.com/89)
 - 기존에 사용했던 애니메이션 라이브러리를 애플에서 제공하는 기본 클래스(UIViewPropertyAnimator)를 사용해서 리펙토링<br/>
@@ -99,7 +105,7 @@ CPU 사용량을 70%에서 10%로 개선 [🔗](https://jaeylee.notion.site/UIVi
 - Cell 삭제시 안전한 삭제를 위해서 Alert를 통한 유저 확인 절차 추가 [🔗](https://hasensprung.tistory.com/95)<br/>
 - Calendar에서 날짜를 클릭시, 해당 날짜 section으로 바로 갈 수 있도록 Calendar와 TableView의 연관관계를 구현 [🔗](https://hasensprung.tistory.com/91)<br/>
 #### 설정 화면
-- 개발자에게 메일 보내기 구현 [🔗]()
+- 개발자에게 메일 보내기 구현 [🔗](https://hasensprung.tistory.com/91)
 - 외부 앱 (앱스토어)으로 사용자 이동시키기 [🔗]()
 #### 위젯
 - UIKit 기반 앱에서 WidgetKit을 사용해서 위젯 개발 [🔗](https://jaeylee.notion.site/Set-Widget-in-UIkit-based-App-351d26d3fc38455093a8864581d79e41)<br/>
