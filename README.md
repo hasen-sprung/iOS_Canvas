@@ -3,6 +3,7 @@
   <a href="https://apps.apple.com/kr/app/id1596669616">
     <img src="https://user-images.githubusercontent.com/20364535/147945401-1a372903-becb-4cd8-af0c-15ebf9ce4858.png" width="250" height="250" style="border-radius:50%">
   </a>
+
 </p>
 
 > **"순간 순간의 감정을 그림으로 기록하세요"** <br/><br/>
@@ -31,6 +32,10 @@
   <p>
     <img width="400" src="https://user-images.githubusercontent.com/20364535/148074922-95d41586-6873-4185-b1a3-42cc3e642973.jpeg">
     <img width="400" src="https://user-images.githubusercontent.com/20364535/148074938-2ad4dbe0-4bea-4e0b-884d-a4485c17e465.jpeg">
+  </p>
+  <p>
+    <img width="400" src="https://user-images.githubusercontent.com/53016167/148373457-2a44ff12-944c-4328-976d-532bc915172f.jpg">
+    <img width="400" src="https://user-images.githubusercontent.com/53016167/148374328-7f98a41f-46b7-410c-acc6-633d595b8e53.jpg">
   </p>
 </p>
 
