@@ -31,9 +31,21 @@
 
 <br/>
 
-## 프로젝트 주요 기능
-- 사용자의 데이터를 날짜별로 CollectionView와 Animation으로 보여주는 MainView
-- 현재 사용자의 감정을 UIPangesutre와 Animation으로 입력하는 GaugeView
+## 프로젝트 Feature
+<br/>
+#### DB
+- CoreData : CoreData프레임워크를 사용하여 SQLite 파일을 관리
+<br/>
+#### Canvas 화면
+- 사용자의 하루 단위 혹은 최근 10개 기록을 모은 그림을 카드 형식으로 한장씩 넘겨가면서 보여주는 custum CollectionView
+- Animation 처리된 도형 (평상시, Shake 기능을 통해 흔들었을 때)
+- 현재 그림의 기록을 최신순으로 넘겨볼 수 있는 Info모듈
+<br/>
+#### 기록 화면
+- 현재 사용자의 감정을 UIPangesutre와 Animation을 통해 입력하는 GaugeView
+- 
+<br/>
+#### 일기장 
 - 모든 데이터를 보여주는 TableView
 <br/>
 
