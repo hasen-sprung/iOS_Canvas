@@ -175,7 +175,7 @@ class MainViewController: UIViewController {
         let greetingTap = UITapGestureRecognizer(target: self, action: #selector(changeGreetginMessage))
         let swipe = UIScreenEdgePanGestureRecognizer(target: self, action: #selector(screenEdgeSwiped))
         
-        swipeLeft.direction = .left
+        swipeLeft.direction = UISwipeGestureRecognizer.Direction.left//.left
         swipeRight.direction = .right
         swipe.edges = .right
         swipe.delegate = self
