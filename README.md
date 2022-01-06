@@ -35,6 +35,7 @@
 
 #### DB
 - CoreData : CoreData프레임워크를 사용하여 SQLite 파일을 관리<br/>
+[🔗](https://hasensprung.tistory.com/69) [🔗](https://hasensprung.tistory.com/70) [🔗](https://hasensprung.tistory.com/71) [🔗](https://hasensprung.tistory.com/72) [🔗](https://hasensprung.tistory.com/73)<br/>
 - Relationship을 통해 기록과 테마를 Date별로 관리하여 빠르게 접근 가능하고, 독립적으로 테마 구성이 가능<br/>
 #### Canvas 화면
 - 사용자의 하루 단위(혹은 최근 10개 기록단위)를 모은 그림을 카드 형식으로 한장씩 넘겨가면서 보여주는 Custom CollectionView<br/>
