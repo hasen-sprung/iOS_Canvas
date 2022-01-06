@@ -75,7 +75,7 @@
 #### UI / 사용자경험 측면
 - Canvas라는, 전체적으로 통일감 있는 사용자 경험을 느낄 수 있도록 모든 View에서 테마의 느낌과 글시체의 통일성을 고려하였음<br/>
 - 비율을 사용하여 View frame를 구성했을 떄, 8과 SE를 비롯한 예전 디바이스의 디스플레이 비율이 달라 발생하는 문제를 오토레이아웃을 통해서 해결<br/>
-- 유저가 Gesture을 통해 화면간 이동을 조작할 수 있도록 필요한 위치에 UIGestureRecognizer을 사용하여 적용<br/>
+- 유저가 Gesture을 통해 화면간 이동을 조작할 수 있도록 필요한 위치에 UIGestureRecognizer을 사용하여 적용 [🔗]()<br/>
 - 유저의 첫 로딩을 감지하여 첫 인삿말과 함께 유저의 이름을 지정하도록 함 [🔗]()<br/>
 #### DB
 - 출시 직전, 기존의 단일 Entity에서 Entity를 추가하여 Relationship을 통해 기록과 테마를 Date별로 관리하여 빠르게 접근 가능하고, 독립적으로 테마 구성이 가능하도록 하였음<br/>
@@ -92,6 +92,8 @@ CPU 사용량을 70%에서 10%로 개선 [🔗](https://jaeylee.notion.site/UIVi
 #### 기록 화면
 - 사용자 UX 개선을 위해 게이지와 애니메이션을 활용해서 Gauge Custom View 개발 [🔗](https://github.com/hasen-sprung/iOS_Canvas/wiki/gauge-view-prototype)<br/>
 - 키보드 중첩 문제를 Notification과 오토레이아웃 Constraints를 사용해서 해결 [🔗](https://jaeylee.notion.site/SnapKit-and-Keyboard-10f5520be1e642a98e875a7cec304b1d)<br/>
+- 키보드 높이에 맞추어 구현된 UIDatePicker [🔗]()
+- UITextView의 최대 줄수와 최대 글자수 제한하는 방법 [🔗]()
 #### 일기장 화면 
 - UITalbeView를 Custom할 때, text 길이에 따라 자동적으로 Cell의 높이를 조절해주기 위해 autoDemesion 사용 [🔗](https://hasensprung.tistory.com/79)<br/>
 - UIGestureRecognizer을 사용할 때, UITalbeView와 UITableViewCell의 Swipe action이 작동하지 않는 문제를 addGestureRecognizer을 통해 해결[🔗](https://hasensprung.tistory.com/96)
