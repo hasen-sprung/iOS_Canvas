@@ -3,32 +3,27 @@ import SwiftUI
 import CoreData
 
 struct Provider: TimelineProvider {
-    func placeholder(in context: Context) -> SimpleEntry {
-        SimpleEntry(date: Date())
+    func placeholder(in context: Context) -> DateEntry {
+        DateEntry(date: Date())
     }
-
-    func getSnapshot(in context: Context, completion: @escaping (SimpleEntry) -> ()) {
-        let entry = SimpleEntry(date: Date())
+    
+    func getSnapshot(in context: Context, completion: @escaping (DateEntry) -> ()) {
+        let entry = DateEntry(date: Date())
         completion(entry)
     }
-
+    
     func getTimeline(in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
-        var entries: [SimpleEntry] = []
-
-        // Generate a timeline consisting of five entries an hour apart, starting from the current date.
-        let currentDate = Date()
-        for hourOffset in 0 ..< 5 {
-            let entryDate = Calendar.current.date(byAdding: .hour, value: hourOffset, to: currentDate)!
-            let entry = SimpleEntry(date: entryDate)
-            entries.append(entry)
-        }
-
-        let timeline = Timeline(entries: entries, policy: .atEnd)
+        let currentDate = Date().startOfDay
+        let startOfDay = Calendar.current.startOfDay(for: currentDate)
+        let endOfDay = Calendar.current.date(byAdding: .day, value: 1, to: startOfDay)!
+        
+        let entry = DateEntry(date: Date())
+        let timeline = Timeline(entries: [entry], policy: .after(endOfDay))
         completion(timeline)
     }
 }
 
-struct SimpleEntry: TimelineEntry {
+struct DateEntry: TimelineEntry {
     let date: Date
 }
 
@@ -74,7 +69,7 @@ struct CanvasWidgetEntryView : View {
                                alignment: .center)
                 }
                 
-                if  UserDefaults.shared.bool(forKey: "guideAvail") == true {
+                if UserDefaults.shared.bool(forKey: "guideAvail") == true {
                     ForEach(getIndex(recordNum: records.count) ..< 10) { index in
                         let record = DefaultRecord.data[index]
                         let pos = defaultPosition[index]
@@ -157,7 +152,7 @@ struct CanvasWidgetEntryView : View {
 @main
 struct CanvasWidget: Widget {
     let kind: String = "CanvasWidget"
-
+    
     var body: some WidgetConfiguration {
         StaticConfiguration(kind: kind, provider: Provider()) { entry in
             CanvasWidgetEntryView(entry: entry)
@@ -170,9 +165,19 @@ struct CanvasWidget: Widget {
 
 struct CanvasWidget_Previews: PreviewProvider {
     static var previews: some View {
-        CanvasWidgetEntryView(entry: SimpleEntry(date: Date()))
+        CanvasWidgetEntryView(entry: DateEntry(date: Date()))
             .previewContext(WidgetPreviewContext(family: .systemSmall))
-        CanvasWidgetEntryView(entry: SimpleEntry(date: Date()))
+        CanvasWidgetEntryView(entry: DateEntry(date: Date()))
             .previewContext(WidgetPreviewContext(family: .systemLarge))
+    }
+}
+
+extension Date {
+    
+    var startOfDay : Date {
+        let calendar = Calendar.current
+        let unitFlags = Set<Calendar.Component>([.year, .month, .day])
+        let components = calendar.dateComponents(unitFlags, from: self)
+        return calendar.date(from: components)!
     }
 }
