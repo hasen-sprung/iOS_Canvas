@@ -23,7 +23,7 @@ class GaugeWaveAnimationView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.backgroundColor = bgColor
+        self.backgroundColor = Const.Color.background
         currentGaugeLevel = 60
         setPanGesture()
     }
@@ -73,7 +73,7 @@ extension GaugeWaveAnimationView {
 
 extension GaugeWaveAnimationView {
     private func setWaveView() {
-        waveView = WaveAnimationView(frame: self.frame, color: bgColor)
+        waveView = WaveAnimationView(frame: self.frame, color: Const.Color.background)
         waveView.transform = CGAffineTransform(rotationAngle: .pi)
         waveView.progress = 0.9 // 0 ~ 0.9 Warning!
         waveView.waveDelay = 100.0

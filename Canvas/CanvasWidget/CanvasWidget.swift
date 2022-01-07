@@ -52,7 +52,7 @@ struct CanvasWidgetEntryView : View {
     
     var body: some View {
         ZStack{
-            Color(canvasColor).edgesIgnoringSafeArea(.all)
+            Color(Const.Color.canvas).edgesIgnoringSafeArea(.all)
                 .cornerRadius(15)
             GeometryReader { geometry in
                 let width: CGFloat = sizeRatio * geometry.size.width
@@ -85,7 +85,8 @@ struct CanvasWidgetEntryView : View {
             }
         }
         .padding(10)
-        .background(Color(bgColor))
+//        .background(Color(bgColor))
+        .background(Color(Const.Color.background))
     }
     
     var sizeRatio: CGFloat {
@@ -157,8 +158,8 @@ struct CanvasWidget: Widget {
         StaticConfiguration(kind: kind, provider: Provider()) { entry in
             CanvasWidgetEntryView(entry: entry)
         }
-        .configurationDisplayName(widgetDisplayName)
-        .description(widgetDescription)
+        .configurationDisplayName(Const.Widget.configurationDisplayName)
+        .description(Const.Widget.description)
         .supportedFamilies([.systemSmall, .systemLarge])
     }
 }

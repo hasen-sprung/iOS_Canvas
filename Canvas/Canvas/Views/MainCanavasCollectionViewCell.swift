@@ -27,7 +27,7 @@ class MainCanavasCollectionViewCell: UICollectionViewCell {
         self.contentView.addSubview(canvasView)
         canvasSubView.center = CGPoint(x: canvasView.frame.width / 2,
                                        y: canvasView.frame.height / 2)
-        canvasSubView.backgroundColor = canvasColor
+        canvasSubView.backgroundColor = Const.Color.canvas
         canvasView.addSubview(canvasSubView)
         canvasRecordView?.clearRecordViews()
         canvasRecordView = MainRecordsView(in: canvasSubView)

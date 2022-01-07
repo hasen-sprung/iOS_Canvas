@@ -33,7 +33,7 @@ class MainViewController: UIViewController {
     private var shouldInvalidateLayout = true
     
     private var isFirstInitInMainView: Bool = false
-    private var countOfRecordInCanvas: Int = defaultCountOfRecordInCanvas
+    private var countOfRecordInCanvas: Int = Const.MainView.countOfRecordViews
     override var preferredStatusBarStyle: UIStatusBarStyle {
         .black
     }

@@ -11,7 +11,7 @@ class SettingViewController: UIViewController {
               let version = dictionary["CFBundleShortVersionString"] as? String,
               let build = dictionary["CFBundleVersion"] as? String
         else { return nil }
-        let versionAndBuild: String = "\(textSettingVersion) \(version).\(build)"
+        let versionAndBuild: String = "\(Const.SettingView.version) \(version).\(build)"
         
         return versionAndBuild
     }

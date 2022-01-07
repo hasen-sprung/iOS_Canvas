@@ -21,7 +21,7 @@ class GaugeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = bgColor
+        view.backgroundColor = Const.Color.background
         setSubViews()
         setLayout()
         setupFeedbackGenerator()
