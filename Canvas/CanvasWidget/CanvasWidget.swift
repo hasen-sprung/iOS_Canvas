@@ -13,11 +13,11 @@ struct Provider: TimelineProvider {
     }
     
     func getTimeline(in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
-        let currentDate = Date().startOfDay
+        let currentDate = Date()
         let startOfDay = Calendar.current.startOfDay(for: currentDate)
         let endOfDay = Calendar.current.date(byAdding: .day, value: 1, to: startOfDay)!
         
-        let entry = DateEntry(date: Date())
+        let entry = DateEntry(date: currentDate)
         let timeline = Timeline(entries: [entry], policy: .after(endOfDay))
         completion(timeline)
     }
