@@ -84,6 +84,7 @@
 ## 기술적 도전 및 개선 사례
 #### UI / 사용자경험 측면
 - Canvas라는, 전체적으로 통일감 있는 사용자 경험을 느낄 수 있도록 모든 View에서 테마의 느낌과 글시체의 통일성을 고려하였음<br/>
+-> 외주 디자이너와의 회의와 협업을 통해 목표한 수준의 UI에 도달___   [Canvas_디자인의뢰서.pdf](https://github.com/hasen-sprung/iOS_Canvas/files/7826605/Canvas_.pdf)<br/>
 - 비율을 사용하여 View frame를 구성했을 떄, 8과 SE를 비롯한 예전 디바이스의 디스플레이 비율이 달라 발생하는 문제를 오토레이아웃을 통해서 해결<br/>
 - 유저가 Gesture을 통해 화면간 이동을 조작할 수 있도록 필요한 위치에 UIGestureRecognizer을 사용하여 적용 [🔗](https://hasensprung.tistory.com/90)<br/>
 - 유저의 첫 로딩을 감지하여 첫 인삿말과 함께 유저의 이름을 지정하도록 함 [🔗](https://hasensprung.tistory.com/92)<br/>
@@ -96,7 +97,8 @@ O(2N)(전체 기록개수 N에 대한 정렬 + N)  ->->  O(Date개수 * 각각 �
 > ##### CoreData개념/사용법<br/>
 > context: [🔗](https://hasensprung.tistory.com/69) EX1: [🔗](https://hasensprung.tistory.com/70) EX2: [🔗](https://hasensprung.tistory.com/71) EX3: [🔗](https://hasensprung.tistory.com/72) EX4: [🔗](https://hasensprung.tistory.com/73)<br/>
 #### 위젯
-- UIKit 기반 앱에서 SwiftUI와 WidgetKit을 사용해서 위젯 개발 [🔗](https://jaeylee.notion.site/Set-Widget-in-UIkit-based-App-351d26d3fc38455093a8864581d79e41) [🔗]()<br/>
+- UIKit 기반 앱에서 SwiftUI와 WidgetKit을 사용해서 위젯 개발 [🔗](https://jaeylee.notion.site/Set-Widget-in-UIkit-based-App-351d26d3fc38455093a8864581d79e41)<br/>
+- Entry와 Timeline 수정을 통해, 매일 00:00시에 위젯 업데이트 [🔗]()<br/>
 - CoreData, UserDefault 데이터 공유를 위해 AppGroup 사용 [🔗](https://jaeylee.notion.site/Get-Data-in-CoreData-2ab732209eaf4fb496d71211625b53fd)<br/>
 #### Canvas 화면
 - Canvas가 스와이프가 절반 이상 진행되었을떄 한장씩만 넘어가도록 UIScrollViewDelegate에서 scrollViewWillEndDragging을 구현 [🔗](https://hasensprung.tistory.com/89)
@@ -112,6 +114,7 @@ CPU 사용량을 70%에서 10%로 개선 [🔗](https://jaeylee.notion.site/UIVi
 - UITalbeView를 Custom할 때, text 길이에 따라 자동적으로 Cell의 높이를 조절해주기 위해 autoDemesion 사용 [🔗](https://hasensprung.tistory.com/79)<br/>
 - UIGestureRecognizer을 사용할 때, UITalbeView와 UITableViewCell의 Swipe action이 작동하지 않는 문제를 addGestureRecognizer을 통해 해결[🔗](https://hasensprung.tistory.com/96)
 - Cell 삭제시 안전한 삭제를 위해서 Alert를 통한 유저 확인 절차 추가 [🔗](https://hasensprung.tistory.com/95)<br/>
+
 - Calendar에서 날짜를 클릭시, 해당 날짜 section으로 바로 갈 수 있도록 Calendar와 TableView의 연관관계를 구현 [🔗](https://hasensprung.tistory.com/91)<br/>
 #### 설정 화면
 - 개발자에게 메일 보내기 구현 [🔗](https://hasensprung.tistory.com/91)
