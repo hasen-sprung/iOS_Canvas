@@ -47,6 +47,8 @@
 ![xcode](https://img.shields.io/badge/Xcode-13.2-blue)
 ![firebase](https://img.shields.io/badge/Firebase-8.9.0-red)
 ![snapkit](https://img.shields.io/badge/SnapKit-5.0.1-yellow)
+![WaveAnimationView](https://img.shields.io/badge/waveAnimationView-1.0.2-green)
+
 
 <br/>
 
@@ -107,7 +109,7 @@ CPU 사용량을 70%에서 10%로 개선 [🔗](https://jaeylee.notion.site/UIVi
 - 최신 기록을 보여주는 Info모듈의 경우, impactFeedbackGenerator를 사용하여 상황에 따라 다른 Taptic feedback을 적용하여 유저가 착오없이 사용할 수 있도록 업데이트함.
 - 도형을 눌러서 새로운 해당 기록에 대한 View가 생성되었을 떄, 뒷 배경의 자연스러운 Blur처리를 위해서 UIBlurEffect를 사용 [🔗](https://hasensprung.tistory.com/93)
 #### 기록 화면
-- 사용자 UX 개선을 위해 게이지와 애니메이션을 활용해서 Gauge Custom View 개발 [🔗](https://github.com/hasen-sprung/iOS_Canvas/wiki/gauge-view-prototype)<br/>
+- 사용자 UX 개선을 WaveAnimationView라이브러리를 사용하여 Gauge Custom View 개발 [🔗](https://github.com/hasen-sprung/iOS_Canvas/wiki/gauge-view-prototype)<br/>
 - 키보드 중첩 문제를 Notification과 오토레이아웃 Constraints를 사용해서 해결 [🔗](https://jaeylee.notion.site/SnapKit-and-Keyboard-10f5520be1e642a98e875a7cec304b1d)<br/>
 - 키보드 높이에 맞추어 구현된 UIDatePicker
 #### 일기장 화면 
