@@ -1,6 +1,6 @@
 import UIKit
 
-protocol GaugeWaveAnimationViewDelegate {
+protocol GaugeWaveAnimationViewDelegate: AnyObject {
     func cancelGaugeView()
     func createRecord()
     func changedGaugeLevel()
@@ -8,7 +8,7 @@ protocol GaugeWaveAnimationViewDelegate {
 }
 
 class GaugeWaveAnimationView: UIView {
-    var delegate: GaugeWaveAnimationViewDelegate?
+    weak var delegate: GaugeWaveAnimationViewDelegate?
     private var waveView: WaveAnimationView = WaveAnimationView()
     private let colorAnimation = CABasicAnimation(keyPath: "colors")
     private let gradientLayer = CAGradientLayer()

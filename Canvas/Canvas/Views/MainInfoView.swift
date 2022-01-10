@@ -1,6 +1,6 @@
 import UIKit
 
-protocol MainInfoViewDelegate {
+protocol MainInfoViewDelegate: AnyObject {
     func getLastRecord() -> Record?
     func getInfoDateString() -> String
     func getCurrentIndex() -> Int
@@ -8,7 +8,7 @@ protocol MainInfoViewDelegate {
 
 class MainInfoView: UIView {
     
-    var delegate: MainInfoViewDelegate?
+    weak var delegate: MainInfoViewDelegate?
 //    let canvasUserLabel = UILabel()
 //    let canvasShapesView = UIView()
     let lastTimeView = UILabel()

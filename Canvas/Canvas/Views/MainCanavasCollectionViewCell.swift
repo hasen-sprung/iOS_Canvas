@@ -1,12 +1,12 @@
 import UIKit
 
-protocol MainCanavasCollectionViewCellDelegate {
+protocol MainCanavasCollectionViewCellDelegate: AnyObject {
     func setCanvasSubView(subView: MainRecordsView, idx: Int)
 }
 
 class MainCanavasCollectionViewCell: UICollectionViewCell {
     
-    var delegate: MainCanavasCollectionViewCellDelegate?
+    weak var delegate: MainCanavasCollectionViewCellDelegate?
     let canvasView = UIView()
     var canvasSubView = UIView()
     var canvasRecordView: MainRecordsView?

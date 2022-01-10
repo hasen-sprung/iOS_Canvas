@@ -5,13 +5,13 @@ class RecordView: UIView {
     var index: Int? // 각각의 인덱스를 확인하기 위해서
 }
 
-protocol MainRecordsViewDelegate {
+protocol MainRecordsViewDelegate: AnyObject {
     func openRecordTextView(index: Int)
 //    func tapActionRecordView()
 }
 
 class MainRecordsView: UIView {
-    var delegate: MainRecordsViewDelegate?
+    weak var delegate: MainRecordsViewDelegate?
     private var recordViews: [RecordView] = [RecordView]()
     private var recordViewsCount: Int = defaultCountOfRecordInCanvas
     private var recordSize: CGFloat?

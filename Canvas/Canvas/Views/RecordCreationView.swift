@@ -1,7 +1,7 @@
 import UIKit
 import SnapKit
 
-protocol CreateRecordViewDelegate {
+protocol CreateRecordViewDelegate: AnyObject {
     func getGaugeLevel() -> Int
     func dismissCreateRecordView()
     func completeCreateRecordView()
@@ -9,7 +9,7 @@ protocol CreateRecordViewDelegate {
 }
 
 class RecordCreationView: UIView {
-    var delegate: CreateRecordViewDelegate?
+    weak var delegate: CreateRecordViewDelegate?
     private var date = Date()
     
     private let rootBackgroundView = UIView()
