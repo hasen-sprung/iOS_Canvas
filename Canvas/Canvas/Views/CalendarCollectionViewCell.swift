@@ -1,6 +1,6 @@
 import UIKit
 
-protocol CalendarCollectionViewCellDelegate {
+protocol CalendarCollectionViewCellDelegate: AnyObject {
     func isCellPressed(sectionStr: String)
 }
 
@@ -10,7 +10,7 @@ class CalendarCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var dateDot: UIButton!
     var cellDateStr: String?
     
-    var delegate: CalendarCollectionViewCellDelegate?
+    weak var delegate: CalendarCollectionViewCellDelegate?
     
     override func awakeFromNib() {
         super.awakeFromNib()
