@@ -58,7 +58,7 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.backgroundColor = defaultBackGroundColor
+        self.view.backgroundColor = Const.Color.background
         canvasCollectionView.delegate = self
         canvasCollectionView.dataSource = self
         setAutoLayout()
@@ -414,52 +414,52 @@ extension MainViewController {
         mainViewLabel.snp.makeConstraints { make in
             mainViewLabel.backgroundColor = .clear
             mainViewLabel.text = getDateString(date: Date())
-            mainViewLabel.font = UIFont(name: "Cardo-Bold", size: CGFloat(fontSize))
-            mainViewLabel.textColor = textColor
+            mainViewLabel.font = UIFont(name: "Cardo-Bold", size: CGFloat(Const.FontSize.label))
+            mainViewLabel.textColor = Const.Color.textLabel
             mainViewLabel.textAlignment = .center
             mainViewLabel.frame.size = CGSize(width: mainViewLabel.intrinsicContentSize.width,
                                               height: mainViewLabel.intrinsicContentSize.height)
             make.centerX.equalTo(self.view)
-            make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top).offset(paddingInSafeArea + 10)
+            make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top).offset(Const.Constraints.paddingInSafeArea + 10)
             view.addSubview(mainViewLabel)
         }
         goToListButton.snp.makeConstraints { make in
             goToListButton.backgroundColor = .clear
             goToListButton.setTitle("", for: .normal)
             goToListButton.setImage(UIImage(named: "SmallBtnBackground"), for: .normal)
-            make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top).offset(paddingInSafeArea)
-            make.trailing.equalTo(self.view.safeAreaLayoutGuide.snp.trailing).offset(-paddingInSafeArea)
-            make.size.equalTo(buttonSize)
+            make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top).offset(Const.Constraints.paddingInSafeArea)
+            make.trailing.equalTo(self.view.safeAreaLayoutGuide.snp.trailing).offset(-Const.Constraints.paddingInSafeArea)
+            make.size.equalTo(Const.Constraints.buttonSize)
         }
         goToSettingButton.snp.makeConstraints { make in
             goToSettingButton.backgroundColor = .clear
             goToSettingButton.setTitle("", for: .normal)
             goToSettingButton.setImage(UIImage(named: "SmallBtnBackground"), for: .normal)
-            make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top).offset(paddingInSafeArea)
-            make.leading.equalTo(self.view.safeAreaLayoutGuide.snp.leading).offset(paddingInSafeArea)
-            make.size.equalTo(buttonSize)
+            make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top).offset(Const.Constraints.paddingInSafeArea)
+            make.leading.equalTo(self.view.safeAreaLayoutGuide.snp.leading).offset(Const.Constraints.paddingInSafeArea)
+            make.size.equalTo(Const.Constraints.buttonSize)
         }
         mainAddRecordButton.snp.makeConstraints { make in
             mainAddRecordButton.backgroundColor = .clear
-            make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).offset(-paddingInSafeArea)
+            make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).offset(-Const.Constraints.paddingInSafeArea)
             make.centerX.equalTo(self.view)
-            make.size.equalTo(addButtonSize)
+            make.size.equalTo(Const.Constraints.addButtonSize)
             view.addSubview(mainAddRecordButton)
         }
         mainInfoView.snp.makeConstraints { make in
             mainInfoView.backgroundColor = .white
-            make.leading.equalTo(self.view.safeAreaLayoutGuide.snp.leading).offset(paddingInSafeArea)
-            make.trailing.equalTo(self.view.safeAreaLayoutGuide.snp.trailing).offset(-paddingInSafeArea)
-            make.bottom.equalTo(mainAddRecordButton.snp.top).offset(-paddingInSafeArea)
-            make.height.equalTo(infoHeight)
+            make.leading.equalTo(self.view.safeAreaLayoutGuide.snp.leading).offset(Const.Constraints.paddingInSafeArea)
+            make.trailing.equalTo(self.view.safeAreaLayoutGuide.snp.trailing).offset(-Const.Constraints.paddingInSafeArea)
+            make.bottom.equalTo(mainAddRecordButton.snp.top).offset(-Const.Constraints.paddingInSafeArea)
+            make.height.equalTo(Const.Constraints.infoHeight)
             view.addSubview(mainInfoView)
         }
         mainCanvasLayout.snp.makeConstraints { make in
             mainCanvasLayout.backgroundColor = .white
-            make.top.equalTo(goToListButton.snp.bottom).offset(paddingInSafeArea)
-            make.leading.equalTo(self.view.safeAreaLayoutGuide.snp.leading).offset(paddingInSafeArea)
-            make.trailing.equalTo(self.view.safeAreaLayoutGuide.snp.trailing).offset(-paddingInSafeArea)
-            make.bottom.equalTo(mainInfoView.snp.top).offset(-paddingInSafeArea)
+            make.top.equalTo(goToListButton.snp.bottom).offset(Const.Constraints.paddingInSafeArea)
+            make.leading.equalTo(self.view.safeAreaLayoutGuide.snp.leading).offset(Const.Constraints.paddingInSafeArea)
+            make.trailing.equalTo(self.view.safeAreaLayoutGuide.snp.trailing).offset(-Const.Constraints.paddingInSafeArea)
+            make.bottom.equalTo(mainInfoView.snp.top).offset(-Const.Constraints.paddingInSafeArea)
             mainCanvasLayout.backgroundColor = .white
             view.addSubview(mainCanvasLayout)
         }
@@ -468,14 +468,14 @@ extension MainViewController {
         goToListIcon.snp.makeConstraints { make in
             goToListIcon.image = UIImage(named: "ListBtnIcon")
             goToListIcon.isUserInteractionEnabled = false
-            make.size.equalTo(goToListButton).multipliedBy(iconSizeRatio)
+            make.size.equalTo(goToListButton).multipliedBy(Const.Constraints.iconSizeRatio)
             make.center.equalTo(goToListButton)
             view.addSubview(goToListIcon)
         }
         goToSettingIcon.snp.makeConstraints { make in
             goToSettingIcon.image = UIImage(named: "SettingBtnIcon")
             goToSettingIcon.isUserInteractionEnabled = false
-            make.size.equalTo(goToSettingButton).multipliedBy(iconSizeRatio)
+            make.size.equalTo(goToSettingButton).multipliedBy(Const.Constraints.iconSizeRatio)
             make.center.equalTo(goToSettingButton)
             view.addSubview(goToSettingIcon)
         }

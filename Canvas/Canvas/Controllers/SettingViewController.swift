@@ -33,7 +33,7 @@ class SettingViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = defaultBackGroundColor
+        view.backgroundColor = Const.Color.background
         setTableView()
         settingTableView.delegate = self
         settingTableView.dataSource = self
@@ -208,7 +208,7 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
         }
         
         let bgColorView = UIView()
-        bgColorView.backgroundColor = defaultBackGroundColor
+        bgColorView.backgroundColor = Const.Color.background
         cell?.selectedBackgroundView = bgColorView
         
         return cell ?? UITableViewCell()
@@ -227,13 +227,13 @@ extension SettingViewController {
         settingTitle.snp.makeConstraints { make in
             settingTitle.backgroundColor = .clear
             settingTitle.text = "Setting"
-            settingTitle.font = UIFont(name: "Cardo-Bold", size: CGFloat(fontSize))
-            settingTitle.textColor = textColor
+            settingTitle.font = UIFont(name: "Cardo-Bold", size: CGFloat(Const.FontSize.label))
+            settingTitle.textColor = Const.Color.textLabel
             settingTitle.textAlignment = .center
             settingTitle.frame.size = CGSize(width: settingTitle.intrinsicContentSize.width,
                                               height: settingTitle.intrinsicContentSize.height)
             make.centerX.equalTo(self.view)
-            make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top).offset(paddingInSafeArea + 10)
+            make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top).offset(Const.Constraints.paddingInSafeArea + 10)
             view.addSubview(settingTitle)
         }
     }
@@ -246,12 +246,12 @@ extension SettingViewController {
     
     private func setBackButtonConstraints() {
         backButton.snp.makeConstraints { make in
-            make.leading.equalTo(self.view.safeAreaLayoutGuide.snp.leading).offset(paddingInSafeArea)
-            make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top).offset(paddingInSafeArea)
-            make.size.equalTo(buttonSize)
+            make.leading.equalTo(self.view.safeAreaLayoutGuide.snp.leading).offset(Const.Constraints.paddingInSafeArea)
+            make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top).offset(Const.Constraints.paddingInSafeArea)
+            make.size.equalTo(Const.Constraints.buttonSize)
         }
         backButtonIcon.snp.makeConstraints { make in
-            make.size.equalTo(backButton).multipliedBy(iconSizeRatio)
+            make.size.equalTo(backButton).multipliedBy(Const.Constraints.iconSizeRatio)
             make.center.equalTo(backButton)
             view.addSubview(backButtonIcon)
         }
