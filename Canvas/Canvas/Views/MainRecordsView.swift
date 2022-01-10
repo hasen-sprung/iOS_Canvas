@@ -13,7 +13,8 @@ protocol MainRecordsViewDelegate: AnyObject {
 class MainRecordsView: UIView {
     weak var delegate: MainRecordsViewDelegate?
     private var recordViews: [RecordView] = [RecordView]()
-    private var recordViewsCount: Int = defaultCountOfRecordInCanvas
+    // TODO: Const 의존성 제거
+    private var recordViewsCount: Int = Const.MainView.countOfRecordViews
     private var recordSize: CGFloat?
     
     override init(frame: CGRect) {
@@ -51,7 +52,7 @@ class MainRecordsView: UIView {
         var views = [RecordView]()
         var width = setRecordSize(recordsCount: records.count)
         if UserDefaults.shared.bool(forKey: "guideAvail") {
-            width = setRecordSize(recordsCount: defaultCountOfRecordInCanvas)
+            width = setRecordSize(recordsCount: recordViewsCount)
         }
         
         for i in 0 ..< recordViewsCount {
@@ -197,7 +198,7 @@ extension MainRecordsView {
     }
     
     private func isOverlapedInRecordsView(_ view: RecordView, in views: [RecordView]) -> Bool {
-        let overlapRatio: CGFloat = recordViewOverlapRatio
+        let overlapRatio: CGFloat = Const.MainView.overlapRatio
         let target = CGRect(origin: view.frame.origin,
                             size: CGSize(width: view.frame.size.width * overlapRatio,
                                          height: view.frame.size.height * overlapRatio))

@@ -16,7 +16,7 @@ class UserIdInputViewController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = defaultBackGroundColor
+        view.backgroundColor = Const.Color.background
         textField.delegate = self
         setSettingTitle()
         setTextField()

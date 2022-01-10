@@ -44,7 +44,7 @@ class ListTableViewController: UIViewController, UITableViewDelegate, UITableVie
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = defaultBackGroundColor
+        view.backgroundColor = Const.Color.background
         listTableView.dataSource = self
         listTableView.delegate = self
         setListTableView()
@@ -323,8 +323,8 @@ extension ListTableViewController: UICollectionViewDelegateFlowLayout, UICollect
         calendarDateLabel.snp.makeConstraints { make in
             calendarDateLabel.backgroundColor = .clear
             calendarDateLabel.text = "CANVAS"
-            calendarDateLabel.font = UIFont(name: "JosefinSans-Regular", size: CGFloat(fontSize))
-            calendarDateLabel.textColor = textColor
+            calendarDateLabel.font = UIFont(name: "JosefinSans-Regular", size: CGFloat(Const.FontSize.label))
+            calendarDateLabel.textColor = Const.Color.textLabel
             calendarDateLabel.textAlignment = .center
             calendarDateLabel.frame.size = CGSize(width: calendarDateLabel.intrinsicContentSize.width,
                                                   height: calendarDateLabel.intrinsicContentSize.height)
@@ -566,7 +566,7 @@ extension ListTableViewController {
         searchDateButton.snp.makeConstraints { make in
             make.centerX.equalTo(self.view)
             make.centerY.equalTo(backButtonIcon.snp.centerY)
-            make.height.equalTo(buttonSize)
+            make.height.equalTo(Const.Constraints.buttonSize)
             make.width.equalTo(searchDateButton.intrinsicContentSize.width + 20)
             
             searchDateButton.setTitle("", for: .normal)
@@ -584,7 +584,7 @@ extension ListTableViewController {
             searchDateButtonLabel.text = "Calendar"
             searchDateButtonLabel.textAlignment = .center
             searchDateButtonLabel.textColor = UIColor(r: 72, g: 80, b: 84)
-            searchDateButtonLabel.font = UIFont(name: "Cardo-Bold", size: CGFloat(fontSize))
+            searchDateButtonLabel.font = UIFont(name: "Cardo-Bold", size: CGFloat(Const.FontSize.label))
             searchDateButtonLabel.isUserInteractionEnabled = false
             view.addSubview(searchDateButtonLabel)
         }
@@ -599,12 +599,12 @@ extension ListTableViewController {
     
     private func setBackButtonConstraints() {
         backButton.snp.makeConstraints { make in
-            make.leading.equalTo(self.view.safeAreaLayoutGuide.snp.leading).offset(paddingInSafeArea)
-            make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top).offset(paddingInSafeArea)
-            make.size.equalTo(buttonSize)
+            make.leading.equalTo(self.view.safeAreaLayoutGuide.snp.leading).offset(Const.Constraints.paddingInSafeArea)
+            make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top).offset(Const.Constraints.paddingInSafeArea)
+            make.size.equalTo(Const.Constraints.buttonSize)
         }
         backButtonIcon.snp.makeConstraints { make in
-            make.size.equalTo(backButton).multipliedBy(iconSizeRatio)
+            make.size.equalTo(backButton).multipliedBy(Const.Constraints.iconSizeRatio)
             make.center.equalTo(backButton)
             view.addSubview(backButtonIcon)
         }
