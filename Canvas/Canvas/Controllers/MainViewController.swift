@@ -1,6 +1,5 @@
 import UIKit
 import SnapKit
-import FirebaseAnalytics
 
 class MainViewController: UIViewController {
     // Data
