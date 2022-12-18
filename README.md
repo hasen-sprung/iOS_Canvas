@@ -28,16 +28,16 @@
 <br/><br/>
 <p float"left>
   <p>
-    <img width="400" src="https://user-images.githubusercontent.com/20364535/148074891-b98b2ae9-0ebc-4cc0-8118-b7eb75a2e856.jpeg">
-    <img width="400" src="https://user-images.githubusercontent.com/20364535/148074914-416d5853-139c-4f05-af22-d6d96774e9dd.jpeg">
+    <img width="300" src="https://user-images.githubusercontent.com/20364535/148074891-b98b2ae9-0ebc-4cc0-8118-b7eb75a2e856.jpeg">
+    <img width="300" src="https://user-images.githubusercontent.com/20364535/148074914-416d5853-139c-4f05-af22-d6d96774e9dd.jpeg">
   </p>
   <p>
-    <img width="400" src="https://user-images.githubusercontent.com/20364535/148074922-95d41586-6873-4185-b1a3-42cc3e642973.jpeg">
-    <img width="400" src="https://user-images.githubusercontent.com/20364535/148074938-2ad4dbe0-4bea-4e0b-884d-a4485c17e465.jpeg">
+    <img width="300" src="https://user-images.githubusercontent.com/20364535/148074922-95d41586-6873-4185-b1a3-42cc3e642973.jpeg">
+    <img width="300" src="https://user-images.githubusercontent.com/20364535/148074938-2ad4dbe0-4bea-4e0b-884d-a4485c17e465.jpeg">
   </p>
   <p>
-    <img width="400" src="https://user-images.githubusercontent.com/53016167/148373457-2a44ff12-944c-4328-976d-532bc915172f.jpg">
-    <img width="400" src="https://user-images.githubusercontent.com/53016167/148374328-7f98a41f-46b7-410c-acc6-633d595b8e53.jpg">
+    <img width="300" src="https://user-images.githubusercontent.com/53016167/148373457-2a44ff12-944c-4328-976d-532bc915172f.jpg">
+    <img width="300" src="https://user-images.githubusercontent.com/53016167/148374328-7f98a41f-46b7-410c-acc6-633d595b8e53.jpg">
   </p>
 </p>
 
@@ -50,6 +50,7 @@
 ![firebase](https://img.shields.io/badge/Firebase-8.9.0-red)
 ![snapkit](https://img.shields.io/badge/SnapKit-5.0.1-yellow)
 ![WaveAnimationView](https://img.shields.io/badge/waveAnimationView-1.0.2-green)
+
 
 
 <br/>
@@ -76,9 +77,11 @@
 - 흔들어서 그림섞기 on/off
 <br/>
 
+
 ## 아키텍쳐
 - MVC Design Pattern
 - Delegate Pattern
+
 
 ## 프레임워크
 - UIKit
@@ -127,6 +130,3 @@ CPU 사용량을 70%에서 10%로 개선 [🔗](https://jaeylee.notion.site/UIVi
 - 코코아팟에서 SPM으로 변경시 발생했던 에러 처리 [🔗](https://jaeylee.notion.site/SPM-Delete-CocoaPods-06bb2700857843cea9c29ac384ab0107)<br/>
 <br/>
 <br/>
-
-## How We Develop (문서화, 회의록, 개발 일지)
-[wiki 바로가기](https://github.com/hasen-sprung/iOS-EmoRec/wiki)
