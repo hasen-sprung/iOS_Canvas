@@ -98,7 +98,7 @@ extension SettingViewController: MFMailComposeViewControllerDelegate {
                 
                 let compseVC = MFMailComposeViewController()
                 compseVC.mailComposeDelegate = self
-                compseVC.setToRecipients(["hasensprung42@gmail.com"])
+                compseVC.setToRecipients(["feldblume5263@gmail.com"])
                 compseVC.setSubject("[Canvas] ")
                 compseVC.setMessageBody("", isHTML: false)
                 self.present(compseVC, animated: true, completion: nil)
