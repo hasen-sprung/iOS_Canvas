@@ -283,7 +283,7 @@ extension RecordCreationView {
 extension RecordCreationView: UITextViewDelegate {
     
     func textViewDidChange(_ textView: UITextView) {
-        if textView.text.count > 180 {
+        if textView.text.count > 250 {
             textView.deleteBackward()
         }
         if textView.numberOfLine() >= textView.textContainer.maximumNumberOfLines {
