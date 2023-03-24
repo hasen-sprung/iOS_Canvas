@@ -294,7 +294,7 @@ extension RecordCreationView: UITextViewDelegate {
         if finalText.count > 0 {
             completeButton.isEnabled = true
         }
-        byteView.text = "\(textView.text.count)/180"
+        byteView.text = "\(textView.text.count)/250"
     }
 }
 extension UITextView {
